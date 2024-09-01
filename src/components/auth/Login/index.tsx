@@ -6,48 +6,26 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  Divider,
   FormControlLabel,
   Grid,
   Link,
   Stack,
   TextField,
   Typography,
-  styled,
 } from "@mui/material";
 import React from "react";
 import GoogleIcon from "@mui/icons-material/Google"; // You can use any icon for Google
 import FacebookIcon from "@mui/icons-material/Facebook"; // Import Facebook icon
-const DividerWithText = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  margin: theme.spacing(1, 0),
-  "& .divider": {
-    flexGrow: 1,
-  },
-  "& .text": {
-    margin: theme.spacing(0, 2),
-    color: theme.palette.text.secondary,
-    whiteSpace: "nowrap",
-  },
-}));
+import CenteredDivider from "../../comman/CenteredDivider";
 
-const CenteredDivider: React.FC<{ text: string }> = ({ text }) => {
-  return (
-    <DividerWithText>
-      <Divider className="divider" />
-      <Typography variant="caption" className="text">
-        {text}
-      </Typography>
-      <Divider className="divider" />
-    </DividerWithText>
-  );
-};
 interface LoginProps {
   openDialog: boolean;
-  handleCloseLoginDialog: Function
+  handleCloseLoginDialog: Function;
 }
-const Login: React.FC<LoginProps> = ({ openDialog, handleCloseLoginDialog }) => {
+const Login: React.FC<LoginProps> = ({
+  openDialog,
+  handleCloseLoginDialog,
+}) => {
   return (
     <Dialog
       open={openDialog}

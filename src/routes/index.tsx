@@ -7,6 +7,7 @@ const HomePage = lazy(() => import("../pages/HomePage"));
 const AboutUs = lazy(() => import("../pages/AboutUs"));
 const ContactUs = lazy(() => import("../pages/ContactUs"));
 const LandlordQuiz = lazy(() => import("../pages/LanlordQuiz"));
+const SearchPage = lazy(() => import("../pages/SearchPage"));
 
 const routes: RouteObject[] = [
   {
@@ -15,6 +16,16 @@ const routes: RouteObject[] = [
       <SuspenseWrapper>
         <GuestLayout>
           <HomePage />
+        </GuestLayout>
+      </SuspenseWrapper>
+    ),
+  },
+  {
+    path: "/search",
+    element: (
+      <SuspenseWrapper>
+        <GuestLayout>
+          <SearchPage />
         </GuestLayout>
       </SuspenseWrapper>
     ),

@@ -17,7 +17,7 @@ const Header: React.FC = () => {
   return (
     <Box
       sx={{
-        background: "linear-gradient(to right, #FFEBE8, #EDD6F5, #EDF6FD)",
+        background: "linear-gradient(to bottom, #FFEBE8, #EDD6F5, #EDF6FD)",
         p: 2,
         position: "fixed",
         width: "100%",
@@ -85,7 +85,12 @@ const Header: React.FC = () => {
           </Box>
         </Box>
       </Container>
-      {openLoginDialog && <Login openDialog={openLoginDialog} handleCloseLoginDialog={() => setOpenLoginDialog(false)}/>}
+      {openLoginDialog && (
+        <Login
+          openDialog={openLoginDialog}
+          handleCloseLoginDialog={() => setOpenLoginDialog(false)}
+        />
+      )}
     </Box>
   );
 };
