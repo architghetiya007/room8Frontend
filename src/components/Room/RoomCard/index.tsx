@@ -46,6 +46,7 @@ const RoomCard: React.FC = () => {
           display={"flex"}
           alignItems={"center"}
           justifyContent={"space-between"}
+          pt={1}
         >
           <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
             <BathtubOutlinedIcon />
