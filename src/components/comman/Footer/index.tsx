@@ -14,7 +14,17 @@ const Footer: React.FC = () => {
       <Container>
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
-            <Typography mb={1} variant="h5" color={"white"}>
+            <Typography
+              sx={{
+                background:
+                  "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+                backgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+              mb={1}
+              variant="h5"
+              color={"white"}
+            >
               Room8
             </Typography>
             <Typography color={"white"}>
