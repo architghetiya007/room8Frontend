@@ -19,7 +19,12 @@ const RoomCard: React.FC = () => {
       }}
     >
       <Box sx={{ height: "220px", p: 1, position: "relative" }}>
-        <Box component={"img"} src={RoomImage}></Box>
+        <Box
+          component={"img"}
+          width={"100%"}
+          height={"220px"}
+          src={RoomImage}
+        ></Box>
         <Chip
           label="Available Now"
           sx={{
