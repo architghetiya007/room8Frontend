@@ -6,8 +6,6 @@ import GuestLayout from "../components/Layout/GuestLayout";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const AboutUs = lazy(() => import("../pages/AboutUs"));
 const ContactUs = lazy(() => import("../pages/ContactUs"));
-const Login = lazy(() => import("../pages/Auth/Login"));
-const Register = lazy(() => import("../pages/Auth/Register"));
 const LandlordQuiz = lazy(() => import("../pages/LanlordQuiz"));
 
 const routes: RouteObject[] = [
@@ -50,27 +48,6 @@ const routes: RouteObject[] = [
         </GuestLayout>
       </SuspenseWrapper>
     ),
-  },
-  {
-    path: "/auth",
-    children: [
-      {
-        path: "login",
-        element: (
-          <SuspenseWrapper>
-            <Login />
-          </SuspenseWrapper>
-        ),
-      },
-      {
-        path: "register",
-        element: (
-          <SuspenseWrapper>
-            <Register />
-          </SuspenseWrapper>
-        ),
-      },
-    ],
   },
 ];
 

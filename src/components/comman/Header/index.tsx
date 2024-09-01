@@ -6,11 +6,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import EastIcon from "@mui/icons-material/East";
 import { HeaderMenus } from "../../../utils/Header";
 import { Link as RouterLink } from "react-router-dom";
+import Login from "../../auth/Login";
 const Header: React.FC = () => {
+  const [openLoginDialog, setOpenLoginDialog] = useState<boolean>(false);
   const theme = useTheme();
   return (
     <Box
@@ -63,6 +65,8 @@ const Header: React.FC = () => {
                 fontWeight: "bold",
                 marginRight: 2,
               }}
+              type="button"
+              onClick={() => setOpenLoginDialog(true)}
             >
               Login
             </Button>
@@ -81,6 +85,7 @@ const Header: React.FC = () => {
           </Box>
         </Box>
       </Container>
+      {openLoginDialog && <Login openDialog={openLoginDialog} handleCloseLoginDialog={() => setOpenLoginDialog(false)}/>}
     </Box>
   );
 };
