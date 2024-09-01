@@ -4,6 +4,7 @@ import HeroSection from "../../components/HomePage/HeroSection";
 import CitySection from "../../components/HomePage/CitySection";
 import RoomSection from "../../components/HomePage/RoomSection";
 import RoomRentalSection from "../../components/HomePage/RoomRentalSection";
+import EasyStepSection from "../../components/HomePage/EasyStepSection";
 
 const HomePage: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const HomePage: React.FC = () => {
       <CitySection />
       <RoomSection />
       <RoomRentalSection />
+      <EasyStepSection />
     </Box>
   );
 };
