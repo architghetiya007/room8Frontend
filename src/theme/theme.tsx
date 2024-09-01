@@ -13,7 +13,7 @@ const theme = createTheme({
     },
     custom: {
       blackDark: "#373940",
-      blackDarkGray: '#6D778A'
+      blackDarkGray: "#6D778A",
     },
   },
 });

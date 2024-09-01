@@ -1,5 +1,4 @@
-import { CompanyMenuProps } from "../../types/comman/Footer";
-
+import { CompanyMenuProps, ServicesMenuProps } from "../../types/comman/Footer";
 
 export const CompanyMenus: CompanyMenuProps[] = [
   {
@@ -17,5 +16,24 @@ export const CompanyMenus: CompanyMenuProps[] = [
   {
     name: "Support",
     route: "/support",
+  },
+];
+
+export const ServicesMenu: ServicesMenuProps[] = [
+  {
+    name: "Prices",
+    route: "/prices",
+  },
+  {
+    name: "Affiliate program",
+    route: "/affiliateProgram",
+  },
+  {
+    name: "Additional Services",
+    route: "/additionalServices",
+  },
+  {
+    name: "Discounts",
+    route: "/discounts",
   },
 ];
