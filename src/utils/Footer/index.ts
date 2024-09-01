@@ -1,7 +1,5 @@
-interface CompanyMenuProps {
-  name: string;
-  route: string;
-}
+import { CompanyMenuProps } from "../../types/comman/Footer";
+
 
 export const CompanyMenus: CompanyMenuProps[] = [
   {

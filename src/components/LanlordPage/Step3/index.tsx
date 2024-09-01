@@ -4,7 +4,7 @@ import React from "react";
 interface Step3Props {
   updateTabIndex: Function;
 }
-const Step3: React.FC<Step3Props> = ({ updateTabIndex }) => {
+const Step3: React.FC<Step3Props> = () => {
   return (
     <Grid container spacing={2}>
       <Grid></Grid>

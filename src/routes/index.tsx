@@ -35,7 +35,9 @@ const routes: RouteObject[] = [
     path: "/aboutus",
     element: (
       <SuspenseWrapper>
-        <AboutUs />
+        <GuestLayout>
+          <AboutUs />
+        </GuestLayout>
       </SuspenseWrapper>
     ),
   },
@@ -43,7 +45,9 @@ const routes: RouteObject[] = [
     path: "/contactus",
     element: (
       <SuspenseWrapper>
-        <ContactUs />
+        <GuestLayout>
+          <ContactUs />
+        </GuestLayout>
       </SuspenseWrapper>
     ),
   },

@@ -25,6 +25,7 @@ const CityData: CityProps[] = [
     city: "Lubin (79)",
   },
 ];
+
 const CitySection: React.FC = () => {
   const theme = useTheme();
   return (

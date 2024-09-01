@@ -14,7 +14,7 @@ import React from "react";
 interface Step2Props {
   updateTabIndex: Function;
 }
-const Step2: React.FC<Step2Props> = ({ updateTabIndex }) => {
+const Step2: React.FC<Step2Props> = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>

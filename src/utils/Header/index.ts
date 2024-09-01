@@ -1,7 +1,5 @@
-interface HeaderMenusProps {
-  name: string;
-  route: string;
-}
+import { HeaderMenusProps } from "../../types/comman/Header";
+
 export const HeaderMenus: HeaderMenusProps[] = [
   {
     name: "Shortlist",
