@@ -6,13 +6,13 @@ const Footer: React.FC = () => {
   return (
     <Box
       sx={{
-        background: "linear-gradient(to right, #1e3c72, #2a5298)",
+        background: "linear-gradient(to bottom, #141A1D, #351440, #392927)",
         px: 2,
         py: 8,
       }}
     >
       <Container>
-        <Grid container spacing={1}>
+        <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
             <Typography mb={1} variant="h5" color={"white"}>
               Room8
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
               Let's Connect
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} mt={1} mb={1}>
             <Box sx={{ borderBottom: "1px solid lightgray" }}></Box>
           </Grid>
           <Grid item xs={12}>
@@ -78,8 +78,7 @@ const Footer: React.FC = () => {
                 Copyright © Room8 - All Right Reserved
               </Typography>
               <Typography color={"white"} variant="subtitle1">
-                {" "}
-                Copyright © Room8 - All Right Reserved
+                Privacy Policy | Cookie Policy | Refund Policy
               </Typography>
             </Stack>
           </Grid>
