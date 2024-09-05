@@ -1,9 +1,4 @@
-import { AxiosError } from "axios";
-interface ApiError {
-  message: string;
-  statusCode?: number;
-}
-export const getErrorMessage = (error: AxiosError<ApiError>): string => {
+export const getErrorMessage = (error: any): string => {
   let getErrorMessage: string = "";
   if (error.response && error.response.data && error.response.data?.message) {
     getErrorMessage =
