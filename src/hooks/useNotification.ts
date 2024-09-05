@@ -2,7 +2,7 @@ import { useSnackbar } from "notistack";
 type SnackBarVariant = "success" | "error" | "info" | "warning";
 interface SnackBarProps {
   message: string;
-  variant: SnackBarVariant;
+  variant?: SnackBarVariant;
 }
 const useNotification = () => {
   const { enqueueSnackbar } = useSnackbar();

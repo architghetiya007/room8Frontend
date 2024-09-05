@@ -7,7 +7,14 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({
   children,
 }) => {
   return (
-    <SnackbarProvider maxSnack={5} autoHideDuration={3000}>
+    <SnackbarProvider
+      anchorOrigin={{
+        horizontal: "right",
+        vertical: "top",
+      }}
+      maxSnack={5}
+      autoHideDuration={3000}
+    >
       {children}
     </SnackbarProvider>
   );

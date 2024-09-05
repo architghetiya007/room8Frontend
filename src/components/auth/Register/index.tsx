@@ -19,6 +19,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useGoogleLogin } from "@react-oauth/google";
 import useUserMutations from "../../../mutations/user";
+import useNotification from "../../../hooks/useNotification";
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
   email: Yup.string()
@@ -40,7 +41,8 @@ const Register: React.FC<RegisterProps> = ({
   openDialog,
   handleCloseRegisterDialog,
 }) => {
-  const { registerUserMutation,googleLoginUserMutation } = useUserMutations();
+  const { showSnackBar } = useNotification();
+  const { registerUserMutation, googleLoginUserMutation } = useUserMutations();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -53,10 +55,12 @@ const Register: React.FC<RegisterProps> = ({
       registerUserMutation.mutate(values, {
         onSuccess: (data) => {
           console.log("User created successfully:", data);
+          showSnackBar({ message: data.message });
           // Handle success (e.g., show a success message or redirect)
         },
         onError: (error: Error) => {
           console.log(error.message);
+          showSnackBar({ message: error.message, variant: "error" });
           // Handle error (e.g., show an error message)
         },
       });
@@ -68,16 +72,19 @@ const Register: React.FC<RegisterProps> = ({
   const login = useGoogleLogin({
     prompt: "select_account",
     onSuccess: (codeResponse) => {
-      googleLoginUserMutation.mutate({ token: codeResponse.access_token}, {
-        onSuccess: (data) => {
-          console.log("Google Login:", data);
-          // Handle success (e.g., show a success message or redirect)
-        },
-        onError: (error: Error) => {
-          console.log(error.message);
-          // Handle error (e.g., show an error message)
-        },
-      })
+      googleLoginUserMutation.mutate(
+        { token: codeResponse.access_token },
+        {
+          onSuccess: (data) => {
+            console.log("Google Login:", data);
+            // Handle success (e.g., show a success message or redirect)
+          },
+          onError: (error: Error) => {
+            console.log(error.message);
+            // Handle error (e.g., show an error message)
+          },
+        }
+      );
     },
     onError: (error) => console.log("Login Failed:", error),
   });

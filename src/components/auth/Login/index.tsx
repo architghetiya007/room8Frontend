@@ -20,6 +20,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useGoogleLogin } from "@react-oauth/google";
 import useUserMutations from "../../../mutations/user";
+import useNotification from "../../../hooks/useNotification";
 const validationSchema = Yup.object({
   email: Yup.string()
     .email("Invalid email format")
@@ -40,6 +41,7 @@ const Login: React.FC<LoginProps> = ({
   openDialog,
   handleCloseLoginDialog,
 }) => {
+  const { showSnackBar } = useNotification();
   const { loginUserMutation, googleLoginUserMutation } = useUserMutations();
   const formik = useFormik({
     initialValues: {
@@ -54,11 +56,12 @@ const Login: React.FC<LoginProps> = ({
       loginUserMutation.mutate(values, {
         onSuccess: (data) => {
           console.log("User created successfully:", data);
+          showSnackBar({ message: data.message });
           // Handle success (e.g., show a success message or redirect)
         },
         onError: (error: Error) => {
           console.log(error.message);
-          // Handle error (e.g., show an error message)
+          showSnackBar({ message: error.message, variant: "error" });
         },
       });
       // Handle form submission here
@@ -68,7 +71,7 @@ const Login: React.FC<LoginProps> = ({
   const login = useGoogleLogin({
     prompt: "select_account",
     onSuccess: (codeResponse) => {
-      console.log(codeResponse)
+      console.log(codeResponse);
       googleLoginUserMutation.mutate(
         { token: codeResponse.access_token },
         {
