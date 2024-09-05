@@ -1,3 +1,5 @@
+import { BaseResponse } from "../comman/BaseResponse";
+
 export interface RegisterRequestDTO {
   name: string;
   email: string;
@@ -11,4 +13,15 @@ export interface LoginRequestDTO {
 
 export interface GoogleLoginRequestDTO {
   token: string;
+}
+
+export interface UserResponseDTO {
+  email: string;
+}
+
+export interface LoginResponseDTO extends BaseResponse {
+  data: {
+    token: string;
+    user: UserResponseDTO;
+  };
 }

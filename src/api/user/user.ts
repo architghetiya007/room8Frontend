@@ -1,6 +1,7 @@
 import {
   GoogleLoginRequestDTO,
   LoginRequestDTO,
+  LoginResponseDTO,
   RegisterRequestDTO,
 } from "../../types/user";
 import { apiPaths } from "../../utils/Comman/apiPaths";
@@ -18,7 +19,7 @@ const registerUserAPI = async (data: RegisterRequestDTO) => {
 
 const loginUserAPI = async (data: LoginRequestDTO) => {
   try {
-    const response = await axiosInstance.post(apiPaths.USER.login, data);
+    const response = await axiosInstance.post<LoginResponseDTO>(apiPaths.USER.login, data);
     return response.data;
   } catch (error) {
     getErrorMessage(error);

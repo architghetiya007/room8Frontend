@@ -21,6 +21,7 @@ import * as Yup from "yup";
 import { useGoogleLogin } from "@react-oauth/google";
 import useUserMutations from "../../../mutations/user";
 import useNotification from "../../../hooks/useNotification";
+import { apiMessages } from "../../../utils/Comman/apiMessages";
 const validationSchema = Yup.object({
   email: Yup.string()
     .email("Invalid email format")
@@ -56,12 +57,13 @@ const Login: React.FC<LoginProps> = ({
       loginUserMutation.mutate(values, {
         onSuccess: (data) => {
           console.log("User created successfully:", data);
-          showSnackBar({ message: data.message });
+          showSnackBar({ message: data?.message ?? apiMessages.USER.login });
           // Handle success (e.g., show a success message or redirect)
         },
         onError: (error: Error) => {
           console.log(error.message);
           showSnackBar({ message: error.message, variant: "error" });
+          // Handle error (e.g., show an error message)
         },
       });
       // Handle form submission here
@@ -77,10 +79,12 @@ const Login: React.FC<LoginProps> = ({
         {
           onSuccess: (data) => {
             console.log("Google Login:", data);
+            showSnackBar({ message: data?.message ?? apiMessages.USER.login });
             // Handle success (e.g., show a success message or redirect)
           },
           onError: (error: Error) => {
             console.log(error.message);
+            showSnackBar({ message: error.message, variant: "error" });
             // Handle error (e.g., show an error message)
           },
         }
