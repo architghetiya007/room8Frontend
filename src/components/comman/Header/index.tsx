@@ -11,8 +11,10 @@ import EastIcon from "@mui/icons-material/East";
 import { HeaderMenus } from "../../../utils/Header";
 import { Link as RouterLink } from "react-router-dom";
 import Login from "../../auth/Login";
+import Register from "../../auth/Register";
 const Header: React.FC = () => {
   const [openLoginDialog, setOpenLoginDialog] = useState<boolean>(false);
+  const [openRegisterDialog, setOpenRegisterDialog] = useState<boolean>(false);
   const theme = useTheme();
   return (
     <Box
@@ -79,6 +81,8 @@ const Header: React.FC = () => {
                 fontWeight: "bold",
               }}
               endIcon={<EastIcon />}
+              type="button"
+              onClick={() => setOpenRegisterDialog(true)}
             >
               Signup
             </Button>
@@ -89,6 +93,12 @@ const Header: React.FC = () => {
         <Login
           openDialog={openLoginDialog}
           handleCloseLoginDialog={() => setOpenLoginDialog(false)}
+        />
+      )}
+      {openRegisterDialog && (
+        <Register
+          openDialog={openRegisterDialog}
+          handleCloseRegisterDialog={() => setOpenRegisterDialog(false)}
         />
       )}
     </Box>

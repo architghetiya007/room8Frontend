@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
@@ -31,8 +29,8 @@ axiosInstance.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       // Clear auth data and redirect to login
       //   clearAuthData();
-      const navigate = useNavigate();
-      navigate("/login"); // Redirect to login page
+      // const navigate = useNavigate();
+      // navigate("/login"); // Redirect to login page
     }
     return Promise.reject(error);
   }
