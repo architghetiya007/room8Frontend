@@ -43,6 +43,7 @@ const ChangePassword: React.FC = () => {
         {
           onSuccess: (data) => {
             showSnackBar({ message: data!.message });
+            formik.resetForm();
           },
           onError: (error: Error) => {
             showSnackBar({ message: error.message, variant: "error" });

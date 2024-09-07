@@ -1,3 +1,4 @@
+import { BaseResponse } from "../../types/comman/BaseResponse";
 import {
   ChangePasswordRequestDTO,
   ForgotPasswordRequestDTO,
@@ -74,7 +75,7 @@ const resetPasswordAPI = async (data: ResetPasswordRequestDTO) => {
 
 const changePasswordAPI = async (data: ChangePasswordRequestDTO) => {
   try {
-    const response = await axiosInstance.put(apiPaths.USER.resetPassword, data);
+    const response = await axiosInstance.put(apiPaths.USER.changePassword, data);
     return response.data;
   } catch (error) {
     getErrorMessage(error);
@@ -90,6 +91,15 @@ const updateProfileAPI = async (data: UpdateProfileRequestDTO) => {
   }
 };
 
+const deleteAccountAPI = async () => {
+  try {
+    const response = await axiosInstance.put<BaseResponse>(apiPaths.USER.deleteAccount);
+    return response.data;
+  } catch (error) {
+    getErrorMessage(error);
+  }
+};
+
 export {
   registerUserAPI,
   loginUserAPI,
@@ -98,4 +108,5 @@ export {
   resetPasswordAPI,
   changePasswordAPI,
   updateProfileAPI,
+  deleteAccountAPI,
 };

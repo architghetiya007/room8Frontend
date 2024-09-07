@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import {
   changePasswordAPI,
+  deleteAccountAPI,
   forgotPasswordAPI,
   googleLoginAPI,
   loginUserAPI,
@@ -38,6 +39,10 @@ const useUserMutations = () => {
     mutationFn: updateProfileAPI,
   });
 
+  const deleteAccountUserMutation = useMutation({
+    mutationFn: deleteAccountAPI,
+  });
+
   return {
     registerUserMutation,
     loginUserMutation,
@@ -46,6 +51,7 @@ const useUserMutations = () => {
     resetPasswordUserMutation,
     changePasswordUserMutation,
     updateProfileUserMutation,
+    deleteAccountUserMutation,
   };
 };
 
