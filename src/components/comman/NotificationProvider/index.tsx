@@ -13,7 +13,7 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({
         vertical: "top",
       }}
       maxSnack={5}
-      autoHideDuration={3000}
+      autoHideDuration={2000}
     >
       {children}
     </SnackbarProvider>

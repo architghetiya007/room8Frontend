@@ -14,13 +14,17 @@ import LogoutIcon from "@mui/icons-material/Logout"; // Import the Logout icon
 import { useAppDispatch } from "../../../store";
 import { clearUserInfo } from "../../../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
+import useNotification from "../../../hooks/useNotification";
+import { apiMessages } from "../../../utils/Comman/apiMessages";
 const UserProfile: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { showSnackBar } = useNotification();
 
   const logoutButton = () => {
     dispatch(clearUserInfo());
     navigate("/");
+    showSnackBar({ message: apiMessages.USER.logout });
   };
   return (
     <Box

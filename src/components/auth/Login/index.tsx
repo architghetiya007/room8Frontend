@@ -222,7 +222,8 @@ const Login: React.FC<LoginProps> = ({
               <CenteredDivider text="or use one of this options" />
             </Grid>
             <Grid item xs={12}>
-              <Button
+              <LoadingButton
+                loading={googleLoginUserMutation.isPending}
                 variant="contained"
                 color="primary"
                 onClick={() => login()}
@@ -239,13 +240,18 @@ const Login: React.FC<LoginProps> = ({
                   px: 2,
                   py: 1.5,
                   width: "100%",
+                  minHeight: "50px",
                 }}
               >
-                <GoogleIcon sx={{ mr: 1 }} /> {/* Google Icon */}
-                <Typography variant="button" sx={{ color: "black" }}>
-                  Continue with Google
-                </Typography>
-              </Button>
+                {!googleLoginUserMutation.isPending && (
+                  <>
+                    <GoogleIcon sx={{ mr: 1 }} /> {/* Google Icon */}
+                    <Typography variant="button" sx={{ color: "black" }}>
+                      Continue with Google
+                    </Typography>
+                  </>
+                )}
+              </LoadingButton>
             </Grid>
             {/* <Grid item xs={12}>
             <Button

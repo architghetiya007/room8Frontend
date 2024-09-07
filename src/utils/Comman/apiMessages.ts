@@ -4,5 +4,6 @@ export const apiMessages = {
     login: "Login Successfully",
     googleLogin: "Google Login Successfully",
     forgotPassword: "Email sent Successfully",
+    logout: "Logout Successfully"
   },
 };
