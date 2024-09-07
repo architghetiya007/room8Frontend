@@ -12,10 +12,27 @@ import { HeaderMenus } from "../../../utils/Header";
 import { Link as RouterLink } from "react-router-dom";
 import Login from "../../auth/Login";
 import Register from "../../auth/Register";
+import ForgotPassword from "../../auth/ForgotPassword";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 const Header: React.FC = () => {
+  const userSlice = useSelector((state: RootState) => state.user);
   const [openLoginDialog, setOpenLoginDialog] = useState<boolean>(false);
   const [openRegisterDialog, setOpenRegisterDialog] = useState<boolean>(false);
+  const [openForgotDialog, setOpenForgotDialog] = useState<boolean>(false);
   const theme = useTheme();
+
+  const handleLoginDialog = (openDialog: boolean) => {
+    setOpenLoginDialog(openDialog);
+  };
+
+  const handleRegisterDialog = (openDialog: boolean) => {
+    setOpenRegisterDialog(openDialog);
+  };
+
+  const handleForgotDialog = (openDialog: boolean) => {
+    setOpenForgotDialog(openDialog);
+  };
   return (
     <Box
       sx={{
@@ -93,12 +110,23 @@ const Header: React.FC = () => {
         <Login
           openDialog={openLoginDialog}
           handleCloseLoginDialog={() => setOpenLoginDialog(false)}
+          handleRegisterDialog={handleRegisterDialog}
+          handleForgotDialog={handleForgotDialog}
         />
       )}
       {openRegisterDialog && (
         <Register
           openDialog={openRegisterDialog}
           handleCloseRegisterDialog={() => setOpenRegisterDialog(false)}
+          handleForgotDialog={handleForgotDialog}
+          handleLoginDialog={handleLoginDialog}
+        />
+      )}
+      {openForgotDialog && (
+        <ForgotPassword
+          openDialog={openForgotDialog}
+          handleCloseForgotDialog={() => setOpenForgotDialog(false)}
+          handleLoginDialog={handleLoginDialog}
         />
       )}
     </Box>

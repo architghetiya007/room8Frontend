@@ -8,7 +8,6 @@ import {
   DialogTitle,
   FormControlLabel,
   Grid,
-  Link,
   Stack,
   TextField,
   Typography,
@@ -20,8 +19,9 @@ import * as Yup from "yup";
 import { useGoogleLogin } from "@react-oauth/google";
 import useUserMutations from "../../../mutations/user";
 import useNotification from "../../../hooks/useNotification";
+import { storeTokenDetails } from "../../../utils/Comman/auth";
 const validationSchema = Yup.object({
-  name: Yup.string().required("Name is required"),
+  fullName: Yup.string().required("Name is required"),
   email: Yup.string()
     .email("Invalid email format")
     .required("Email is required"),
@@ -36,16 +36,20 @@ const validationSchema = Yup.object({
 interface RegisterProps {
   openDialog: boolean;
   handleCloseRegisterDialog: Function;
+  handleForgotDialog: Function;
+  handleLoginDialog: Function;
 }
 const Register: React.FC<RegisterProps> = ({
   openDialog,
   handleCloseRegisterDialog,
+  handleForgotDialog,
+  handleLoginDialog,
 }) => {
   const { showSnackBar } = useNotification();
   const { registerUserMutation, googleLoginUserMutation } = useUserMutations();
   const formik = useFormik({
     initialValues: {
-      name: "",
+      fullName: "",
       email: "",
       password: "",
       keepSignedIn: false,
@@ -54,18 +58,18 @@ const Register: React.FC<RegisterProps> = ({
     onSubmit: (values) => {
       registerUserMutation.mutate(values, {
         onSuccess: (data) => {
-          console.log("User created successfully:", data);
-          showSnackBar({ message: data.message });
-          // Handle success (e.g., show a success message or redirect)
+          showSnackBar({ message: data!.message });
+          storeTokenDetails({
+            token: data!.data.token,
+            refreshToken: data!.data.user.refreshToken,
+            user: data!.data.user,
+          });
+          handleCloseRegisterDialog();
         },
         onError: (error: Error) => {
-          console.log(error.message);
           showSnackBar({ message: error.message, variant: "error" });
-          // Handle error (e.g., show an error message)
         },
       });
-      console.log("Form Data", values);
-      // Handle form submission here
     },
   });
 
@@ -76,12 +80,16 @@ const Register: React.FC<RegisterProps> = ({
         { token: codeResponse.access_token },
         {
           onSuccess: (data) => {
-            console.log("Google Login:", data);
-            // Handle success (e.g., show a success message or redirect)
+            showSnackBar({ message: data!.message });
+            storeTokenDetails({
+              token: data!.data.token,
+              refreshToken: data!.data.user.refreshToken,
+              user: data!.data.user,
+            });
+            handleCloseRegisterDialog();
           },
           onError: (error: Error) => {
-            console.log(error.message);
-            // Handle error (e.g., show an error message)
+            showSnackBar({ message: error.message, variant: "error" });
           },
         }
       );
@@ -97,7 +105,9 @@ const Register: React.FC<RegisterProps> = ({
       PaperProps={{
         sx: {
           borderRadius: 8, // Adjust border radius here
-          px: 6, // Padding inside the dialog
+          px: {
+            md: 6
+          }, // Padding inside the dialog
           py: 1,
           height: "95vh", // Adjust the height here
           maxHeight: "95vh", // Optional: Set a maximum height
@@ -121,20 +131,22 @@ const Register: React.FC<RegisterProps> = ({
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                placeholder="Enter Your Email"
+                placeholder="Enter Your Name"
                 sx={{
                   width: "100%", // Adjust width as needed
                   "& .MuiInputBase-root": {
                     borderRadius: "4px", // Adjust border radius as needed
                   },
                 }}
-                id="name"
-                name="name"
-                value={formik.values.name}
+                id="fullName"
+                name="fullName"
+                value={formik.values.fullName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
+                error={
+                  formik.touched.fullName && Boolean(formik.errors.fullName)
+                }
+                helperText={formik.touched.fullName && formik.errors.fullName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -194,7 +206,17 @@ const Register: React.FC<RegisterProps> = ({
                   control={<Checkbox />}
                   label="Keep me signed in"
                 />
-                <Typography>Forgot Password?</Typography>
+                <Button
+                  sx={{ textTransform: "none" }}
+                  type="button"
+                  onClick={() => {
+                    handleCloseRegisterDialog();
+                    handleForgotDialog(true);
+                  }}
+                  color="primary"
+                >
+                  Forgot Password?
+                </Button>
               </Stack>
             </Grid>
             <Grid item xs={12}>
@@ -235,9 +257,17 @@ const Register: React.FC<RegisterProps> = ({
               >
                 <Typography variant="body2" color="text.secondary">
                   Already have an account?{" "}
-                  <Link href="/signup" underline="hover" color="primary">
+                  <Button
+                    sx={{ textTransform: "none", p: 0 }}
+                    type="button"
+                    onClick={() => {
+                      handleCloseRegisterDialog();
+                      handleLoginDialog(true);
+                    }}
+                    color="primary"
+                  >
                     Login
-                  </Link>
+                  </Button>
                 </Typography>
               </Box>
             </Grid>

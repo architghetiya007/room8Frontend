@@ -8,7 +8,6 @@ import {
   DialogTitle,
   FormControlLabel,
   Grid,
-  Link,
   Stack,
   TextField,
   Typography,
@@ -21,7 +20,10 @@ import * as Yup from "yup";
 import { useGoogleLogin } from "@react-oauth/google";
 import useUserMutations from "../../../mutations/user";
 import useNotification from "../../../hooks/useNotification";
-import { apiMessages } from "../../../utils/Comman/apiMessages";
+import { storeTokenDetails } from "../../../utils/Comman/auth";
+import { useAppDispatch } from "../../../store";
+import { setUserInfo } from "../../../store/slices/userSlice";
+import { AuthStorageDTO } from "../../../types/comman/Auth";
 const validationSchema = Yup.object({
   email: Yup.string()
     .email("Invalid email format")
@@ -37,55 +39,62 @@ const validationSchema = Yup.object({
 interface LoginProps {
   openDialog: boolean;
   handleCloseLoginDialog: Function;
+  handleRegisterDialog: Function;
+  handleForgotDialog: Function;
 }
 const Login: React.FC<LoginProps> = ({
   openDialog,
   handleCloseLoginDialog,
+  handleRegisterDialog,
+  handleForgotDialog,
 }) => {
+  const dispatch = useAppDispatch();
   const { showSnackBar } = useNotification();
   const { loginUserMutation, googleLoginUserMutation } = useUserMutations();
   const formik = useFormik({
     initialValues: {
-      name: "",
       email: "",
       password: "",
       keepSignedIn: false,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log("Form Data", values);
       loginUserMutation.mutate(values, {
         onSuccess: (data) => {
-          console.log("User created successfully:", data);
-          showSnackBar({ message: data?.message ?? apiMessages.USER.login });
-          // Handle success (e.g., show a success message or redirect)
+          showSnackBar({ message: data!.message });
+          let user: AuthStorageDTO = {
+            token: data!.data.token,
+            refreshToken: data!.data.user.refreshToken,
+            user: data!.data.user,
+          };
+          storeTokenDetails(user);
+          dispatch(setUserInfo(user));
+          handleCloseLoginDialog();
         },
         onError: (error: Error) => {
-          console.log(error.message);
           showSnackBar({ message: error.message, variant: "error" });
-          // Handle error (e.g., show an error message)
         },
       });
-      // Handle form submission here
     },
   });
 
   const login = useGoogleLogin({
     prompt: "select_account",
     onSuccess: (codeResponse) => {
-      console.log(codeResponse);
       googleLoginUserMutation.mutate(
         { token: codeResponse.access_token },
         {
           onSuccess: (data) => {
-            console.log("Google Login:", data);
-            showSnackBar({ message: data?.message ?? apiMessages.USER.login });
-            // Handle success (e.g., show a success message or redirect)
+            showSnackBar({ message: data!.message });
+            storeTokenDetails({
+              token: data!.data.token,
+              refreshToken: data!.data.user.refreshToken,
+              user: data!.data.user,
+            });
+            handleCloseLoginDialog();
           },
           onError: (error: Error) => {
-            console.log(error.message);
             showSnackBar({ message: error.message, variant: "error" });
-            // Handle error (e.g., show an error message)
           },
         }
       );
@@ -101,7 +110,9 @@ const Login: React.FC<LoginProps> = ({
       PaperProps={{
         sx: {
           borderRadius: 8, // Adjust border radius here
-          px: 6, // Padding inside the dialog
+          px: {
+            md: 6,
+          }, // Padding inside the dialog
           py: 1,
         },
       }}
@@ -171,7 +182,17 @@ const Login: React.FC<LoginProps> = ({
                   control={<Checkbox />}
                   label="Keep me signed in"
                 />
-                <Typography>Forgot Password?</Typography>
+                <Button
+                  sx={{ textTransform: "none" }}
+                  type="button"
+                  onClick={() => {
+                    handleCloseLoginDialog();
+                    handleForgotDialog(true);
+                  }}
+                  color="primary"
+                >
+                  Forgot Password?
+                </Button>
               </Stack>
             </Grid>
             <Grid item xs={12}>
@@ -258,9 +279,17 @@ const Login: React.FC<LoginProps> = ({
               >
                 <Typography variant="body2" color="text.secondary">
                   Don't have an account?{" "}
-                  <Link href="/signup" underline="hover" color="primary">
+                  <Button
+                    sx={{ textTransform: "none" }}
+                    type="button"
+                    onClick={() => {
+                      handleCloseLoginDialog();
+                      handleRegisterDialog(true);
+                    }}
+                    color="primary"
+                  >
                     Sign up
-                  </Link>
+                  </Button>
                 </Typography>
               </Box>
             </Grid>

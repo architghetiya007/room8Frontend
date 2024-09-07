@@ -3,5 +3,6 @@ export const apiMessages = {
     register: "User Register Successfully",
     login: "Login Successfully",
     googleLogin: "Google Login Successfully",
+    forgotPassword: "Email sent Successfully",
   },
 };

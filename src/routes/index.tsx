@@ -8,6 +8,7 @@ const AboutUs = lazy(() => import("../pages/AboutUs"));
 const ContactUs = lazy(() => import("../pages/ContactUs"));
 const LandlordQuiz = lazy(() => import("../pages/LanlordQuiz"));
 const SearchPage = lazy(() => import("../pages/SearchPage"));
+const ReserPasswordPage = lazy(() => import("../pages/ResetPasswordPage"));
 
 const routes: RouteObject[] = [
   {
@@ -59,6 +60,10 @@ const routes: RouteObject[] = [
         </GuestLayout>
       </SuspenseWrapper>
     ),
+  },
+  {
+    path: "/reset-password/:token",
+    element: <ReserPasswordPage />,
   },
 ];
 
