@@ -13,7 +13,6 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import GoogleIcon from "@mui/icons-material/Google"; // You can use any icon for Google
 import CenteredDivider from "../../comman/CenteredDivider";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -24,6 +23,7 @@ import { storeTokenDetails } from "../../../utils/Comman/auth";
 import { useAppDispatch } from "../../../store";
 import { setUserInfo } from "../../../store/slices/userSlice";
 import { AuthStorageDTO } from "../../../types/comman/Auth";
+import GoogleLoginButton from "../../comman/GoogleLoginButton";
 const validationSchema = Yup.object({
   email: Yup.string()
     .email("Invalid email format")
@@ -222,36 +222,10 @@ const Login: React.FC<LoginProps> = ({
               <CenteredDivider text="or use one of this options" />
             </Grid>
             <Grid item xs={12}>
-              <LoadingButton
-                loading={googleLoginUserMutation.isPending}
-                variant="contained"
-                color="primary"
-                onClick={() => login()}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "8px",
-                  borderColor: "black",
-                  backgroundColor: "#fff", // Google blue
-                  "&:hover": {
-                    backgroundColor: "#fff",
-                  },
-                  px: 2,
-                  py: 1.5,
-                  width: "100%",
-                  minHeight: "50px",
-                }}
-              >
-                {!googleLoginUserMutation.isPending && (
-                  <>
-                    <GoogleIcon sx={{ mr: 1 }} /> {/* Google Icon */}
-                    <Typography variant="button" sx={{ color: "black" }}>
-                      Continue with Google
-                    </Typography>
-                  </>
-                )}
-              </LoadingButton>
+              <GoogleLoginButton
+                isLoading={googleLoginUserMutation.isPending}
+                googleLoginClick={() => login()}
+              />
             </Grid>
             {/* <Grid item xs={12}>
             <Button
