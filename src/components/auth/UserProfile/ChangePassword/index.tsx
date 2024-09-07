@@ -133,7 +133,8 @@ const ChangePassword: React.FC = () => {
         <LoadingButton
           loading={changePasswordUserMutation.isPending}
           sx={{
-            background: "linear-gradient(to right, #6CC0F4, #8160D7, #F6A2A9)",
+            background:
+              "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
             pl: 2,
             pr: 2,
             borderRadius: "8px",
@@ -147,7 +148,7 @@ const ChangePassword: React.FC = () => {
           type="button"
           onClick={() => formik.handleSubmit()}
         >
-          Reset Password
+          Change Password
         </LoadingButton>
       </Grid>
     </Grid>

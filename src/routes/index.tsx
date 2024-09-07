@@ -11,6 +11,7 @@ const LandlordQuiz = lazy(() => import("../pages/LanlordQuiz"));
 const SearchPage = lazy(() => import("../pages/SearchPage"));
 const ReserPasswordPage = lazy(() => import("../pages/ResetPasswordPage"));
 const UserProfilePage = lazy(() => import("../pages/UserProfilePage"));
+const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
 
 const routes: RouteObject[] = [
   {
@@ -82,6 +83,10 @@ const routes: RouteObject[] = [
   {
     path: "/reset-password/:token",
     element: <ReserPasswordPage />,
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ];
 

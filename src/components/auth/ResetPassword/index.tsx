@@ -67,9 +67,11 @@ const ResetPassword: React.FC = () => {
         <Typography variant="h5" fontWeight="bold" align="center" mb={2}>
           Reset Password
         </Typography>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           <Grid item xs={12}>
             <Typography>New Password</Typography>
+          </Grid>
+          <Grid item xs={12}>
             <TextField
               variant="outlined"
               placeholder="Enter Your New Password"
@@ -95,6 +97,8 @@ const ResetPassword: React.FC = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography>Confirm Password</Typography>
+          </Grid>
+          <Grid item xs={12}>
             <TextField
               variant="outlined"
               placeholder="Confirm Your New Password"
@@ -124,7 +128,7 @@ const ResetPassword: React.FC = () => {
               loading={resetPasswordUserMutation.isPending}
               sx={{
                 background:
-                  "linear-gradient(to right, #6CC0F4, #8160D7, #F6A2A9)",
+                  "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
                 width: "100%",
                 p: 1,
                 borderRadius: "8px",

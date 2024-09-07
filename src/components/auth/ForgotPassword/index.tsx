@@ -94,12 +94,12 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({
                 helperText={formik.touched.email && formik.errors.email}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} mt={2}>
               <LoadingButton
                 loading={forgotPasswordUserMutation.isPending}
                 sx={{
                   background:
-                    "linear-gradient(to right, #6CC0F4, #8160D7, #F6A2A9)",
+                    "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
                   width: "100%",
                   p: 1,
                   borderRadius: "8px",

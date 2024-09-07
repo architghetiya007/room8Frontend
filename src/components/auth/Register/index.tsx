@@ -242,7 +242,7 @@ const Register: React.FC<RegisterProps> = ({
                 loading={registerUserMutation.isPending}
                 sx={{
                   background:
-                    "linear-gradient(to right, #6CC0F4, #8160D7, #F6A2A9)",
+                    "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
                   width: "100%",
                   p: 1,
                   borderRadius: "8px",
