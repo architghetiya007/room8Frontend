@@ -40,7 +40,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({
     onSubmit: (values) => {
       forgotPasswordUserMutation.mutate(values, {
         onSuccess: (data) => {
-          showSnackBar({ message: data?.message ?? apiMessages.USER.login });
+          showSnackBar({ message: data?.message ?? apiMessages.USER.forgotPassword });
           handleCloseForgotDialog();
         },
         onError: (error: Error) => {
@@ -109,7 +109,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({
                   fontWeight: "600",
                   fontSize: "24px",
                 }}
-                type="submit"
+                type="button"
                 onClick={() => formik.handleSubmit()}
               >
                 Forgot Password

@@ -252,7 +252,7 @@ const Register: React.FC<RegisterProps> = ({
                   fontWeight: "600",
                   fontSize: "24px",
                 }}
-                type="submit"
+                type="button"
                 onClick={() => formik.handleSubmit()}
               >
                 Create Account

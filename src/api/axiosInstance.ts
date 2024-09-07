@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Get the token from the local storage or any other secure location
+    // Get the token from the local storage
     const token = localStorage.getItem(AuthStorage.TOKEN);
 
     if (token) {

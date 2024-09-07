@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -18,15 +18,34 @@ import useNotification from "../../../hooks/useNotification";
 import { apiMessages } from "../../../utils/Comman/apiMessages";
 import DeleteAccount from "./DeleteAccount";
 import ChangePassword from "./ChangePassword";
+import ConfirmationDialog from "../../comman/ConfirmationDialog";
+import useUserMutations from "../../../mutations/user";
 const UserProfile: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { showSnackBar } = useNotification();
+  const { logoutUserMutation } = useUserMutations();
+  const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
 
   const logoutButton = () => {
-    dispatch(clearUserInfo());
-    navigate("/");
-    showSnackBar({ message: apiMessages.USER.logout });
+    logoutUserMutation.mutate(undefined, {
+      onSuccess: (data) => {
+        showSnackBar({ message: data!.message ?? apiMessages.USER.logout });
+        dispatch(clearUserInfo());
+        navigate("/");
+      },
+      onError: (error: Error) => {
+        showSnackBar({ message: error.message, variant: "error" });
+      },
+    });
   };
   return (
     <Box
@@ -118,7 +137,7 @@ const UserProfile: React.FC = () => {
                 color: "custom.white",
               }}
               onClick={() => {
-                logoutButton();
+                handleOpenDialog();
               }}
             >
               Logout
@@ -126,6 +145,18 @@ const UserProfile: React.FC = () => {
           </Box>
         </CardContent>
       </Card>
+      {isDialogOpen && (
+        <ConfirmationDialog
+          open={isDialogOpen}
+          title="Logout"
+          message="Are you sure you want to logout?"
+          onConfirm={() => logoutButton()}
+          onCancel={handleCloseDialog}
+          confirmText="Yes"
+          cancelText="No"
+          isLoading={logoutUserMutation.isPending}
+        />
+      )}
     </Box>
   );
 };

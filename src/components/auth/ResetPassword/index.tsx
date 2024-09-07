@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import useNotification from "../../../hooks/useNotification";
 import useUserMutations from "../../../mutations/user";
 import { useNavigate, useParams } from "react-router-dom";
+import { apiMessages } from "../../../utils/Comman/apiMessages";
 const validationSchema = Yup.object({
   newPassword: Yup.string()
     .min(8, "Password must be at least 8 characters")
@@ -34,7 +35,9 @@ const ResetPassword: React.FC = () => {
         { newPassword: values.newPassword, token: token ?? "" },
         {
           onSuccess: (data) => {
-            showSnackBar({ message: data!.message });
+            showSnackBar({
+              message: data!.message ?? apiMessages.USER.resetPassword,
+            });
             navigate("/");
           },
           onError: (error: Error) => {

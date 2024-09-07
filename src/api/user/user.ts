@@ -100,6 +100,15 @@ const deleteAccountAPI = async () => {
   }
 };
 
+const logoutAPI = async () => {
+  try {
+    const response = await axiosInstance.put<BaseResponse>(apiPaths.USER.logout);
+    return response.data;
+  } catch (error) {
+    getErrorMessage(error);
+  }
+};
+
 export {
   registerUserAPI,
   loginUserAPI,
@@ -109,4 +118,5 @@ export {
   changePasswordAPI,
   updateProfileAPI,
   deleteAccountAPI,
+  logoutAPI
 };

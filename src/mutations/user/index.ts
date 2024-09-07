@@ -5,6 +5,7 @@ import {
   forgotPasswordAPI,
   googleLoginAPI,
   loginUserAPI,
+  logoutAPI,
   registerUserAPI,
   resetPasswordAPI,
   updateProfileAPI,
@@ -43,6 +44,10 @@ const useUserMutations = () => {
     mutationFn: deleteAccountAPI,
   });
 
+  const logoutUserMutation = useMutation({
+    mutationFn: logoutAPI,
+  });
+
   return {
     registerUserMutation,
     loginUserMutation,
@@ -52,6 +57,7 @@ const useUserMutations = () => {
     changePasswordUserMutation,
     updateProfileUserMutation,
     deleteAccountUserMutation,
+    logoutUserMutation,
   };
 };
 

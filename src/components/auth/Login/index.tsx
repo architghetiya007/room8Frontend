@@ -215,7 +215,7 @@ const Login: React.FC<LoginProps> = ({
                   fontWeight: "600",
                   fontSize: "24px",
                 }}
-                type="submit"
+                type="button"
                 onClick={() => formik.handleSubmit()}
               >
                 Login

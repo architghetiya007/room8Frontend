@@ -8,5 +8,6 @@ export const apiPaths = {
     resetPassword: "/user/reset-password",
     updateProfile: "/user/update-profile",
     deleteAccount: "/user/delete-account",
+    logout: "/user/logout",
   },
 };
