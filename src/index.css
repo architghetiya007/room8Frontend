@@ -46,6 +46,7 @@
 
 /* For Firefox */
 * {
+  overflow-y: auto;
   scrollbar-width: thin; /* Thick scrollbar */
   scrollbar-color: #d749af #f0f0f0; /* Thumb color (solid fallback) and track color */
 }
