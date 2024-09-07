@@ -9,6 +9,7 @@ const ContactUs = lazy(() => import("../pages/ContactUs"));
 const LandlordQuiz = lazy(() => import("../pages/LanlordQuiz"));
 const SearchPage = lazy(() => import("../pages/SearchPage"));
 const ReserPasswordPage = lazy(() => import("../pages/ResetPasswordPage"));
+const UserProfilePage = lazy(() => import("../pages/UserProfilePage"));
 
 const routes: RouteObject[] = [
   {
@@ -57,6 +58,16 @@ const routes: RouteObject[] = [
       <SuspenseWrapper>
         <GuestLayout>
           <ContactUs />
+        </GuestLayout>
+      </SuspenseWrapper>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <SuspenseWrapper>
+        <GuestLayout>
+          <UserProfilePage />
         </GuestLayout>
       </SuspenseWrapper>
     ),
