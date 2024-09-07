@@ -119,6 +119,7 @@ const Register: React.FC<RegisterProps> = ({
           py: 1,
           height: "95vh", // Adjust the height here
           maxHeight: "95vh", // Optional: Set a maximum height
+          scrollbarWidth: "none",
         },
       }}
     >

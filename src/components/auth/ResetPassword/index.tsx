@@ -7,13 +7,6 @@ import useNotification from "../../../hooks/useNotification";
 import useUserMutations from "../../../mutations/user";
 import { useNavigate, useParams } from "react-router-dom";
 const validationSchema = Yup.object({
-  currentPassword: Yup.string()
-    .min(8, "Password must be at least 8 characters")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
-      "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number"
-    )
-    .required("Password is required"),
   newPassword: Yup.string()
     .min(8, "Password must be at least 8 characters")
     .matches(
@@ -32,7 +25,6 @@ const ResetPassword: React.FC = () => {
   const { resetPasswordUserMutation } = useUserMutations();
   const formik = useFormik({
     initialValues: {
-      currentPassword: "",
       newPassword: "",
       confirmPassword: "",
     },
@@ -76,32 +68,6 @@ const ResetPassword: React.FC = () => {
           Reset Password
         </Typography>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Typography>Password</Typography>
-            <TextField
-              variant="outlined"
-              placeholder="Enter Your Current Password"
-              sx={{
-                width: "100%",
-                "& .MuiInputBase-root": {
-                  borderRadius: "4px",
-                },
-              }}
-              id="currentPassword"
-              name="currentPassword"
-              type="password"
-              value={formik.values.currentPassword}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.currentPassword &&
-                Boolean(formik.errors.currentPassword)
-              }
-              helperText={
-                formik.touched.currentPassword && formik.errors.currentPassword
-              }
-            />
-          </Grid>
           <Grid item xs={12}>
             <Typography>New Password</Typography>
             <TextField

@@ -16,6 +16,8 @@ import { clearUserInfo } from "../../../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import useNotification from "../../../hooks/useNotification";
 import { apiMessages } from "../../../utils/Comman/apiMessages";
+import DeleteAccount from "./DeleteAccount";
+import ChangePassword from "./ChangePassword";
 const UserProfile: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -49,7 +51,9 @@ const UserProfile: React.FC = () => {
           {/* Accordion: Your Listings */}
           <Accordion elevation={0} sx={{ mb: 1 }}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>Your Listings</Typography>
+              <Typography variant="h6" fontWeight={"bold"}>
+                Your Listings
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
@@ -63,7 +67,9 @@ const UserProfile: React.FC = () => {
           {/* Accordion: Account Settings */}
           <Accordion elevation={0} sx={{ mb: 1 }}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>Account Settings</Typography>
+              <Typography variant="h6" fontWeight={"bold"}>
+                Account Settings
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
@@ -77,26 +83,24 @@ const UserProfile: React.FC = () => {
           {/* Accordion: Change Password */}
           <Accordion elevation={0} sx={{ mb: 1 }}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>Change Password</Typography>
+              <Typography variant="h6" fontWeight={"bold"}>
+                Change Password
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                {/* Add content for Change Password here */}
-                Change your account password to keep your account secure.
-              </Typography>
+              <ChangePassword />
             </AccordionDetails>
           </Accordion>
 
           {/* Accordion: Manage Account */}
           <Accordion elevation={0} sx={{ mb: 1 }}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>Manage Account</Typography>
+              <Typography variant="h6" fontWeight={"bold"}>
+                Manage Account
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                {/* Add content for Manage Account here */}
-                Deactivate or delete your account, or transfer your data.
-              </Typography>
+              <DeleteAccount />
             </AccordionDetails>
           </Accordion>
           <Box display="flex" justifyContent="center" mt={2} mb={2}>
