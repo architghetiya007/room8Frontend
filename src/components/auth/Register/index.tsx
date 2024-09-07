@@ -20,6 +20,9 @@ import { useGoogleLogin } from "@react-oauth/google";
 import useUserMutations from "../../../mutations/user";
 import useNotification from "../../../hooks/useNotification";
 import { storeTokenDetails } from "../../../utils/Comman/auth";
+import { AuthStorageDTO } from "../../../types/comman/Auth";
+import { useAppDispatch } from "../../../store";
+import { setUserInfo } from "../../../store/slices/userSlice";
 const validationSchema = Yup.object({
   fullName: Yup.string().required("Name is required"),
   email: Yup.string()
@@ -45,6 +48,7 @@ const Register: React.FC<RegisterProps> = ({
   handleForgotDialog,
   handleLoginDialog,
 }) => {
+  const dispatch = useAppDispatch();
   const { showSnackBar } = useNotification();
   const { registerUserMutation, googleLoginUserMutation } = useUserMutations();
   const formik = useFormik({
@@ -59,11 +63,13 @@ const Register: React.FC<RegisterProps> = ({
       registerUserMutation.mutate(values, {
         onSuccess: (data) => {
           showSnackBar({ message: data!.message });
-          storeTokenDetails({
+          let user: AuthStorageDTO = {
             token: data!.data.token,
             refreshToken: data!.data.user.refreshToken,
             user: data!.data.user,
-          });
+          };
+          storeTokenDetails(user);
+          dispatch(setUserInfo(user));
           handleCloseRegisterDialog();
         },
         onError: (error: Error) => {
@@ -81,11 +87,13 @@ const Register: React.FC<RegisterProps> = ({
         {
           onSuccess: (data) => {
             showSnackBar({ message: data!.message });
-            storeTokenDetails({
+            let user: AuthStorageDTO = {
               token: data!.data.token,
               refreshToken: data!.data.user.refreshToken,
               user: data!.data.user,
-            });
+            };
+            storeTokenDetails(user);
+            dispatch(setUserInfo(user));
             handleCloseRegisterDialog();
           },
           onError: (error: Error) => {
@@ -106,7 +114,7 @@ const Register: React.FC<RegisterProps> = ({
         sx: {
           borderRadius: 8, // Adjust border radius here
           px: {
-            md: 6
+            md: 6,
           }, // Padding inside the dialog
           py: 1,
           height: "95vh", // Adjust the height here

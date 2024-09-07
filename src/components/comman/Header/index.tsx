@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import EastIcon from "@mui/icons-material/East";
 import { HeaderMenus } from "../../../utils/Header";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Login from "../../auth/Login";
 import Register from "../../auth/Register";
 import ForgotPassword from "../../auth/ForgotPassword";
@@ -22,6 +22,7 @@ const Header: React.FC = () => {
   const [openRegisterDialog, setOpenRegisterDialog] = useState<boolean>(false);
   const [openForgotDialog, setOpenForgotDialog] = useState<boolean>(false);
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const handleLoginDialog = (openDialog: boolean) => {
     setOpenLoginDialog(openDialog);
@@ -79,7 +80,12 @@ const Header: React.FC = () => {
             })}
           </Box>
           {userSlice.user ? (
-            <Box display={"flex"} alignItems={"center"}>
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              sx={{ cursor: "pointer" }}
+              onClick={() => navigate("/profile")}
+            >
               <Typography sx={{ mr: 2 }}>{userSlice.user.fullName}</Typography>
               {userSlice.user.profilePic ? (
                 <Avatar src={userSlice.user.profilePic}></Avatar>

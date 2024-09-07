@@ -86,11 +86,13 @@ const Login: React.FC<LoginProps> = ({
         {
           onSuccess: (data) => {
             showSnackBar({ message: data!.message });
-            storeTokenDetails({
+            let user: AuthStorageDTO = {
               token: data!.data.token,
               refreshToken: data!.data.user.refreshToken,
               user: data!.data.user,
-            });
+            };
+            storeTokenDetails(user);
+            dispatch(setUserInfo(user));
             handleCloseLoginDialog();
           },
           onError: (error: Error) => {

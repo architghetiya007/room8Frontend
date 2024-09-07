@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserSlice } from "../../types/slices/userState";
-import { AuthStorage, getUserFromStorage } from "../../utils/Comman/auth";
+import {
+  AuthStorage,
+  getUserFromStorage,
+  removeTokenDetails,
+} from "../../utils/Comman/auth";
 import { AuthStorageDTO } from "../../types/comman/Auth";
 const initialState: UserSlice = {
   token: localStorage.getItem(AuthStorage.TOKEN) ?? "",
@@ -17,6 +21,7 @@ const userSlice = createSlice({
       state.user = action.payload.user;
     },
     clearUserInfo: (state) => {
+      removeTokenDetails();
       state.refreshToken = "";
       state.token = "";
       state.user = null;

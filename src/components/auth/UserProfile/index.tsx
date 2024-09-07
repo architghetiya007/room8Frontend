@@ -11,7 +11,17 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LogoutIcon from "@mui/icons-material/Logout"; // Import the Logout icon
+import { useAppDispatch } from "../../../store";
+import { clearUserInfo } from "../../../store/slices/userSlice";
+import { useNavigate } from "react-router-dom";
 const UserProfile: React.FC = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const logoutButton = () => {
+    dispatch(clearUserInfo());
+    navigate("/");
+  };
   return (
     <Box
       display="flex"
@@ -100,8 +110,7 @@ const UserProfile: React.FC = () => {
                 color: "custom.white",
               }}
               onClick={() => {
-                // Add your logout logic here
-                console.log("Logout button clicked");
+                logoutButton();
               }}
             >
               Logout
