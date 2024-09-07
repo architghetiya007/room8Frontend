@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserSlice } from "../../types/slices/userState";
 import { AuthStorage, getUserFromStorage } from "../../utils/Comman/auth";
-import { LoginResponseDTO } from "../../types/user";
 import { AuthStorageDTO } from "../../types/comman/Auth";
 const initialState: UserSlice = {
   token: localStorage.getItem(AuthStorage.TOKEN) ?? "",
