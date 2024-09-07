@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Container,
@@ -77,33 +78,44 @@ const Header: React.FC = () => {
               );
             })}
           </Box>
-          <Box>
-            <Button
-              sx={{
-                color: theme.palette.custom.blackDark,
-                fontWeight: "bold",
-                marginRight: 2,
-              }}
-              type="button"
-              onClick={() => setOpenLoginDialog(true)}
-            >
-              Login
-            </Button>
-            <Button
-              variant="outlined"
-              sx={{
-                borderRadius: "20px",
-                color: theme.palette.custom.blackDark,
-                borderColor: theme.palette.custom.blackDark,
-                fontWeight: "bold",
-              }}
-              endIcon={<EastIcon />}
-              type="button"
-              onClick={() => setOpenRegisterDialog(true)}
-            >
-              Signup
-            </Button>
-          </Box>
+          {userSlice.user ? (
+            <Box display={"flex"} alignItems={"center"}>
+              <Typography sx={{ mr: 2 }}>{userSlice.user.fullName}</Typography>
+              {userSlice.user.profilePic ? (
+                <Avatar src={userSlice.user.profilePic}></Avatar>
+              ) : (
+                <Avatar>{userSlice.user.fullName.charAt(0)}</Avatar>
+              )}
+            </Box>
+          ) : (
+            <Box>
+              <Button
+                sx={{
+                  color: theme.palette.custom.blackDark,
+                  fontWeight: "bold",
+                  marginRight: 2,
+                }}
+                type="button"
+                onClick={() => setOpenLoginDialog(true)}
+              >
+                Login
+              </Button>
+              <Button
+                variant="outlined"
+                sx={{
+                  borderRadius: "20px",
+                  color: theme.palette.custom.blackDark,
+                  borderColor: theme.palette.custom.blackDark,
+                  fontWeight: "bold",
+                }}
+                endIcon={<EastIcon />}
+                type="button"
+                onClick={() => setOpenRegisterDialog(true)}
+              >
+                Signup
+              </Button>
+            </Box>
+          )}
         </Box>
       </Container>
       {openLoginDialog && (
