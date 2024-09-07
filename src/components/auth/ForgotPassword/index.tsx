@@ -109,7 +109,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({
                   fontWeight: "600",
                   fontSize: "24px",
                 }}
-                type="button"
+                type="submit"
                 onClick={() => formik.handleSubmit()}
               >
                 Forgot Password
@@ -124,15 +124,20 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({
                 }}
               >
                 <Typography variant="body2" color="text.secondary">
-                  Already have an account?
+                  Already have an account?{" "}
                   <Button
-                    sx={{ textTransform: "none" }}
+                    sx={{
+                      textTransform: "none",
+                      color: "custom.darkRed",
+                      fontWeight: "600",
+                      p: 0,
+                      minWidth: "unset",
+                    }}
                     type="button"
                     onClick={() => {
                       handleCloseForgotDialog();
                       handleLoginDialog(true);
                     }}
-                    color="primary"
                   >
                     Login
                   </Button>

@@ -15,6 +15,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
       loading={isLoading}
       variant="contained"
       color="primary"
+      type="button"
       onClick={() => googleLoginClick()}
       sx={{
         display: "flex",

@@ -185,13 +185,16 @@ const Login: React.FC<LoginProps> = ({
                   label="Keep me signed in"
                 />
                 <Button
-                  sx={{ textTransform: "none" }}
+                  sx={{
+                    textTransform: "none",
+                    color: "custom.darkRed",
+                    fontWeight: "600",
+                  }}
                   type="button"
                   onClick={() => {
                     handleCloseLoginDialog();
                     handleForgotDialog(true);
                   }}
-                  color="primary"
                 >
                   Forgot Password?
                 </Button>
@@ -212,7 +215,7 @@ const Login: React.FC<LoginProps> = ({
                   fontWeight: "600",
                   fontSize: "24px",
                 }}
-                type="button"
+                type="submit"
                 onClick={() => formik.handleSubmit()}
               >
                 Login
@@ -262,13 +265,18 @@ const Login: React.FC<LoginProps> = ({
                 <Typography variant="body2" color="text.secondary">
                   Don't have an account?{" "}
                   <Button
-                    sx={{ textTransform: "none" }}
+                    sx={{
+                      textTransform: "none",
+                      color: "custom.darkRed",
+                      fontWeight: "600",
+                      p: 0,
+                      minWidth: "unset",
+                    }}
                     type="button"
                     onClick={() => {
                       handleCloseLoginDialog();
                       handleRegisterDialog(true);
                     }}
-                    color="primary"
                   >
                     Sign up
                   </Button>

@@ -215,13 +215,16 @@ const Register: React.FC<RegisterProps> = ({
                   label="Keep me signed in"
                 />
                 <Button
-                  sx={{ textTransform: "none" }}
+                  sx={{
+                    textTransform: "none",
+                    color: "custom.darkRed",
+                    fontWeight: "600",
+                  }}
                   type="button"
                   onClick={() => {
                     handleCloseRegisterDialog();
                     handleForgotDialog(true);
                   }}
-                  color="primary"
                 >
                   Forgot Password?
                 </Button>
@@ -248,7 +251,7 @@ const Register: React.FC<RegisterProps> = ({
                   fontWeight: "600",
                   fontSize: "24px",
                 }}
-                type="button"
+                type="submit"
                 onClick={() => formik.handleSubmit()}
               >
                 Create Account
@@ -266,7 +269,13 @@ const Register: React.FC<RegisterProps> = ({
                 <Typography variant="body2" color="text.secondary">
                   Already have an account?{" "}
                   <Button
-                    sx={{ textTransform: "none", p: 0 }}
+                    sx={{
+                      textTransform: "none",
+                      color: "custom.darkRed",
+                      fontWeight: "600",
+                      p: 0,
+                      minWidth: "unset",
+                    }}
                     type="button"
                     onClick={() => {
                       handleCloseRegisterDialog();
