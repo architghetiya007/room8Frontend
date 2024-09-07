@@ -1,7 +1,7 @@
 import React from "react";
 import { LoadingButton } from "@mui/lab";
 import { Typography } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google"; // You can use any icon for Google
+import GoogleIcon from "../../icons/GoogleIcon";
 interface GoogleLoginButtonProps {
   isLoading: boolean;
   googleLoginClick: Function;
@@ -35,7 +35,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     >
       {!isLoading && (
         <>
-          <GoogleIcon sx={{ mr: 1 }} /> {/* Google Icon */}
+          <GoogleIcon /> {/* Google Icon */}
           <Typography variant="button" sx={{ color: "black" }}>
             Continue with Google
           </Typography>
