@@ -2,6 +2,7 @@ import { RouteObject, useRoutes } from "react-router-dom";
 import React, { lazy } from "react";
 import SuspenseWrapper from "../components/Layout/SuspenseWrapper";
 import GuestLayout from "../components/Layout/GuestLayout";
+import ProtectedRoute from "../guard/ProtectedRoute";
 // Lazy load your page components
 const HomePage = lazy(() => import("../pages/HomePage"));
 const AboutUs = lazy(() => import("../pages/AboutUs"));
@@ -64,13 +65,19 @@ const routes: RouteObject[] = [
   },
   {
     path: "/profile",
-    element: (
-      <SuspenseWrapper>
-        <GuestLayout>
-          <UserProfilePage />
-        </GuestLayout>
-      </SuspenseWrapper>
-    ),
+    element: <ProtectedRoute />, // Protect this route
+    children: [
+      {
+        path: "",
+        element: (
+          <SuspenseWrapper>
+            <GuestLayout>
+              <UserProfilePage />
+            </GuestLayout>
+          </SuspenseWrapper>
+        ),
+      },
+    ],
   },
   {
     path: "/reset-password/:token",
