@@ -74,6 +74,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
             letterSpacing: "1px",
             fontWeight: "600",
             fontSize: "18px",
+            minWidth: '100px'
           }}
         >
           {confirmText}
