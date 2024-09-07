@@ -82,11 +82,19 @@ const routes: RouteObject[] = [
   },
   {
     path: "/reset-password/:token",
-    element: <ReserPasswordPage />,
+    element: (
+      <SuspenseWrapper>
+        <ReserPasswordPage />
+      </SuspenseWrapper>
+    ),
   },
   {
     path: "*",
-    element: <NotFoundPage />,
+    element: (
+      <SuspenseWrapper>
+        <NotFoundPage />
+      </SuspenseWrapper>
+    ),
   },
 ];
 
