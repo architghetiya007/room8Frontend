@@ -42,10 +42,20 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
             md: 2,
           }, // Padding inside the dialog
           py: 1,
+          scrollbarWidth: "none",
+          m: {
+            xs: 0,
+          },
         },
       }}
     >
-      <DialogTitle id="confirmation-dialog-title">{title}</DialogTitle>
+      <DialogTitle
+        variant="h5"
+        fontWeight={"bold"}
+        id="confirmation-dialog-title"
+      >
+        {title}
+      </DialogTitle>
       <DialogContent>
         <Typography id="confirmation-dialog-description">{message}</Typography>
       </DialogContent>
@@ -74,7 +84,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
             letterSpacing: "1px",
             fontWeight: "600",
             fontSize: "18px",
-            minWidth: '100px'
+            minWidth: "100px",
           }}
         >
           {confirmText}
