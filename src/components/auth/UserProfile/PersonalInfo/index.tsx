@@ -86,7 +86,7 @@ const PersonalInfo: React.FC = () => {
             gap={2}
           >
             <Avatar
-              alt="Profile Image"
+              alt={userSlice.user?.fullName ?? "Profile Image"}
               src={preview ? preview : userSlice.user?.profilePic ?? ""}
               sx={{ width: 120, height: 120, mb: 1 }} // Style for Avatar
             />
