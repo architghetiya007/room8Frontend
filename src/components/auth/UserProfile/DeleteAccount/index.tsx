@@ -72,7 +72,7 @@ const DeleteAccount: React.FC = () => {
       {isDialogOpen && (
         <ConfirmationDialog
           open={isDialogOpen}
-          title="Delete Item"
+          title="Delete"
           message="Are you sure you want to delete your account?"
           onConfirm={() => deleteAccount()}
           onCancel={handleCloseDialog}

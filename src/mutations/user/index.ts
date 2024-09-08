@@ -9,6 +9,7 @@ import {
   registerUserAPI,
   resetPasswordAPI,
   updateProfileAPI,
+  uploadImageAPI,
 } from "../../api/user/user";
 
 const useUserMutations = () => {
@@ -48,6 +49,10 @@ const useUserMutations = () => {
     mutationFn: logoutAPI,
   });
 
+  const uploadImageMutation = useMutation({
+    mutationFn: uploadImageAPI,
+  });
+
   return {
     registerUserMutation,
     loginUserMutation,
@@ -58,6 +63,7 @@ const useUserMutations = () => {
     updateProfileUserMutation,
     deleteAccountUserMutation,
     logoutUserMutation,
+    uploadImageMutation,
   };
 };
 

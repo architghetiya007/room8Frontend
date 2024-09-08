@@ -3,11 +3,13 @@ import {
   ChangePasswordRequestDTO,
   ForgotPasswordRequestDTO,
   GoogleLoginRequestDTO,
+  ImageUploadResponseDTO,
   LoginRequestDTO,
   LoginResponseDTO,
   RegisterRequestDTO,
   ResetPasswordRequestDTO,
   UpdateProfileRequestDTO,
+  UpdateProfileResponseDTO,
 } from "../../types/user";
 import { apiPaths } from "../../utils/Comman/apiPaths";
 import { getErrorMessage } from "../../utils/Comman/errorHandler";
@@ -75,7 +77,10 @@ const resetPasswordAPI = async (data: ResetPasswordRequestDTO) => {
 
 const changePasswordAPI = async (data: ChangePasswordRequestDTO) => {
   try {
-    const response = await axiosInstance.put(apiPaths.USER.changePassword, data);
+    const response = await axiosInstance.put(
+      apiPaths.USER.changePassword,
+      data
+    );
     return response.data;
   } catch (error) {
     getErrorMessage(error);
@@ -84,7 +89,10 @@ const changePasswordAPI = async (data: ChangePasswordRequestDTO) => {
 
 const updateProfileAPI = async (data: UpdateProfileRequestDTO) => {
   try {
-    const response = await axiosInstance.put(apiPaths.USER.updateProfile, data);
+    const response = await axiosInstance.put<UpdateProfileResponseDTO>(
+      apiPaths.USER.updateProfile,
+      data
+    );
     return response.data;
   } catch (error) {
     getErrorMessage(error);
@@ -93,7 +101,9 @@ const updateProfileAPI = async (data: UpdateProfileRequestDTO) => {
 
 const deleteAccountAPI = async () => {
   try {
-    const response = await axiosInstance.put<BaseResponse>(apiPaths.USER.deleteAccount);
+    const response = await axiosInstance.put<BaseResponse>(
+      apiPaths.USER.deleteAccount
+    );
     return response.data;
   } catch (error) {
     getErrorMessage(error);
@@ -102,7 +112,21 @@ const deleteAccountAPI = async () => {
 
 const logoutAPI = async () => {
   try {
-    const response = await axiosInstance.put<BaseResponse>(apiPaths.USER.logout);
+    const response = await axiosInstance.put<BaseResponse>(
+      apiPaths.USER.logout
+    );
+    return response.data;
+  } catch (error) {
+    getErrorMessage(error);
+  }
+};
+
+const uploadImageAPI = async (data: FormData) => {
+  try {
+    const response = await axiosInstance.post<ImageUploadResponseDTO>(
+      apiPaths.USER.imageUpload,
+      data
+    );
     return response.data;
   } catch (error) {
     getErrorMessage(error);
@@ -118,5 +142,6 @@ export {
   changePasswordAPI,
   updateProfileAPI,
   deleteAccountAPI,
-  logoutAPI
+  logoutAPI,
+  uploadImageAPI,
 };

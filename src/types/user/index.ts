@@ -30,10 +30,9 @@ export interface ChangePasswordRequestDTO {
 }
 
 export interface UpdateProfileRequestDTO {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  profilePic: string;
+  fullName: string;
+  phoneNumber?: string;
+  profilePic?: string;
 }
 
 export interface UserResponseDTO {
@@ -54,4 +53,12 @@ export interface LoginResponseDTO extends BaseResponse {
     token: string;
     user: UserResponseDTO;
   };
+}
+
+export interface ImageUploadResponseDTO extends BaseResponse {
+  data: string[];
+}
+
+export interface UpdateProfileResponseDTO extends BaseResponse {
+  data: UserResponseDTO;
 }

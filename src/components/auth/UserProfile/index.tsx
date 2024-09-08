@@ -20,6 +20,7 @@ import DeleteAccount from "./DeleteAccount";
 import ChangePassword from "./ChangePassword";
 import ConfirmationDialog from "../../comman/ConfirmationDialog";
 import useUserMutations from "../../../mutations/user";
+import PersonalInfo from "./PersonalInfo";
 const UserProfile: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -91,11 +92,7 @@ const UserProfile: React.FC = () => {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                {/* Add content for Account Settings here */}
-                Update your personal information, email, and notification
-                preferences.
-              </Typography>
+              <PersonalInfo />
             </AccordionDetails>
           </Accordion>
 

@@ -9,5 +9,6 @@ export const apiPaths = {
     updateProfile: "/user/update-profile",
     deleteAccount: "/user/delete-account",
     logout: "/user/logout",
+    imageUpload: "/user/image-upload",
   },
 };
