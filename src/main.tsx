@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/index.ts";
 import App from "./App.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import "./i18n.ts"; // Import the i18n configuration
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(

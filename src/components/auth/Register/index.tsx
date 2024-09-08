@@ -23,6 +23,7 @@ import { AuthStorageDTO } from "../../../types/comman/Auth";
 import { useAppDispatch } from "../../../store";
 import { setUserInfo } from "../../../store/slices/userSlice";
 import GoogleLoginButton from "../../comman/GoogleLoginButton";
+import useCommonTranslation from "../../../hooks/useCommonTranslation";
 const validationSchema = Yup.object({
   fullName: Yup.string().required("Name is required"),
   email: Yup.string()
@@ -48,6 +49,7 @@ const Register: React.FC<RegisterProps> = ({
   handleForgotDialog,
   handleLoginDialog,
 }) => {
+  const { t }= useCommonTranslation();
   const dispatch = useAppDispatch();
   const { showSnackBar } = useNotification();
   const { registerUserMutation, googleLoginUserMutation } = useUserMutations();
@@ -132,7 +134,7 @@ const Register: React.FC<RegisterProps> = ({
       <Box component={"form"} onSubmit={formik.handleSubmit}>
         <DialogTitle component={"div"} align="left">
           <Typography variant="h5" fontWeight={"bold"}>
-            Register
+            {t('REGISTER_TITLE')}
           </Typography>
           <Typography variant="subtitle2" fontWeight={"400"}>
             ...and start a new chapter in a place you’ll love!
