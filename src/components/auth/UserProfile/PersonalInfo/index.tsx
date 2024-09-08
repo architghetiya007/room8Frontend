@@ -99,11 +99,13 @@ const PersonalInfo: React.FC = () => {
             />
             <Button
               sx={{
-                backgroundColor: "#D749AF",
+                background:
+                  "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
                 color: "custom.white",
                 borderRadius: "8px",
                 textTransform: "none",
                 letterSpacing: "1px",
+                fontWeight: "600",
                 fontSize: "16px",
               }}
               type="button"
@@ -167,7 +169,7 @@ const PersonalInfo: React.FC = () => {
               pl: 2,
               pr: 2,
               borderRadius: "8px",
-              color: "white",
+              color: "custom.white",
               textTransform: "none",
               letterSpacing: "1px",
               fontWeight: "600",
