@@ -49,7 +49,7 @@ const Register: React.FC<RegisterProps> = ({
   handleForgotDialog,
   handleLoginDialog,
 }) => {
-  const { t }= useCommonTranslation();
+  const { t } = useCommonTranslation();
   const dispatch = useAppDispatch();
   const { showSnackBar } = useNotification();
   const { registerUserMutation, googleLoginUserMutation } = useUserMutations();
@@ -134,7 +134,7 @@ const Register: React.FC<RegisterProps> = ({
       <Box component={"form"} onSubmit={formik.handleSubmit}>
         <DialogTitle component={"div"} align="left">
           <Typography variant="h5" fontWeight={"bold"}>
-            {t('REGISTER_TITLE')}
+            {t("REGISTER_TITLE")}
           </Typography>
           <Typography variant="subtitle2" fontWeight={"400"}>
             ...and start a new chapter in a place you’ll love!
