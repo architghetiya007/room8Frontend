@@ -1,7 +1,7 @@
 import "react-i18next";
 
 // Import the type of your translation JSON files
-import enTranslation from "../locales/en/translation.json"; // Adjust the path
+import enTranslation from "./locales/en/translation.json"; // Adjust the path
 
 // Define the type for your resources
 type DefaultNamespace = typeof enTranslation;
