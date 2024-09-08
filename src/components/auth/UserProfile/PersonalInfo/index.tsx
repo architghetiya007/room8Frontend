@@ -137,6 +137,25 @@ const PersonalInfo: React.FC = () => {
           />
         </Grid>
         <Grid item xs={12}>
+          <Typography>Email</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            disabled
+            variant="outlined"
+            placeholder="Enter Your Email"
+            sx={{
+              width: "100%", // Adjust width as needed
+              "& .MuiInputBase-root": {
+                borderRadius: "4px", // Adjust border radius as needed
+              },
+            }}
+            id="email"
+            name="email"
+            value={userSlice.user?.email}
+          />
+        </Grid>
+        <Grid item xs={12}>
           <LoadingButton
             loading={
               uploadImageMutation.isPending ??
