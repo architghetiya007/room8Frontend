@@ -35,6 +35,10 @@ export interface UpdateProfileRequestDTO {
   profilePic?: string;
 }
 
+export interface RefreshTokenRequestDTO {
+  refreshToken: string;
+}
+
 export interface UserResponseDTO {
   email: string;
   fullName: string;
