@@ -40,7 +40,9 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({
     onSubmit: (values) => {
       forgotPasswordUserMutation.mutate(values, {
         onSuccess: (data) => {
-          showSnackBar({ message: data?.message ?? apiMessages.USER.forgotPassword });
+          showSnackBar({
+            message: data?.message ?? apiMessages.USER.forgotPassword,
+          });
           handleCloseForgotDialog();
         },
         onError: (error: Error) => {
@@ -61,14 +63,19 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({
             md: 6,
           }, // Padding inside the dialog
           py: 1,
+          scrollbarWidth: "none",
+          m: {
+            xs: 0,
+          },
+          width: {
+            xs: "100%",
+          },
         },
       }}
     >
       <Box component={"form"} onSubmit={formik.handleSubmit}>
-        <DialogTitle align="center">
-          <Typography variant="h5" fontWeight={"bold"}>
-            Forgot Password
-          </Typography>
+        <DialogTitle align="center" variant="h5" fontWeight={"bold"}>
+          Forgot Password
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={1}>

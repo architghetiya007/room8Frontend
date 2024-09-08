@@ -120,11 +120,17 @@ const Register: React.FC<RegisterProps> = ({
           height: "95vh", // Adjust the height here
           maxHeight: "95vh", // Optional: Set a maximum height
           scrollbarWidth: "none",
+          m: {
+            xs: 0,
+          },
+          width: {
+            xs: "100%",
+          },
         },
       }}
     >
       <Box component={"form"} onSubmit={formik.handleSubmit}>
-        <DialogTitle align="left">
+        <DialogTitle component={"div"} align="left">
           <Typography variant="h5" fontWeight={"bold"}>
             Register
           </Typography>

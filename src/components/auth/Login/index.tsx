@@ -116,14 +116,19 @@ const Login: React.FC<LoginProps> = ({
             md: 6,
           }, // Padding inside the dialog
           py: 1,
+          scrollbarWidth: "none",
+          m: {
+            xs: 0,
+          },
+          width: {
+            xs: "100%",
+          },
         },
       }}
     >
       <Box component={"form"} onSubmit={formik.handleSubmit}>
-        <DialogTitle align="center">
-          <Typography variant="h5" fontWeight={"bold"}>
-            Login
-          </Typography>
+        <DialogTitle variant="h5" align="center" fontWeight={"bold"}>
+          Login
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={1}>
