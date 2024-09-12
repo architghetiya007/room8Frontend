@@ -11,5 +11,7 @@ export const apiPaths = {
     logout: "/user/logout",
     imageUpload: "/user/image-upload",
     refreshToken: "/user/reset-password",
+    sendOtp: "/user/send-otp",
+    verifyOtp: "/user/verify-otp",
   },
 };

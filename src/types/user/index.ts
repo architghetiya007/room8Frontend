@@ -39,6 +39,14 @@ export interface RefreshTokenRequestDTO {
   refreshToken: string;
 }
 
+export interface SendOtpRequestDTO {
+  phoneNo: string;
+}
+
+export interface VerifyOtpRequestDTO {
+  OTP: string;
+}
+
 export interface UserResponseDTO {
   email: string;
   fullName: string;
@@ -66,3 +74,9 @@ export interface ImageUploadResponseDTO extends BaseResponse {
 export interface UpdateProfileResponseDTO extends BaseResponse {
   data: UserResponseDTO;
 }
+
+export interface verifyOtpResponseDTO extends BaseResponse {
+  data: UserResponseDTO;
+
+}
+

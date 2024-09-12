@@ -69,7 +69,7 @@ const Login: React.FC<LoginProps> = ({
           };
           storeTokenDetails(user);
           dispatch(setUserInfo(user));
-          handleCloseLoginDialog();
+          handleCloseLoginDialog(!data!.data.user.isPhoneVerify ? 'Phone' :'');
         },
         onError: (error: Error) => {
           showSnackBar({ message: error.message, variant: "error" });
@@ -93,7 +93,7 @@ const Login: React.FC<LoginProps> = ({
             };
             storeTokenDetails(user);
             dispatch(setUserInfo(user));
-            handleCloseLoginDialog();
+            handleCloseLoginDialog(!data!.data.user.isPhoneVerify ? 'Phone' :'');
           },
           onError: (error: Error) => {
             showSnackBar({ message: error.message, variant: "error" });

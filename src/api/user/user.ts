@@ -8,8 +8,11 @@ import {
   LoginResponseDTO,
   RegisterRequestDTO,
   ResetPasswordRequestDTO,
+  SendOtpRequestDTO,
   UpdateProfileRequestDTO,
   UpdateProfileResponseDTO,
+  VerifyOtpRequestDTO,
+  verifyOtpResponseDTO,
 } from "../../types/user";
 import { apiPaths } from "../../utils/Comman/apiPaths";
 import { getErrorMessage } from "../../utils/Comman/errorHandler";
@@ -133,6 +136,30 @@ const uploadImageAPI = async (data: FormData) => {
   }
 };
 
+const sendOtpAPI = async (data: SendOtpRequestDTO) => {
+  try {
+    const response = await axiosInstance.put<BaseResponse>(
+      apiPaths.USER.sendOtp,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    getErrorMessage(error);
+  }
+};
+
+const verifyOtpAPI = async (data: VerifyOtpRequestDTO) => {
+  try {
+    const response = await axiosInstance.put<verifyOtpResponseDTO>(
+      apiPaths.USER.verifyOtp,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    getErrorMessage(error);
+  }
+};
+
 export {
   registerUserAPI,
   loginUserAPI,
@@ -144,4 +171,6 @@ export {
   deleteAccountAPI,
   logoutAPI,
   uploadImageAPI,
+  sendOtpAPI, 
+  verifyOtpAPI
 };

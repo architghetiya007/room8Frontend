@@ -72,7 +72,7 @@ const Register: React.FC<RegisterProps> = ({
           };
           storeTokenDetails(user);
           dispatch(setUserInfo(user));
-          handleCloseRegisterDialog();
+          handleCloseRegisterDialog(!data!.data.user.isPhoneVerify ? 'Phone' :'');
         },
         onError: (error: Error) => {
           showSnackBar({ message: error.message, variant: "error" });
@@ -96,7 +96,7 @@ const Register: React.FC<RegisterProps> = ({
             };
             storeTokenDetails(user);
             dispatch(setUserInfo(user));
-            handleCloseRegisterDialog();
+            handleCloseRegisterDialog(!data!.data.user.isPhoneVerify ? 'Phone' :'');
           },
           onError: (error: Error) => {
             showSnackBar({ message: error.message, variant: "error" });

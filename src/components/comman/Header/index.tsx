@@ -16,11 +16,13 @@ import Register from "../../auth/Register";
 import ForgotPassword from "../../auth/ForgotPassword";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
+import PhoneNumberDialog from "../../auth/PhoneNumberDialog";
 const Header: React.FC = () => {
   const userSlice = useSelector((state: RootState) => state.user);
   const [openLoginDialog, setOpenLoginDialog] = useState<boolean>(false);
   const [openRegisterDialog, setOpenRegisterDialog] = useState<boolean>(false);
   const [openForgotDialog, setOpenForgotDialog] = useState<boolean>(false);
+  const [phoneNumberDialog, setPhoneNumberDialog] = useState<boolean>(false);
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -30,11 +32,31 @@ const Header: React.FC = () => {
 
   const handleRegisterDialog = (openDialog: boolean) => {
     setOpenRegisterDialog(openDialog);
+    // setPhoneNumberDialog(openDialog);
   };
 
   const handleForgotDialog = (openDialog: boolean) => {
     setOpenForgotDialog(openDialog);
   };
+
+  const handleClosePhoneNumberDialog = (open: boolean) => {
+    setPhoneNumberDialog(open);
+  };
+
+  const handleCloseLoginDialog = (val: string) => {
+    setOpenLoginDialog(false);
+    if (val) {
+      setPhoneNumberDialog(true);
+    }
+  };
+
+  const handleCloseRegisterDialog = (val: string) => {
+    setOpenRegisterDialog(false);
+    if (val) {
+      setPhoneNumberDialog(true);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -127,7 +149,7 @@ const Header: React.FC = () => {
       {openLoginDialog && (
         <Login
           openDialog={openLoginDialog}
-          handleCloseLoginDialog={() => setOpenLoginDialog(false)}
+          handleCloseLoginDialog={handleCloseLoginDialog}
           handleRegisterDialog={handleRegisterDialog}
           handleForgotDialog={handleForgotDialog}
         />
@@ -135,7 +157,7 @@ const Header: React.FC = () => {
       {openRegisterDialog && (
         <Register
           openDialog={openRegisterDialog}
-          handleCloseRegisterDialog={() => setOpenRegisterDialog(false)}
+          handleCloseRegisterDialog={handleCloseRegisterDialog}
           handleForgotDialog={handleForgotDialog}
           handleLoginDialog={handleLoginDialog}
         />
@@ -145,6 +167,12 @@ const Header: React.FC = () => {
           openDialog={openForgotDialog}
           handleCloseForgotDialog={() => setOpenForgotDialog(false)}
           handleLoginDialog={handleLoginDialog}
+        />
+      )}
+      {phoneNumberDialog && (
+        <PhoneNumberDialog
+          openDialog={phoneNumberDialog}
+          handleClosePhoneNumberDialog={handleClosePhoneNumberDialog}
         />
       )}
     </Box>
