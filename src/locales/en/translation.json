@@ -1,5 +1,9 @@
 {
   "REGISTER_TITLE": "Register",
+  "BACK_BUTTON_TEXT": "Back",
+  "PREVIEW_BUTTON_TEXT": "Preview",
+  "NEXT_BUTTON_TEXT": "Next",
+  "CANCEL_BUTTON_TEXT": "Cancel",
   "accommodation": {
     "ENTIREROOM": "ENTIRE ROOM",
     "SHAREDROOM": "SHARED ROOM",
@@ -61,20 +65,74 @@
   },
   "gender": {
     "MALE": "Man",
-    "FEMALE":"Woman"
+    "FEMALE": "Woman"
   },
-  "parking": {
-
-  },
-  "kitchen" : {
+  "parking": {},
+  "kitchen": {
     "SEPERATE": "SEPERATE",
-    "KICHENETTE" :"KICHENETTE",
-    "NO_PREFERENCE" :"NO PREFERENCES"
+    "KICHENETTE": "KICHENETTE",
+    "NO_PREFERENCE": "NO PREFERENCES"
   },
-  "maximumNumberOfpeople" : {
-    "NO_PREFERENCE" :"NO PREFERENCES",
-    "01" : "01",
-    "02" : "02",
-    "03" : "03+"
+  "maximumNumberOfpeople": {
+    "NO_PREFERENCE": "NO PREFERENCES",
+    "01": "01",
+    "02": "02",
+    "03": "03+"
+  },
+  "hunterStep1Title": "So you’re looking for a place for yourself...",
+  "hunterStep2Title": "Now, tell something about yourself...",
+  "accommodationQuestion": "What type of accommodation are you interested in?",
+  "typeOfPropertyQuestion": "Type of the property",
+  "acceptableRentRangeQuestion": "Acceptable rent (zł/month)",
+  "maximumDepositQuestion": "Maximum deposit",
+  "whenYouWouldLikeMoveInQuestion": "When you would like to move in?",
+  "availableNow": "Available Now:",
+  "preferredLengthToStayQuestion": "Preferred length of stay",
+  "addressQuestion": "Where would you like to live?",
+  "addressSubTitle": "Type in address or choose a point on the map",
+  "rangeFromCoordinateQuestion": "Distance from reference point (km)",
+  "describeYourPlace": "Describe your ideal place",
+  "minimumPropertySizeQuestion": "Minimum propety size (m²)",
+  "minimumNumberOfTenantsQuestion": "Maximum number of tenants (excluding you)",
+  "roomAmountQuestion": "Rooms amount",
+  "bathroomAmountQuestion": "Bathroom amount (you can choose many)",
+  "parkingQuestion": "Parking (you can choose many)",
+  "furnishedQuestion": "Furnished",
+  "kitchenQuestion": "Kitchen",
+  "balconyQuestion": "Balcony in the apartment",
+  "describeIdelRoom": "Describe your ideal room",
+  "maximumNumberOfpeopleQuestion": "Maximum number of people in the room (including you)",
+  "minimumRoomSizeQuestion": "Minimum room size (m^2)",
+  "furnishedRoomQuestion": "Furnished?",
+  "privateBathroomQuestion": "Private bathroom?",
+  "balconyInRoomQuestion": "Balcony in the room?",
+  "whoAreYouQuestion": "Who are you?",
+  "nameQuestion": "What’s your name?",
+  "ageQuestion": "Your age",
+  "withChildQuestion": "Are you looking with a child for a place to live?",
+  "havePetQuestion": "Do you have a pet?",
+  "typeOfEmploymentQuestion": "What do you do/type of employment?",
+  "areYouSmokingQuestion": "Are you smoking?",
+  "anotherPersonQuestion": {
+    "name": "Your partner/friend's name",
+    "age": "His/Her age",
+    "gender": "Gender",
+    "addAnotherPerson": "Add Another Person"
+  },
+  "flatemateTitle": "Your flatmate preferences",
+  "flatmatePreferenceQuestion": "I’m accepting (you can choose many)",
+  "livingWithOwnerQuestion": "Do you accept living with an owner?",
+  "tenantsWithChildrenQuestion": "Do you accept tenants with children?",
+  "acceptPetQuestion": "Do you accept a pet?",
+  "acceptSmokingQuestion": "Do you accept smoking?",
+  "photosHunterQuestion": {
+    "title": "Add your photo",
+    "subTitle1": "Photos increase the chance of finding the perfect match.",
+    "subTitle2": "You can also add them later",
+    "buttonText": "Upload Photo"
+  },
+  "describeYourSelfQuestion": {
+    "title": "Write a few sentences about yourself so others can get to know you better",
+    "subTitle": "(Tell about your ideal roommates and a little about yourself. What you do for work, what you like to do for fun, or where you're from. Also, be sure to let them know what you're looking for)"
   }
 }

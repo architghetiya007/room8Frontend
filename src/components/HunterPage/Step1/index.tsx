@@ -1,10 +1,4 @@
-import {
-  Box,
-  Grid,
-  OutlinedInput,
-  Slider,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, OutlinedInput, Slider, Typography } from "@mui/material";
 import React from "react";
 import CustomButtonGroup from "../../comman/CustomButtonGroup";
 import useHunterData from "../../../hooks/useHunter";
@@ -14,8 +8,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import GoogleMaps from "../../GoogleMaps";
 import IOSSwitch from "../../comman/IOSSwitch";
-import { LoadingButton } from "@mui/lab";
-
+import CustomLoadingButton from "../../comman/CustomLoadingButton";
+import OutlinedButton from "../../comman/OutlinedButton";
+import useCommonTranslation from "../../../hooks/useCommonTranslation";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import useAdvertisementMutations from "../../../mutations/advertisement";
+import useNotification from "../../../hooks/useNotification";
 const marks = [
   {
     value: 0,
@@ -63,10 +62,54 @@ const marks = [
   },
 ];
 
+const addressSchema = Yup.object().shape({
+  street: Yup.string(),
+  city: Yup.string(),
+  state: Yup.string(),
+  country: Yup.string(),
+  zipCode: Yup.string().matches(/^\d{5}$/, "Invalid Zip Code"),
+  coordinate: Yup.array()
+    .of(Yup.number())
+    .length(2, "Must provide latitude and longitude coordinates"),
+  rowText: Yup.string(),
+});
+
+const accommodationSchema = Yup.object().shape({
+  accommodation: Yup.string().oneOf(["ENTIREROOM", "SHAREDROOM", "PRIVATE"]),
+  typeOfProperty: Yup.string().oneOf(["FLAT", "HOUSE", "STUDIO"]),
+  acceptableRentRange: Yup.array()
+    .of(Yup.number().min(0, "Rent must be non-negative"))
+    .length(2, "Rent range should have two values"),
+  maximumDeposit: Yup.number().min(0, "Deposit must be non-negative"),
+  whenYouWouldLikeMoveIn: Yup.number().typeError(
+    "Invalid timestamp for move-in date"
+  ),
+  preferredLengthToStay: Yup.string().oneOf([
+    "NO_PREFERENCE",
+    "SHORT_TERM",
+    "LONG_TERM",
+  ]),
+  address: addressSchema,
+  rangeFromCoordinate: Yup.number().min(0, "Range must be non-negative"),
+  minimumPropertySize: Yup.number().min(
+    0,
+    "Minimum property size must be non-negative"
+  ),
+  minimumNumberOfTenants: Yup.string(),
+  roomAmount: Yup.string(),
+  bathroomAmount: Yup.string(),
+  parking: Yup.string().oneOf(["PUBLIC", "PRIVATE", "NONE"]),
+  furnished: Yup.string().oneOf(["YES", "NO"]),
+  kitchen: Yup.string().oneOf(["SEPARATE", "OPEN"]),
+  balcony: Yup.string().oneOf(["YES", "NO"]),
+});
 interface Step1Props {
   updateTabIndex: Function;
 }
 const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
+  const { t } = useCommonTranslation();
+  const { createAdvertisementMutation } = useAdvertisementMutations();
+  const { showSnackBar } = useNotification();
   const {
     accommodation,
     bathroomsAmount,
@@ -78,6 +121,21 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
     maximumNumberOfpeopleOptions,
     yesNoOptions,
   } = useHunterData();
+
+  useFormik({
+    initialValues: {},
+    validationSchema: accommodationSchema,
+    onSubmit: (values: any) => {
+      createAdvertisementMutation.mutate(values, {
+        onSuccess: (data) => {
+          showSnackBar({ message: data!.message });
+        },
+        // onError: (error: Error) => {
+        //   // showSnackBar({ message: error.message, variant: "error" });
+        // },
+      });
+    },
+  });
   return (
     <Grid container spacing={2} mt={2} mb={2}>
       <Grid item xs={12}>
@@ -85,24 +143,22 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
       </Grid>
       <Grid item xs={12}>
         <Typography
+          variant="h4"
           sx={{
             background:
               "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
             backgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            fontSize: "44px",
           }}
         >
-          So you’re looking for a place for yourself...
+          {t("hunterStep1Title")}
         </Typography>
       </Grid>
       <Grid item xs={12}>
         <Box sx={{ borderBottom: "1px solid black" }}></Box>
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>
-          What type of accommodation are you interested in?
-        </Typography>
+        <Typography variant="h5">{t("accommodationQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <CustomButtonGroup
@@ -112,7 +168,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>Type of the property</Typography>
+        <Typography variant="h5">{t("typeOfPropertyQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <CustomButtonGroup
@@ -122,9 +178,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>
-          Acceptable rent (zł/month)
-        </Typography>
+        <Typography variant="h5">{t("acceptableRentRangeQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <Slider
@@ -138,20 +192,20 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>Maximum deposit</Typography>
+        <Typography variant="h5">{t("maximumDepositQuestion")}</Typography>
       </Grid>
 
       <Grid item xs={12}>
         <OutlinedInput fullWidth placeholder="No Preferences" />
       </Grid>
       <Grid item xs={12} md={6}>
-        <Typography sx={{ fontSize: "28px" }}>
-          When you would like to move in?
+        <Typography variant="h5">
+          {t("whenYouWouldLikeMoveInQuestion")}?
         </Typography>
       </Grid>
       <Grid item xs={12} md={6}>
         <Box display={"flex"} alignItems={"center"} justifyContent={"flex-end"}>
-          <Typography sx={{ fontSize: "28px" }}>Available Now:</Typography>
+          <Typography variant="h5">{t("availableNow")}</Typography>
           <IOSSwitch />
         </Box>
       </Grid>
@@ -160,7 +214,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
           <DemoContainer components={["DatePicker", "DatePicker"]}>
             <DatePicker
               sx={{ width: "100%" }}
-              label="Controlled picker"
+              label="Date"
               value={null}
               onChange={(newValue) => console.log(newValue)}
             />
@@ -168,14 +222,10 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         </LocalizationProvider>
       </Grid>
       <Grid item xs={12} md={6}>
-        <Typography sx={{ fontSize: "28px" }}>
-          Where would you like to live?
-        </Typography>
+        <Typography variant="h5">{t("addressQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "18px" }}>
-          Type in address or choose a point on the map
-        </Typography>
+        <Typography variant="subtitle1">{t("addressSubTitle")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <OutlinedInput fullWidth placeholder="Search an Address" />
@@ -184,9 +234,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         <GoogleMaps />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>
-          Distance from reference point (km)
-        </Typography>
+        <Typography variant="h5">{t("rangeFromCoordinateQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <Slider
@@ -208,23 +256,21 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
             fontSize: "44px",
           }}
         >
-          Describe your ideal place
+          {t("describeYourPlace")}
         </Typography>
       </Grid>
       <Grid item xs={12}>
         <Box sx={{ borderBottom: "1px solid black" }}></Box>
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>
-          Minimum propety size (m²)
-        </Typography>
+        <Typography variant="h5">{t("minimumPropertySizeQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <OutlinedInput fullWidth placeholder="100" />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>
-          Maximum number of tenants (excluding you)
+        <Typography variant="h5">
+          {t("minimumNumberOfTenantsQuestion")}
         </Typography>
       </Grid>
       <Grid item xs={12}>
@@ -235,7 +281,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>Rooms amount</Typography>
+        <Typography variant="h5">{t("roomAmountQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <CustomButtonGroup
@@ -245,9 +291,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>
-          Bathroom amount (you can choose many)
-        </Typography>
+        <Typography variant="h5">{t("bathroomAmountQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <CustomButtonGroup
@@ -257,9 +301,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>
-          Parking (you can choose many)
-        </Typography>
+        <Typography variant="h5">{t("parkingQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <CustomButtonGroup
@@ -269,7 +311,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>Furnished</Typography>
+        <Typography variant="h5">{t("furnishedQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <CustomButtonGroup
@@ -279,7 +321,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>Kitchen</Typography>
+        <Typography variant="h5">{t("kitchenQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <CustomButtonGroup
@@ -289,9 +331,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>
-          Balcony in the apartment
-        </Typography>
+        <Typography variant="h5">{t("balconyQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <CustomButtonGroup
@@ -313,12 +353,12 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
             fontSize: "44px",
           }}
         >
-          Describe your ideal room
+          {t("describeIdelRoom")}
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>
-          Maximum number of people in the room (including you)
+        <Typography variant="h5">
+          {t("maximumNumberOfpeopleQuestion")}
         </Typography>
       </Grid>
       <Grid item xs={12}>
@@ -329,15 +369,13 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>
-          Minimum room size (m^2)
-        </Typography>
+        <Typography variant="h5">{t("minimumRoomSizeQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <OutlinedInput fullWidth placeholder="No Preferences" />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>Furnished?</Typography>
+        <Typography variant="h5">{t("furnishedRoomQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <CustomButtonGroup
@@ -347,7 +385,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>Private bathroom?</Typography>
+        <Typography variant="h5">{t("privateBathroomQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <CustomButtonGroup
@@ -357,7 +395,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "28px" }}>Balcony in the room?</Typography>
+        <Typography variant="h5">{t("balconyInRoomQuestion")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <CustomButtonGroup
@@ -367,42 +405,15 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         />
       </Grid>
       <Grid item xs={12} md={6}>
-        <LoadingButton
-          sx={{
-            background: "transparent",
-            width: "100%",
-            p: 1,
-            borderRadius: "8px",
-            color: "black",
-            textTransform: "none",
-            letterSpacing: "1px",
-            fontWeight: "600",
-            fontSize: "24px",
-            border: "1px solid gray",
-          }}
-          type="button"
-        >
-          Preview
-        </LoadingButton>
+        <OutlinedButton>{t("CANCEL_BUTTON_TEXT")}</OutlinedButton>
       </Grid>
       <Grid item xs={12} md={6}>
-        <LoadingButton
-          sx={{
-            background:
-              "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
-            width: "100%",
-            p: 1,
-            borderRadius: "8px",
-            color: "white",
-            textTransform: "none",
-            letterSpacing: "1px",
-            fontWeight: "600",
-            fontSize: "24px",
-          }}
-          type="button"
+        <CustomLoadingButton
+          sx={{ width: "100%" }}
+          onClick={() => updateTabIndex()}
         >
-          Preview
-        </LoadingButton>
+          {t("NEXT_BUTTON_TEXT")}
+        </CustomLoadingButton>
       </Grid>
     </Grid>
   );

@@ -14,4 +14,7 @@ export const apiPaths = {
     sendOtp: "/user/send-otp",
     verifyOtp: "/user/verify-otp",
   },
+  ADVERTISEMENT: {
+    createAdvertisement: "/advertisement"
+  }
 };
