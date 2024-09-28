@@ -1,3 +1,80 @@
 {
-    "REGISTER_TITLE" : "Register"
+  "REGISTER_TITLE": "Register",
+  "accommodation": {
+    "ENTIREROOM": "ENTIRE ROOM",
+    "SHAREDROOM": "SHARED ROOM",
+    "WHOLEPROPERTY": "WHOLE PROPERTY"
+  },
+  "propertyTypes": {
+    "FLAT": "FLAT",
+    "HOUSE": "HOUSE"
+  },
+  "tenants": {
+    "NO_PREFERENCE": "NO PREFERENCES",
+    "02": "02",
+    "03": "03",
+    "04+": "04+"
+  },
+  "roomsAmount": {
+    "NO_PREFERENCE": "NO PREFERENCES",
+    "01+": "01+",
+    "02+": "02+",
+    "03+": "03+"
+  },
+  "bathroomsAmount": {
+    "NO_PREFERENCE": "NO PREFERENCES",
+    "01+": "01+",
+    "02+": "02+",
+    "03+": "03+"
+  },
+  "duration": {
+    "NO_PREFERENCE": "NO PREFERENCES",
+    "1_WEEK": "1 week",
+    "2_WEEK": "2 weeks",
+    "1_MONTH": "1 month",
+    "2_MONTH": "2 months",
+    "3_MONTH": "3 months",
+    "4_MONTH": "4 months",
+    "6_MONTH": "6 months",
+    "9_MONTH": "9 months",
+    "12_MONTH": "12 months+"
+  },
+  "whoAreYou": {
+    "man": "Man",
+    "woman": "Woman",
+    "couple": "Couple",
+    "groupFriends": "GROUP/FRIENDS"
+  },
+  "yesNoOptions": {
+    "YES": "Yes",
+    "NO": "No"
+  },
+  "smokingOptions": {
+    "YES": "Yes",
+    "NO": "No",
+    "OUTSIDE": "OutSide Only"
+  },
+  "commanOptions": {
+    "NO_PREFERENCE": "NO PREFERENCES",
+    "YES": "Yes",
+    "NO": "No"
+  },
+  "gender": {
+    "MALE": "Man",
+    "FEMALE":"Woman"
+  },
+  "parking": {
+
+  },
+  "kitchen" : {
+    "SEPERATE": "SEPERATE",
+    "KICHENETTE" :"KICHENETTE",
+    "NO_PREFERENCE" :"NO PREFERENCES"
+  },
+  "maximumNumberOfpeople" : {
+    "NO_PREFERENCE" :"NO PREFERENCES",
+    "01" : "01",
+    "02" : "02",
+    "03" : "03+"
+  }
 }

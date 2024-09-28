@@ -8,6 +8,7 @@ const HomePage = lazy(() => import("../pages/HomePage"));
 const AboutUs = lazy(() => import("../pages/AboutUs"));
 const ContactUs = lazy(() => import("../pages/ContactUs"));
 const LandlordQuiz = lazy(() => import("../pages/LanlordQuiz"));
+const HunterPage = lazy(() => import("../pages/HunterPage"));
 const SearchPage = lazy(() => import("../pages/SearchPage"));
 const ReserPasswordPage = lazy(() => import("../pages/ResetPasswordPage"));
 const UserProfilePage = lazy(() => import("../pages/UserProfilePage"));
@@ -40,6 +41,16 @@ const routes: RouteObject[] = [
       <SuspenseWrapper>
         <GuestLayout>
           <LandlordQuiz />
+        </GuestLayout>
+      </SuspenseWrapper>
+    ),
+  },
+  {
+    path: "hunter",
+    element: (
+      <SuspenseWrapper>
+        <GuestLayout>
+          <HunterPage />
         </GuestLayout>
       </SuspenseWrapper>
     ),

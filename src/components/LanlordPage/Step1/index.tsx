@@ -20,7 +20,17 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         <Typography>Step 1/3</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography>So you want to rent out your place...</Typography>
+        <Typography
+          sx={{
+            background:
+              "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+            backgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            fontSize: "44px",
+          }}
+        >
+          So you want to rent out your place...
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <Box sx={{ borderBottom: "1px solid black" }}></Box>
