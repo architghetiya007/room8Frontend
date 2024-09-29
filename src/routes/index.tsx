@@ -8,6 +8,7 @@ const HomePage = lazy(() => import("../pages/HomePage"));
 const AboutUs = lazy(() => import("../pages/AboutUs"));
 const ContactUs = lazy(() => import("../pages/ContactUs"));
 const LandlordQuiz = lazy(() => import("../pages/LanlordQuiz"));
+const LanlordPreviewPage = lazy(() => import("../pages/LanlordPreviewPage"));
 const HunterPage = lazy(() => import("../pages/HunterPage"));
 const HunterPreviewPage = lazy(() => import("../pages/HunterPreviewPage"));
 const SearchPage = lazy(() => import("../pages/SearchPage"));
@@ -42,6 +43,16 @@ const routes: RouteObject[] = [
       <SuspenseWrapper>
         <GuestLayout>
           <LandlordQuiz />
+        </GuestLayout>
+      </SuspenseWrapper>
+    ),
+  },
+  {
+    path: "lanlord-preview",
+    element: (
+      <SuspenseWrapper>
+        <GuestLayout>
+          <LanlordPreviewPage />
         </GuestLayout>
       </SuspenseWrapper>
     ),
