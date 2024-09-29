@@ -7,6 +7,7 @@ import RoomRentalSection from "../../components/HomePage/RoomRentalSection";
 import EasyStepSection from "../../components/HomePage/EasyStepSection";
 import ApartmentSection from "../../components/HomePage/ApartmentSection";
 import AtRoom8Section from "../../components/HomePage/AtRoom8Section";
+import RoomMatesSection from "../../components/HomePage/RoomMatesSection";
 
 const HomePage: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const HomePage: React.FC = () => {
       <RoomSection />
       <RoomRentalSection />
       <EasyStepSection />
+      <RoomMatesSection />
       <AtRoom8Section />
     </Box>
   );
