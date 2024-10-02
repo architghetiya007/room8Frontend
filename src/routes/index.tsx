@@ -14,6 +14,7 @@ const HunterPreviewPage = lazy(() => import("../pages/HunterPreviewPage"));
 const SearchPage = lazy(() => import("../pages/SearchPage"));
 const ReserPasswordPage = lazy(() => import("../pages/ResetPasswordPage"));
 const UserProfilePage = lazy(() => import("../pages/UserProfilePage"));
+const EmailVerifyPage = lazy(() => import("../pages/EmailVerifyPage"));
 const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
 
 const routes: RouteObject[] = [
@@ -38,7 +39,7 @@ const routes: RouteObject[] = [
     ),
   },
   {
-    path: "/landlordQuiz",
+    path: "/landlord",
     element: (
       <SuspenseWrapper>
         <GuestLayout>
@@ -118,6 +119,14 @@ const routes: RouteObject[] = [
     element: (
       <SuspenseWrapper>
         <ReserPasswordPage />
+      </SuspenseWrapper>
+    ),
+  },
+  {
+    path: "/verify-email/:id",
+    element: (
+      <SuspenseWrapper>
+        <EmailVerifyPage />
       </SuspenseWrapper>
     ),
   },

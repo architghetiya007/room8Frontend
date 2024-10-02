@@ -6,8 +6,14 @@ const RoomSection: React.FC = () => {
   return (
     <Box
       sx={{
-        px: 4,
-        py: 10
+        px: {
+          xs: 1,
+          md: 4
+        },
+        py: {
+          xs: 1,
+          md: 10
+        },
       }}
     >
       <Container>

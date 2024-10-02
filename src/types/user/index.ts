@@ -47,6 +47,10 @@ export interface VerifyOtpRequestDTO {
   OTP: string;
 }
 
+export interface VerifyEmailRequestDTO {
+  token: string;
+}
+
 export interface UserResponseDTO {
   email: string;
   fullName: string;

@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import {
   changePasswordAPI,
   deleteAccountAPI,
+  emailVerifyAPI,
   forgotPasswordAPI,
   googleLoginAPI,
   loginUserAPI,
@@ -56,12 +57,16 @@ const useUserMutations = () => {
   });
 
   const sendOtpUserMutation = useMutation({
-    mutationFn: sendOtpAPI
+    mutationFn: sendOtpAPI,
   });
 
   const verifyOtpUserMutation = useMutation({
-    mutationFn: verifyOtpAPI
-  })
+    mutationFn: verifyOtpAPI,
+  });
+
+  const emailVerifyMutation = useMutation({
+    mutationFn: emailVerifyAPI,
+  });
 
   return {
     registerUserMutation,
@@ -75,7 +80,8 @@ const useUserMutations = () => {
     logoutUserMutation,
     uploadImageMutation,
     sendOtpUserMutation,
-    verifyOtpUserMutation
+    verifyOtpUserMutation,
+    emailVerifyMutation,
   };
 };
 

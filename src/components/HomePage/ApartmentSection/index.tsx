@@ -39,6 +39,7 @@ const ApartmentSection: React.FC = () => {
                     width: "auto",
                     height: "55px",
                   }}
+                  variant="contained"
                 >
                   Add Room/Apartment
                 </Button>
@@ -90,6 +91,7 @@ const ApartmentSection: React.FC = () => {
                     width: "auto",
                     height: "50px",
                   }}
+                  variant="contained"
                 >
                   Add an Announcement
                 </Button>

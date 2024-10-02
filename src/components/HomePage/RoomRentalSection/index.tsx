@@ -5,8 +5,14 @@ const RoomRentalSection: React.FC = () => {
   return (
     <Box
       sx={{
-        px: 4,
-        py: 10,
+        px: {
+          xs: 2,
+          md: 4
+        },
+        py: {
+          xs: 1,
+          md: 10
+        },
       }}
     >
       <Container>
@@ -15,7 +21,7 @@ const RoomRentalSection: React.FC = () => {
             backgroundColor: "white",
             backgroundImage: `url(${RoomBackImage})`, // URL to your image
             width: "100%",
-            height: "230px",
+            height: {xs: 'auto',md: '230px'},
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

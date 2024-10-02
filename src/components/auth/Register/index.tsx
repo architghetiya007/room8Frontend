@@ -65,14 +65,17 @@ const Register: React.FC<RegisterProps> = ({
       registerUserMutation.mutate(values, {
         onSuccess: (data) => {
           showSnackBar({ message: data!.message });
-          let user: AuthStorageDTO = {
-            token: data!.data.token,
-            refreshToken: data!.data.user.refreshToken,
-            user: data!.data.user,
-          };
-          storeTokenDetails(user);
-          dispatch(setUserInfo(user));
-          handleCloseRegisterDialog(!data!.data.user.isPhoneVerify ? 'Phone' :'');
+          // let user: AuthStorageDTO = {
+          //   token: data!.data.token,
+          //   refreshToken: data!.data.user.refreshToken,
+          //   user: data!.data.user,
+          // };
+          // storeTokenDetails(user);
+          // dispatch(setUserInfo(user));
+          // handleCloseRegisterDialog(
+          //   !data!.data.user.isPhoneVerify ? "Phone" : ""
+          // );
+          handleCloseRegisterDialog("");
         },
         onError: (error: Error) => {
           showSnackBar({ message: error.message, variant: "error" });
@@ -96,7 +99,9 @@ const Register: React.FC<RegisterProps> = ({
             };
             storeTokenDetails(user);
             dispatch(setUserInfo(user));
-            handleCloseRegisterDialog(!data!.data.user.isPhoneVerify ? 'Phone' :'');
+            handleCloseRegisterDialog(
+              !data!.data.user.isPhoneVerify ? "Phone" : ""
+            );
           },
           onError: (error: Error) => {
             showSnackBar({ message: error.message, variant: "error" });

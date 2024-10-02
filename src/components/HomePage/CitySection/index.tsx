@@ -32,11 +32,31 @@ const CitySection: React.FC = () => {
     <Box
       sx={{
         background: "linear-gradient(to right, #FFEBE8, #EDD6F5, #EDF6FD)",
-        p: 5,
+        p: {
+          xs: 1,
+          md: 5,
+        },
       }}
     >
-      <Container>
-        <Box display={"flex"} alignItems={"center"}>
+      <Container
+        sx={{
+          p: {
+            xs: 1,
+            md: 2,
+          },
+        }}
+      >
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          sx={{
+            flexDirection: {
+              xs: "column",
+              md: "row",
+            },
+            justifyContent: "center",
+          }}
+        >
           <Typography
             sx={{
               color: theme.palette.custom.blackDarkGray,
@@ -45,12 +65,26 @@ const CitySection: React.FC = () => {
           >
             TOP CITIES
           </Typography>
-          <Box sx={{ ml: 5 }}>
+          <Box
+            sx={{
+              ml: {
+                xs: 0,
+                md: 5,
+              },
+            }}
+          >
             {CityData.map((item) => {
               return (
                 <Chip
                   key={item.city}
-                  sx={{ m: 1, p: 3, borderRadius: 8 }}
+                  sx={{
+                    m: 1,
+                    p: {
+                      xs: 0,
+                      md: 3,
+                    },
+                    borderRadius: 8,
+                  }}
                   label={item.city}
                 ></Chip>
               );

@@ -11,6 +11,7 @@ import {
   SendOtpRequestDTO,
   UpdateProfileRequestDTO,
   UpdateProfileResponseDTO,
+  VerifyEmailRequestDTO,
   VerifyOtpRequestDTO,
   verifyOtpResponseDTO,
 } from "../../types/user";
@@ -160,6 +161,18 @@ const verifyOtpAPI = async (data: VerifyOtpRequestDTO) => {
   }
 };
 
+const emailVerifyAPI = async (data: VerifyEmailRequestDTO) => {
+  try {
+    const response = await axiosInstance.post<LoginResponseDTO>(
+      apiPaths.USER.verifyEmail,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    getErrorMessage(error);
+  }
+};
+
 export {
   registerUserAPI,
   loginUserAPI,
@@ -171,6 +184,7 @@ export {
   deleteAccountAPI,
   logoutAPI,
   uploadImageAPI,
-  sendOtpAPI, 
-  verifyOtpAPI
+  sendOtpAPI,
+  verifyOtpAPI,
+  emailVerifyAPI,
 };

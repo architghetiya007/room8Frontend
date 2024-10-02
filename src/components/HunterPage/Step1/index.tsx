@@ -102,6 +102,11 @@ const accommodationSchema = Yup.object().shape({
   furnished: Yup.string().oneOf(["YES", "NO"]),
   kitchen: Yup.string().oneOf(["SEPARATE", "OPEN"]),
   balcony: Yup.string().oneOf(["YES", "NO"]),
+  maximumNumberOfpeople: Yup.number().min(0, "Range must be non-negative"),
+  minimumRoomSize: Yup.number().min(0, "Range must be non-negative"),
+  furnishedRoom: Yup.string().oneOf(["YES", "NO"]),
+  privateBathroom: Yup.string().oneOf(["YES", "NO"]),
+  balconyInRoom: Yup.string().oneOf(["YES", "NO"]),
 });
 interface Step1Props {
   updateTabIndex: Function;
@@ -122,8 +127,38 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
     yesNoOptions,
   } = useHunterData();
 
-  useFormik({
-    initialValues: {},
+  const formik = useFormik({
+    initialValues: {
+      accommodation: "",
+      typeOfProperty: "",
+      acceptableRentRange: [20, 100],
+      maximumDeposit: "",
+      whenYouWouldLikeMoveIn: null,
+      preferredLengthToStay: "",
+      address: {
+        street: "",
+        city: "",
+        state: "",
+        country: "",
+        zipCode: "",
+        coordinate: [0, 0],
+        rowText: "",
+      },
+      rangeFromCoordinate: 20,
+      minimumPropertySize: "",
+      minimumNumberOfTenants: "",
+      roomAmount: "",
+      bathroomAmount: "",
+      parking: "",
+      furnished: "",
+      kitchen: "",
+      balcony: "",
+      maximumNumberOfpeople: "",
+      minimumRoomSize: "",
+      furnishedRoom: "YES",
+      privateBathroom: "YES",
+      balconyInRoom: "YES",
+    },
     validationSchema: accommodationSchema,
     onSubmit: (values: any) => {
       createAdvertisementMutation.mutate(values, {
@@ -137,285 +172,321 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
     },
   });
   return (
-    <Grid container spacing={2} mt={2} mb={2}>
-      <Grid item xs={12}>
-        <Typography>Step 1/2</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography
-          variant="h4"
-          sx={{
-            background:
-              "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
-            backgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
-          {t("hunterStep1Title")}
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Box sx={{ borderBottom: "1px solid black" }}></Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("accommodationQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={accommodation}
-          selectionOption="entireRoom"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("typeOfPropertyQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={propertyTypes}
-          selectionOption="entireRoom"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("acceptableRentRangeQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Slider
-          getAriaLabel={() => "Temperature range"}
-          value={[20, 100]}
-          min={0}
-          max={600}
-          // onChange={handleChange}
-          valueLabelDisplay="auto"
-          // getAriaValueText={valuetext}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("maximumDepositQuestion")}</Typography>
-      </Grid>
+    <Box component={"form"}>
+      <Grid container spacing={2} mt={2} mb={2}>
+        <Grid item xs={12}>
+          <Typography>Step 1/2</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography
+            variant="h4"
+            sx={{
+              background:
+                "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            {t("hunterStep1Title")}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Box sx={{ borderBottom: "1px solid black" }}></Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("accommodationQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("accommodation", e);
+            }}
+            selectionOption={formik.values.accommodation}
+            options={accommodation}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("typeOfPropertyQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("typeOfProperty", e);
+            }}
+            selectionOption={formik.values.typeOfProperty}
+            options={propertyTypes}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            {t("acceptableRentRangeQuestion")}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Slider
+            getAriaLabel={() => "Temperature range"}
+            min={0}
+            max={600}
+            valueLabelDisplay="auto"
+            value={formik.values.acceptableRentRange}
+            onChange={(_, newValue) => {
+              formik.setFieldValue("acceptableRentRange", newValue);
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("maximumDepositQuestion")}</Typography>
+        </Grid>
 
-      <Grid item xs={12}>
-        <OutlinedInput fullWidth placeholder="No Preferences" />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Typography variant="h5">
-          {t("whenYouWouldLikeMoveInQuestion")}?
-        </Typography>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Box display={"flex"} alignItems={"center"} justifyContent={"flex-end"}>
-          <Typography variant="h5">{t("availableNow")}</Typography>
-          <IOSSwitch />
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DatePicker", "DatePicker"]}>
-            <DatePicker
-              sx={{ width: "100%" }}
-              label="Date"
-              value={null}
-              onChange={(newValue) => console.log(newValue)}
+        <Grid item xs={12}>
+          <OutlinedInput
+            fullWidth
+            placeholder="No Preferences"
+            value={formik.values.maximumDeposit}
+            onChange={(e) =>
+              formik.setFieldValue("maximumDeposit", e.target.value)
+            }
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5">
+            {t("whenYouWouldLikeMoveInQuestion")}?
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"flex-end"}
+          >
+            <Typography variant="h5">{t("availableNow")}</Typography>
+            <IOSSwitch
+              checked={formik.values.whenYouWouldLikeMoveIn === null}
+              onChange={(e) => {
+                const value = e.target.checked ? null : Date.now(); // Assuming timestamp
+                formik.setFieldValue("whenYouWouldLikeMoveIn", value);
+              }}
             />
-          </DemoContainer>
-        </LocalizationProvider>
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DatePicker", "DatePicker"]}>
+              <DatePicker
+                sx={{ width: "100%" }}
+                label="Date"
+                value={formik.values.whenYouWouldLikeMoveIn}
+                onChange={(newValue) => {
+                  formik.setFieldValue("whenYouWouldLikeMoveIn", newValue);
+                }}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5">{t("addressQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="subtitle1">{t("addressSubTitle")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <OutlinedInput fullWidth placeholder="Search an Address" />
+        </Grid>
+        <Grid item xs={12}>
+          <GoogleMaps />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            {t("rangeFromCoordinateQuestion")}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Slider
+            aria-label="Restricted values"
+            defaultValue={20}
+            // getAriaValueText={valuetext}
+            step={null}
+            valueLabelDisplay="auto"
+            marks={marks}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography
+            sx={{
+              background:
+                "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              fontSize: "44px",
+            }}
+          >
+            {t("describeYourPlace")}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Box sx={{ borderBottom: "1px solid black" }}></Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            {t("minimumPropertySizeQuestion")}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <OutlinedInput fullWidth placeholder="100" />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            {t("minimumNumberOfTenantsQuestion")}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e) => console.log(e)}
+            options={tenants}
+            selectionOption="entireRoom"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("roomAmountQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e) => console.log(e)}
+            options={roomsAmount}
+            selectionOption="entireRoom"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("bathroomAmountQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e) => console.log(e)}
+            options={bathroomsAmount}
+            selectionOption="entireRoom"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("parkingQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e) => console.log(e)}
+            options={bathroomsAmount}
+            selectionOption="entireRoom"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("furnishedQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e) => console.log(e)}
+            options={commanPreferenceOptions}
+            selectionOption="YES"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("kitchenQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e) => console.log(e)}
+            options={kitchenOptions}
+            selectionOption="YES"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("balconyQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e) => console.log(e)}
+            options={commanPreferenceOptions}
+            selectionOption="YES"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Box sx={{ borderBottom: "1px solid black" }}></Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography
+            sx={{
+              background:
+                "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              fontSize: "44px",
+            }}
+          >
+            {t("describeIdelRoom")}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            {t("maximumNumberOfpeopleQuestion")}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e) => console.log(e)}
+            options={maximumNumberOfpeopleOptions}
+            selectionOption="YES"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("minimumRoomSizeQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <OutlinedInput fullWidth placeholder="No Preferences" />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("furnishedRoomQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e) => console.log(e)}
+            options={commanPreferenceOptions}
+            selectionOption="YES"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("privateBathroomQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            options={yesNoOptions}
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("balconyInRoom", e);
+            }}
+            selectionOption={formik.values.balconyInRoom}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("balconyInRoomQuestion")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            options={commanPreferenceOptions}
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("balcony", e);
+            }}
+            selectionOption={formik.values.balcony}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <OutlinedButton>{t("CANCEL_BUTTON_TEXT")}</OutlinedButton>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <CustomLoadingButton
+            sx={{ width: "100%" }}
+            onClick={() => updateTabIndex()}
+          >
+            {t("NEXT_BUTTON_TEXT")}
+          </CustomLoadingButton>
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={6}>
-        <Typography variant="h5">{t("addressQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="subtitle1">{t("addressSubTitle")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <OutlinedInput fullWidth placeholder="Search an Address" />
-      </Grid>
-      <Grid item xs={12}>
-        <GoogleMaps />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("rangeFromCoordinateQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Slider
-          aria-label="Restricted values"
-          defaultValue={20}
-          // getAriaValueText={valuetext}
-          step={null}
-          valueLabelDisplay="auto"
-          marks={marks}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography
-          sx={{
-            background:
-              "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
-            backgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            fontSize: "44px",
-          }}
-        >
-          {t("describeYourPlace")}
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Box sx={{ borderBottom: "1px solid black" }}></Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("minimumPropertySizeQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <OutlinedInput fullWidth placeholder="100" />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">
-          {t("minimumNumberOfTenantsQuestion")}
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={tenants}
-          selectionOption="entireRoom"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("roomAmountQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={roomsAmount}
-          selectionOption="entireRoom"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("bathroomAmountQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={bathroomsAmount}
-          selectionOption="entireRoom"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("parkingQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={bathroomsAmount}
-          selectionOption="entireRoom"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("furnishedQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={commanPreferenceOptions}
-          selectionOption="YES"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("kitchenQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={kitchenOptions}
-          selectionOption="YES"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("balconyQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={commanPreferenceOptions}
-          selectionOption="YES"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Box sx={{ borderBottom: "1px solid black" }}></Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography
-          sx={{
-            background:
-              "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
-            backgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            fontSize: "44px",
-          }}
-        >
-          {t("describeIdelRoom")}
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">
-          {t("maximumNumberOfpeopleQuestion")}
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={maximumNumberOfpeopleOptions}
-          selectionOption="YES"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("minimumRoomSizeQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <OutlinedInput fullWidth placeholder="No Preferences" />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("furnishedRoomQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={commanPreferenceOptions}
-          selectionOption="YES"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("privateBathroomQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={yesNoOptions}
-          selectionOption="YES"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">{t("balconyInRoomQuestion")}</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <CustomButtonGroup
-          optionClick={(e: string) => console.log(e)}
-          options={commanPreferenceOptions}
-          selectionOption="YES"
-        />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <OutlinedButton>{t("CANCEL_BUTTON_TEXT")}</OutlinedButton>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <CustomLoadingButton
-          sx={{ width: "100%" }}
-          onClick={() => updateTabIndex()}
-        >
-          {t("NEXT_BUTTON_TEXT")}
-        </CustomLoadingButton>
-      </Grid>
-    </Grid>
+    </Box>
   );
 };
 

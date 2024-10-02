@@ -5,8 +5,14 @@ const AtRoom8Section: React.FC = () => {
   return (
     <Box
       sx={{
-        px: 4,
-        py: 10,
+        px: {
+          xs: 1,
+          md: 4
+        },
+        py: {
+          xs: 1,
+          md: 10
+        },
       }}
     >
       <Container>
@@ -22,8 +28,14 @@ const AtRoom8Section: React.FC = () => {
             boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.1)", // White shadow
             transition: "box-shadow 0.3s ease-in-out",
             borderRadius: "20px",
-            px: 10,
-            py: 4,
+            px: {
+              xs: 1,
+              md: 4
+            },
+            py: {
+              xs: 1,
+              md: 10
+            },
             textAlign: "center",
           }}
         >

@@ -13,6 +13,7 @@ export const apiPaths = {
     refreshToken: "/user/reset-password",
     sendOtp: "/user/send-otp",
     verifyOtp: "/user/verify-otp",
+    verifyEmail: "/user/verify-email",
   },
   ADVERTISEMENT: {
     createAdvertisement: "/advertisement"
