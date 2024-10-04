@@ -1,6 +1,7 @@
 import {
   AdvertisementRequestDTO,
   AdvertisementResponseDTO,
+  AdvertisementStatusRequestDTO,
   ListAdvertisementResponseDTO,
 } from "../../types/advertisement";
 import { apiPaths } from "../../utils/Comman/apiPaths";
@@ -56,9 +57,22 @@ const getAllAdvertisementAPI = async () => {
   }
 };
 
+const updateStatusAdvertisementAPI = async (data: AdvertisementStatusRequestDTO) => {
+  try {
+    const response = await axiosInstance.put<AdvertisementResponseDTO>(
+      apiPaths.ADVERTISEMENT.updateStatusAdvertisement,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    getErrorMessage(error);
+  }
+};
+
 export {
   createAdvertisementAPI,
   updateAdvertisementAPI,
   getAdvertisementAPI,
   getAllAdvertisementAPI,
+  updateStatusAdvertisementAPI,
 };

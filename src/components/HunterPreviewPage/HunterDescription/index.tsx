@@ -3,8 +3,12 @@ import { Box, Grid, OutlinedInput, Stack, Typography } from "@mui/material";
 import React from "react";
 import OutlinedButton from "../../comman/OutlinedButton";
 import CustomLoadingButton from "../../comman/CustomLoadingButton";
-
-const HunterDescription: React.FC = () => {
+interface HunterDescriptionProps {
+  updateStatusAPI: () => void;
+}
+const HunterDescription: React.FC<HunterDescriptionProps> = ({
+  updateStatusAPI,
+}) => {
   return (
     <Box
       sx={{
@@ -209,7 +213,11 @@ const HunterDescription: React.FC = () => {
           <OutlinedButton>Back</OutlinedButton>
         </Grid>
         <Grid item xs={12} md={6}>
-          <CustomLoadingButton sx={{ width: "100%" }}>
+          <CustomLoadingButton
+            onClick={() => updateStatusAPI()}
+            type="button"
+            sx={{ width: "100%" }}
+          >
             Publish
           </CustomLoadingButton>
         </Grid>

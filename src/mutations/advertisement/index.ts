@@ -4,6 +4,7 @@ import {
   getAdvertisementAPI,
   getAllAdvertisementAPI,
   updateAdvertisementAPI,
+  updateStatusAdvertisementAPI,
 } from "../../api/advertisement/advertisement";
 import { AdvertisementRequestDTO } from "../../types/advertisement";
 
@@ -31,11 +32,16 @@ const useAdvertisementMutations = () => {
     mutationFn: getAllAdvertisementAPI,
   });
 
+  const updateStatusAdvertisementMutation = useMutation({
+    mutationFn: updateStatusAdvertisementAPI,
+  });
+
   return {
     createAdvertisementMutation,
     getAdvertisementMutation,
     updateAdvertisementMutation,
     getAllAdvertisementMutation,
+    updateStatusAdvertisementMutation,
   };
 };
 

@@ -181,7 +181,7 @@ const Step1: React.FC<Step1Props> = () => {
       });
     },
   });
-  console.log(formik.errors);
+  
   return (
     <Box component={"form"}>
       <Grid container spacing={2} mt={2} mb={2}>

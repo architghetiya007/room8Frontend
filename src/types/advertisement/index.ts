@@ -139,3 +139,8 @@ export interface AdvertisementResponseDTO extends BaseResponse {
 export interface ListAdvertisementResponseDTO extends BaseResponse {
   data: AdvertisementData[];
 }
+
+export interface AdvertisementStatusRequestDTO {
+  id: string;
+  isActive: boolean;
+}

@@ -69,7 +69,7 @@ const routes: RouteObject[] = [
     ),
   },
   {
-    path: "lanlord-preview",
+    path: "lanlord-preview/:id",
     element: (
       <SuspenseWrapper>
         <GuestLayout>
