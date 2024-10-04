@@ -16,6 +16,9 @@ export const apiPaths = {
     verifyEmail: "/user/verify-email",
   },
   ADVERTISEMENT: {
-    createAdvertisement: "/advertisement"
+    createAdvertisement: "/advertisement",
+    updateAdvertisement: "/advertisement/",
+    getAdvertisement: "/advertisement/advertisement/",
+    getAllAdvertisement: "/advertisement/all"
   }
 };

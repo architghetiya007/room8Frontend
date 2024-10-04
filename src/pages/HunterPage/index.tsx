@@ -1,11 +1,18 @@
 import { Box, Container } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Step1 from "../../components/HunterPage/Step1";
 import Step2 from "../../components/HunterPage/Step2";
+interface HunterPageProps {
+  activePage: number;
+}
+const HunterPage: React.FC<HunterPageProps> = ({ activePage }) => {
+  const [tabIndex, setTabIndex] = useState<number>(activePage ?? 1);
 
-const HunterPage: React.FC = () => {
-  const [tabIndex, setTabIndex] = useState<number>(1);
-
+  useEffect(() => {
+    if (activePage === 2) {
+      setTabIndex(activePage);
+    }
+  }, [activePage]); // Dependencies to re-run effect on changes
 
   const updateTabIndex = () => {
     setTabIndex(tabIndex + 1);

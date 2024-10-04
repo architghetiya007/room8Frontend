@@ -15,75 +15,75 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import useAdvertisementMutations from "../../../mutations/advertisement";
 import useNotification from "../../../hooks/useNotification";
+import { AdvertisementType } from "../../../utils/advertisement";
+import GoogleMapsAutocomplete from "../../comman/GoogleMapsAutoComplete";
+import { useNavigate } from "react-router-dom";
 const marks = [
   {
-    value: 0,
-    label: "0",
+    value: 1,
+    label: "1",
+  },
+  {
+    value: 2,
+    label: "2",
+  },
+  {
+    value: 3,
+    label: "3",
+  },
+  {
+    value: 4,
+    label: "4",
+  },
+  {
+    value: 5,
+    label: "5",
+  },
+  {
+    value: 6,
+    label: "6",
+  },
+  {
+    value: 7,
+    label: "7",
+  },
+  {
+    value: 8,
+    label: "8",
+  },
+  {
+    value: 9,
+    label: "9",
   },
   {
     value: 10,
     label: "10",
   },
-  {
-    value: 20,
-    label: "20",
-  },
-  {
-    value: 30,
-    label: "30",
-  },
-  {
-    value: 40,
-    label: "40",
-  },
-  {
-    value: 50,
-    label: "50",
-  },
-  {
-    value: 60,
-    label: "60",
-  },
-  {
-    value: 70,
-    label: "70",
-  },
-  {
-    value: 80,
-    label: "80",
-  },
-  {
-    value: 90,
-    label: "90",
-  },
-  {
-    value: 100,
-    label: "100",
-  },
 ];
 
 const addressSchema = Yup.object().shape({
-  street: Yup.string(),
-  city: Yup.string(),
-  state: Yup.string(),
-  country: Yup.string(),
-  zipCode: Yup.string().matches(/^\d{5}$/, "Invalid Zip Code"),
-  coordinate: Yup.array()
-    .of(Yup.number())
-    .length(2, "Must provide latitude and longitude coordinates"),
-  rowText: Yup.string(),
+  streetNumber: Yup.string(), // Corresponds to streetNumber in interface
+  streetName: Yup.string(), // Corresponds to streetName in interface
+  city: Yup.string(), // Corresponds to city in interface
+  state: Yup.string(), // Corresponds to state in interface
+  country: Yup.string(), // Corresponds to country in interface
+  postalCode: Yup.string(), // Updated for postalCode (was zipCode)
+  addressLine: Yup.string(), // Corresponds to addressLine in interface
+  formattedAddress: Yup.string(), // Corresponds to formattedAddress in interface
+  coordinates: Yup.array().of(Yup.number()),
+  // .length(2, "Must provide latitude and longitude coordinates") // Coordinates as [latitude, longitude]
 });
 
-const accommodationSchema = Yup.object().shape({
+const hunterSchema = Yup.object().shape({
   accommodation: Yup.string().oneOf(["ENTIREROOM", "SHAREDROOM", "PRIVATE"]),
   typeOfProperty: Yup.string().oneOf(["FLAT", "HOUSE", "STUDIO"]),
   acceptableRentRange: Yup.array()
     .of(Yup.number().min(0, "Rent must be non-negative"))
     .length(2, "Rent range should have two values"),
   maximumDeposit: Yup.number().min(0, "Deposit must be non-negative"),
-  whenYouWouldLikeMoveIn: Yup.number().typeError(
-    "Invalid timestamp for move-in date"
-  ),
+  whenYouWouldLikeMoveIn: Yup.number()
+    .nullable()
+    .typeError("Invalid timestamp for move-in date"),
   preferredLengthToStay: Yup.string().oneOf([
     "NO_PREFERENCE",
     "SHORT_TERM",
@@ -98,20 +98,21 @@ const accommodationSchema = Yup.object().shape({
   minimumNumberOfTenants: Yup.string(),
   roomAmount: Yup.string(),
   bathroomAmount: Yup.string(),
-  parking: Yup.string().oneOf(["PUBLIC", "PRIVATE", "NONE"]),
-  furnished: Yup.string().oneOf(["YES", "NO"]),
-  kitchen: Yup.string().oneOf(["SEPARATE", "OPEN"]),
-  balcony: Yup.string().oneOf(["YES", "NO"]),
+  parking: Yup.string(),
+  furnished: Yup.string(),
+  kitchen: Yup.string(),
+  balcony: Yup.string(),
   maximumNumberOfpeople: Yup.number().min(0, "Range must be non-negative"),
   minimumRoomSize: Yup.number().min(0, "Range must be non-negative"),
-  furnishedRoom: Yup.string().oneOf(["YES", "NO"]),
-  privateBathroom: Yup.string().oneOf(["YES", "NO"]),
-  balconyInRoom: Yup.string().oneOf(["YES", "NO"]),
+  furnishedRoom: Yup.string(),
+  privateBathroom: Yup.string(),
+  balconyInRoom: Yup.string(),
 });
 interface Step1Props {
-  updateTabIndex: Function;
+  updateTabIndex?: Function;
 }
-const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
+const Step1: React.FC<Step1Props> = () => {
+  const navigate = useNavigate();
   const { t } = useCommonTranslation();
   const { createAdvertisementMutation } = useAdvertisementMutations();
   const { showSnackBar } = useNotification();
@@ -125,52 +126,62 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
     kitchenOptions,
     maximumNumberOfpeopleOptions,
     yesNoOptions,
+    parkingOptions,
   } = useHunterData();
 
   const formik = useFormik({
     initialValues: {
-      accommodation: "",
-      typeOfProperty: "",
-      acceptableRentRange: [20, 100],
+      accommodation: "ENTIREROOM",
+      typeOfProperty: "FLAT",
+      acceptableRentRange: [300, 600],
       maximumDeposit: "",
       whenYouWouldLikeMoveIn: null,
-      preferredLengthToStay: "",
+      preferredLengthToStay: "NO_PREFERENCE",
       address: {
-        street: "",
+        streetNumber: "",
+        streetName: "",
         city: "",
         state: "",
         country: "",
-        zipCode: "",
-        coordinate: [0, 0],
-        rowText: "",
+        postalCode: "",
+        addressLine: "",
+        formattedAddress: "",
+        coordinates: [],
       },
-      rangeFromCoordinate: 20,
+
+      rangeFromCoordinate: 3,
       minimumPropertySize: "",
-      minimumNumberOfTenants: "",
-      roomAmount: "",
-      bathroomAmount: "",
-      parking: "",
-      furnished: "",
-      kitchen: "",
-      balcony: "",
-      maximumNumberOfpeople: "",
+      minimumNumberOfTenants: "02",
+      roomAmount: "02+",
+      bathroomAmount: "01",
+      parking: "DEDICATED",
+      furnished: "NO_PREFERENCE",
+      kitchen: "NO_PREFERENCE",
+      balcony: "NO_PREFERENCE",
+      maximumNumberOfpeople: "01",
       minimumRoomSize: "",
-      furnishedRoom: "YES",
+      furnishedRoom: "NO_PREFERENCE",
       privateBathroom: "YES",
-      balconyInRoom: "YES",
+      balconyInRoom: "NO_PREFERENCE",
     },
-    validationSchema: accommodationSchema,
+    validationSchema: hunterSchema,
     onSubmit: (values: any) => {
-      createAdvertisementMutation.mutate(values, {
+      const body = {
+        advertiseType: AdvertisementType.HUNTER,
+        hunterData: { ...values },
+      };
+      createAdvertisementMutation.mutate(body, {
         onSuccess: (data) => {
           showSnackBar({ message: data!.message });
+          navigate(`/hunter/2/${data?.data._id}`);
         },
-        // onError: (error: Error) => {
-        //   // showSnackBar({ message: error.message, variant: "error" });
-        // },
+        onError: (error: Error) => {
+          showSnackBar({ message: error.message, variant: "error" });
+        },
       });
     },
   });
+  console.log(formik.errors);
   return (
     <Box component={"form"}>
       <Grid container spacing={2} mt={2} mb={2}>
@@ -226,7 +237,7 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
           <Slider
             getAriaLabel={() => "Temperature range"}
             min={0}
-            max={600}
+            max={1000}
             valueLabelDisplay="auto"
             value={formik.values.acceptableRentRange}
             onChange={(_, newValue) => {
@@ -290,10 +301,19 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
           <Typography variant="subtitle1">{t("addressSubTitle")}</Typography>
         </Grid>
         <Grid item xs={12}>
-          <OutlinedInput fullWidth placeholder="Search an Address" />
+          <GoogleMapsAutocomplete
+            onClickPlaceDetails={(e) => {
+              formik.setFieldValue("address", e);
+            }}
+          />
         </Grid>
         <Grid item xs={12}>
-          <GoogleMaps />
+          <GoogleMaps
+            {...(formik.values?.address?.coordinates && {
+              lat: formik.values.address.coordinates[1],
+              lng: formik.values.address.coordinates[0],
+            })}
+          />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">
@@ -303,11 +323,15 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         <Grid item xs={12}>
           <Slider
             aria-label="Restricted values"
-            defaultValue={20}
-            // getAriaValueText={valuetext}
-            step={null}
+            value={formik.values.rangeFromCoordinate}
+            onChange={(_, newValue) => {
+              formik.setFieldValue("rangeFromCoordinate", newValue);
+            }}
+            step={1}
             valueLabelDisplay="auto"
             marks={marks}
+            max={10}
+            min={1}
           />
         </Grid>
         <Grid item xs={12}>
@@ -332,7 +356,14 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <OutlinedInput fullWidth placeholder="100" />
+          <OutlinedInput
+            value={formik.values.minimumPropertySize}
+            onChange={(e) =>
+              formik.setFieldValue("minimumPropertySize", e.target.value)
+            }
+            fullWidth
+            placeholder="100"
+          />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">
@@ -341,9 +372,11 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
-            optionClick={(e) => console.log(e)}
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("minimumNumberOfTenants", e);
+            }}
+            selectionOption={formik.values.minimumNumberOfTenants}
             options={tenants}
-            selectionOption="entireRoom"
           />
         </Grid>
         <Grid item xs={12}>
@@ -351,9 +384,11 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
-            optionClick={(e) => console.log(e)}
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("roomAmount", e);
+            }}
+            selectionOption={formik.values.roomAmount}
             options={roomsAmount}
-            selectionOption="entireRoom"
           />
         </Grid>
         <Grid item xs={12}>
@@ -361,9 +396,11 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
-            optionClick={(e) => console.log(e)}
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("bathroomAmount", e);
+            }}
+            selectionOption={formik.values.bathroomAmount}
             options={bathroomsAmount}
-            selectionOption="entireRoom"
           />
         </Grid>
         <Grid item xs={12}>
@@ -371,9 +408,11 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
-            optionClick={(e) => console.log(e)}
-            options={bathroomsAmount}
-            selectionOption="entireRoom"
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("parking", e);
+            }}
+            selectionOption={formik.values.parking}
+            options={parkingOptions}
           />
         </Grid>
         <Grid item xs={12}>
@@ -381,9 +420,11 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
-            optionClick={(e) => console.log(e)}
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("furnished", e);
+            }}
+            selectionOption={formik.values.furnished}
             options={commanPreferenceOptions}
-            selectionOption="YES"
           />
         </Grid>
         <Grid item xs={12}>
@@ -391,9 +432,11 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
-            optionClick={(e) => console.log(e)}
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("kitchen", e);
+            }}
+            selectionOption={formik.values.kitchen}
             options={kitchenOptions}
-            selectionOption="YES"
           />
         </Grid>
         <Grid item xs={12}>
@@ -401,9 +444,11 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
-            optionClick={(e) => console.log(e)}
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("balcony", e);
+            }}
+            selectionOption={formik.values.balcony}
             options={commanPreferenceOptions}
-            selectionOption="YES"
           />
         </Grid>
         <Grid item xs={12}>
@@ -429,25 +474,36 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
-            optionClick={(e) => console.log(e)}
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("maximumNumberOfpeople", e);
+            }}
+            selectionOption={formik.values.maximumNumberOfpeople}
             options={maximumNumberOfpeopleOptions}
-            selectionOption="YES"
           />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">{t("minimumRoomSizeQuestion")}</Typography>
         </Grid>
         <Grid item xs={12}>
-          <OutlinedInput fullWidth placeholder="No Preferences" />
+          <OutlinedInput
+            value={formik.values.minimumRoomSize}
+            onChange={(e) =>
+              formik.setFieldValue("minimumRoomSize", e.target.value)
+            }
+            fullWidth
+            placeholder="100"
+          />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">{t("furnishedRoomQuestion")}</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
-            optionClick={(e) => console.log(e)}
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("furnishedRoom", e);
+            }}
+            selectionOption={formik.values.furnishedRoom}
             options={commanPreferenceOptions}
-            selectionOption="YES"
           />
         </Grid>
         <Grid item xs={12}>
@@ -457,9 +513,9 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
           <CustomButtonGroup
             options={yesNoOptions}
             optionClick={(e: string[] | string) => {
-              formik.setFieldValue("balconyInRoom", e);
+              formik.setFieldValue("privateBathroom", e);
             }}
-            selectionOption={formik.values.balconyInRoom}
+            selectionOption={formik.values.privateBathroom}
           />
         </Grid>
         <Grid item xs={12}>
@@ -469,9 +525,9 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
           <CustomButtonGroup
             options={commanPreferenceOptions}
             optionClick={(e: string[] | string) => {
-              formik.setFieldValue("balcony", e);
+              formik.setFieldValue("balconyInRoom", e);
             }}
-            selectionOption={formik.values.balcony}
+            selectionOption={formik.values.balconyInRoom}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -479,8 +535,9 @@ const Step1: React.FC<Step1Props> = ({ updateTabIndex }) => {
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
+            loading={createAdvertisementMutation.isPending}
             sx={{ width: "100%" }}
-            onClick={() => updateTabIndex()}
+            onClick={() => formik.handleSubmit()}
           >
             {t("NEXT_BUTTON_TEXT")}
           </CustomLoadingButton>

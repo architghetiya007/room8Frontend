@@ -74,12 +74,12 @@ const useHunterData = () => {
       value: "NO_PREFERENCE",
     },
     {
-      name: t("bathroomsAmount.01+"),
-      value: "01+",
+      name: t("bathroomsAmount.01"),
+      value: "01",
     },
     {
-      name: t("bathroomsAmount.02+"),
-      value: "02+",
+      name: t("bathroomsAmount.02"),
+      value: "02",
     },
     {
       name: t("bathroomsAmount.03+"),
@@ -132,20 +132,20 @@ const useHunterData = () => {
 
   const whoAreYou: ButtonGroupInterface[] = [
     {
-      name: t("whoAreYou.man"),
-      value: "man",
+      name: t("whoAreYou.MEN"),
+      value: "MEN",
     },
     {
-      name: t("whoAreYou.woman"),
-      value: "woman",
+      name: t("whoAreYou.WOMEN"),
+      value: "WOMEN",
     },
     {
-      name: t("whoAreYou.couple"),
-      value: "couple",
+      name: t("whoAreYou.COUPLE"),
+      value: "COUPLE",
     },
     {
-      name: t("whoAreYou.groupFriends"),
-      value: "groupFriends",
+      name: t("whoAreYou.GROUP_FRIEND"),
+      value: "GROUP_FRIEND ",
     },
   ];
 
@@ -234,8 +234,8 @@ const useHunterData = () => {
       value: "IN_THE_GARAGE",
     },
     {
-      name: t("parking.NO_PREFERENCES"),
-      value: "NO_PREFERENCES",
+      name: t("parking.NO_PREFERENCE"),
+      value: "NO_PREFERENCE",
     },
   ];
 
@@ -251,7 +251,7 @@ const useHunterData = () => {
     {
       name: t("kitchen.NO_PREFERENCE"),
       value: "NO_PREFERENCE",
-    }
+    },
   ];
 
   const maximumNumberOfpeopleOptions: ButtonGroupInterface[] = [
@@ -270,8 +270,27 @@ const useHunterData = () => {
     {
       name: t("maximumNumberOfpeople.03"),
       value: "03",
-    }
-  ]
+    },
+  ];
+
+  const iamAcceptingOptions: ButtonGroupInterface[] = [
+    {
+      name: t("landlord.iamAccepting.MAN"),
+      value: "MAN",
+    },
+    {
+      name: t("landlord.iamAccepting.WOMAN"),
+      value: "WOMAN",
+    },
+    {
+      name: t("landlord.iamAccepting.COUPLE"),
+      value: "COUPLE",
+    },
+    {
+      name: t("landlord.iamAccepting.GROUPSFRIENDS"),
+      value: "GROUPSFRIENDS",
+    },
+  ];
 
   return {
     accommodation,
@@ -288,7 +307,8 @@ const useHunterData = () => {
     commanPreferenceOptions,
     parkingOptions,
     kitchenOptions,
-    maximumNumberOfpeopleOptions
+    maximumNumberOfpeopleOptions,
+    iamAcceptingOptions,
   };
 };
 

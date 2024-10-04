@@ -1,18 +1,37 @@
 import { Box, Container, Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RoomCard from "../../Room/RoomCard";
+import { AdvertisementData } from "../../../types/advertisement";
+import useAdvertisementMutations from "../../../mutations/advertisement";
 
 const RoomSection: React.FC = () => {
+  const { getAllAdvertisementMutation } = useAdvertisementMutations();
+  const [roomData, setRoomData] = useState<AdvertisementData[]>([]);
+
+  const getAllAdvertisementAPI = () => {
+    getAllAdvertisementMutation.mutate(undefined, {
+      onSuccess: (data) => {
+        setRoomData(data!.data);
+      },
+    });
+  };
+
+  console.log(roomData, "roomData");
+
+  useEffect(() => {
+    getAllAdvertisementAPI();
+  }, []);
+
   return (
     <Box
       sx={{
         px: {
           xs: 1,
-          md: 4
+          md: 4,
         },
         py: {
           xs: 1,
-          md: 10
+          md: 10,
         },
       }}
     >

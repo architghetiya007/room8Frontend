@@ -27,8 +27,8 @@
   },
   "bathroomsAmount": {
     "NO_PREFERENCE": "NO PREFERENCES",
-    "01+": "01+",
-    "02+": "02+",
+    "01": "01",
+    "02": "02",
     "03+": "03+"
   },
   "duration": {
@@ -44,10 +44,10 @@
     "12_MONTH": "12 months+"
   },
   "whoAreYou": {
-    "man": "Man",
-    "woman": "Woman",
-    "couple": "Couple",
-    "groupFriends": "GROUP/FRIENDS"
+    "MEN": "MEN",
+    "WOMEN": "WOMEN",
+    "COUPLE": "COUPLE",
+    "GROUP_FRIEND": "GROUP/FRIENDS"
   },
   "yesNoOptions": {
     "YES": "Yes",
@@ -67,7 +67,12 @@
     "MALE": "Man",
     "FEMALE": "Woman"
   },
-  "parking": {},
+  "parking": {
+    "PUBLIC": "PUBLIC/ON THE STREET",
+    "DEDICATED": "DEDICATED",
+    "IN_THE_GARAGE": "IN THE GARAGE",
+    "NO_PREFERENCE": "NO PREFERENCES"
+  },
   "kitchen": {
     "SEPERATE": "SEPERATE",
     "KICHENETTE": "KICHENETTE",
@@ -134,5 +139,40 @@
   "describeYourSelfQuestion": {
     "title": "Write a few sentences about yourself so others can get to know you better",
     "subTitle": "(Tell about your ideal roommates and a little about yourself. What you do for work, what you like to do for fun, or where you're from. Also, be sure to let them know what you're looking for)"
+  },
+  "landlord": {
+    "GO_TO_ROOM_DESCRIPTION": "Go to Room Description",
+    "propertyOfferOptions": {
+      "ENTIREROOM": "ENTIRE ROOM",
+      "SHAREDROOM": "SHARED ROOM",
+      "WHOLEPROPERTY": "WHOLE PROPERTY"
+    },
+    "howmanyPeopleLive": {
+      "01": "01",
+      "02": "02",
+      "03": "03",
+      "04+": "04+"
+    },
+    "IsApartmentFurnished": {
+      "FULLY": "FULLY",
+      "NO": "NO",
+      "PARTIALLY": "PARTIALLY"
+    },
+    "kitchen": {
+      "SEPARATE": "SEPARATE",
+      "KICHENETTE": "KICHENETTE"
+    },
+    "parking": {
+      "PUBLIC": "PUBLIC/ON THE STREET",
+      "DEDICATED": "DEDICATED",
+      "IN_THE_GARAGE": "IN THE GARAGE",
+      "NO_PREFERENCE": "NO PREFERENCES"
+    },
+    "iamAccepting": {
+      "MAN": "MAN",
+      "WOMAN": "WOMAN",
+      "COUPLE": "COUPLE",
+      "GROUPSFRIENDS": "GROUPS/FRIENDS"
+    }
   }
 }

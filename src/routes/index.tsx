@@ -7,7 +7,7 @@ import ProtectedRoute from "../guard/ProtectedRoute";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const AboutUs = lazy(() => import("../pages/AboutUs"));
 const ContactUs = lazy(() => import("../pages/ContactUs"));
-const LandlordQuiz = lazy(() => import("../pages/LanlordQuiz"));
+const LandlordQuiz = lazy(() => import("../pages/LanlordPage"));
 const LanlordPreviewPage = lazy(() => import("../pages/LanlordPreviewPage"));
 const HunterPage = lazy(() => import("../pages/HunterPage"));
 const HunterPreviewPage = lazy(() => import("../pages/HunterPreviewPage"));
@@ -39,11 +39,31 @@ const routes: RouteObject[] = [
     ),
   },
   {
-    path: "/landlord",
+    path: "/landlord/1",
     element: (
       <SuspenseWrapper>
         <GuestLayout>
-          <LandlordQuiz />
+          <LandlordQuiz activePage={1} />
+        </GuestLayout>
+      </SuspenseWrapper>
+    ),
+  },
+  {
+    path: "/landlord/2/:id",
+    element: (
+      <SuspenseWrapper>
+        <GuestLayout>
+          <LandlordQuiz activePage={2} />
+        </GuestLayout>
+      </SuspenseWrapper>
+    ),
+  },
+  {
+    path: "/landlord/3/:id",
+    element: (
+      <SuspenseWrapper>
+        <GuestLayout>
+          <LandlordQuiz activePage={3} />
         </GuestLayout>
       </SuspenseWrapper>
     ),
@@ -59,17 +79,37 @@ const routes: RouteObject[] = [
     ),
   },
   {
-    path: "hunter",
+    path: "hunter/1",
     element: (
       <SuspenseWrapper>
         <GuestLayout>
-          <HunterPage />
+          <HunterPage activePage={1} />
         </GuestLayout>
       </SuspenseWrapper>
     ),
   },
   {
-    path: "hunter-preview",
+    path: "hunter/1/:id",
+    element: (
+      <SuspenseWrapper>
+        <GuestLayout>
+          <HunterPage activePage={1} />
+        </GuestLayout>
+      </SuspenseWrapper>
+    ),
+  },
+  {
+    path: "hunter/2/:id",
+    element: (
+      <SuspenseWrapper>
+        <GuestLayout>
+          <HunterPage activePage={2} />
+        </GuestLayout>
+      </SuspenseWrapper>
+    ),
+  },
+  {
+    path: "hunter-preview/:id",
     element: (
       <SuspenseWrapper>
         <GuestLayout>
