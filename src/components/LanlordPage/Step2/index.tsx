@@ -14,7 +14,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AdvertisementType } from "../../../utils/advertisement";
 import useLandlord from "../../../hooks/useLandlord";
-import useCommonTranslation from "../../../hooks/useCommonTranslation";
 import useAdvertisementMutations from "../../../mutations/advertisement";
 import useNotification from "../../../hooks/useNotification";
 const landlordSchema = Yup.object().shape({
@@ -92,7 +91,7 @@ interface Step2Props {
   updateTabIndex: Function;
 }
 const Step2: React.FC<Step2Props> = () => {
-  const { t } = useCommonTranslation();
+  // const { t } = useCommonTranslation();
   const { createAdvertisementMutation } = useAdvertisementMutations();
   const { showSnackBar } = useNotification();
   const {} = useLandlord();

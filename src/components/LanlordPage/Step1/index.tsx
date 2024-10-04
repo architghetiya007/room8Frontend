@@ -1,14 +1,11 @@
 import {
   Box,
   Grid,
-  InputAdornment,
   OutlinedInput,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import React from "react";
-import SearchIcon from "@mui/icons-material/Search";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import useCommonTranslation from "../../../hooks/useCommonTranslation";

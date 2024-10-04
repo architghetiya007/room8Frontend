@@ -155,7 +155,7 @@ const GoogleMapsAutocomplete: React.FC<GoogleMapsAutocompleteProps> = ({
   return (
     <Autocomplete
       inputValue={inputValue}
-      onInputChange={(event, newInputValue) => {
+      onInputChange={(_, newInputValue) => {
         setInputValue(newInputValue);
         if (newInputValue) {
           fetchPlacePredictions(newInputValue);
@@ -163,7 +163,7 @@ const GoogleMapsAutocomplete: React.FC<GoogleMapsAutocompleteProps> = ({
       }}
       options={options}
       getOptionLabel={(option) => option.description || ""}
-      onChange={(event, value) => {
+      onChange={(_, value) => {
         if (value) {
           fetchPlaceDetails(value.place_id); // Fetch details of selected place
         }
