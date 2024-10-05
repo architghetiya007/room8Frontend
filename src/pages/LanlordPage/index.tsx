@@ -11,7 +11,9 @@ const LandlordPage: React.FC<LandlordPageProps> = ({ activePage }) => {
   const [tabIndex, setTabIndex] = useState<number>(1);
 
   useEffect(() => {
-    if (activePage === 2) {
+    if (activePage === 1) {
+      setTabIndex(activePage);
+    } else if (activePage === 2) {
       setTabIndex(activePage);
     } else if (activePage === 3) {
       setTabIndex(activePage);

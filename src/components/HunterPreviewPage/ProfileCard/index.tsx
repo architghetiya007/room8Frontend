@@ -19,9 +19,13 @@ const ProfileCard: React.FC = () => {
     >
       <Grid container spacing={1}>
         <Grid item xs={12} md={3}>
-          <Box component={"img"} src={ProfilePNG}></Box>
+          <Box sx={{
+            width: {
+              xs: '100%'
+            }
+          }} component={"img"} src={ProfilePNG}></Box>
         </Grid>
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} md={5} ml={2}>
           <Stack spacing={1}>
             <Typography
               sx={{

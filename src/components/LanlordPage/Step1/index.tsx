@@ -392,7 +392,7 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <OutlinedButton>{t("CANCEL_BUTTON_TEXT")}</OutlinedButton>
+          <OutlinedButton type="button" onClick={() => navigate('/')}>{t("CANCEL_BUTTON_TEXT")}</OutlinedButton>
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton

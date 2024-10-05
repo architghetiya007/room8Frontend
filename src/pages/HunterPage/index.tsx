@@ -9,7 +9,9 @@ const HunterPage: React.FC<HunterPageProps> = ({ activePage }) => {
   const [tabIndex, setTabIndex] = useState<number>(activePage ?? 1);
 
   useEffect(() => {
-    if (activePage === 2) {
+    if (activePage === 1) {
+      setTabIndex(activePage);
+    } else if (activePage === 2) {
       setTabIndex(activePage);
     }
   }, [activePage]); // Dependencies to re-run effect on changes

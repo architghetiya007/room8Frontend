@@ -125,7 +125,7 @@ const Step2: React.FC<Step2Props> = () => {
       },
     });
   };
-  console.log(formik.errors)
+  console.log(formik.errors);
   useEffect(() => {
     getAdvertisementAPI();
   }, []);
@@ -421,7 +421,12 @@ const Step2: React.FC<Step2Props> = () => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <OutlinedButton>{t("BACK_BUTTON_TEXT")}</OutlinedButton>
+          <OutlinedButton
+            type="button"
+            onClick={() => navigate(`/hunter/1/${advertisementData?._id}`)}
+          >
+            {t("BACK_BUTTON_TEXT")}
+          </OutlinedButton>
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton

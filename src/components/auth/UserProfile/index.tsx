@@ -62,9 +62,15 @@ const UserProfile: React.FC = () => {
           maxWidth: "600px",
           boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
           borderRadius: "12px",
+          
         }}
       >
-        <CardContent>
+        <CardContent sx={{
+          px:{
+            xs: 1,
+            md: 2
+          }
+        }}>
           <Typography variant="h5" fontWeight="bold" align="center" mb={2}>
             Account Management
           </Typography>

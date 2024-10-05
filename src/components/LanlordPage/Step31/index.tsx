@@ -343,7 +343,12 @@ const Step31: React.FC<Step31Props> = () => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <OutlinedButton>{t("BACK_BUTTON_TEXT")}</OutlinedButton>
+          <OutlinedButton
+            type="button"
+            onClick={() => navigate(`/landlord/2/${advertisementData?._id}`)}
+          >
+            {t("BACK_BUTTON_TEXT")}
+          </OutlinedButton>
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton

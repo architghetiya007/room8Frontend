@@ -399,7 +399,12 @@ const Step2: React.FC<Step2Props> = () => {
           </Stack>
         </Grid>
         <Grid item xs={12} md={6}>
-          <OutlinedButton>BACK</OutlinedButton>
+          <OutlinedButton
+            type="button"
+            onClick={() => navigate(`/landlord/1/${advertisementData?._id}`)}
+          >
+            BACK
+          </OutlinedButton>
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
