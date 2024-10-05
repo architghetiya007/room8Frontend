@@ -15,7 +15,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AdvertisementData } from "../../../types/advertisement";
 
 const addressSchema = Yup.object().shape({
-  streetNumber: Yup.string().nullable(), // Corresponds to streetNumber in interface
+  streetNumber: Yup.string().optional(), // Corresponds to streetNumber in interface
   streetName: Yup.string(), // Corresponds to streetName in interface
   city: Yup.string(), // Corresponds to city in interface
   state: Yup.string(), // Corresponds to state in interface
@@ -46,6 +46,36 @@ const landlordSchema = Yup.object().shape({
   parking: Yup.string().required("Parking type is required"),
   balconyInApartment: Yup.string().required("Balcony in apartment is required"),
 });
+
+interface Address {
+  streetNumber?: string;
+  streetName?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  postalCode?: string;
+  addressLine?: string;
+  formattedAddress?: string;
+  coordinates?: number[]; // Assuming coordinates are represented as an array of numbers (latitude, longitude)
+}
+
+interface PropertyFormValues {
+  propertyOffer: string;
+  typeofProperty: string;
+  address?: Address;
+  doYouLiveHere: string;
+  ownerLiveHere: string;
+  howmanyPeopleLive: string; // You may want to use `number` if this is always a number
+  propertySize: number; // Assuming property size is a number
+  roomsAmount: string; // You may want to use `number` if this is always a number
+  floor: string; // You may want to use `number` if this is always a number
+  numberOfFloor: string; // You may want to use `number` if this is always a number
+  liftInBuilding: string;
+  IsApartmentFurnished: string;
+  kitchen: string;
+  parking: string;
+  balconyInApartment: string;
+}
 interface Step1Props {
   updateTabIndex: Function;
 }
@@ -71,7 +101,7 @@ const Step1: React.FC<Step1Props> = () => {
     parkingOptions,
     roomsAmount,
   } = useLandlord();
-  const formik = useFormik({
+  const formik = useFormik<PropertyFormValues>({
     initialValues: {
       propertyOffer: "ENTIREROOM",
       typeofProperty: "FLAT",
@@ -101,13 +131,13 @@ const Step1: React.FC<Step1Props> = () => {
     },
     validationSchema: landlordSchema,
     onSubmit: (values) => {
-      if (!formik.values.address.formattedAddress) {
+      if (!formik.values!.address!.formattedAddress) {
         showSnackBar({ message: t("messages.address") });
         return;
       }
       const body = {
         advertiseType: AdvertisementType.LANDLORD,
-        landlordData: { ...advertisementData?.landlordData,...values },
+        landlordData: { ...advertisementData?.landlordData, ...values },
       };
       if (params.id) {
         updateAdvertisementMutation.mutate(
@@ -142,7 +172,7 @@ const Step1: React.FC<Step1Props> = () => {
         setAdvertisementData(data!.data);
         formik.setValues({
           ...formik.values,
-          // ...data!.data.landlordData,
+          ...data!.data.landlordData,
         });
       },
       onError: (error: Error) => {
@@ -392,7 +422,9 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <OutlinedButton type="button" onClick={() => navigate('/')}>{t("CANCEL_BUTTON_TEXT")}</OutlinedButton>
+          <OutlinedButton type="button" onClick={() => navigate("/")}>
+            {t("CANCEL_BUTTON_TEXT")}
+          </OutlinedButton>
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton

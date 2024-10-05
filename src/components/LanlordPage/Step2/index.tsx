@@ -42,6 +42,23 @@ const landlordSchema = Yup.object().shape({
   photosOfPlace: Yup.array().of(Yup.string()),
 });
 
+interface RoomFormValues {
+  roomSize: string; // Assuming roomSize is a string (you may want to specify number if it's numeric)
+  howManyPropleInRoom: string; // Keeping as string; consider using number if it's always numeric
+  isRoomFurnished: string; // Assuming it's a string, could also be a boolean
+  bed: string; // Bed type as string
+  privateBathroom: string; // Assuming it's a string (could also be a boolean)
+  doesRoomHaveBalcony: string; // Assuming it's a string (could also be a boolean)
+  dateAvailable: string; // Keeping as string (consider using Date type if it's a date)
+  minimumStay: string; // Keeping as string (consider using number if numeric)
+  maximumStay: string; // Keeping as string (consider using number if numeric)
+  rentPerMonth: string; // Assuming rent is a string (consider using number if numeric)
+  billIncludeInRent: string; // Assuming it's a string (could also be a boolean)
+  deposit: string; // Keeping as string (consider using number if numeric)
+  descriptionOfFlat: string; // Description as string
+  photosOfPlace: string[]; // Array of strings for photos
+}
+
 interface Step2Props {
   updateTabIndex: Function;
 }
@@ -60,7 +77,7 @@ const Step2: React.FC<Step2Props> = () => {
   } = useLandlord();
   const [advertisementData, setAdvertisementData] =
     useState<AdvertisementData>();
-  const formik = useFormik({
+  const formik = useFormik<RoomFormValues>({
     initialValues: {
       roomSize: "",
       howManyPropleInRoom: "02",
@@ -108,7 +125,7 @@ const Step2: React.FC<Step2Props> = () => {
         setAdvertisementData(data?.data);
         formik.setValues({
           ...formik.values,
-          // ...data?.data?.landlordData,
+          ...data?.data?.landlordData,
         });
       },
       onError: (error: Error) => {

@@ -7,26 +7,28 @@ const RoomRentalSection: React.FC = () => {
       sx={{
         px: {
           xs: 1,
-          md: 4
+          md: 4,
         },
         py: {
           xs: 1,
-          md: 10
+          md: 10,
         },
       }}
     >
-      <Container sx={{
-        px: {
-          xs: 1,
-          md: 2
-        },
-      }}>
+      <Container
+        sx={{
+          px: {
+            xs: 1,
+            md: 2,
+          },
+        }}
+      >
         <Box
           sx={{
             backgroundColor: "white",
             backgroundImage: `url(${RoomBackImage})`, // URL to your image
             width: "100%",
-            height: {xs: 'auto',md: '230px'},
+            height: { xs: "auto", md: "230px" },
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -34,7 +36,7 @@ const RoomRentalSection: React.FC = () => {
             boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.1)", // White shadow
             transition: "box-shadow 0.3s ease-in-out",
             borderRadius: "20px",
-            p:1
+            p: 1,
           }}
         >
           <Typography
