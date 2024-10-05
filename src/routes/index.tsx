@@ -16,6 +16,7 @@ const ReserPasswordPage = lazy(() => import("../pages/ResetPasswordPage"));
 const UserProfilePage = lazy(() => import("../pages/UserProfilePage"));
 const EmailVerifyPage = lazy(() => import("../pages/EmailVerifyPage"));
 const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
+const ChatsPage = lazy(() => import("../pages/ChatsPage"));
 
 const routes: RouteObject[] = [
   {
@@ -134,6 +135,16 @@ const routes: RouteObject[] = [
       <SuspenseWrapper>
         <GuestLayout>
           <HunterPreviewPage />
+        </GuestLayout>
+      </SuspenseWrapper>
+    ),
+  },
+  {
+    path: "/messages",
+    element: (
+      <SuspenseWrapper>
+        <GuestLayout>
+          <ChatsPage />
         </GuestLayout>
       </SuspenseWrapper>
     ),

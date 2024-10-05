@@ -25,6 +25,7 @@
     "@tanstack/react-query": "^5.53.1",
     "axios": "^1.7.6",
     "dayjs": "^1.11.13",
+    "firebase": "^10.14.0",
     "formik": "^2.4.6",
     "i18next": "^23.14.0",
     "libphonenumber-js": "^1.11.8",
