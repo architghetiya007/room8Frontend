@@ -210,8 +210,6 @@ const Step1: React.FC<Step1Props> = () => {
     },
   });
 
-  console.log(formik.errors);
-
   const getAdvertisementAPI = () => {
     getAdvertisementMutation.mutate(params?.id ?? "", {
       onSuccess: (data) => {
@@ -321,6 +319,7 @@ const Step1: React.FC<Step1Props> = () => {
             display={"flex"}
             alignItems={"center"}
             justifyContent={"flex-end"}
+            gap={1}
           >
             <Typography variant="h5">{t("availableNow")}</Typography>
             <IOSSwitch
@@ -357,6 +356,7 @@ const Step1: React.FC<Step1Props> = () => {
             onClickPlaceDetails={(e) => {
               formik.setFieldValue("address", e);
             }}
+            selectedAddress={formik.values.address?.formattedAddress ?? ""}
           />
         </Grid>
         <Grid item xs={12}>

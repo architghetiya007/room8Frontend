@@ -19,22 +19,30 @@ interface AddressDetails {
   formattedAddress?: string;
   coordinates?: [number, number]; // Coordinates array [latitude, longitude]
 }
+
 interface GoogleMapsAutocompleteProps {
   onClickPlaceDetails: (details: AddressDetails | null) => void; // Callback for place details
+  selectedAddress?: string;
 }
+
 const GoogleMapsAutocomplete: React.FC<GoogleMapsAutocompleteProps> = ({
   onClickPlaceDetails,
+  selectedAddress,
 }) => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string>(selectedAddress || ""); // Set initial state from selectedAddress
   const [options, setOptions] = useState<PlaceType[]>([]);
   const [loading, setLoading] = useState(false);
-  const [addressDetails, setAddressDetails] = useState<AddressDetails | null>(
-    null
-  );
   const [autocompleteService, setAutocompleteService] =
     useState<google.maps.places.AutocompleteService | null>(null);
   const [placeService, setPlaceService] =
     useState<google.maps.places.PlacesService | null>(null);
+
+  // Effect to update inputValue when selectedAddress changes
+  useEffect(() => {
+    if (selectedAddress !== undefined) {
+      setInputValue(selectedAddress || ""); // Default to empty string if undefined
+    }
+  }, [selectedAddress]);
 
   useEffect(() => {
     if (!autocompleteService && window.google) {
@@ -44,7 +52,6 @@ const GoogleMapsAutocomplete: React.FC<GoogleMapsAutocompleteProps> = ({
     }
   }, [autocompleteService]);
 
-  // Initialize PlacesService once Google Maps API is loaded
   useEffect(() => {
     if (!placeService && window.google) {
       const map = document.createElement("div"); // Create a dummy div for the PlacesService
@@ -145,14 +152,14 @@ const GoogleMapsAutocomplete: React.FC<GoogleMapsAutocompleteProps> = ({
         addressComponents.postalCode || ""
       }, ${addressComponents.country || ""}`.trim();
 
-      setAddressDetails(addressComponents);
-      onClickPlaceDetails(addressDetails);
+      onClickPlaceDetails(addressComponents); // Pass the updated address details
     }
   };
 
   return (
     <Autocomplete
       inputValue={inputValue}
+      value={{ description: inputValue, place_id: "1" }}
       onInputChange={(_, newInputValue) => {
         setInputValue(newInputValue);
         if (newInputValue) {

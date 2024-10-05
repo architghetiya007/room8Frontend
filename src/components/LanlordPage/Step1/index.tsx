@@ -250,6 +250,7 @@ const Step1: React.FC<Step1Props> = () => {
             onClickPlaceDetails={(e) => {
               formik.setFieldValue("address", e);
             }}
+            selectedAddress={formik.values.address?.formattedAddress ?? ""}
           />
         </Grid>
         <Grid item xs={12}>
