@@ -181,7 +181,7 @@ const Step1: React.FC<Step1Props> = () => {
       });
     },
   });
-  
+
   return (
     <Box component={"form"}>
       <Grid container spacing={2} mt={2} mb={2}>
@@ -531,7 +531,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <OutlinedButton>{t("CANCEL_BUTTON_TEXT")}</OutlinedButton>
+          <OutlinedButton type="button" onClick={() => navigate('/')}>{t("CANCEL_BUTTON_TEXT")}</OutlinedButton>
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton

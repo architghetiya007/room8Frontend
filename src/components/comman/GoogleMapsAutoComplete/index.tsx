@@ -94,7 +94,6 @@ const GoogleMapsAutocomplete: React.FC<GoogleMapsAutocompleteProps> = ({
           status === window.google.maps.places.PlacesServiceStatus.OK &&
           place
         ) {
-          console.log("Full Place details:", place);
           extractAddressComponents(place);
         } else {
           console.error("Error fetching place details:", status);
@@ -146,7 +145,6 @@ const GoogleMapsAutocomplete: React.FC<GoogleMapsAutocompleteProps> = ({
         addressComponents.postalCode || ""
       }, ${addressComponents.country || ""}`.trim();
 
-      console.log("Extracted Address Components:", addressComponents);
       setAddressDetails(addressComponents);
       onClickPlaceDetails(addressDetails);
     }

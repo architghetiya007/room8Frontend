@@ -5,9 +5,11 @@ import OutlinedButton from "../../comman/OutlinedButton";
 import CustomLoadingButton from "../../comman/CustomLoadingButton";
 interface HunterDescriptionProps {
   updateStatusAPI: () => void;
+  loading: boolean;
 }
 const HunterDescription: React.FC<HunterDescriptionProps> = ({
   updateStatusAPI,
+  loading,
 }) => {
   return (
     <Box
@@ -214,6 +216,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
+            loading={loading}
             onClick={() => updateStatusAPI()}
             type="button"
             sx={{ width: "100%" }}

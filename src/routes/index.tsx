@@ -69,7 +69,17 @@ const routes: RouteObject[] = [
     ),
   },
   {
-    path: "lanlord-preview/:id",
+    path: "/landlord/31/:id",
+    element: (
+      <SuspenseWrapper>
+        <GuestLayout>
+          <LandlordQuiz activePage={31} />
+        </GuestLayout>
+      </SuspenseWrapper>
+    ),
+  },
+  {
+    path: "landlord-preview/:id",
     element: (
       <SuspenseWrapper>
         <GuestLayout>

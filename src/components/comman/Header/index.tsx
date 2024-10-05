@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Container,
+  IconButton,
   Link,
   Typography,
   useTheme,
@@ -17,6 +18,7 @@ import ForgotPassword from "../../auth/ForgotPassword";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import PhoneNumberDialog from "../../auth/PhoneNumberDialog";
+import MenuIcon from "@mui/icons-material/Menu";
 const Header: React.FC = () => {
   const userSlice = useSelector((state: RootState) => state.user);
   const [openLoginDialog, setOpenLoginDialog] = useState<boolean>(false);
@@ -79,10 +81,35 @@ const Header: React.FC = () => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-          <Typography sx={{ fontWeight: "bold", fontSize: "24px" }}>
-            Room8
-          </Typography>
-          <Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
+            }}
+          >
+            <IconButton
+              sx={{
+                display: {
+                  xs: "block",
+                  md: "none",
+                },
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography sx={{ fontWeight: "bold", fontSize: "24px" }}>
+              Room8
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: {
+                xs: "none",
+                md: "block",
+              },
+            }}
+          >
             {HeaderMenus.map((item) => {
               return (
                 <Link

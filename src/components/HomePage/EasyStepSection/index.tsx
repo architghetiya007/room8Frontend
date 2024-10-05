@@ -53,7 +53,7 @@ const EasyStepSection: React.FC = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} display={'flex'} gap={2} flexDirection={'column'}>
             <Typography
               sx={{
                 fontSize: "24px",
@@ -107,7 +107,7 @@ const EasyStepSection: React.FC = () => {
               ></Box>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} display={'flex'} gap={2} flexDirection={'column'}>
             <Typography
               sx={{
                 fontSize: "24px",
@@ -129,7 +129,7 @@ const EasyStepSection: React.FC = () => {
               suits your preferences.
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} display={'flex'} gap={2} flexDirection={'column'}>
             <Typography
               sx={{
                 fontSize: "24px",

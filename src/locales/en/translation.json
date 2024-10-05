@@ -56,7 +56,8 @@
   "smokingOptions": {
     "YES": "Yes",
     "NO": "No",
-    "OUTSIDE": "OutSide Only"
+    "OUTSIDE": "OutSide Only",
+    "NO_PREFERENCE" : "NO PREFERENCES"
   },
   "commanOptions": {
     "NO_PREFERENCE": "NO PREFERENCES",
@@ -140,6 +141,11 @@
     "title": "Write a few sentences about yourself so others can get to know you better",
     "subTitle": "(Tell about your ideal roommates and a little about yourself. What you do for work, what you like to do for fun, or where you're from. Also, be sure to let them know what you're looking for)"
   },
+  "yesNoOutside": {
+    "YES": "YES",
+    "NO": "NO",
+    "OUTSIDE": "OutSide Only"
+  },
   "landlord": {
     "GO_TO_ROOM_DESCRIPTION": "Go to Room Description",
     "propertyOfferOptions": {
@@ -173,6 +179,31 @@
       "WOMAN": "WOMAN",
       "COUPLE": "COUPLE",
       "GROUPSFRIENDS": "GROUPS/FRIENDS"
+    },
+    "howManyPropleInRoom": {
+      "01": "01",
+      "02": "02",
+      "03+": "03+"
+    },
+    "yesNoPartiallyOptions": {
+      "YES": "YES",
+      "NO": "NO",
+      "PARTIALLY": "PARTIALLY"
+    },
+    "bedOptions": {
+      "SINGLE": "SINGLE",
+      "DOUBLE": "DOUBLE",
+      "COUCH": "COUCH",
+      "NOBED": "NO BED"
+    },
+    "roomsAmount": {
+      "STUDIO": "STUDIO",
+      "01": "01",
+      "02": "02",
+      "03+": "03+"
     }
+  },
+  "messages" : {
+    "address" : "Please Select Address"
   }
 }

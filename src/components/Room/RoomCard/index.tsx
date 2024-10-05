@@ -4,7 +4,11 @@ import RoomImage from "../../../assets/room.png";
 import BathtubOutlinedIcon from "@mui/icons-material/BathtubOutlined";
 import BedOutlinedIcon from "@mui/icons-material/BedOutlined";
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
-const RoomCard: React.FC = () => {
+import { AdvertisementData } from "../../../types/advertisement";
+interface RoomCardProps {
+  advertisement: AdvertisementData;
+}
+const RoomCard: React.FC<RoomCardProps> = () => {
   return (
     <Stack
       flexDirection={"column"}

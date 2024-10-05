@@ -64,7 +64,7 @@ export interface LandlordRequestDTO {
   doYouLiveHere?: string;
   ownerLiveHere?: string;
   howmanyPeopleLive?: string; // Changed to number for numeric value
-  propertySize?: string; // Kept as number, can be refined further
+  propertySize?: number; // Kept as number, can be refined further
   roomsAmount?: string; // Made optional
   floor?: string;
   numberOfFloor?: string;
@@ -73,46 +73,46 @@ export interface LandlordRequestDTO {
   kitchen?: string; // Made optional
   parking?: string; // Made optional
   balconyInApartment?: string;
-  roomSize?: number; // Kept as number, can be refined further
+  roomSize?: string; // Kept as number, can be refined further
   howManyPeopleInRoom?: number; // Changed to number for numeric value
   isRoomFurnished?: string; // Using enum for better type safety
   bed?: string; // Made optional
-  privateBathroom?: boolean;
-  doesRoomHaveBalcony?: boolean;
-  dateAvailable?: Date; // Changed to Date type
+  privateBathroom?: string;
+  doesRoomHaveBalcony?: string;
+  dateAvailable?: string; // Changed to Date type
   minimumStay?: string; // Consider specifying format (e.g., '1 month')
   maximumStay?: string; // Consider specifying format (e.g., '12 months')
-  rentPerMonth?: number; // Made optional
-  billIncludeInRent?: boolean; // Changed to boolean for clarity
-  deposit?: number; // Made optional
+  rentPerMonth?: string; // Made optional
+  billIncludeInRent?: string; // Changed to boolean for clarity
+  deposit?: string; // Made optional
   descriptionOfFlat?: string; // Made optional
   photosOfPlace?: string[]; // Made optional
   whoAreYou?: string; // Made optional
   name?: string; // Made optional
   age?: number; // Made optional
-  haveAnyChildren?: boolean; // Made optional
-  havePet?: boolean; // Made optional
+  haveAnyChildren?: string; // Made optional
+  havePet?: string; // Made optional
   typeOfEmployment?: string; // Using enum for better type safety
   doYouSmoke?: string; // Using enum for better type safety
   descriptionAbout?: string; // Made optional
   flatmateAccepting?: string[]; // Made optional
   ageOfFutureRoomMate?: number[]; // Made optional
-  acceptTenantWithChildren?: boolean; // Changed to boolean for clarity
-  acceptPets?: boolean; // Changed to boolean for clarity
-  acceptSmoking?: boolean; // Changed to boolean for clarity
+  acceptTenantWithChildren?: string; // Changed to boolean for clarity
+  acceptPets?: string; // Changed to boolean for clarity
+  acceptSmoking?: string; // Changed to boolean for clarity
   flatmatePhoto?: string; // Made optional
   profilePhoto?: string; // Made optional
   genderOfCurrentTenants?: string; // Using enum for better type safety
   currentTenantsName?: string; // Made optional
   ageOfCurrentTenants?: number; // Made optional
-  doChildrenLiveHere?: boolean; // Made optional
-  isPetLivingInApartment?: boolean; // Made optional
+  doChildrenLiveHere?: string; // Made optional
+  isPetLivingInApartment?: string; // Made optional
   currentTenantsEmployment?: string; // Using enum for better type safety
   tenantsSmoking?: string; // Using enum for better type safety
   preferenceOfFutureTenants?: string[]; // Made optional
   ageRangeOfFutureRoommate?: number[]; // Made optional
-  tenantAcceptPets?: boolean; // Changed to boolean for clarity
-  tenantAcceptSmoking?: boolean; // Changed to boolean for clarity
+  tenantAcceptPets?: string; // Changed to boolean for clarity
+  tenantAcceptSmoking?: string; // Changed to boolean for clarity
 }
 export interface AdvertisementRequestDTO {
   advertiseType: string;

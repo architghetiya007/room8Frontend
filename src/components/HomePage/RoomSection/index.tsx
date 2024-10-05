@@ -16,8 +16,6 @@ const RoomSection: React.FC = () => {
     });
   };
 
-  console.log(roomData, "roomData");
-
   useEffect(() => {
     getAllAdvertisementAPI();
   }, []);
@@ -37,10 +35,10 @@ const RoomSection: React.FC = () => {
     >
       <Container>
         <Grid container spacing={2}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => {
+          {roomData.map((item) => {
             return (
-              <Grid key={item} item xs={12} sm={6} md={6} lg={4}>
-                <RoomCard />
+              <Grid key={item._id} item xs={12} sm={6} md={6} lg={4}>
+                <RoomCard advertisement={item} />
               </Grid>
             );
           })}

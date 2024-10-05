@@ -6,7 +6,7 @@ const RoomRentalSection: React.FC = () => {
     <Box
       sx={{
         px: {
-          xs: 2,
+          xs: 1,
           md: 4
         },
         py: {
@@ -15,7 +15,12 @@ const RoomRentalSection: React.FC = () => {
         },
       }}
     >
-      <Container>
+      <Container sx={{
+        px: {
+          xs: 1,
+          md: 2
+        },
+      }}>
         <Box
           sx={{
             backgroundColor: "white",
@@ -29,6 +34,7 @@ const RoomRentalSection: React.FC = () => {
             boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.1)", // White shadow
             transition: "box-shadow 0.3s ease-in-out",
             borderRadius: "20px",
+            p:1
           }}
         >
           <Typography

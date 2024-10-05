@@ -2,8 +2,10 @@ import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RoomMatePng from "../../../assets/images/roommate.png";
 import ApartmentPng from "../../../assets/images/apartment.png";
+import { useNavigate } from "react-router-dom";
 
 const ApartmentSection: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <Box>
       <Container>
@@ -30,6 +32,8 @@ const ApartmentSection: React.FC = () => {
                   place.
                 </Typography>
                 <Button
+                  type="button"
+                  onClick={() => navigate("/hunter/1")}
                   startIcon={<AddIcon />}
                   sx={{
                     backgroundColor: "#44ABEB",
@@ -82,6 +86,8 @@ const ApartmentSection: React.FC = () => {
                   ideal place.
                 </Typography>
                 <Button
+                  type="button"
+                  onClick={() => navigate("/landlord/1")}
                   startIcon={<AddIcon />}
                   sx={{
                     backgroundColor: "#E152B9",

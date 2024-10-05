@@ -1,10 +1,4 @@
-import {
-  Box,
-  Grid,
-  OutlinedInput,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, OutlinedInput, Stack, Typography } from "@mui/material";
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -40,7 +34,7 @@ const landlordSchema = Yup.object().shape({
   ownerLiveHere: Yup.string().required("Owner live here is required"),
   howmanyPeopleLive: Yup.string().required("How many people live is required"),
   propertySize: Yup.number().required("Property size is required").min(0),
-  roomsAmoount: Yup.string().required("Rooms amount is required"),
+  roomsAmount: Yup.string().required("Rooms amount is required"),
   floor: Yup.number().required("Floor is required").min(0),
   numberOfFloor: Yup.number(),
   liftInBuilding: Yup.string().required("Lift in building is required"),
@@ -49,77 +43,7 @@ const landlordSchema = Yup.object().shape({
   ),
   kitchen: Yup.string().required("Kitchen type is required"),
   parking: Yup.string().required("Parking type is required"),
-  balconyInApartment: Yup.string().required(
-    "Balcony in apartment is required"
-  ),
-  // roomSize: Yup.number().required("Room size is required").min(0),
-  // howManyPropleInRoom: Yup.string().required(
-  //   "How many people in room is required"
-  // ),
-  // isRoomFurnished: Yup.string().required("Is room furnished is required"),
-  // bed: Yup.string().required("Bed information is required"),
-  // privateBathroom: Yup.boolean().required("Private bathroom is required"),
-  // doesRoomHaveBalcony: Yup.boolean().required(
-  //   "Does room have balcony is required"
-  // ),
-  // dateAvailable: Yup.number().required("Date available is required"),
-  // minimumStay: Yup.string().required("Minimum stay is required"),
-  // maximumStay: Yup.string().required("Maximum stay is required"),
-  // rentPerMonth: Yup.number().required("Rent per month is required").min(0),
-  // billIncludeInRent: Yup.string().required("Bill included in rent is required"),
-  // deposit: Yup.number().required("Deposit is required").min(0),
-  // descriptionOfFlat: Yup.string().required("Description of flat is required"),
-  // photosOfPlace: Yup.array().of(Yup.string().required("Photo URL is required")),
-  // whoAreYou: Yup.string().required("Who are you is required"),
-  // name: Yup.string().required("Name is required"),
-  // age: Yup.number().required("Age is required").min(0),
-  // haveAnychildren: Yup.boolean().required("Have any children is required"),
-  // havePet: Yup.boolean().required("Have pet is required"),
-  // typeOfEmployment: Yup.string().required("Type of employment is required"),
-  // doYouSmoke: Yup.string().required("Do you smoke is required"),
-  // descriptionAbout: Yup.string().required("Description about is required"),
-  // flatmateAccepting: Yup.array().of(
-  //   Yup.string().required("Flatmate accepting value is required")
-  // ),
-  // ageOfFutureRoomMate: Yup.array()
-  //   .of(Yup.number().required("Age of future roommate is required"))
-  //   .min(1, "At least one age value is required"),
-  // acceptTenantWithChilder: Yup.string().required(
-  //   "Accept tenant with children is required"
-  // ),
-  // acceptPets: Yup.string().required("Accept pets is required"),
-  // acceptSmoking: Yup.string().required("Accept smoking is required"),
-  // flatmatePhoto: Yup.string().required("Flatmate photo URL is required"),
-  // profilePhoto: Yup.string().required("Profile photo URL is required"),
-  // genderOfCurrentTenants: Yup.string().required(
-  //   "Gender of current tenants is required"
-  // ),
-  // currentTenantsName: Yup.string().required(
-  //   "Current tenant's name is required"
-  // ),
-  // ageOfCurrentTenants: Yup.number()
-  //   .required("Age of current tenants is required")
-  //   .min(0),
-  // doChildrenLiveHere: Yup.boolean().required(
-  //   "Do children live here is required"
-  // ),
-  // isPetLivingInApartment: Yup.boolean().required(
-  //   "Is pet living in apartment is required"
-  // ),
-  // currentTenantsEmployment: Yup.string().required(
-  //   "Current tenant's employment is required"
-  // ),
-  // tenantsSmoking: Yup.string().required("Tenants smoking is required"),
-  // preferenceOfFutureTenants: Yup.array().of(
-  //   Yup.string().required("Preference of future tenant is required")
-  // ),
-  // ageRangeOfFutureRoommate: Yup.array()
-  //   .of(Yup.number().required("Age range of future roommate is required"))
-  //   .min(1, "At least one age range value is required"),
-  // acceptTenantWithChildren: Yup.string().required(
-  //   "Accept tenant with children is required"
-  // ),
-  // tenantAcceptPets: Yup.string().required("Tenant accepts pets is required"),
+  balconyInApartment: Yup.string().required("Balcony in apartment is required"),
 });
 interface Step1Props {
   updateTabIndex: Function;
@@ -137,6 +61,7 @@ const Step1: React.FC<Step1Props> = () => {
     IsApartmentFurnished,
     kitchenOptions,
     parkingOptions,
+    roomsAmount,
   } = useLandlord();
   const formik = useFormik({
     initialValues: {
@@ -156,8 +81,8 @@ const Step1: React.FC<Step1Props> = () => {
       doYouLiveHere: "YES",
       ownerLiveHere: "YES",
       howmanyPeopleLive: "02",
-      propertySize: "02",
-      roomsAmoount: "02+",
+      propertySize: 0,
+      roomsAmount: "01",
       floor: "01",
       numberOfFloor: "",
       liftInBuilding: "YES",
@@ -168,6 +93,10 @@ const Step1: React.FC<Step1Props> = () => {
     },
     validationSchema: landlordSchema,
     onSubmit: (values) => {
+      if (!formik.values.address.formattedAddress) {
+        showSnackBar({ message: t("messages.address") });
+        return;
+      }
       const body = {
         advertiseType: AdvertisementType.LANDLORD,
         landlordData: { ...values },
@@ -184,7 +113,6 @@ const Step1: React.FC<Step1Props> = () => {
     },
   });
 
-  console.log(formik.errors)
   return (
     <Box component={"form"} onSubmit={formik.handleSubmit}>
       <Grid container spacing={2} mt={2} mb={2}>
@@ -208,7 +136,9 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          What type of accommodation are you interested in?
+          <Typography variant="h5">
+            What type of property do you offer?
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -220,7 +150,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          Type of the property
+          <Typography variant="h5">Type of the property</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -232,11 +162,13 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          Address of the place
+          <Typography variant="h5">Address of the place</Typography>
         </Grid>
         <Grid item xs={12}>
-          Don't be afraid - The exact address will be hidden. People will only
-          see approximate location
+          <Typography variant="body1">
+            Don't be afraid - The exact address will be hidden. People will only
+            see approximate location
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <GoogleMapsAutocomplete
@@ -249,13 +181,13 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          Tell us more about your place
+          <Typography variant="h5"> Tell us more about your place</Typography>
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          Do you live here?
+          <Typography variant="h5">Do you live here?</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -267,7 +199,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          Does the owner live here?
+          <Typography variant="h5">Does the owner live here?</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -279,7 +211,10 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          How many people live at this PROPERTY? (including you and new person)
+          <Typography variant="h5">
+            How many people live at this PROPERTY? (including you and new
+            person)
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -294,7 +229,7 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          Property Size
+          <Typography variant="h5">Property Size</Typography>
         </Grid>
         <Grid item xs={12}>
           <OutlinedInput
@@ -304,6 +239,18 @@ const Step1: React.FC<Step1Props> = () => {
             }
             fullWidth
             placeholder="100"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">Rooms Amount</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            options={roomsAmount}
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("roomsAmount", e);
+            }}
+            selectionOption={formik.values.roomsAmount}
           />
         </Grid>
         <Grid item xs={12}>
@@ -337,7 +284,7 @@ const Step1: React.FC<Step1Props> = () => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          Lift in the building?
+          <Typography variant="h5">Lift in the building?</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -349,7 +296,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          Is the apartment furnished?
+          <Typography variant="h5">Is the apartment furnished?</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -361,7 +308,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          Kitchen
+          <Typography variant="h5">Kitchen</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -373,7 +320,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          Parking
+          <Typography variant="h5">Parking</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -385,7 +332,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          Balcony in the apartment?
+          <Typography variant="h5">Balcony in the apartment?</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup

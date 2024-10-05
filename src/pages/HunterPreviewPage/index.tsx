@@ -21,7 +21,10 @@ const HunterPreviewPage: React.FC = () => {
         isActive: previewData?.isActive ? false : true,
       },
       {
-        onSuccess: () => {},
+        onSuccess: (data) => {
+          showSnackBar({ message: data!.message });
+          navigate(`/`);
+        },
       }
     );
   };
@@ -49,7 +52,10 @@ const HunterPreviewPage: React.FC = () => {
             <ProfileCard />
           </Grid>
           <Grid item xs={12}>
-            <HunterDescription updateStatusAPI={() => updateStatusAPI()} />
+            <HunterDescription
+              updateStatusAPI={() => updateStatusAPI()}
+              loading={updateStatusAdvertisementMutation.isPending}
+            />
           </Grid>
         </Grid>
       </Container>

@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AdvertisementType } from "../../../utils/advertisement";
@@ -16,75 +16,68 @@ import useAdvertisementMutations from "../../../mutations/advertisement";
 import CustomButtonGroup from "../../comman/CustomButtonGroup";
 import useLandlord from "../../../hooks/useLandlord";
 import { LoadingButton } from "@mui/lab";
-import { AdvertisementData } from "../../../types/advertisement";
-import { useNavigate, useParams } from "react-router-dom";
 import CustomLoadingButton from "../../comman/CustomLoadingButton";
 import OutlinedButton from "../../comman/OutlinedButton";
+import { useNavigate } from "react-router-dom";
 import useCommonTranslation from "../../../hooks/useCommonTranslation";
 const landlordSchema = Yup.object().shape({
-  whoAreYou: Yup.string(),
-  name: Yup.string(),
-  age: Yup.number(),
-  haveAnychildren: Yup.string(),
-  havePet: Yup.string(),
-  typeOfEmployment: Yup.string(),
-  doYouSmoke: Yup.string(),
-  descriptionAbout: Yup.string(),
-  flatmateAccepting: Yup.array().of(
-    Yup.string().required("Flatmate accepting value is required")
+  profilePhoto: Yup.string(),
+  genderOfCurrentTenants: Yup.string(),
+  currentTenantsName: Yup.string(),
+  ageOfCurrentTenants: Yup.string(),
+  doChildrenLiveHere: Yup.string(),
+  isPetLivingInApartment: Yup.string(),
+  currentTenantsEmployment: Yup.string(),
+  tenantsSmoking: Yup.string(),
+  preferenceOfFutureTenants: Yup.array().of(
+    Yup.string().required("Preference of future tenant is required")
   ),
-  ageOfFutureRoomMate: Yup.array().of(Yup.number()),
-  acceptTenantWithChilder: Yup.string(),
-  acceptPets: Yup.string(),
-  acceptSmoking: Yup.string(),
-  flatmatePhoto: Yup.string(),
+  ageRangeOfFutureRoommate: Yup.array().of(
+    Yup.number().required("Age range of future roommate is required")
+  ),
+  acceptTenantWithChildren: Yup.string(),
+  tenantAcceptPets: Yup.string(),
 });
 
-interface Step3Props {
+interface Step31Props {
   updateTabIndex: Function;
 }
-const Step3: React.FC<Step3Props> = () => {
+const Step31: React.FC<Step31Props> = () => {
   const { t } = useCommonTranslation();
-  const params = useParams();
   const navigate = useNavigate();
-  const { updateAdvertisementMutation, getAdvertisementMutation } =
-    useAdvertisementMutations();
+  const { updateAdvertisementMutation } = useAdvertisementMutations();
   const { showSnackBar } = useNotification();
-  const [advertisementData, setAdvertisementData] =
-    useState<AdvertisementData>();
   const {
     yesNoOptions,
     yesNoOutside,
     iamAcceptingOptions,
-    whoAreYou,
     commanPreferenceOptions,
     smokingOptions,
   } = useLandlord();
   const formik = useFormik({
     initialValues: {
-      whoAreYou: "WOMEN",
-      name: "",
-      age: "",
-      haveAnychildren: "YES",
-      havePet: "NO",
-      typeOfEmployment: "",
-      doYouSmoke: "YES",
-      descriptionAbout: "",
-      flatmateAccepting: ["WOMAN"],
-      ageOfFutureRoomMate: [18, 35],
-      acceptTenantWithChilder: "NO_PREFERENCE",
-      acceptPets: "NO_PREFERENCE",
-      acceptSmoking: "YES",
-      flatmatePhoto: "",
+      profilePhoto: "",
+      genderOfCurrentTenants: "WOMAN",
+      currentTenantsName: "",
+      ageOfCurrentTenants: "",
+      doChildrenLiveHere: "YES",
+      isPetLivingInApartment: "YES",
+      currentTenantsEmployment: "HYBRID_WORK",
+      tenantsSmoking: "YES",
+      preferenceOfFutureTenants: ["WOMAN"],
+      ageRangeOfFutureRoommate: [18, 35],
+      acceptTenantWithChildren: "NO_PREFERENCE",
+      tenantAcceptPets: "NO_PREFERENCE",
+      tenantAcceptSmoking: "YES",
     },
     validationSchema: landlordSchema,
     onSubmit: (values: any) => {
       const body = {
         advertiseType: AdvertisementType.LANDLORD,
-        landlordData: { ...advertisementData?.landlordData, ...values },
+        hunterData: { ...values },
       };
       updateAdvertisementMutation.mutate(
-        { advertisementId: params.id ?? "", data: body },
+        { advertisementId: "", data: body },
         {
           onSuccess: (data) => {
             showSnackBar({ message: data!.message });
@@ -97,25 +90,8 @@ const Step3: React.FC<Step3Props> = () => {
       );
     },
   });
-
-  const getAdvertisementAPI = () => {
-    getAdvertisementMutation.mutate(params?.id ?? "", {
-      onSuccess: (data) => {
-        setAdvertisementData(data?.data);
-      },
-      onError: (error: Error) => {
-        showSnackBar({ message: error.message, variant: "error" });
-        navigate("/");
-      },
-    });
-  };
-
-  useEffect(() => {
-    getAdvertisementAPI();
-  }, []);
-
   return (
-    <Box component={"form"} onSubmit={formik.handleSubmit}>
+    <Box component={"form"}>
       <Grid container spacing={2} mt={2} mb={2}>
         <Grid item xs={12}>
           <Typography>Step 3/3</Typography>
@@ -130,194 +106,11 @@ const Step3: React.FC<Step3Props> = () => {
               fontSize: "44px",
             }}
           >
-            Now, tell something about yourself
+            Tell us something about current tenants and your preferences
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">Who are you?</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("whoAreYou", e);
-            }}
-            selectionOption={formik.values.whoAreYou}
-            options={whoAreYou}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Stack direction={"column"}>
-            <Typography variant="h5">What's your name</Typography>
-            <OutlinedInput
-              value={formik.values.name}
-              onChange={(e) => formik.setFieldValue("name", e.target.value)}
-              fullWidth
-              placeholder="Your Name"
-            />
-          </Stack>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Stack direction={"column"}>
-            <Typography variant="h5">Your age</Typography>
-            <OutlinedInput
-              value={formik.values.age}
-              onChange={(e) => formik.setFieldValue("age", e.target.value)}
-              fullWidth
-              placeholder="Your age"
-            />
-          </Stack>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">Do any children live with you?</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("haveAnychildren", e);
-            }}
-            selectionOption={formik.values.haveAnychildren}
-            options={yesNoOptions}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">Do you have a pet?</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("havePet", e);
-            }}
-            selectionOption={formik.values.havePet}
-            options={yesNoOptions}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">
-            What do you do/type of employment?
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">Do you smoke?</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("doYouSmoke", e);
-            }}
-            selectionOption={formik.values.doYouSmoke}
-            options={yesNoOutside}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">
-            Write a few sentences about the place you want to rent.
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography sx={{ fontSize: "14px" }}>
-            Share a bit about yourself, your roommates, and the vibe of your
-            place to help everyone get a great feel for your home.
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <OutlinedInput
-            multiline
-            minRows={4}
-            fullWidth
-            placeholder="Your Message"
-            value={formik.values.descriptionAbout}
-            onChange={(e) =>
-              formik.setFieldValue("descriptionAbout", e.target.value)
-            }
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography
-            sx={{
-              background:
-                "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              fontSize: "44px",
-            }}
-          >
-            Your flatmate preferences
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">
-            I’m accepting (you can choose many)
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("flatmateAccepting", e);
-            }}
-            multiSelect={true}
-            selectionOption={formik.values.flatmateAccepting}
-            options={iamAcceptingOptions}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">Age of your future roommate</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Slider
-            aria-label="Restricted values"
-            value={formik.values.ageOfFutureRoomMate}
-            onChange={(_, newValue) => {
-              formik.setFieldValue("ageOfFutureRoomMate", newValue);
-            }}
-            step={1}
-            valueLabelDisplay="auto"
-            max={100}
-            min={0}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">
-            Do you accept tenants with children?
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("acceptTenantWithChilder", e);
-            }}
-            selectionOption={formik.values.acceptTenantWithChilder}
-            options={commanPreferenceOptions}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">Do you accept pets?</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("acceptPets", e);
-            }}
-            selectionOption={formik.values.acceptPets}
-            options={commanPreferenceOptions}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">Do you accept smoking?</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("acceptSmoking", e);
-            }}
-            selectionOption={formik.values.acceptSmoking}
-            options={smokingOptions}
-          />
         </Grid>
         <Grid item xs={12}>
           <Stack
@@ -355,6 +148,174 @@ const Step3: React.FC<Step3Props> = () => {
             </LoadingButton>
           </Stack>
         </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            Information about current tenants
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("flatmatePreference", e);
+            }}
+            selectionOption={formik.values.flatmatePreference}
+            options={iamAcceptingOptions}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Stack direction={"column"}>
+            <Typography variant="h5">Current tenant's name</Typography>
+            <OutlinedInput
+              value={formik.values.currentTenantsName}
+              onChange={(e) =>
+                formik.setFieldValue("currentTenantsName", e.target.value)
+              }
+              fullWidth
+              placeholder="Your Name"
+            />
+          </Stack>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Stack direction={"column"}>
+            <Typography variant="h5">Age of current tenant</Typography>
+            <OutlinedInput
+              value={formik.values.ageOfCurrentTenants}
+              onChange={(e) =>
+                formik.setFieldValue("ageOfCurrentTenants", e.target.value)
+              }
+              fullWidth
+              placeholder="Your age"
+            />
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">Do children live here?</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("doChildrenLiveHere", e);
+            }}
+            selectionOption={formik.values.doChildrenLiveHere}
+            options={yesNoOptions}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            Is there a pet living in the apartment?
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("isPetLivingInApartment", e);
+            }}
+            selectionOption={formik.values.isPetLivingInApartment}
+            options={yesNoOptions}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            What do current tenant do/type of employment?
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">Are the tenants smoking?</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("tenantsSmoking", e);
+            }}
+            selectionOption={formik.values.tenantsSmoking}
+            options={yesNoOutside}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography
+            sx={{
+              background:
+                "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              fontSize: "44px",
+            }}
+          >
+            Your flatmate preferences
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Box sx={{ borderBottom: "1px solid black" }}></Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            I’m accepting (you can choose many)
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("preferenceOfFutureTenants", e);
+            }}
+            multiSelect={true}
+            selectionOption={formik.values.preferenceOfFutureTenants}
+            options={iamAcceptingOptions}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">Age of your future roommate</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Slider
+            aria-label="Restricted values"
+            value={formik.values.ageRangeOfFutureRoommate}
+            onChange={(_, newValue) => {
+              formik.setFieldValue("ageRangeOfFutureRoommate", newValue);
+            }}
+            step={1}
+            valueLabelDisplay="auto"
+            max={100}
+            min={0}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            Do you accept tenants with children?
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("acceptTenantWithChildren", e);
+            }}
+            selectionOption={formik.values.acceptTenantWithChildren}
+            options={commanPreferenceOptions}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">Do you accept pets?</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("tenantAcceptPets", e);
+            }}
+            selectionOption={formik.values.tenantAcceptPets}
+            options={commanPreferenceOptions}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">Do you accept smoking?</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <CustomButtonGroup
+            optionClick={(e: string[] | string) => {
+              formik.setFieldValue("tenantAcceptSmoking", e);
+            }}
+            selectionOption={formik.values.tenantAcceptSmoking}
+            options={smokingOptions}
+          />
+        </Grid>
         <Grid item xs={12} md={6}>
           <OutlinedButton>{t("BACK_BUTTON_TEXT")}</OutlinedButton>
         </Grid>
@@ -371,4 +332,5 @@ const Step3: React.FC<Step3Props> = () => {
     </Box>
   );
 };
-export default Step3;
+
+export default Step31;
