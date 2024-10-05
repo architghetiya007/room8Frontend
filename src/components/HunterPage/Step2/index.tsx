@@ -99,7 +99,8 @@ const Step2: React.FC<Step2Props> = () => {
         { advertisementId: params.id ?? "", data: body },
         {
           onSuccess: (data) => {
-            showSnackBar({ message: data!.message });
+            // showSnackBar({ message: data!.message });
+            window.scrollTo({top: 0, behavior: 'smooth'})
             navigate(`/hunter-preview/${data?.data._id}`);
           },
           onError: (error: Error) => {
@@ -163,7 +164,7 @@ const Step2: React.FC<Step2Props> = () => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Stack direction={"column"}>
+          <Stack direction={"column"} spacing={1}>
             <Typography variant="h5">{t("nameQuestion")}</Typography>
             <OutlinedInput
               value={formik.values.name}
@@ -174,7 +175,7 @@ const Step2: React.FC<Step2Props> = () => {
           </Stack>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Stack direction={"column"}>
+          <Stack direction={"column"} spacing={1}>
             <Typography variant="h5">{t("ageQuestion")}</Typography>
             <OutlinedInput
               value={formik.values.age}
@@ -224,7 +225,7 @@ const Step2: React.FC<Step2Props> = () => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Stack direction={"column"}>
+          <Stack direction={"column"} spacing={1}>
             <Typography variant="h5">
               {t("anotherPersonQuestion.name")}
             </Typography>
@@ -232,7 +233,7 @@ const Step2: React.FC<Step2Props> = () => {
           </Stack>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Stack direction={"column"}>
+          <Stack direction={"column"} spacing={1}>
             <Typography variant="h5">
               {t("anotherPersonQuestion.age")}
             </Typography>

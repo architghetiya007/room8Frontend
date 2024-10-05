@@ -87,8 +87,9 @@ const Step3: React.FC<Step3Props> = () => {
         { advertisementId: params.id ?? "", data: body },
         {
           onSuccess: (data) => {
-            showSnackBar({ message: data!.message });
+            // showSnackBar({ message: data!.message });
             navigate(`/landlord-preview/${data?.data._id}`);
+            window.scrollTo({top: 0, behavior: 'smooth'})
           },
           onError: (error: Error) => {
             showSnackBar({ message: error.message, variant: "error" });

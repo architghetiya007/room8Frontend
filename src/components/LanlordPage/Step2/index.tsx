@@ -104,12 +104,13 @@ const Step2: React.FC<Step2Props> = () => {
         { advertisementId: params.id ?? "", data: body },
         {
           onSuccess: (data) => {
-            showSnackBar({ message: data!.message });
+            // showSnackBar({ message: data!.message });
             if (data!.data.landlordData!.doYouLiveHere === "YES") {
               navigate(`/landlord/3/${data?.data._id}`);
             } else {
               navigate(`/landlord/31/${data?.data._id}`);
             }
+            window.scrollTo({top: 0, behavior: 'smooth'})
           },
           onError: (error: Error) => {
             showSnackBar({ message: error.message, variant: "error" });

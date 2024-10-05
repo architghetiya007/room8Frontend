@@ -188,8 +188,9 @@ const Step1: React.FC<Step1Props> = () => {
           { advertisementId: params.id ?? "", data: body },
           {
             onSuccess: (data) => {
-              showSnackBar({ message: data!.message });
+              // showSnackBar({ message: data!.message });
               navigate(`/hunter/2/${data?.data._id}`);
+              window.scrollTo({top: 0, behavior: 'smooth'})
             },
             onError: (error: Error) => {
               showSnackBar({ message: error.message, variant: "error" });
@@ -199,7 +200,7 @@ const Step1: React.FC<Step1Props> = () => {
       } else {
         createAdvertisementMutation.mutate(body, {
           onSuccess: (data) => {
-            showSnackBar({ message: data!.message });
+            // showSnackBar({ message: data!.message });
             navigate(`/hunter/2/${data?.data._id}`);
           },
           onError: (error: Error) => {

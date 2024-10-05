@@ -159,7 +159,7 @@ const GoogleMapsAutocomplete: React.FC<GoogleMapsAutocompleteProps> = ({
   return (
     <Autocomplete
       inputValue={inputValue}
-      value={{ description: inputValue, place_id: "1" }}
+      value={{ description: inputValue, place_id: "" }}
       onInputChange={(_, newInputValue) => {
         setInputValue(newInputValue);
         if (newInputValue) {
