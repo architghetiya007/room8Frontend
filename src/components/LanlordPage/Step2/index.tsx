@@ -239,8 +239,8 @@ const Step2: React.FC<Step2Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Stack flexDirection={"row"} justifyContent={"space-between"}>
-            <Typography>Date available: </Typography>
+          <Stack flexDirection={"row"} gap={1} justifyContent={"space-between"}>
+            <Typography>Date available : </Typography>
             <Box>
               <FormControlLabel
                 control={<Switch defaultChecked />}

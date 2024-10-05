@@ -206,7 +206,7 @@ const Step1: React.FC<Step1Props> = () => {
               fontSize: "44px",
             }}
           >
-            So you want to rent out your place...
+            {t("landlordQ.rentOutOfyourPlace")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -214,7 +214,7 @@ const Step1: React.FC<Step1Props> = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">
-            What type of property do you offer?
+          {t("landlordQ.whatTypefPropertyOffer")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -227,7 +227,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Type of the property</Typography>
+          <Typography variant="h5">{t("landlordQ.typeOfProperty")}</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -239,12 +239,11 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Address of the place</Typography>
+          <Typography variant="h5">{t("landlordQ.addressofPlace")}</Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="body1">
-            Don't be afraid - The exact address will be hidden. People will only
-            see approximate location
+          {t("landlordQ.addressSubTitle")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -259,13 +258,13 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5"> Tell us more about your place</Typography>
+          <Typography variant="h5">{t("landlordQ.tellYourPlace")}</Typography>
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Do you live here?</Typography>
+          <Typography variant="h5">{t("landlordQ.doYouLeaveHere")}</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -277,7 +276,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Does the owner live here?</Typography>
+          <Typography variant="h5">{t("landlordQ.liveOwenerHere")}</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -290,8 +289,7 @@ const Step1: React.FC<Step1Props> = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">
-            How many people live at this PROPERTY? (including you and new
-            person)
+          {t("landlordQ.howManyPeopleLiveInthisProperty")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -307,7 +305,7 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Property Size</Typography>
+          <Typography variant="h5">{t("landlordQ.propertySize")}</Typography>
         </Grid>
         <Grid item xs={12}>
           <OutlinedInput

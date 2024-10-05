@@ -19,6 +19,7 @@ import { AdvertisementType } from "../../../utils/advertisement";
 import GoogleMapsAutocomplete from "../../comman/GoogleMapsAutoComplete";
 import { useNavigate, useParams } from "react-router-dom";
 import { AdvertisementData } from "../../../types/advertisement";
+import CommanTypography from "../../comman/CommonTypography";
 const marks = [
   {
     value: 1,
@@ -190,7 +191,7 @@ const Step1: React.FC<Step1Props> = () => {
             onSuccess: (data) => {
               // showSnackBar({ message: data!.message });
               navigate(`/hunter/2/${data?.data._id}`);
-              window.scrollTo({top: 0, behavior: 'smooth'})
+              window.scrollTo({ top: 0, behavior: "smooth" });
             },
             onError: (error: Error) => {
               showSnackBar({ message: error.message, variant: "error" });
@@ -268,7 +269,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("typeOfPropertyQuestion")}</Typography>
+          <CommanTypography title={t("typeOfPropertyQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -280,9 +281,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            {t("acceptableRentRangeQuestion")}
-          </Typography>
+          <CommanTypography title={t("acceptableRentRangeQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <Slider
@@ -297,7 +296,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("maximumDepositQuestion")}</Typography>
+          <CommanTypography title={t("maximumDepositQuestion")} />
         </Grid>
 
         <Grid item xs={12}>
@@ -311,9 +310,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Typography variant="h5">
-            {t("whenYouWouldLikeMoveInQuestion")}?
-          </Typography>
+          <CommanTypography title={t("whenYouWouldLikeMoveInQuestion")} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Box
@@ -322,7 +319,7 @@ const Step1: React.FC<Step1Props> = () => {
             justifyContent={"flex-end"}
             gap={1}
           >
-            <Typography variant="h5">{t("availableNow")}</Typography>
+            <CommanTypography title={t("availableNow")} />
             <IOSSwitch
               checked={formik.values.whenYouWouldLikeMoveIn === null}
               onChange={(e) => {
@@ -347,7 +344,7 @@ const Step1: React.FC<Step1Props> = () => {
           </LocalizationProvider>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Typography variant="h5">{t("addressQuestion")}</Typography>
+          <CommanTypography title={t("addressQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle1">{t("addressSubTitle")}</Typography>
@@ -369,9 +366,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            {t("rangeFromCoordinateQuestion")}
-          </Typography>
+          <CommanTypography title={t("rangeFromCoordinateQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <Slider
@@ -404,9 +399,7 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            {t("minimumPropertySizeQuestion")}
-          </Typography>
+          <CommanTypography title={t("minimumPropertySizeQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <OutlinedInput
@@ -419,9 +412,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            {t("minimumNumberOfTenantsQuestion")}
-          </Typography>
+          <CommanTypography title={t("minimumNumberOfTenantsQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -433,7 +424,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("roomAmountQuestion")}</Typography>
+          <CommanTypography title={t("roomAmountQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -445,7 +436,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("bathroomAmountQuestion")}</Typography>
+          <CommanTypography title={t("bathroomAmountQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -457,7 +448,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("parkingQuestion")}</Typography>
+          <CommanTypography title={t("parkingQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -469,7 +460,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("furnishedQuestion")}</Typography>
+          <CommanTypography title={t("furnishedQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -481,7 +472,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("kitchenQuestion")}</Typography>
+          <CommanTypography title={t("kitchenQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -493,7 +484,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("balconyQuestion")}</Typography>
+          <CommanTypography title={t("balconyQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -521,9 +512,7 @@ const Step1: React.FC<Step1Props> = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            {t("maximumNumberOfpeopleQuestion")}
-          </Typography>
+          <CommanTypography title={t("maximumNumberOfpeopleQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -535,7 +524,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("minimumRoomSizeQuestion")}</Typography>
+          <CommanTypography title={t("minimumRoomSizeQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <OutlinedInput
@@ -548,7 +537,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("furnishedRoomQuestion")}</Typography>
+          <CommanTypography title={t("furnishedRoomQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -560,7 +549,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("privateBathroomQuestion")}</Typography>
+          <CommanTypography title={t("privateBathroomQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -572,7 +561,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("balconyInRoomQuestion")}</Typography>
+          <CommanTypography title={t("balconyInRoomQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup

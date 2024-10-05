@@ -20,6 +20,7 @@ import useAdvertisementMutations from "../../../mutations/advertisement";
 import { AdvertisementType } from "../../../utils/advertisement";
 import { useNavigate, useParams } from "react-router-dom";
 import { AdvertisementData } from "../../../types/advertisement";
+import useUserMutations from "../../../mutations/user";
 const anotherPersonSchema = Yup.object().shape({
   name: Yup.string(),
   age: Yup.number().min(0, "Age must be a positive number"),
@@ -55,6 +56,9 @@ const Step2: React.FC<Step2Props> = () => {
   const { showSnackBar } = useNotification();
   const { t } = useCommonTranslation();
   const navigate = useNavigate();
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const { uploadImageMutation } = useUserMutations();
 
   const {
     whoAreYou,
@@ -90,7 +94,15 @@ const Step2: React.FC<Step2Props> = () => {
       describeYourSelf: "",
     },
     validationSchema: step2Schema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      if (selectedImage) {
+        let formData = new FormData();
+        formData.append("files", selectedImage);
+        let response = await uploadImageMutation.mutateAsync(formData);
+        if (response?.status === true) {
+          values.photos = response.data[0];
+        }
+      }
       const body = {
         advertiseType: AdvertisementType.HUNTER,
         hunterData: { ...advertisementData?.hunterData, ...values },
@@ -100,7 +112,7 @@ const Step2: React.FC<Step2Props> = () => {
         {
           onSuccess: (data) => {
             // showSnackBar({ message: data!.message });
-            window.scrollTo({top: 0, behavior: 'smooth'})
+            window.scrollTo({ top: 0, behavior: "smooth" });
             navigate(`/hunter-preview/${data?.data._id}`);
           },
           onError: (error: Error) => {
@@ -125,6 +137,27 @@ const Step2: React.FC<Step2Props> = () => {
         navigate("/");
       },
     });
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setSelectedImage(file); // Set the selected file
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result as string); // Set the preview URL
+      };
+
+      reader.readAsDataURL(file); // Read the file as a data URL for preview
+    }
+  };
+
+  const handleClick = () => {
+    const fileInput = document.getElementById(
+      "profile-image-input"
+    ) as HTMLInputElement;
+    fileInput?.click();
   };
   useEffect(() => {
     getAdvertisementAPI();
@@ -378,7 +411,17 @@ const Step2: React.FC<Step2Props> = () => {
                 width: 80, // Set the width
                 height: 80, // Set the height
               }}
+              src={
+                preview ? preview : advertisementData?.hunterData?.photos ?? ""
+              }
             ></Avatar>
+            <input
+              type="file"
+              id="profile-image-input"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: "none" }} // Hide file input
+            />
             <LoadingButton
               sx={{
                 background:
@@ -393,6 +436,7 @@ const Step2: React.FC<Step2Props> = () => {
                 fontSize: "24px",
               }}
               type="button"
+              onClick={handleClick}
             >
               {t("photosHunterQuestion.buttonText")}
             </LoadingButton>
@@ -431,7 +475,10 @@ const Step2: React.FC<Step2Props> = () => {
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
             sx={{ width: "100%" }}
-            loading={updateAdvertisementMutation.isPending}
+            loading={
+              updateAdvertisementMutation.isPending ||
+              uploadImageMutation.isPending
+            }
             onClick={() => formik.handleSubmit()}
           >
             {t("PREVIEW_BUTTON_TEXT")}
