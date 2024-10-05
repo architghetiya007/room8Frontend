@@ -9,8 +9,10 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined"; // Outlined map pin icon
+import { useNavigate } from "react-router-dom";
 
 const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <Box>
       <Container>
@@ -55,6 +57,8 @@ const HeroSection: React.FC = () => {
               endAdornment={
                 <InputAdornment position="end">
                   <Button
+                    type="button"
+                    onClick={() => navigate("/search")}
                     variant="contained"
                     startIcon={<SearchIcon />}
                     sx={{
