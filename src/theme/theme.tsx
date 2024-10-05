@@ -3,50 +3,81 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   typography: {
     fontFamily: '"Maccan", "Arial", sans-serif',
-    // h1: {
-    //   fontSize: "50px", // H1 desktop font size
-    //   fontWeight: 400, // Regular by default, change to Medium, SemiBold, Bold if needed
-    // },
-    // h2: {
-    //   fontSize: "42px", // H2 desktop font size
-    //   fontWeight: 400,
-    // },
-    // h3: {
-    //   fontSize: "30px", // H3 desktop font size
-    //   fontWeight: 400,
-    // },
-    // h4: {
-    //   fontSize: "24px", // H4 desktop font size
-    //   fontWeight: 400,
-    // },
-    // h5: {
-    //   fontSize: "22px", // H5 desktop font size
-    //   fontWeight: 400,
-    // },
-    // h6: {
-    //   fontSize: "20px", // H6 desktop font size
-    //   fontWeight: 400,
-    // },
-    // body1: {
-    //   fontSize: "22px", // Body text large size
-    //   fontWeight: 400,
-    // },
-    // body2: {
-    //   fontSize: "18px", // Body text medium size
-    //   fontWeight: 400,
-    // },
-    // subtitle1: {
-    //   fontSize: "16px", // Subtitle or small body text
-    //   fontWeight: 400,
-    // },
-    // subtitle2: {
-    //   fontSize: "15px", // Even smaller body text
-    //   fontWeight: 400,
-    // },
-    // caption: {
-    //   fontSize: "14px", // Smallest body text
-    //   fontWeight: 400,
-    // },
+    h1: {
+      fontSize: "3rem",
+      fontWeight: 700,
+      lineHeight: 1.2,
+      "@media (max-width:600px)": {
+        fontSize: "2.5rem", // Responsive font size for mobile
+      },
+    },
+    h2: {
+      fontSize: "2.5rem",
+      fontWeight: 600,
+      "@media (max-width:600px)": {
+        fontSize: "2rem",
+      },
+    },
+    h3: {
+      fontSize: "2rem",
+      fontWeight: 600,
+      "@media (max-width:600px)": {
+        fontSize: "1.75rem",
+      },
+    },
+    h4: {
+      fontSize: "1.75rem",
+      fontWeight: 500,
+      "@media (max-width:600px)": {
+        fontSize: "1.5rem",
+      },
+    },
+    h5: {
+      fontSize: "1.5rem",
+      fontWeight: 500,
+      "@media (max-width:600px)": {
+        fontSize: "1.25rem",
+      },
+    },
+    h6: {
+      fontSize: "1.25rem",
+      fontWeight: 500,
+      "@media (max-width:600px)": {
+        fontSize: "1rem",
+      },
+    },
+    body1: {
+      fontSize: "1rem",
+      fontWeight: 400,
+      lineHeight: 1.5,
+      "@media (max-width:600px)": {
+        fontSize: "0.875rem",
+      },
+    },
+    body2: {
+      fontSize: "0.875rem",
+      fontWeight: 400,
+      lineHeight: 1.43,
+      "@media (max-width:600px)": {
+        fontSize: "0.75rem",
+      },
+    },
+    subtitle1: {
+      fontSize: "1rem",
+      fontWeight: 500,
+      lineHeight: 1.75,
+      "@media (max-width:600px)": {
+        fontSize: "0.875rem",
+      },
+    },
+    subtitle2: {
+      fontSize: "0.875rem",
+      fontWeight: 500,
+      lineHeight: 1.57,
+      "@media (max-width:600px)": {
+        fontSize: "0.75rem",
+      },
+    },
   },
   palette: {
     primary: {

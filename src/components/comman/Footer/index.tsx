@@ -81,7 +81,12 @@ const Footer: React.FC = () => {
             <Stack
               alignItems={"center"}
               justifyContent={"space-between"}
-              flexDirection={"row"}
+              sx={{
+                flexDirection: {
+                  xs: 'column',
+                  md: 'row'
+                }
+              }}
             >
               <Typography color={"white"} variant="subtitle1">
                 {" "}
