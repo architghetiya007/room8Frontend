@@ -3,8 +3,13 @@ import {
   Box,
   Button,
   Container,
+  Drawer,
   IconButton,
   Link,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -20,6 +25,11 @@ import { RootState } from "../../../store";
 import PhoneNumberDialog from "../../auth/PhoneNumberDialog";
 import MenuIcon from "@mui/icons-material/Menu";
 const Header: React.FC = () => {
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
   const userSlice = useSelector((state: RootState) => state.user);
   const [openLoginDialog, setOpenLoginDialog] = useState<boolean>(false);
   const [openRegisterDialog, setOpenRegisterDialog] = useState<boolean>(false);
@@ -59,6 +69,20 @@ const Header: React.FC = () => {
     }
   };
 
+  const DrawerList = (
+    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+      <List>
+        {HeaderMenus.map((item) => (
+          <ListItem key={item.route} disablePadding>
+            <ListItemButton>
+              <ListItemText primary={item.name} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
   return (
     <Box
       sx={{
@@ -95,9 +119,13 @@ const Header: React.FC = () => {
                   md: "none",
                 },
               }}
+              onClick={toggleDrawer(true)}
             >
               <MenuIcon />
             </IconButton>
+            <Drawer open={open} onClose={toggleDrawer(false)}>
+              {DrawerList}
+            </Drawer>
             <Typography sx={{ fontWeight: "bold", fontSize: "24px" }}>
               Room8
             </Typography>

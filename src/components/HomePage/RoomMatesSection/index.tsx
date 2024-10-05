@@ -28,6 +28,7 @@ const RoomMatesSection: React.FC = () => {
                 <b>Start your adventure today!</b>
               </Typography>
               <LoadingButton
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 sx={{
                   background:
                     "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",

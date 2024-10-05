@@ -125,7 +125,6 @@ const Step2: React.FC<Step2Props> = () => {
       },
     });
   };
-  console.log(formik.errors);
   useEffect(() => {
     getAdvertisementAPI();
   }, []);
