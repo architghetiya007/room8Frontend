@@ -54,7 +54,7 @@ const ApartmentSection: React.FC = () => {
                   sx={{
                     maxWidth: {
                       xs: "100%",
-                      md: "320px",
+                      md: "330px",
                     },
                   }}
                   src={RoomMatePng}
@@ -108,7 +108,7 @@ const ApartmentSection: React.FC = () => {
                   sx={{
                     maxWidth: {
                       xs: "100%",
-                      md: "266px",
+                      md: "300px",
                     },
                   }}
                   src={ApartmentPng}

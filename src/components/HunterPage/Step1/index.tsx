@@ -1,5 +1,5 @@
 import { Box, Grid, OutlinedInput, Slider, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomButtonGroup from "../../comman/CustomButtonGroup";
 import useHunterData from "../../../hooks/useHunter";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -17,7 +17,8 @@ import useAdvertisementMutations from "../../../mutations/advertisement";
 import useNotification from "../../../hooks/useNotification";
 import { AdvertisementType } from "../../../utils/advertisement";
 import GoogleMapsAutocomplete from "../../comman/GoogleMapsAutoComplete";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { AdvertisementData } from "../../../types/advertisement";
 const marks = [
   {
     value: 1,
@@ -112,9 +113,16 @@ interface Step1Props {
   updateTabIndex?: Function;
 }
 const Step1: React.FC<Step1Props> = () => {
+  const [advertisementData, setAdvertisementData] =
+    useState<AdvertisementData>();
+  const params = useParams();
   const navigate = useNavigate();
   const { t } = useCommonTranslation();
-  const { createAdvertisementMutation } = useAdvertisementMutations();
+  const {
+    createAdvertisementMutation,
+    updateAdvertisementMutation,
+    getAdvertisementMutation,
+  } = useAdvertisementMutations();
   const { showSnackBar } = useNotification();
   const {
     accommodation,
@@ -168,19 +176,54 @@ const Step1: React.FC<Step1Props> = () => {
     onSubmit: (values: any) => {
       const body = {
         advertiseType: AdvertisementType.HUNTER,
-        hunterData: { ...values },
+        hunterData: { ...advertisementData?.hunterData, ...values },
       };
-      createAdvertisementMutation.mutate(body, {
-        onSuccess: (data) => {
-          showSnackBar({ message: data!.message });
-          navigate(`/hunter/2/${data?.data._id}`);
-        },
-        onError: (error: Error) => {
-          showSnackBar({ message: error.message, variant: "error" });
-        },
-      });
+      if (params.id) {
+        updateAdvertisementMutation.mutate(
+          { advertisementId: params.id ?? "", data: body },
+          {
+            onSuccess: (data) => {
+              showSnackBar({ message: data!.message });
+              navigate(`/hunter/2/${data?.data._id}`);
+            },
+            onError: (error: Error) => {
+              showSnackBar({ message: error.message, variant: "error" });
+            },
+          }
+        );
+      } else {
+        createAdvertisementMutation.mutate(body, {
+          onSuccess: (data) => {
+            showSnackBar({ message: data!.message });
+            navigate(`/hunter/2/${data?.data._id}`);
+          },
+          onError: (error: Error) => {
+            showSnackBar({ message: error.message, variant: "error" });
+          },
+        });
+      }
     },
   });
+
+  const getAdvertisementAPI = () => {
+    getAdvertisementMutation.mutate(params?.id ?? "", {
+      onSuccess: (data) => {
+        setAdvertisementData(data?.data);
+        formik.setValues({
+          ...formik.values,
+          ...data!.data.hunterData,
+        });
+      },
+      onError: (error: Error) => {
+        showSnackBar({ message: error.message, variant: "error" });
+        navigate("/");
+      },
+    });
+  };
+
+  useEffect(() => {
+    getAdvertisementAPI();
+  }, []);
 
   return (
     <Box component={"form"}>
@@ -531,11 +574,16 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <OutlinedButton type="button" onClick={() => navigate('/')}>{t("CANCEL_BUTTON_TEXT")}</OutlinedButton>
+          <OutlinedButton type="button" onClick={() => navigate("/")}>
+            {t("CANCEL_BUTTON_TEXT")}
+          </OutlinedButton>
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
-            loading={createAdvertisementMutation.isPending}
+            loading={
+              createAdvertisementMutation.isPending ||
+              updateAdvertisementMutation.isPending
+            }
             sx={{ width: "100%" }}
             onClick={() => formik.handleSubmit()}
           >

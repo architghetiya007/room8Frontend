@@ -114,6 +114,10 @@ const Step2: React.FC<Step2Props> = () => {
     getAdvertisementMutation.mutate(params?.id ?? "", {
       onSuccess: (data) => {
         setAdvertisementData(data?.data);
+        formik.setValues({
+          ...formik.values,
+          ...data!.data.hunterData,
+        });
       },
       onError: (error: Error) => {
         showSnackBar({ message: error.message, variant: "error" });

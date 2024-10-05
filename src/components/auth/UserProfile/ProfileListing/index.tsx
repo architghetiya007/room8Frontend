@@ -1,4 +1,4 @@
-import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
+import { Box, Chip, Grid, IconButton, Stack, Typography } from "@mui/material";
 import useAdvertisementMutations from "../../../../mutations/advertisement";
 import { useEffect, useState } from "react";
 import { AdvertisementData } from "../../../../types/advertisement";
@@ -6,7 +6,9 @@ import { AdvertisementType } from "../../../../utils/advertisement";
 import AddHomeOutlinedIcon from "@mui/icons-material/AddHomeOutlined";
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
+import { useNavigate } from "react-router-dom";
 const ProfileListing: React.FC = () => {
+  const navigate = useNavigate();
   const [hunterData, setHunterData] = useState<AdvertisementData[]>([]);
   const [landlordData, setLandlordData] = useState<AdvertisementData[]>([]);
   const { getUserAdvertisementMutation } = useAdvertisementMutations();
@@ -49,12 +51,18 @@ const ProfileListing: React.FC = () => {
               <Grid item xs={12} key={item._id}>
                 <Stack
                   direction={"row"}
+                  alignItems={"center"}
                   spacing={2}
                   bgcolor={"rgba(74, 177, 241, 0.20)"}
-                  p={2}
+                  p={1}
                   borderRadius={2}
                 >
-                  <BorderColorOutlinedIcon sx={{ color: "black" }} />
+                  <IconButton
+                    type="button"
+                    onClick={() => navigate(`/hunter/1/${item._id}`)}
+                  >
+                    <BorderColorOutlinedIcon sx={{ color: "black" }} />
+                  </IconButton>
                   <Typography variant="body1" sx={{ color: "black" }}>
                     {item.hunterData?.address?.formattedAddress}
                   </Typography>
@@ -89,12 +97,18 @@ const ProfileListing: React.FC = () => {
               <Grid item xs={12} key={item._id}>
                 <Stack
                   direction={"row"}
+                  alignItems={"center"}
                   spacing={2}
                   bgcolor={"rgba(215, 73, 175, 0.20)"}
-                  p={2}
+                  p={1}
                   borderRadius={2}
                 >
-                  <BorderColorOutlinedIcon sx={{ color: "black" }} />
+                  <IconButton
+                    type="button"
+                    onClick={() => navigate(`/landlord/1/${item._id}`)}
+                  >
+                    <BorderColorOutlinedIcon sx={{ color: "black" }} />
+                  </IconButton>{" "}
                   <Typography variant="body1" sx={{ color: "black" }}>
                     {item.landlordData?.address?.formattedAddress}
                   </Typography>
