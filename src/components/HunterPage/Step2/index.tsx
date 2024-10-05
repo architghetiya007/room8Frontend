@@ -29,13 +29,13 @@ const anotherPersonSchema = Yup.object().shape({
 const step2Schema = Yup.object().shape({
   whoAreYou: Yup.string(),
   name: Yup.string(),
-  age: Yup.number().min(0, "Age must be positive"),
+  age: Yup.number().min(0, "Age must be positive").nullable(),
   withChild: Yup.string(),
   havePet: Yup.string(),
   typeOfEmployment: Yup.string(),
   areYouSmoking: Yup.string(),
   anotherPerson: Yup.array().of(anotherPersonSchema),
-  flatmatePreference: Yup.array().of(Yup.string()), // Assuming string values are allowed
+  flatmatePreference: Yup.array().of(Yup.string()).nullable(), // Assuming string values are allowed
   livingWithOwner: Yup.string(),
   tenantsWithChildren: Yup.string(),
   acceptPet: Yup.string(),
@@ -125,7 +125,7 @@ const Step2: React.FC<Step2Props> = () => {
       },
     });
   };
-
+  console.log(formik.errors)
   useEffect(() => {
     getAdvertisementAPI();
   }, []);

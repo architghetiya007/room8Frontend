@@ -76,26 +76,25 @@ const addressSchema = Yup.object().shape({
 });
 
 const hunterSchema = Yup.object().shape({
-  accommodation: Yup.string().oneOf(["ENTIREROOM", "SHAREDROOM", "PRIVATE"]),
-  typeOfProperty: Yup.string().oneOf(["FLAT", "HOUSE", "STUDIO"]),
+  accommodation: Yup.string(),
+  typeOfProperty: Yup.string(),
   acceptableRentRange: Yup.array()
     .of(Yup.number().min(0, "Rent must be non-negative"))
     .length(2, "Rent range should have two values"),
-  maximumDeposit: Yup.number().min(0, "Deposit must be non-negative"),
+  maximumDeposit: Yup.number()
+    .min(0, "Deposit must be non-negative")
+    .nullable(),
   whenYouWouldLikeMoveIn: Yup.number()
     .nullable()
     .typeError("Invalid timestamp for move-in date"),
-  preferredLengthToStay: Yup.string().oneOf([
-    "NO_PREFERENCE",
-    "SHORT_TERM",
-    "LONG_TERM",
-  ]),
+  preferredLengthToStay: Yup.string(),
   address: addressSchema,
-  rangeFromCoordinate: Yup.number().min(0, "Range must be non-negative"),
-  minimumPropertySize: Yup.number().min(
-    0,
-    "Minimum property size must be non-negative"
-  ),
+  rangeFromCoordinate: Yup.number()
+    .min(0, "Range must be non-negative")
+    .nullable(),
+  minimumPropertySize: Yup.number()
+    .min(0, "Minimum property size must be non-negative")
+    .nullable(),
   minimumNumberOfTenants: Yup.string(),
   roomAmount: Yup.string(),
   bathroomAmount: Yup.string(),
@@ -103,8 +102,10 @@ const hunterSchema = Yup.object().shape({
   furnished: Yup.string(),
   kitchen: Yup.string(),
   balcony: Yup.string(),
-  maximumNumberOfpeople: Yup.number().min(0, "Range must be non-negative"),
-  minimumRoomSize: Yup.number().min(0, "Range must be non-negative"),
+  maximumNumberOfpeople: Yup.number()
+    .min(0, "Range must be non-negative")
+    .nullable(),
+  minimumRoomSize: Yup.number().min(0, "Range must be non-negative").nullable(),
   furnishedRoom: Yup.string(),
   privateBathroom: Yup.string(),
   balconyInRoom: Yup.string(),
@@ -174,6 +175,10 @@ const Step1: React.FC<Step1Props> = () => {
     },
     validationSchema: hunterSchema,
     onSubmit: (values: any) => {
+      if (!formik.values.address.formattedAddress) {
+        showSnackBar({ message: t("messages.address") });
+        return;
+      }
       const body = {
         advertiseType: AdvertisementType.HUNTER,
         hunterData: { ...advertisementData?.hunterData, ...values },
@@ -205,6 +210,8 @@ const Step1: React.FC<Step1Props> = () => {
     },
   });
 
+  console.log(formik.errors);
+
   const getAdvertisementAPI = () => {
     getAdvertisementMutation.mutate(params?.id ?? "", {
       onSuccess: (data) => {
@@ -222,8 +229,10 @@ const Step1: React.FC<Step1Props> = () => {
   };
 
   useEffect(() => {
-    getAdvertisementAPI();
-  }, []);
+    if (params.id) {
+      getAdvertisementAPI();
+    }
+  }, [params.id]);
 
   return (
     <Box component={"form"}>

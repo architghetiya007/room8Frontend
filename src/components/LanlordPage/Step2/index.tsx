@@ -39,7 +39,7 @@ const landlordSchema = Yup.object().shape({
   billIncludeInRent: Yup.string().required("Bill included in rent is required"),
   deposit: Yup.string(),
   descriptionOfFlat: Yup.string(),
-  photosOfPlace: Yup.array().of(Yup.string().required("Photo URL is required")),
+  photosOfPlace: Yup.array().of(Yup.string()),
 });
 
 interface Step2Props {
@@ -81,12 +81,7 @@ const Step2: React.FC<Step2Props> = () => {
     onSubmit: (values) => {
       const body = {
         advertiseType: AdvertisementType.LANDLORD,
-        landlordData: {
-          ...advertisementData?.landlordData,
-          ...values,
-          dateAvailable:
-            values.dateAvailable ?? new Date(values.dateAvailable).valueOf(),
-        },
+        landlordData: { ...advertisementData?.landlordData, ...values },
       };
       updateAdvertisementMutation.mutate(
         { advertisementId: params.id ?? "", data: body },
@@ -111,6 +106,10 @@ const Step2: React.FC<Step2Props> = () => {
     getAdvertisementMutation.mutate(params?.id ?? "", {
       onSuccess: (data) => {
         setAdvertisementData(data?.data);
+        formik.setValues({
+          ...formik.values,
+          // ...data?.data?.landlordData,
+        });
       },
       onError: (error: Error) => {
         showSnackBar({ message: error.message, variant: "error" });

@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AdvertisementType } from "../../../utils/advertisement";
@@ -18,8 +18,9 @@ import useLandlord from "../../../hooks/useLandlord";
 import { LoadingButton } from "@mui/lab";
 import CustomLoadingButton from "../../comman/CustomLoadingButton";
 import OutlinedButton from "../../comman/OutlinedButton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useCommonTranslation from "../../../hooks/useCommonTranslation";
+import { AdvertisementData } from "../../../types/advertisement";
 const landlordSchema = Yup.object().shape({
   profilePhoto: Yup.string(),
   genderOfCurrentTenants: Yup.string(),
@@ -43,9 +44,13 @@ interface Step31Props {
   updateTabIndex: Function;
 }
 const Step31: React.FC<Step31Props> = () => {
+  const [advertisementData, setAdvertisementData] =
+    useState<AdvertisementData>();
+  const params = useParams();
   const { t } = useCommonTranslation();
   const navigate = useNavigate();
-  const { updateAdvertisementMutation } = useAdvertisementMutations();
+  const { updateAdvertisementMutation, getAdvertisementMutation } =
+    useAdvertisementMutations();
   const { showSnackBar } = useNotification();
   const {
     yesNoOptions,
@@ -74,10 +79,10 @@ const Step31: React.FC<Step31Props> = () => {
     onSubmit: (values: any) => {
       const body = {
         advertiseType: AdvertisementType.LANDLORD,
-        hunterData: { ...values },
+        landlordData: { ...advertisementData?.landlordData, ...values },
       };
       updateAdvertisementMutation.mutate(
-        { advertisementId: "", data: body },
+        { advertisementId: params.id ?? "", data: body },
         {
           onSuccess: (data) => {
             showSnackBar({ message: data!.message });
@@ -90,6 +95,27 @@ const Step31: React.FC<Step31Props> = () => {
       );
     },
   });
+
+  const getAdvertisementAPI = () => {
+    getAdvertisementMutation.mutate(params?.id ?? "", {
+      onSuccess: (data) => {
+        setAdvertisementData(data?.data);
+        formik.setValues({
+          ...formik.values,
+          ...data?.data?.landlordData,
+        });
+      },
+      onError: (error: Error) => {
+        showSnackBar({ message: error.message, variant: "error" });
+        navigate("/");
+      },
+    });
+  };
+
+  useEffect(() => {
+    getAdvertisementAPI();
+  }, []);
+
   return (
     <Box component={"form"}>
       <Grid container spacing={2} mt={2} mb={2}>
