@@ -57,11 +57,24 @@ const getAllAdvertisementAPI = async () => {
   }
 };
 
-const updateStatusAdvertisementAPI = async (data: AdvertisementStatusRequestDTO) => {
+const updateStatusAdvertisementAPI = async (
+  data: AdvertisementStatusRequestDTO
+) => {
   try {
     const response = await axiosInstance.put<AdvertisementResponseDTO>(
       apiPaths.ADVERTISEMENT.updateStatusAdvertisement,
       data
+    );
+    return response.data;
+  } catch (error) {
+    getErrorMessage(error);
+  }
+};
+
+const getUserAdvertisementAPI = async () => {
+  try {
+    const response = await axiosInstance.get<ListAdvertisementResponseDTO>(
+      apiPaths.ADVERTISEMENT.getUserAdvertisement
     );
     return response.data;
   } catch (error) {
@@ -75,4 +88,5 @@ export {
   getAdvertisementAPI,
   getAllAdvertisementAPI,
   updateStatusAdvertisementAPI,
+  getUserAdvertisementAPI,
 };

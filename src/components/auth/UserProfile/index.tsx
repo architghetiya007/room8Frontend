@@ -21,6 +21,7 @@ import ChangePassword from "./ChangePassword";
 import ConfirmationDialog from "../../comman/ConfirmationDialog";
 import useUserMutations from "../../../mutations/user";
 import PersonalInfo from "./PersonalInfo";
+import ProfileListing from "./ProfileListing";
 const UserProfile: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -76,11 +77,7 @@ const UserProfile: React.FC = () => {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                {/* Add content for Your Listings here */}
-                Manage your active listings, view past listings, or add new
-                listings.
-              </Typography>
+              <ProfileListing />
             </AccordionDetails>
           </Accordion>
 

@@ -3,6 +3,7 @@ import {
   createAdvertisementAPI,
   getAdvertisementAPI,
   getAllAdvertisementAPI,
+  getUserAdvertisementAPI,
   updateAdvertisementAPI,
   updateStatusAdvertisementAPI,
 } from "../../api/advertisement/advertisement";
@@ -36,12 +37,17 @@ const useAdvertisementMutations = () => {
     mutationFn: updateStatusAdvertisementAPI,
   });
 
+  const getUserAdvertisementMutation = useMutation({
+    mutationFn: getUserAdvertisementAPI,
+  });
+
   return {
     createAdvertisementMutation,
     getAdvertisementMutation,
     updateAdvertisementMutation,
     getAllAdvertisementMutation,
     updateStatusAdvertisementMutation,
+    getUserAdvertisementMutation,
   };
 };
 
