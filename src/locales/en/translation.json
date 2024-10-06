@@ -146,6 +146,17 @@
     "NO": "NO",
     "OUTSIDE": "OutSide Only"
   },
+  "typeofEmployment" : {
+    "HYBRID_WORK": "Hybrid work",
+  "REMOTE_WORK": "Remote work",
+  "STUDENT": "Student",
+  "WORKING_FULL_TIME": "Working full-time",
+  "WORKING_HOLIDAY": "Working holiday",
+  "TOURIST": "Tourist",
+  "RETIRED": "Retired",
+  "UNEMPLOYED": "Unemployed",
+  "SOMETHING_ELSE": "Something else"
+  },
   "landlord": {
     "GO_TO_ROOM_DESCRIPTION": "Go to Room Description",
     "propertyOfferOptions": {
@@ -213,6 +224,7 @@
     "addressofPlace" : "Address of the place",
     "addressSubTitle" : "Don't be afraid - The exact address will be hidden. People will only see approximate location",
     "tellYourPlace" : "Tell us more about your place",
+    "tellmeAboutYourProperty" : "Tell us more about your property",
     "doYouLeaveHere" : "Do you live here?",
     "liveOwenerHere" : "Does the owner live here?",
     "howManyPeopleLiveInthisProperty" : "How many people live at this PROPERTY? (including you and new person)",

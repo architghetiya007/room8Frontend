@@ -258,7 +258,17 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("landlordQ.tellYourPlace")}</Typography>
+          <Typography
+            sx={{
+              background:
+                "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              fontSize: "44px",
+            }}
+          >
+            {t("landlordQ.tellmeAboutYourProperty")}
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>

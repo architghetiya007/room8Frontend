@@ -175,6 +175,45 @@ const useHunterData = () => {
     },
   ];
 
+  const typeOfEmployment: ButtonGroupInterface[] = [
+    {
+      name: t("typeofEmployment.HYBRID_WORK"),
+      value: "HYBRID_WORK",
+    },
+    {
+      name: t("typeofEmployment.REMOTE_WORK"),
+      value: "REMOTE_WORK",
+    },
+    {
+      name: t("typeofEmployment.STUDENT"),
+      value: "STUDENT",
+    },
+    {
+      name: t("typeofEmployment.WORKING_FULL_TIME"),
+      value: "WORKING_FULL_TIME",
+    },
+    {
+      name: t("typeofEmployment.WORKING_HOLIDAY"),
+      value: "WORKING_HOLIDAY",
+    },
+    {
+      name: t("typeofEmployment.TOURIST"),
+      value: "TOURIST",
+    },
+    {
+      name: t("typeofEmployment.RETIRED"),
+      value: "RETIRED",
+    },
+    {
+      name: t("typeofEmployment.UNEMPLOYED"),
+      value: "UNEMPLOYED",
+    },
+    {
+      name: t("typeofEmployment.SOMETHING_ELSE"),
+      value: "SOMETHING_ELSE",
+    }
+  ];
+
   const genderOptions: ButtonGroupInterface[] = [
     {
       name: t("gender.MALE"),
@@ -309,6 +348,7 @@ const useHunterData = () => {
     kitchenOptions,
     maximumNumberOfpeopleOptions,
     iamAcceptingOptions,
+    typeOfEmployment
   };
 };
 

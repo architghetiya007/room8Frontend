@@ -26,13 +26,13 @@ import { LoadingButton } from "@mui/lab";
 import { useNavigate, useParams } from "react-router-dom";
 import { AdvertisementData } from "../../../types/advertisement";
 const landlordSchema = Yup.object().shape({
-  roomSize: Yup.string(),
+  roomSize: Yup.string().nullable(),
   howManyPropleInRoom: Yup.string(),
   isRoomFurnished: Yup.string().required("Is room furnished is required"),
   bed: Yup.string(),
   privateBathroom: Yup.string(),
   doesRoomHaveBalcony: Yup.string(),
-  dateAvailable: Yup.string(),
+  dateAvailable: Yup.string().nullable(),
   minimumStay: Yup.string(),
   maximumStay: Yup.string(),
   rentPerMonth: Yup.string(),
@@ -135,6 +135,8 @@ const Step2: React.FC<Step2Props> = () => {
       },
     });
   };
+
+  console.log(formik.errors)
 
   useEffect(() => {
     getAdvertisementAPI();
