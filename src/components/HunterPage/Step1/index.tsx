@@ -1,4 +1,13 @@
-import { Box, Grid, OutlinedInput, Slider, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  Grid,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Slider,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CustomButtonGroup from "../../comman/CustomButtonGroup";
 import useHunterData from "../../../hooks/useHunter";
@@ -139,6 +148,7 @@ const Step1: React.FC<Step1Props> = () => {
     maximumNumberOfpeopleOptions,
     yesNoOptions,
     parkingOptions,
+    duration,
   } = useHunterData();
 
   const formik = useFormik({
@@ -337,7 +347,11 @@ const Step1: React.FC<Step1Props> = () => {
               <DatePicker
                 sx={{ width: "100%" }}
                 label="Date"
-                value={formik.values.whenYouWouldLikeMoveIn ? dayjs(formik.values.whenYouWouldLikeMoveIn) : null}
+                value={
+                  formik.values.whenYouWouldLikeMoveIn
+                    ? dayjs(formik.values.whenYouWouldLikeMoveIn)
+                    : null
+                }
                 onChange={(newValue) => {
                   formik.setFieldValue(
                     "whenYouWouldLikeMoveIn",
@@ -347,6 +361,27 @@ const Step1: React.FC<Step1Props> = () => {
               />
             </DemoContainer>
           </LocalizationProvider>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">{t("preferredLengthToStay")}</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl fullWidth>
+            <Select
+              labelId="work-status-label"
+              id="work-status"
+              value={formik.values.preferredLengthToStay}
+              onChange={(e) => {
+                formik.setFieldValue("preferredLengthToStay", e.target.value);
+              }}
+            >
+              {duration.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {t(option.name)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12} md={6}>
           <CommanTypography title={t("addressQuestion")} />

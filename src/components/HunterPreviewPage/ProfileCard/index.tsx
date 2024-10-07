@@ -3,10 +3,13 @@ import ProfilePNG from "../../../assets/images/profile.png";
 import { AdvertisementData } from "../../../types/advertisement";
 import AvailableImg from "../../../assets/hunter/AVAILABLE.png";
 import MONTHiMG from "../../../assets/hunter/6_MONTH.png";
+import dayjs from "dayjs";
+import useCommonTranslation from "../../../hooks/useCommonTranslation";
 interface ProfileCardProps {
   previewData: AdvertisementData;
 }
 const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
+  const { t } = useCommonTranslation();
   return (
     <Box
       sx={{
@@ -60,10 +63,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              1300 zł/month ± 200 zł
+              {previewData!.hunterData!.acceptableRentRange!.length > 0
+                ? previewData?.hunterData?.acceptableRentRange?.at(0)
+                : ""}{" "}
+              zł/month ±{" "}
+              {previewData!.hunterData!.acceptableRentRange!.length > 0
+                ? previewData?.hunterData?.acceptableRentRange?.at(1)
+                : ""}{" "}
+              zł
             </Typography>
             <Typography variant="h6" mt={"0 !important"}>
-              Looking for a shared room in Wrocław
+              Looking for a {previewData?.hunterData!.accommodation} in{" "}
+              {previewData?.hunterData!.address?.city}
             </Typography>
           </Stack>
         </Grid>
@@ -91,7 +102,15 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
               gap: 2,
             }}
           >
-            <Typography>Available Immediately</Typography>
+            <Typography>
+              {previewData?.hunterData?.isAvailableNow
+                ? "Available Immediately"
+                : previewData?.hunterData?.whenYouWouldLikeMoveIn
+                ? dayjs(previewData.hunterData?.whenYouWouldLikeMoveIn).format(
+                    "MM/DD/YYYY"
+                  )
+                : ""}
+            </Typography>
             <Box component={"img"} src={AvailableImg}></Box>
           </Box>
           <Box
@@ -106,7 +125,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
               gap: 2,
             }}
           >
-            <Typography>6 months length stay </Typography>
+            <Typography>
+              {t(
+                `duration.${
+                  previewData.hunterData?.preferredLengthToStay as string
+                }`
+              )}{" "}
+              length stay{" "}
+            </Typography>
             <Box component={"img"} src={MONTHiMG}></Box>
           </Box>
         </Grid>

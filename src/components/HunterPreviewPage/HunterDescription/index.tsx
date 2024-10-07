@@ -19,6 +19,7 @@ import PARKING from "../../../assets/hunter/PARKING.png";
 import SMOKER from "../../../assets/hunter/SMOKER.png";
 import WITH_CHILDREN from "../../../assets/hunter/WITH_CHILDREN.png";
 import WOMAN_MAN from "../../../assets/hunter/WOMAN_MAN.png";
+import useCommonTranslation from "../../../hooks/useCommonTranslation";
 interface HunterDescriptionProps {
   updateStatusAPI: () => void;
   loading: boolean;
@@ -29,6 +30,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
   loading,
   previewData,
 }) => {
+  const { t } = useCommonTranslation();
   return (
     <Box
       sx={{
@@ -45,6 +47,38 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
       }}
     >
       <Grid container spacing={1}>
+        {previewData!.hunterData!.anotherPerson!.length > 0 && (
+          <Grid item xs={12}>
+            <Typography
+              sx={{
+                fontSize: "46px",
+                background:
+                  "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+                backgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              I am looking for a place with my friend
+            </Typography>
+          </Grid>
+        )}
+        {previewData!.hunterData!.anotherPerson!.map((item) => {
+          return (
+            <Box key={item.name} pl={1}>
+              <Grid item xs={12}>
+                <Typography variant="h5" fontWeight={"bold"}>
+                  {item.name}
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h6">
+                  {item.age} years old, {item.gender}
+                </Typography>
+              </Grid>
+            </Box>
+          );
+        })}
+
         <Grid item xs={12}>
           <Typography
             sx={{
@@ -58,44 +92,10 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
             A few facts about me
           </Typography>
         </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">
-            {previewData.hunterData?.describeYourSelf}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography
-            sx={{
-              fontSize: "46px",
-              background:
-                "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            I am looking for a place with my friend
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5" fontWeight={"bold"}>
-            Diane
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h6">25 years old, Female</Typography>
-        </Grid>
-        <Grid item xs={12} mt={2} mb={2}>
-          <Box sx={{ borderBottom: "1px solid lightgray" }}></Box>
-        </Grid>
         <Grid item xs={12} md={7}>
           <Box sx={{ p: 2 }}>
             <Typography variant="h6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit
-              amet ornare urna, id rhoncus nulla. Ut non dui sed quam tincidunt
-              semper sit amet eget nibh. Duis a felis vitae mauris egestas
-              feugiat. Donec enim neque, faucibus quis elit a, auctor porttitor
-              mi. Sed non porttitor leo. Ut in urna hendrerit, vehicula ex a,
-              sagittis urna. Read more...
+              {previewData.hunterData?.describeYourSelf}
             </Typography>
           </Box>
         </Grid>
@@ -159,10 +159,10 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                 </Grid>
                 <Grid item xs={12}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <Box component={"img"} src={MAXIMUM_FLATMATES}></Box>
+                    <Box component={"img"} width={'30px'} src={MAXIMUM_FLATMATES}></Box>
                     <Typography>
-                      Maximum flatmates:
-                      {previewData.hunterData?.maximumNumberOfpeople}
+                      Maximum flatmates:{" "}
+                      {previewData.hunterData?.minimumNumberOfTenants}
                     </Typography>
                   </Box>
                 </Grid>
@@ -187,7 +187,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                     <Box component={"img"} src={PARKING}></Box>
                     <Typography>
-                      Parking: {previewData.hunterData?.parking}
+                      Parking: {t(`parking.${previewData.hunterData?.parking}`)}
                     </Typography>
                   </Box>
                 </Grid>
@@ -195,7 +195,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                     <Box component={"img"} src={KITCHEN}></Box>
                     <Typography>
-                      Kitchen: {previewData.hunterData?.kitchen}
+                      Kitchen: {t(`kitchen.${previewData.hunterData?.kitchen}`)}
                     </Typography>
                   </Box>
                 </Grid>
@@ -243,7 +243,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                 </Grid>
                 <Grid item xs={12}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <Box component={"img"} src={MAXIMUM_FLATMATES}></Box>
+                    <Box component={"img"} width={'30px'} src={MAXIMUM_FLATMATES}></Box>
                     <Typography>
                       Maximum number of tenants:{" "}
                       {previewData.hunterData?.minimumNumberOfTenants}
@@ -271,7 +271,9 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                     <Box component={"img"} src={BATHROOM}></Box>
                     <Typography>
-                      {previewData.hunterData?.bathroomAmount}
+                      {previewData.hunterData?.privateBathroom
+                        ? "Private Bathroom"
+                        : "Shared Bathroom"}
                     </Typography>
                   </Box>
                 </Grid>
@@ -280,7 +282,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
           </Grid>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} mt={2}>
           <Typography
             sx={{
               fontSize: "46px",
@@ -290,18 +292,20 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
               WebkitTextFillColor: "transparent",
             }}
           >
-            Flatmate preferences
+            Flatemate preferences
           </Typography>
         </Grid>
         <Grid item xs={12} mb={1}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Box component={"img"} src={WOMAN_MAN}></Box>
-            <Typography>Women/men/couples</Typography>
+            <Box component={"img"} width={'30px'} src={WOMAN_MAN}></Box>
+            <Typography>
+              {t(`accommodation.${previewData!.hunterData!.accommodation}`)}
+            </Typography>
           </Box>
         </Grid>
         <Grid item xs={12} mb={1}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Box component={"img"} src={LIVING_WITH_OWNER}></Box>
+            <Box component={"img"} width={'30px'} src={LIVING_WITH_OWNER}></Box>
             <Typography>
               Living with owner?: {previewData.hunterData?.livingWithOwner}
             </Typography>
@@ -309,7 +313,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12} mb={1}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Box component={"img"} src={WITH_CHILDREN}></Box>
+            <Box component={"img"} width={'30px'} src={WITH_CHILDREN}></Box>
             <Typography>
               {previewData.hunterData?.withChild
                 ? "With Children"
@@ -319,7 +323,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12} mb={1}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Box component={"img"} src={SMOKER}></Box>
+            <Box component={"img"} width={'30px'} src={SMOKER}></Box>
             <Typography>
               {previewData.hunterData?.areYouSmoking
                 ? "Smoker"
@@ -329,7 +333,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Box component={"img"} src={ANIMAL}></Box>
+            <Box component={"img"} width={'30px'} src={ANIMAL}></Box>
             <Typography>
               {previewData.hunterData?.acceptPet
                 ? "Pets accepted"
