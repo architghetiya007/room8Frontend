@@ -24,6 +24,7 @@ export interface HunterRequestDTO {
   acceptableRentRange?: number[];
   maximumDeposit?: number;
   whenYouWouldLikeMoveIn?: number;
+  isAvailableNow?: boolean;
   preferredLengthToStay?: string;
   address?: Address;
   rangeFromCoordinate?: number;

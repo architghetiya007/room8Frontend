@@ -1,7 +1,12 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import ProfilePNG from "../../../assets/images/profile.png";
-
-const ProfileCard: React.FC = () => {
+import { AdvertisementData } from "../../../types/advertisement";
+import AvailableImg from "../../../assets/hunter/AVAILABLE.png";
+import MONTHiMG from "../../../assets/hunter/6_MONTH.png";
+interface ProfileCardProps {
+  previewData: AdvertisementData;
+}
+const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
   return (
     <Box
       sx={{
@@ -19,13 +24,17 @@ const ProfileCard: React.FC = () => {
     >
       <Grid container spacing={1}>
         <Grid item xs={12} md={3}>
-          <Box sx={{
-            width: {
-              xs: '100%'
-            }
-          }} component={"img"} src={ProfilePNG}></Box>
+          <Box
+            sx={{
+              width: {
+                xs: "100%",
+              },
+            }}
+            component={"img"}
+            src={previewData.hunterData?.photos ?? ProfilePNG}
+          ></Box>
         </Grid>
-        <Grid item xs={12} md={5} ml={2}>
+        <Grid item xs={12} md={5} pl={2}>
           <Stack spacing={1}>
             <Typography
               sx={{
@@ -36,10 +45,11 @@ const ProfileCard: React.FC = () => {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Aleksander{" "}
+              {previewData.hunterData!.name}{" "}
             </Typography>
             <Typography variant="h6" mt={"0 !important"}>
-              28 years old, Man
+              {previewData.hunterData!.age} years old,{" "}
+              {previewData.hunterData!.whoAreYou}
             </Typography>
             <Typography
               sx={{
@@ -57,7 +67,49 @@ const ProfileCard: React.FC = () => {
             </Typography>
           </Stack>
         </Grid>
-        <Grid item xs={12} md={4}></Grid>
+        <Grid
+          item
+          xs={12}
+          md={4}
+          display={"flex"}
+          alignItems={"flex-end"}
+          justifyContent={"flex-start"}
+          direction={"column"}
+          spacing={2}
+          ml={"auto"}
+          gap={2}
+        >
+          <Box
+            sx={{
+              maxWidth: "250px",
+              borderRadius: 10,
+              backgroundColor: "#EDF4FE",
+              p: 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 2,
+            }}
+          >
+            <Typography>Available Immediately</Typography>
+            <Box component={"img"} src={AvailableImg}></Box>
+          </Box>
+          <Box
+            sx={{
+              maxWidth: "250px",
+              borderRadius: 10,
+              backgroundColor: "#EDF4FE",
+              p: 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 2,
+            }}
+          >
+            <Typography>6 months length stay </Typography>
+            <Box component={"img"} src={MONTHiMG}></Box>
+          </Box>
+        </Grid>
       </Grid>
     </Box>
   );

@@ -88,7 +88,7 @@ const Step2: React.FC<Step2Props> = () => {
       age: 0, // e.g., 30
       withChild: "YES", // e.g., "YES"
       havePet: "NO", // e.g., "YES"
-      typeOfEmployment: "", // e.g., "HYBRID_WORK"
+      typeOfEmployment: "HYBRID_WORK", // e.g., "HYBRID_WORK"
       areYouSmoking: "YES", // e.g., "YES"
       anotherPerson: [
         {
@@ -101,7 +101,7 @@ const Step2: React.FC<Step2Props> = () => {
       livingWithOwner: "NO_PREFERENCE", // e.g., "NO"
       tenantsWithChildren: "NO_PREFERENCE", // e.g., "NO"
       acceptPet: "NO_PREFERENCE", // e.g., "NO"
-      acceptSmoking: "", // e.g., "YES"
+      acceptSmoking: "YES", // e.g., "YES"
       photos: "", // e.g., "url_to_photo.jpg"
       describeYourSelf: "",
     },

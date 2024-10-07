@@ -145,7 +145,7 @@ const useHunterData = () => {
     },
     {
       name: t("whoAreYou.GROUP_FRIEND"),
-      value: "GROUP_FRIEND ",
+      value: "GROUP_FRIEND",
     },
   ];
 

@@ -1,9 +1,10 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useNotification from "../../hooks/useNotification";
 import useAdvertisementMutations from "../../mutations/advertisement";
 import { AdvertisementData } from "../../types/advertisement";
+import LandlordPreviewDescription from "../../components/LandlordPreviewPage/LandlordPreviewDescription";
 
 const LanlordPreviewPage: React.FC = () => {
   const params = useParams();
@@ -43,7 +44,32 @@ const LanlordPreviewPage: React.FC = () => {
   }, []);
   return (
     <Box>
-      <Container></Container>
+      <Container>
+        <Grid container spacing={3} mb={4}>
+          <Grid item xs={12}>
+            {" "}
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={3}>
+                <Typography>room: 13 (m²)</Typography>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <Typography>property: 50 (m²)</Typography>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <Typography>3 rooms</Typography>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <Typography>04+ flatmates</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <LandlordPreviewDescription />
+          </Grid>
+        </Grid>
+      </Container>
     </Box>
   );
 };

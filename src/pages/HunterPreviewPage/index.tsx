@@ -48,15 +48,20 @@ const HunterPreviewPage: React.FC = () => {
     <Box>
       <Container>
         <Grid container spacing={3} mb={4}>
-          <Grid item xs={12}>
-            <ProfileCard />
-          </Grid>
-          <Grid item xs={12}>
-            <HunterDescription
-              updateStatusAPI={() => updateStatusAPI()}
-              loading={updateStatusAdvertisementMutation.isPending}
-            />
-          </Grid>
+          {previewData && (
+            <Grid item xs={12}>
+              <ProfileCard previewData={previewData} />
+            </Grid>
+          )}
+          {previewData && (
+            <Grid item xs={12}>
+              <HunterDescription
+                previewData={previewData}
+                updateStatusAPI={() => updateStatusAPI()}
+                loading={updateStatusAdvertisementMutation.isPending}
+              />
+            </Grid>
+          )}
         </Grid>
       </Container>
     </Box>

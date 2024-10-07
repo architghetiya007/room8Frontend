@@ -20,6 +20,7 @@ import GoogleMapsAutocomplete from "../../comman/GoogleMapsAutoComplete";
 import { useNavigate, useParams } from "react-router-dom";
 import { AdvertisementData } from "../../../types/advertisement";
 import CommanTypography from "../../comman/CommonTypography";
+import dayjs from "dayjs";
 const marks = [
   {
     value: 1,
@@ -88,6 +89,7 @@ const hunterSchema = Yup.object().shape({
   whenYouWouldLikeMoveIn: Yup.number()
     .nullable()
     .typeError("Invalid timestamp for move-in date"),
+  isAvailableNow: Yup.boolean(),
   preferredLengthToStay: Yup.string(),
   address: addressSchema,
   rangeFromCoordinate: Yup.number()
@@ -146,6 +148,7 @@ const Step1: React.FC<Step1Props> = () => {
       acceptableRentRange: [300, 600],
       maximumDeposit: "",
       whenYouWouldLikeMoveIn: null,
+      isAvailableNow: true,
       preferredLengthToStay: "NO_PREFERENCE",
       address: {
         streetNumber: "",
@@ -321,10 +324,9 @@ const Step1: React.FC<Step1Props> = () => {
           >
             <CommanTypography title={t("availableNow")} />
             <IOSSwitch
-              checked={formik.values.whenYouWouldLikeMoveIn === null}
+              checked={formik.values.isAvailableNow}
               onChange={(e) => {
-                const value = e.target.checked ? null : Date.now(); // Assuming timestamp
-                formik.setFieldValue("whenYouWouldLikeMoveIn", value);
+                formik.setFieldValue("isAvailableNow", e.target.checked);
               }}
             />
           </Box>
@@ -335,9 +337,12 @@ const Step1: React.FC<Step1Props> = () => {
               <DatePicker
                 sx={{ width: "100%" }}
                 label="Date"
-                value={formik.values.whenYouWouldLikeMoveIn}
+                value={formik.values.whenYouWouldLikeMoveIn ? dayjs(formik.values.whenYouWouldLikeMoveIn) : null}
                 onChange={(newValue) => {
-                  formik.setFieldValue("whenYouWouldLikeMoveIn", newValue);
+                  formik.setFieldValue(
+                    "whenYouWouldLikeMoveIn",
+                    newValue?.valueOf()
+                  );
                 }}
               />
             </DemoContainer>
