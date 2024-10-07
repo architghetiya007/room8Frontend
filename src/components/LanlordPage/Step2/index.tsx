@@ -1,11 +1,9 @@
 import {
   Avatar,
   Box,
-  FormControlLabel,
   Grid,
   OutlinedInput,
   Stack,
-  Switch,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -25,6 +23,9 @@ import CustomLoadingButton from "../../comman/CustomLoadingButton";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate, useParams } from "react-router-dom";
 import { AdvertisementData } from "../../../types/advertisement";
+import CommanTypography from "../../comman/CommonTypography";
+import IOSSwitch from "../../comman/IOSSwitch";
+import dayjs from "dayjs";
 const landlordSchema = Yup.object().shape({
   roomSize: Yup.string().nullable(),
   howManyPropleInRoom: Yup.string(),
@@ -32,6 +33,7 @@ const landlordSchema = Yup.object().shape({
   bed: Yup.string(),
   privateBathroom: Yup.string(),
   doesRoomHaveBalcony: Yup.string(),
+  isAvailableNow: Yup.boolean(),
   dateAvailable: Yup.string().nullable(),
   minimumStay: Yup.string(),
   maximumStay: Yup.string(),
@@ -49,6 +51,7 @@ interface RoomFormValues {
   bed: string; // Bed type as string
   privateBathroom: string; // Assuming it's a string (could also be a boolean)
   doesRoomHaveBalcony: string; // Assuming it's a string (could also be a boolean)
+  isAvailableNow: boolean;
   dateAvailable: string; // Keeping as string (consider using Date type if it's a date)
   minimumStay: string; // Keeping as string (consider using number if numeric)
   maximumStay: string; // Keeping as string (consider using number if numeric)
@@ -86,6 +89,7 @@ const Step2: React.FC<Step2Props> = () => {
       privateBathroom: "YES",
       doesRoomHaveBalcony: "YES",
       dateAvailable: "",
+      isAvailableNow: true,
       minimumStay: "",
       maximumStay: "",
       rentPerMonth: "",
@@ -110,7 +114,7 @@ const Step2: React.FC<Step2Props> = () => {
             } else {
               navigate(`/landlord/31/${data?.data._id}`);
             }
-            window.scrollTo({top: 0, behavior: 'smooth'})
+            window.scrollTo({ top: 0, behavior: "smooth" });
           },
           onError: (error: Error) => {
             showSnackBar({ message: error.message, variant: "error" });
@@ -135,9 +139,6 @@ const Step2: React.FC<Step2Props> = () => {
       },
     });
   };
-
-  console.log(formik.errors)
-
   useEffect(() => {
     getAdvertisementAPI();
   }, []);
@@ -241,16 +242,20 @@ const Step2: React.FC<Step2Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Stack flexDirection={"row"} gap={1} justifyContent={"space-between"}>
-            <Typography>Date available : </Typography>
-            <Box>
-              <FormControlLabel
-                control={<Switch defaultChecked />}
-                label="Available Now:"
-                labelPlacement="start"
-              />
-            </Box>
-          </Stack>
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"flex-end"}
+            gap={1}
+          >
+            <CommanTypography title={"Available Now : "} />
+            <IOSSwitch
+              checked={formik.values.isAvailableNow}
+              onChange={(e) => {
+                formik.setFieldValue("isAvailableNow", e.target.checked);
+              }}
+            />
+          </Box>
         </Grid>
         <Grid item xs={12}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -258,9 +263,13 @@ const Step2: React.FC<Step2Props> = () => {
               <DatePicker
                 sx={{ width: "100%" }}
                 label="Date"
-                // value={formik.values?.dateAvailable ?? undefined}
+                value={
+                  formik.values?.dateAvailable
+                    ? dayjs(formik.values?.dateAvailable)
+                    : null
+                }
                 onChange={(newValue) => {
-                  formik.setFieldValue("dateAvailable", newValue);
+                  formik.setFieldValue("dateAvailable", newValue?.valueOf());
                 }}
               />
             </DemoContainer>

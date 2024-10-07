@@ -20,7 +20,6 @@ const CustomButtonGroup: React.FC<CustomButtonGroupProps> = ({
   multiSelect = false, // Default to single-select mode if not provided
 }) => {
   const handleOptionClick = (itemValue: string) => {
-    console.log(itemValue)
     if (multiSelect) {
       // Multi-select mode
       if (Array.isArray(selectionOption)) {

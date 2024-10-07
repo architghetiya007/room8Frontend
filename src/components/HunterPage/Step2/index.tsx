@@ -172,6 +172,11 @@ const Step2: React.FC<Step2Props> = () => {
         formik.setValues({
           ...formik.values,
           ...data!.data.hunterData,
+          typeOfEmployment:
+            data!.data!.hunterData?.typeOfEmployment ?? "HYBRID_WORK",
+          flatmatePreference: data!.data!.hunterData?.flatmatePreference ?? [
+            "WOMAN",
+          ],
         });
       },
       onError: (error: Error) => {
@@ -204,6 +209,7 @@ const Step2: React.FC<Step2Props> = () => {
   useEffect(() => {
     getAdvertisementAPI();
   }, []);
+
   return (
     <FormikProvider value={formik}>
       <Box component={"form"} onSubmit={formik.handleSubmit}>
@@ -377,6 +383,7 @@ const Step2: React.FC<Step2Props> = () => {
                 {t("anotherPersonQuestion.age")}
               </Typography>
               <OutlinedInput
+                type="number"
                 value={anotherPerson.age}
                 onChange={(e) =>
                   setAnotherPerson({ ...anotherPerson, age: e.target.value })
@@ -447,7 +454,6 @@ const Step2: React.FC<Step2Props> = () => {
           <Grid item xs={12}>
             <CustomButtonGroup
               optionClick={(e: string[] | string) => {
-                console.log(e);
                 formik.setFieldValue("flatmatePreference", e);
               }}
               multiSelect={true}

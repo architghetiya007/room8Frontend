@@ -21,6 +21,7 @@ import OutlinedButton from "../../comman/OutlinedButton";
 import { useNavigate, useParams } from "react-router-dom";
 import useCommonTranslation from "../../../hooks/useCommonTranslation";
 import { AdvertisementData } from "../../../types/advertisement";
+import useUserMutations from "../../../mutations/user";
 const landlordSchema = Yup.object().shape({
   profilePhoto: Yup.string(),
   genderOfCurrentTenants: Yup.string(),
@@ -49,6 +50,9 @@ const Step31: React.FC<Step31Props> = () => {
   const params = useParams();
   const { t } = useCommonTranslation();
   const navigate = useNavigate();
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const { uploadImageMutation } = useUserMutations();
   const { updateAdvertisementMutation, getAdvertisementMutation } =
     useAdvertisementMutations();
   const { showSnackBar } = useNotification();
@@ -76,7 +80,15 @@ const Step31: React.FC<Step31Props> = () => {
       tenantAcceptSmoking: "YES",
     },
     validationSchema: landlordSchema,
-    onSubmit: (values: any) => {
+    onSubmit: async (values: any) => {
+      if (selectedImage) {
+        let formData = new FormData();
+        formData.append("files", selectedImage);
+        let response = await uploadImageMutation.mutateAsync(formData);
+        if (response?.status === true) {
+          values.profilePhoto = response.data[0];
+        }
+      }
       const body = {
         advertiseType: AdvertisementType.LANDLORD,
         landlordData: { ...advertisementData?.landlordData, ...values },
@@ -104,6 +116,14 @@ const Step31: React.FC<Step31Props> = () => {
         formik.setValues({
           ...formik.values,
           ...data?.data?.landlordData,
+          preferenceOfFutureTenants:
+            data!.data?.landlordData!.preferenceOfFutureTenants!.length > 0
+              ? data?.data?.landlordData?.preferenceOfFutureTenants
+              : ["WOMAN"],
+          ageRangeOfFutureRoommate:
+            data!.data?.landlordData!.ageRangeOfFutureRoommate!.length > 0
+              ? data?.data?.landlordData?.ageRangeOfFutureRoommate
+              : [18, 35],
         });
       },
       onError: (error: Error) => {
@@ -116,6 +136,27 @@ const Step31: React.FC<Step31Props> = () => {
   useEffect(() => {
     getAdvertisementAPI();
   }, []);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setSelectedImage(file); // Set the selected file
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result as string); // Set the preview URL
+      };
+
+      reader.readAsDataURL(file); // Read the file as a data URL for preview
+    }
+  };
+
+  const handleClick = () => {
+    const fileInput = document.getElementById(
+      "profile-image-input"
+    ) as HTMLInputElement;
+    fileInput?.click();
+  };
 
   return (
     <Box component={"form"}>
@@ -155,8 +196,21 @@ const Step31: React.FC<Step31Props> = () => {
                 width: 80, // Set the width
                 height: 80, // Set the height
               }}
+              src={
+                preview
+                  ? preview
+                  : advertisementData?.landlordData?.profilePhoto ?? ""
+              }
             ></Avatar>
+            <input
+              type="file"
+              id="profile-image-input"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: "none" }} // Hide file input
+            />
             <LoadingButton
+              onClick={handleClick}
               sx={{
                 background:
                   "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
@@ -171,7 +225,7 @@ const Step31: React.FC<Step31Props> = () => {
               }}
               type="button"
             >
-              Upload Photos
+              Upload Photo
             </LoadingButton>
           </Stack>
         </Grid>
@@ -183,14 +237,14 @@ const Step31: React.FC<Step31Props> = () => {
         <Grid item xs={12}>
           <CustomButtonGroup
             optionClick={(e: string[] | string) => {
-              formik.setFieldValue("flatmatePreference", e);
+              formik.setFieldValue("genderOfCurrentTenants", e);
             }}
-            selectionOption={formik.values.flatmatePreference}
+            selectionOption={formik.values.genderOfCurrentTenants}
             options={iamAcceptingOptions}
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Stack direction={"column"}>
+          <Stack direction={"column"} spacing={1}>
             <Typography variant="h5">Current tenant's name</Typography>
             <OutlinedInput
               value={formik.values.currentTenantsName}
@@ -203,7 +257,7 @@ const Step31: React.FC<Step31Props> = () => {
           </Stack>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Stack direction={"column"}>
+          <Stack direction={"column"} spacing={1}>
             <Typography variant="h5">Age of current tenant</Typography>
             <OutlinedInput
               value={formik.values.ageOfCurrentTenants}
@@ -354,7 +408,10 @@ const Step31: React.FC<Step31Props> = () => {
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
             sx={{ width: "100%" }}
-            loading={updateAdvertisementMutation.isPending}
+            loading={
+              updateAdvertisementMutation.isPending ||
+              uploadImageMutation.isPending
+            }
             onClick={() => formik.handleSubmit()}
           >
             {t("PREVIEW_BUTTON_TEXT")}

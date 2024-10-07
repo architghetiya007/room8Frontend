@@ -8,7 +8,7 @@ import ANIMAL from "../../../assets/hunter/ANIMAL.png";
 import BALCONY_PROPERTY from "../../../assets/hunter/BALCONY_PROPERTY.png";
 import BATHROOM from "../../../assets/hunter/BATHROOM.png";
 import FURNISHED from "../../../assets/hunter/FURNISHED.png";
-import HYBRID_WORK from "../../../assets/hunter/HYBRID_WORK.png";
+// import HYBRID_WORK from "../../../assets/hunter/HYBRID_WORK.png";
 import KITCHEN from "../../../assets/hunter/KITCHEN.png";
 import LIFT from "../../../assets/hunter/LIFT.png";
 import LIVING_WITH_OWNER from "../../../assets/hunter/LIVING_WITH_OWNER.png";
