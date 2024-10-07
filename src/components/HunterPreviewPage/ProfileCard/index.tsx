@@ -89,13 +89,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
           spacing={2}
           ml={"auto"}
           gap={2}
+          mt={2}
         >
           <Box
             sx={{
-              maxWidth: "250px",
               borderRadius: 10,
               backgroundColor: "#EDF4FE",
-              p: 2,
+              py: 1,
+              px: 2,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -115,10 +116,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
           </Box>
           <Box
             sx={{
-              maxWidth: "250px",
               borderRadius: 10,
               backgroundColor: "#EDF4FE",
-              p: 2,
+              py: 1,
+              px: 2,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",

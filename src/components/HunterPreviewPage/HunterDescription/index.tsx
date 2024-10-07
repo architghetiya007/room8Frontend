@@ -20,6 +20,9 @@ import SMOKER from "../../../assets/hunter/SMOKER.png";
 import WITH_CHILDREN from "../../../assets/hunter/WITH_CHILDREN.png";
 import WOMAN_MAN from "../../../assets/hunter/WOMAN_MAN.png";
 import useCommonTranslation from "../../../hooks/useCommonTranslation";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { useNavigate } from "react-router-dom";
 interface HunterDescriptionProps {
   updateStatusAPI: () => void;
   loading: boolean;
@@ -30,7 +33,9 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
   loading,
   previewData,
 }) => {
+  const userSlice = useSelector((state: RootState) => state.user);
   const { t } = useCommonTranslation();
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -159,7 +164,11 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                 </Grid>
                 <Grid item xs={12}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <Box component={"img"} width={'30px'} src={MAXIMUM_FLATMATES}></Box>
+                    <Box
+                      component={"img"}
+                      width={"30px"}
+                      src={MAXIMUM_FLATMATES}
+                    ></Box>
                     <Typography>
                       Maximum flatmates:{" "}
                       {previewData.hunterData?.minimumNumberOfTenants}
@@ -243,7 +252,11 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                 </Grid>
                 <Grid item xs={12}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <Box component={"img"} width={'30px'} src={MAXIMUM_FLATMATES}></Box>
+                    <Box
+                      component={"img"}
+                      width={"30px"}
+                      src={MAXIMUM_FLATMATES}
+                    ></Box>
                     <Typography>
                       Maximum number of tenants:{" "}
                       {previewData.hunterData?.minimumNumberOfTenants}
@@ -297,7 +310,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12} mb={1}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Box component={"img"} width={'30px'} src={WOMAN_MAN}></Box>
+            <Box component={"img"} width={"30px"} src={WOMAN_MAN}></Box>
             <Typography>
               {t(`accommodation.${previewData!.hunterData!.accommodation}`)}
             </Typography>
@@ -305,7 +318,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12} mb={1}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Box component={"img"} width={'30px'} src={LIVING_WITH_OWNER}></Box>
+            <Box component={"img"} width={"30px"} src={LIVING_WITH_OWNER}></Box>
             <Typography>
               Living with owner?: {previewData.hunterData?.livingWithOwner}
             </Typography>
@@ -313,7 +326,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12} mb={1}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Box component={"img"} width={'30px'} src={WITH_CHILDREN}></Box>
+            <Box component={"img"} width={"30px"} src={WITH_CHILDREN}></Box>
             <Typography>
               {previewData.hunterData?.withChild
                 ? "With Children"
@@ -323,7 +336,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12} mb={1}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Box component={"img"} width={'30px'} src={SMOKER}></Box>
+            <Box component={"img"} width={"30px"} src={SMOKER}></Box>
             <Typography>
               {previewData.hunterData?.areYouSmoking
                 ? "Smoker"
@@ -333,7 +346,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Box component={"img"} width={'30px'} src={ANIMAL}></Box>
+            <Box component={"img"} width={"30px"} src={ANIMAL}></Box>
             <Typography>
               {previewData.hunterData?.acceptPet
                 ? "Pets accepted"
@@ -341,22 +354,30 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} mt={2} mb={2}>
-          <Box sx={{ borderBottom: "1px solid lightgray" }}></Box>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <OutlinedButton>Back</OutlinedButton>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <CustomLoadingButton
-            loading={loading}
-            onClick={() => updateStatusAPI()}
-            type="button"
-            sx={{ width: "100%" }}
-          >
-            Publish
-          </CustomLoadingButton>
-        </Grid>
+        {previewData?.userId && userSlice?.user?._id === previewData.userId && (
+          <Grid item xs={12} mt={2} mb={2}>
+            <Box sx={{ borderBottom: "1px solid lightgray" }}></Box>
+          </Grid>
+        )}
+
+        {previewData?.userId && userSlice?.user?._id === previewData.userId && (
+          <Grid item xs={12} md={6}>
+            <OutlinedButton type="button" onClick={() => navigate('/')}>Back</OutlinedButton>
+          </Grid>
+        )}
+        {previewData?.userId &&
+          userSlice?.user?._id === previewData?.userId && (
+            <Grid item xs={12} md={6}>
+              <CustomLoadingButton
+                loading={loading}
+                onClick={() => updateStatusAPI()}
+                type="button"
+                sx={{ width: "100%" }}
+              >
+                {previewData.isActive ? "Unpublish" : "Publish"}
+              </CustomLoadingButton>
+            </Grid>
+          )}
       </Grid>
     </Box>
   );
