@@ -23,6 +23,10 @@ const RoomSection: React.FC = () => {
     getAllAdvertisementAPI();
   }, []);
 
+  if (roomData.length == 0) {
+    return null;
+  }
+
   return (
     <Box
       sx={{
