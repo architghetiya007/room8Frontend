@@ -81,6 +81,7 @@ export interface LandlordRequestDTO {
   privateBathroom?: string;
   doesRoomHaveBalcony?: string;
   dateAvailable?: string; // Changed to Date type
+  isAvailableNow?: boolean;
   minimumStay?: string; // Consider specifying format (e.g., '1 month')
   maximumStay?: string; // Consider specifying format (e.g., '12 months')
   rentPerMonth?: string; // Made optional
