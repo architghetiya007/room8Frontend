@@ -3,8 +3,22 @@ import { Box, Grid, Typography, Stack, OutlinedInput } from "@mui/material";
 import CustomLoadingButton from "../comman/CustomLoadingButton";
 import OutlinedButton from "../comman/OutlinedButton";
 import GoogleMaps from "../GoogleMaps";
-
-const LandlordPreviewDescription: React.FC = () => {
+import { AdvertisementData } from "../../types/advertisement";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store";
+interface LandlordPreviewDescriptionProps {
+  updateStatusAPI: () => void;
+  loading: boolean;
+  previewData: AdvertisementData;
+}
+const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
+  previewData,
+  loading,
+  updateStatusAPI,
+}) => {
+  const userSlice = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -116,7 +130,7 @@ const LandlordPreviewDescription: React.FC = () => {
               width: "100%",
               p: 3,
               mt: 4,
-              mb: 4
+              mb: 4,
             }}
             spacing={2}
           >
@@ -215,7 +229,12 @@ const LandlordPreviewDescription: React.FC = () => {
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <GoogleMaps />
+              <GoogleMaps
+                {...(previewData.landlordData?.address?.coordinates && {
+                  lat: previewData.landlordData.address.coordinates[1],
+                  lng: previewData.landlordData.address.coordinates[0],
+                })}
+              />
             </Grid>
           </Grid>
         </Grid>
@@ -225,7 +244,7 @@ const LandlordPreviewDescription: React.FC = () => {
               borderRadius: 5,
               display: "flex",
               width: "100%",
-              p: 3,
+              p: 1,
             }}
             spacing={2}
           >
@@ -250,22 +269,32 @@ const LandlordPreviewDescription: React.FC = () => {
             </LoadingButton>
           </Stack>
         </Grid>
-        <Grid item xs={12} mt={2} mb={2}>
-          <Box sx={{ borderBottom: "1px solid lightgray" }}></Box>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <OutlinedButton>Back</OutlinedButton>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <CustomLoadingButton
-            // loading={loading}
-            // onClick={() => updateStatusAPI()}
-            type="button"
-            sx={{ width: "100%" }}
-          >
-            Publish
-          </CustomLoadingButton>
-        </Grid>
+        {previewData?.userId && userSlice?.user?._id === previewData.userId && (
+          <Grid item xs={12} mt={2} mb={2}>
+            <Box sx={{ borderBottom: "1px solid lightgray" }}></Box>
+          </Grid>
+        )}
+
+        {previewData?.userId && userSlice?.user?._id === previewData.userId && (
+          <Grid item xs={12} md={6}>
+            <OutlinedButton type="button" onClick={() => navigate("/")}>
+              Back
+            </OutlinedButton>
+          </Grid>
+        )}
+        {previewData?.userId &&
+          userSlice?.user?._id === previewData?.userId && (
+            <Grid item xs={12} md={6}>
+              <CustomLoadingButton
+                loading={loading}
+                onClick={() => updateStatusAPI()}
+                type="button"
+                sx={{ width: "100%" }}
+              >
+                {previewData.isActive ? "Unpublish" : "Publish"}
+              </CustomLoadingButton>
+            </Grid>
+          )}
       </Grid>
     </Box>
   );

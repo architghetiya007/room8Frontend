@@ -90,7 +90,7 @@ const useHunterData = () => {
   const duration: ButtonGroupInterface[] = [
     {
       name: t("duration.NO_PREFERENCE"),
-      value: "NO_PREFERENCE  ",
+      value: "NO_PREFERENCE",
     },
     {
       name: t("duration.1_WEEK"),

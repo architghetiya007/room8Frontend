@@ -112,7 +112,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
                   )
                 : ""}
             </Typography>
-            <Box component={"img"} src={AvailableImg}></Box>
+            <Box
+              sx={{ width: "25px", height: "25px" }}
+              component={"img"}
+              src={AvailableImg}
+            ></Box>
           </Box>
           <Box
             sx={{
@@ -134,7 +138,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
               )}{" "}
               length stay{" "}
             </Typography>
-            <Box component={"img"} src={MONTHiMG}></Box>
+            <Box
+              sx={{ width: "25px", height: "25px" }}
+              component={"img"}
+              src={MONTHiMG}
+            ></Box>
           </Box>
         </Grid>
       </Grid>

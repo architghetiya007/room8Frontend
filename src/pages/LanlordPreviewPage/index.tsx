@@ -40,7 +40,6 @@ const LanlordPreviewPage: React.FC = () => {
 
   useEffect(() => {
     getAdvertisementAPI();
-    updateStatusAPI();
   }, []);
   return (
     <Box>
@@ -65,9 +64,15 @@ const LanlordPreviewPage: React.FC = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <LandlordPreviewDescription />
-          </Grid>
+          {previewData && (
+            <Grid item xs={12}>
+              <LandlordPreviewDescription
+                previewData={previewData}
+                updateStatusAPI={() => updateStatusAPI()}
+                loading={updateStatusAdvertisementMutation.isPending}
+              />
+            </Grid>
+          )}
         </Grid>
       </Container>
     </Box>

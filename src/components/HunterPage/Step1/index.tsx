@@ -204,7 +204,9 @@ const Step1: React.FC<Step1Props> = () => {
             onSuccess: (data) => {
               // showSnackBar({ message: data!.message });
               navigate(`/hunter/2/${data?.data._id}`);
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }, 0);
             },
             onError: (error: Error) => {
               showSnackBar({ message: error.message, variant: "error" });
