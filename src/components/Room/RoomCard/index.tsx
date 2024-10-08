@@ -90,7 +90,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
       )}
 
       <Box sx={{ p: 2 }}>
-        <Typography variant="subtitle1">
+        <Typography variant="subtitle1" sx={{ minHeight: "90px" }}>
           {advertisement.advertiseType === AdvertisementType.HUNTER
             ? advertisement.hunterData?.address?.formattedAddress
             : advertisement.landlordData?.address?.formattedAddress}
