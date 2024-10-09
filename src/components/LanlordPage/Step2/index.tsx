@@ -31,6 +31,7 @@ import IOSSwitch from "../../comman/IOSSwitch";
 import dayjs from "dayjs";
 import { t } from "i18next";
 import useHunterData from "../../../hooks/useHunter";
+import useUserMutations from "../../../mutations/user";
 const landlordSchema = Yup.object().shape({
   roomSize: Yup.string().nullable(),
   howManyPropleInRoom: Yup.string(),
@@ -66,6 +67,10 @@ interface RoomFormValues {
   descriptionOfFlat: string; // Description as string
   photosOfPlace: string[]; // Array of strings for photos
 }
+interface PreviewState {
+  previews: string[]; // URLs for the previews
+  files: (File | string)[]; // Array containing both File objects and strings
+}
 
 interface Step2Props {
   updateTabIndex: Function;
@@ -86,6 +91,11 @@ const Step2: React.FC<Step2Props> = () => {
   const { duration } = useHunterData();
   const [advertisementData, setAdvertisementData] =
     useState<AdvertisementData>();
+  const { uploadImageMutation } = useUserMutations();
+  const [previewState, setPreviewState] = useState<PreviewState>({
+    previews: [],
+    files: [],
+  });
   const formik = useFormik<RoomFormValues>({
     initialValues: {
       roomSize: "",
@@ -105,7 +115,26 @@ const Step2: React.FC<Step2Props> = () => {
       photosOfPlace: [],
     },
     validationSchema: landlordSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      let array = previewState.files.filter(
+        (file): file is File => file instanceof File
+      );
+      let stringFiles = previewState.files.filter(
+        (file): file is string => typeof file === "string"
+      );
+
+      if (array.length > 0) {
+        let formData = new FormData();
+        array.forEach((e) => {
+          formData.append("files", e);
+        });
+        let response = await uploadImageMutation.mutateAsync(formData);
+        if (response?.status === true) {
+          values.photosOfPlace = [...stringFiles, ...response.data];
+        }
+      } else {
+        values.photosOfPlace = stringFiles;
+      }
       const body = {
         advertiseType: AdvertisementType.LANDLORD,
         landlordData: { ...advertisementData?.landlordData, ...values },
@@ -138,6 +167,12 @@ const Step2: React.FC<Step2Props> = () => {
           ...formik.values,
           ...data?.data?.landlordData,
         });
+        if (data?.data.landlordData?.photosOfPlace) {
+          setPreviewState({
+            previews: data?.data.landlordData?.photosOfPlace,
+            files: data?.data.landlordData?.photosOfPlace,
+          });
+        }
       },
       onError: (error: Error) => {
         showSnackBar({ message: error.message, variant: "error" });
@@ -148,6 +183,34 @@ const Step2: React.FC<Step2Props> = () => {
   useEffect(() => {
     getAdvertisementAPI();
   }, []);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) return;
+
+    const newFiles = Array.from(files); // Convert FileList to array
+    const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
+
+    // Update state to store file previews and uploaded files
+    setPreviewState((prevState) => ({
+      previews: [...prevState.previews, ...newPreviews],
+      files: [...prevState.files, ...newFiles],
+    }));
+  };
+
+  const handleRemove = (index: number) => {
+    setPreviewState((prevState) => ({
+      previews: prevState.previews.filter((_, i) => i !== index),
+      files: prevState.files.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleClick = () => {
+    const fileInput = document.getElementById(
+      "profile-image-input"
+    ) as HTMLInputElement;
+    fileInput?.click();
+  };
 
   return (
     <Box component={"form"} onSubmit={formik.handleSubmit}>
@@ -424,13 +487,47 @@ const Step2: React.FC<Step2Props> = () => {
             <Typography variant="h6">Add photos of your place</Typography>
             {/* <Typography>{t("photosHunterQuestion.subTitle1")}</Typography> */}
             <Typography>(you can also add them later)</Typography>
-            <Avatar
-              sx={{
-                width: 80, // Set the width
-                height: 80, // Set the height
-              }}
-            ></Avatar>
+            {previewState.previews.length > 0 && (
+              <Stack direction="row" spacing={2}>
+                {previewState.previews.map((preview, index) => (
+                  <Stack key={index} alignItems="center">
+                    <Avatar
+                      sx={{
+                        width: 80,
+                        height: 80,
+                      }}
+                      src={preview}
+                    />
+                    <LoadingButton
+                      onClick={() => handleRemove(index)}
+                      sx={{
+                        mt: 1,
+                        background: "#FF7C51",
+                        color: "white",
+                        borderRadius: "50px",
+                        textTransform: "none",
+                        "&:hover": {
+                          background: "#FF7C51",
+                        },
+                      }}
+                    >
+                      Remove
+                    </LoadingButton>
+                  </Stack>
+                ))}
+              </Stack>
+            )}
+
+            <input
+              type="file"
+              id="profile-image-input"
+              accept="image/*"
+              onChange={handleImageChange}
+              multiple
+              style={{ display: "none" }} // Hide file input
+            />
             <LoadingButton
+              onClick={handleClick}
               sx={{
                 background:
                   "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
@@ -459,7 +556,10 @@ const Step2: React.FC<Step2Props> = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
-            loading={updateAdvertisementMutation.isPending}
+            loading={
+              updateAdvertisementMutation.isPending ||
+              uploadImageMutation.isPending
+            }
             sx={{ width: "100%" }}
             onClick={() => formik.handleSubmit()}
           >

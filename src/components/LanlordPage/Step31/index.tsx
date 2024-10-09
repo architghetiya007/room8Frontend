@@ -188,9 +188,12 @@ const Step31: React.FC<Step31Props> = () => {
             justifyContent={"center"}
             sx={{ border: "1px solid red", borderRadius: "8px", p: 4 }}
           >
-            <Typography variant="h6">Add photos of your place</Typography>
+            <Typography variant="h6">Add your profile picture</Typography>
             {/* <Typography>{t("photosHunterQuestion.subTitle1")}</Typography> */}
-            <Typography>(you can also add them later)</Typography>
+            <Typography>
+              (A profile with a photo builds more trust – stand out and find the
+              right tenant faster!)
+            </Typography>
             <Avatar
               sx={{
                 width: 80, // Set the width
