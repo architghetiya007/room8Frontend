@@ -90,7 +90,20 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
       )}
 
       <Box sx={{ p: 2 }}>
-        <Typography variant="subtitle1" sx={{ minHeight: "90px" }}>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            maxHeight:
+              advertisement.advertiseType === AdvertisementType.HUNTER
+                ? "60px"
+                : "90px",
+            minHeight:
+              advertisement.advertiseType === AdvertisementType.HUNTER
+                ? "60px"
+                : "90px",
+            overflow: "hidden",
+          }}
+        >
           {advertisement.advertiseType === AdvertisementType.HUNTER
             ? advertisement.hunterData?.address?.formattedAddress
             : advertisement.landlordData?.address?.formattedAddress}
@@ -116,19 +129,19 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
           >
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
               <BathtubOutlinedIcon />
-              <Typography sx={{ ml: 1 }} variant="subtitle1">
+              <Typography sx={{ ml: 1 }} variant="subtitle2">
                 {advertisement.landlordData?.privateBathroom} baths
               </Typography>
             </Box>
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
               <BedOutlinedIcon />
-              <Typography sx={{ ml: 1 }} variant="subtitle1">
+              <Typography sx={{ ml: 1 }} variant="subtitle2">
                 {advertisement?.landlordData?.bed} bedrooms
               </Typography>
             </Box>
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
               <Person2OutlinedIcon />
-              <Typography sx={{ ml: 1 }} variant="subtitle1">
+              <Typography sx={{ ml: 1 }} variant="subtitle2">
                 2 sharing
               </Typography>
             </Box>
@@ -143,7 +156,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
           >
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
               <AddHomeOutlined />
-              <Typography sx={{ ml: 1 }} variant="subtitle1">
+              <Typography sx={{ ml: 1 }} variant="subtitle2">
                 Looking for a room/shared room
               </Typography>
             </Box>
