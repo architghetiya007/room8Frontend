@@ -17,6 +17,11 @@ import MINIMUM_PROPERY_SIZE from "../../assets/hunter/MINIMUM_PROPERY_SIZE.png";
 import NUMBER_OF_ROOMS from "../../assets/hunter/NUMBER_OF_ROOMS.png";
 import PARKING from "../../assets/hunter/PARKING.png";
 import useCommonTranslation from "../../hooks/useCommonTranslation";
+import ProfilePNG from "../../assets/images/profile.png";
+import ANIMAL from "../../assets/hunter/ANIMAL.png";
+import SMOKER from "../../assets/hunter/SMOKER.png";
+import WITH_CHILDREN from "../../assets/hunter/WITH_CHILDREN.png";
+import HYBRID_WORK from "../../assets/hunter/HYBRID_WORK.png";
 interface LandlordPreviewDescriptionProps {
   updateStatusAPI: () => void;
   loading: boolean;
@@ -74,14 +79,8 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" fontWeight={"bold"}>
-            Diane
+            Few words about myself:
           </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h6">25 years old, Female</Typography>
-        </Grid>
-        <Grid item xs={12} mt={2} mb={2}>
-          <Box sx={{ borderBottom: "1px solid lightgray" }}></Box>
         </Grid>
         <Grid item xs={12} md={7}>
           <Box sx={{ p: 1 }}>
@@ -90,6 +89,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
             </Typography>
           </Box>
         </Grid>
+
         <Grid item xs={12} md={5}>
           <Stack
             sx={{
@@ -101,6 +101,101 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
             }}
             spacing={2}
           >
+            <Stack direction={"row"} alignItems={'center'}>
+              <Box
+                sx={{
+                  width: "150px",
+                  height: "130px",
+                }}
+                component={"img"}
+                src={previewData.landlordData?.flatmatePhoto ?? ProfilePNG}
+              ></Box>
+              <Box sx={{ ml: 1 }}>
+                <Typography
+                  sx={{
+                    fontSize: "30px",
+                    background:
+                      "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+                    backgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
+                  {previewData.landlordData?.currentTenantsName}
+                </Typography>
+                <Typography>
+                  {previewData.landlordData?.ageOfCurrentTenants} years old{" "}
+                  {previewData.landlordData?.genderOfCurrentTenants}
+                </Typography>
+              </Box>
+            </Stack>
+            <Stack>
+            <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Box
+                  component={"img"}
+                  sx={{ width: "25px", height: "25px" }}
+                  src={HYBRID_WORK}
+                ></Box>
+                <Typography
+                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
+                >
+                  {t(
+                    `typeofEmployment.${previewData.landlordData?.typeOfEmployment}`
+                  )}
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Box
+                  component={"img"}
+                  sx={{ width: "25px", height: "25px" }}
+                  src={WITH_CHILDREN}
+                ></Box>
+                <Typography
+                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
+                >
+                  {previewData.landlordData?.haveAnyChildren
+                    ? "With Children"
+                    : "No Children"}
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Box
+                  component={"img"}
+                  sx={{ width: "25px", height: "25px" }}
+                  src={SMOKER}
+                ></Box>
+                <Typography
+                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
+                >
+                  {previewData.landlordData?.tenantsSmoking
+                    ? "Smoker"
+                    : "Not a Smoker"}
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Box
+                  component={"img"}
+                  sx={{ width: "25px", height: "25px" }}
+                  src={ANIMAL}
+                ></Box>
+                <Typography
+                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
+                >
+                  {previewData.hunterData?.havePet
+                    ? "Animal"
+                    : "Not a Animal"}
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+            </Stack>
             <Typography variant="h4">Write a Message</Typography>
             <OutlinedInput placeholder="Your Message" multiline minRows={4} />
             <LoadingButton

@@ -4,14 +4,12 @@ import ANIMAL from "../../assets/hunter/ANIMAL.png";
 import HYBRID_WORK from "../../assets/hunter/HYBRID_WORK.png";
 import WITH_CHILDREN from "../../assets/hunter/WITH_CHILDREN.png";
 import SMOKER from "../../assets/hunter/SMOKER.png";
-import useCommonTranslation from "../../hooks/useCommonTranslation";
 interface LandlordPreviewDescriptionProps {
   previewData: AdvertisementData;
 }
 const LandloardPreviewSubCard: React.FC<LandlordPreviewDescriptionProps> = ({
   previewData,
 }) => {
-  const { t } = useCommonTranslation();
   return (
     <Box
       sx={{
@@ -39,9 +37,7 @@ const LandloardPreviewSubCard: React.FC<LandlordPreviewDescriptionProps> = ({
               <Typography
                 sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
               >
-                {t(
-                  `typeofEmployment.${previewData?.landlordData?.typeOfEmployment}`
-                )}
+                room: {previewData.landlordData?.roomSize} (m²)
               </Typography>
             </Box>
           </Grid>
@@ -55,9 +51,7 @@ const LandloardPreviewSubCard: React.FC<LandlordPreviewDescriptionProps> = ({
               <Typography
                 sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
               >
-                {previewData?.landlordData?.haveAnyChildren
-                  ? "With Children"
-                  : "No Children"}
+                property: {previewData.landlordData?.propertySize} (m²)
               </Typography>
             </Box>
           </Grid>
@@ -71,9 +65,7 @@ const LandloardPreviewSubCard: React.FC<LandlordPreviewDescriptionProps> = ({
               <Typography
                 sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
               >
-                {previewData?.landlordData?.acceptSmoking
-                  ? "Smoker"
-                  : "Not a Smoker"}
+                {previewData.landlordData?.roomsAmount} rooms
               </Typography>
             </Box>
           </Grid>
@@ -87,9 +79,7 @@ const LandloardPreviewSubCard: React.FC<LandlordPreviewDescriptionProps> = ({
               <Typography
                 sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
               >
-                {previewData?.landlordData?.acceptPets
-                  ? "Animal"
-                  : "Not a Animal"}
+                {previewData?.landlordData?.howmanyPeopleLive} flatmates
               </Typography>
             </Box>
           </Grid>

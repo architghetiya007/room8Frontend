@@ -6,6 +6,7 @@ import useAdvertisementMutations from "../../mutations/advertisement";
 import { AdvertisementData } from "../../types/advertisement";
 import LandlordPreviewDescription from "../../components/LandlordPreviewPage/LandlordPreviewDescription";
 import LandloardPreviewSubCard from "../../components/LandlordPreviewPage/LandloardPreviewSubCard";
+import LandlordProfileCard from "../../components/LandlordPreviewPage/LandlordProfileCard";
 
 const LanlordPreviewPage: React.FC = () => {
   const params = useParams();
@@ -46,9 +47,12 @@ const LanlordPreviewPage: React.FC = () => {
     <Box>
       <Container>
         <Grid container spacing={3} mb={4}>
-          <Grid item xs={12}>
-            {" "}
-          </Grid>
+          {previewData && (
+            <Grid item xs={12}>
+              <LandlordProfileCard previewData={previewData} />
+            </Grid>
+          )}
+
           {previewData && (
             <Grid item xs={12}>
               <LandloardPreviewSubCard previewData={previewData} />

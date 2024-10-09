@@ -1,8 +1,11 @@
 import {
   Avatar,
   Box,
+  FormControl,
   Grid,
+  MenuItem,
   OutlinedInput,
+  Select,
   Stack,
   Typography,
 } from "@mui/material";
@@ -26,6 +29,8 @@ import { AdvertisementData } from "../../../types/advertisement";
 import CommanTypography from "../../comman/CommonTypography";
 import IOSSwitch from "../../comman/IOSSwitch";
 import dayjs from "dayjs";
+import { t } from "i18next";
+import useHunterData from "../../../hooks/useHunter";
 const landlordSchema = Yup.object().shape({
   roomSize: Yup.string().nullable(),
   howManyPropleInRoom: Yup.string(),
@@ -78,6 +83,7 @@ const Step2: React.FC<Step2Props> = () => {
     bedOptions,
     yesNoOptions,
   } = useLandlord();
+  const { duration } = useHunterData();
   const [advertisementData, setAdvertisementData] =
     useState<AdvertisementData>();
   const formik = useFormik<RoomFormValues>({
@@ -90,8 +96,8 @@ const Step2: React.FC<Step2Props> = () => {
       doesRoomHaveBalcony: "YES",
       dateAvailable: "",
       isAvailableNow: true,
-      minimumStay: "",
-      maximumStay: "",
+      minimumStay: "NO_PREFERENCE",
+      maximumStay: "NO_PREFERENCE",
       rentPerMonth: "",
       billIncludeInRent: "YES",
       deposit: "",
@@ -279,27 +285,43 @@ const Step2: React.FC<Step2Props> = () => {
           <Typography variant="h5"> Minimum length of stay</Typography>
         </Grid>
         <Grid item xs={12}>
-          <OutlinedInput
-            value={formik.values.minimumStay}
-            onChange={(e) =>
-              formik.setFieldValue("minimumStay", e.target.value)
-            }
-            fullWidth
-            placeholder="100"
-          />
+          <FormControl fullWidth>
+            <Select
+              labelId="work-status-label"
+              id="work-status"
+              value={formik.values.minimumStay}
+              onChange={(e) => {
+                formik.setFieldValue("minimumStay", e.target.value);
+              }}
+            >
+              {duration.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {t(option.name)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5"> Maximum length of stay</Typography>
         </Grid>
         <Grid item xs={12}>
-          <OutlinedInput
-            value={formik.values.maximumStay}
-            onChange={(e) =>
-              formik.setFieldValue("maximumStay", e.target.value)
-            }
-            fullWidth
-            placeholder="100"
-          />
+          <FormControl fullWidth>
+            <Select
+              labelId="work-status-label"
+              id="work-status"
+              value={formik.values.maximumStay}
+              onChange={(e) => {
+                formik.setFieldValue("maximumStay", e.target.value);
+              }}
+            >
+              {duration.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {t(option.name)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12}>
           <Typography
