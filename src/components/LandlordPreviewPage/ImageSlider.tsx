@@ -5,7 +5,6 @@ import {
   ArrowBackIos,
   ArrowForwardIos,
   Fullscreen,
-  Close,
 } from "@mui/icons-material"; // Import Close icon
 
 const ImageSlider: React.FC<{
