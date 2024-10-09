@@ -9,6 +9,8 @@ import { store } from "./store/index.ts";
 import App from "./App.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import "./i18n.ts"; // Import the i18n configuration
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(

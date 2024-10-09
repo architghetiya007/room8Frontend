@@ -5,6 +5,7 @@ import AvailableImg from "../../assets/hunter/AVAILABLE.png";
 import dayjs from "dayjs";
 import useCommonTranslation from "../../hooks/useCommonTranslation";
 import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
+import ImageSlider from "./ImageSlider";
 interface LandlordProfileCardProps {
   previewData: AdvertisementData;
 }
@@ -115,6 +116,14 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
             </Grid>
           </Grid>
         </Grid>
+        {previewData?.landlordData!.photosOfPlace!.length > 0 && (
+          <Grid item xs={12}>
+            <ImageSlider
+              images={previewData.landlordData?.photosOfPlace ?? []}
+            />
+          </Grid>
+        )}
+
         <Grid item xs={12}>
           <Grid container spacing={1} mt={1}>
             <Grid item xs={12} md={8}>
