@@ -597,7 +597,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
 
         {previewData?.userId && userSlice?.user?._id === previewData.userId && (
           <Grid item xs={12} md={6}>
-            <OutlinedButton type="button" onClick={() => navigate("/")}>
+            <OutlinedButton type="button" onClick={() => navigate(-1)}>
               Back
             </OutlinedButton>
           </Grid>
