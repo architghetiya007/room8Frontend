@@ -12,13 +12,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useGoogleLogin } from "@react-oauth/google";
 import useUserMutations from "../../../mutations/user";
 import useNotification from "../../../hooks/useNotification";
-import { storeTokenDetails } from "../../../utils/Comman/auth";
+import {
+  AuthStorage,
+  decodeFromBase64,
+  encodeToBase64,
+  storeTokenDetails,
+} from "../../../utils/Comman/auth";
 import { AuthStorageDTO } from "../../../types/comman/Auth";
 import { useAppDispatch } from "../../../store";
 import { setUserInfo } from "../../../store/slices/userSlice";
@@ -50,14 +55,19 @@ const Register: React.FC<RegisterProps> = ({
   handleLoginDialog,
 }) => {
   const { t } = useCommonTranslation();
+  const [isChecked, setIsChecked] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const { showSnackBar } = useNotification();
   const { registerUserMutation, googleLoginUserMutation } = useUserMutations();
   const formik = useFormik({
     initialValues: {
       fullName: "",
-      email: "",
-      password: "",
+      email: localStorage.getItem(AuthStorage.EMAIL)
+        ? decodeFromBase64(localStorage.getItem(AuthStorage.EMAIL) as string)
+        : "",
+      password: localStorage.getItem(AuthStorage.PASSWORD)
+        ? decodeFromBase64(localStorage.getItem(AuthStorage.PASSWORD) as string)
+        : "",
       keepSignedIn: false,
     },
     validationSchema: validationSchema,
@@ -65,6 +75,19 @@ const Register: React.FC<RegisterProps> = ({
       registerUserMutation.mutate(values, {
         onSuccess: (data) => {
           showSnackBar({ message: data!.message });
+          if (isChecked) {
+            localStorage.setItem(
+              AuthStorage.EMAIL,
+              encodeToBase64(values.email)
+            );
+            localStorage.setItem(
+              AuthStorage.PASSWORD,
+              encodeToBase64(values.password)
+            );
+          } else {
+            localStorage.removeItem(AuthStorage.EMAIL);
+            localStorage.removeItem(AuthStorage.PASSWORD);
+          }
           // let user: AuthStorageDTO = {
           //   token: data!.data.token,
           //   refreshToken: data!.data.user.refreshToken,
@@ -225,7 +248,12 @@ const Register: React.FC<RegisterProps> = ({
                 justifyContent={"space-between"}
               >
                 <FormControlLabel
-                  control={<Checkbox />}
+                  control={
+                    <Checkbox
+                      checked={isChecked}
+                      onChange={(e) => setIsChecked(e.target.checked)}
+                    />
+                  }
                   label="Keep me signed in"
                 />
                 <Button

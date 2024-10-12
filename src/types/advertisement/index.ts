@@ -32,7 +32,7 @@ export interface HunterRequestDTO {
   minimumNumberOfTenants?: string;
   roomAmount?: string;
   bathroomAmount?: string;
-  parking?: string;
+  parking?: string[];
   furnished?: string;
   kitchen?: string;
   balcony?: string;

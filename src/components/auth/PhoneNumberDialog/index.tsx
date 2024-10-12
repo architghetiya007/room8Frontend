@@ -142,7 +142,7 @@ const PhoneNumberDialog: React.FC<PhoneNumberProps> = ({
                 </Grid>
                 <Grid item xs={12}>
                   <MuiTelInput
-                    defaultCountry="US"
+                    defaultCountry="PL"
                     value={formik.values.phoneNumber}
                     onChange={(value) =>
                       formik.setFieldValue("phoneNumber", value)

@@ -4,6 +4,8 @@ export enum AuthStorage {
   TOKEN = "token",
   REFRESHTOKEN = "refreshToken",
   USER = "user",
+  EMAIL = "QERTYUIABN",
+  PASSWORD = "BYIOQMELKP"
 }
 export const storeTokenDetails = (data: AuthStorageDTO) => {
   localStorage.setItem(AuthStorage.TOKEN, data.token);
@@ -20,4 +22,13 @@ export const removeTokenDetails = () => {
 export const getUserFromStorage = () => {
   const userData = localStorage.getItem(AuthStorage.USER);
   return userData ? JSON.parse(userData) : null;
+};
+
+export const encodeToBase64 = (str: string) => {
+  return btoa(unescape(encodeURIComponent(str)));
+};
+
+// Function to decode a Base64 string
+export const decodeFromBase64 = (base64: string) => {
+  return decodeURIComponent(escape(atob(base64)));
 };

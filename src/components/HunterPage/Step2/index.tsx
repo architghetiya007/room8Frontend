@@ -26,6 +26,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AdvertisementData } from "../../../types/advertisement";
 import useUserMutations from "../../../mutations/user";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { RootState } from "../../../store";
+import { useSelector } from "react-redux";
 const anotherPersonSchema = Yup.object().shape({
   name: Yup.string(),
   age: Yup.number().min(0, "Age must be a positive number"),
@@ -53,6 +55,7 @@ interface Step2Props {
   updateTabIndex: Function;
 }
 const Step2: React.FC<Step2Props> = () => {
+  const userSlice = useSelector((state: RootState) => state.user);
   const [advertisementData, setAdvertisementData] =
     useState<AdvertisementData>();
   const params = useParams();
@@ -84,11 +87,11 @@ const Step2: React.FC<Step2Props> = () => {
   const formik = useFormik({
     initialValues: {
       whoAreYou: "WOMEN", // e.g., "MEN"
-      name: "", // e.g., "John Doe"
+      name: userSlice?.user?.fullName ?? "", // e.g., "John Doe"
       age: 0, // e.g., 30
       withChild: "YES", // e.g., "YES"
       havePet: "NO", // e.g., "YES"
-      typeOfEmployment: "HYBRID_WORK", // e.g., "HYBRID_WORK"
+      typeOfEmployment: "", // e.g., "HYBRID_WORK"
       areYouSmoking: "YES", // e.g., "YES"
       anotherPerson: [
         {
@@ -172,8 +175,6 @@ const Step2: React.FC<Step2Props> = () => {
         formik.setValues({
           ...formik.values,
           ...data!.data.hunterData,
-          typeOfEmployment:
-            data!.data!.hunterData?.typeOfEmployment ?? "HYBRID_WORK",
           flatmatePreference: data!.data!.hunterData?.flatmatePreference ?? [
             "WOMAN",
           ],
@@ -263,7 +264,11 @@ const Step2: React.FC<Step2Props> = () => {
                 value={formik.values.age}
                 onChange={(e) => formik.setFieldValue("age", e.target.value)}
                 fullWidth
+                inputProps={{
+                  min: "0"
+                }}
                 placeholder="Your age"
+                type="number"
               />
             </Stack>
           </Grid>
@@ -299,6 +304,7 @@ const Step2: React.FC<Step2Props> = () => {
           <Grid item xs={12}>
             <FormControl fullWidth>
               <Select
+                displayEmpty
                 labelId="work-status-label"
                 id="work-status"
                 value={formik.values.typeOfEmployment}
@@ -306,6 +312,9 @@ const Step2: React.FC<Step2Props> = () => {
                   formik.setFieldValue("typeOfEmployment", e.target.value);
                 }}
               >
+                <MenuItem value=''>
+                    Select
+                  </MenuItem>
                 {typeOfEmployment.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {t(option.name)}
@@ -388,6 +397,9 @@ const Step2: React.FC<Step2Props> = () => {
                 onChange={(e) =>
                   setAnotherPerson({ ...anotherPerson, age: e.target.value })
                 }
+                inputProps={{
+                  min: "0"
+                }}
                 fullWidth
                 placeholder="No Preferences"
               />

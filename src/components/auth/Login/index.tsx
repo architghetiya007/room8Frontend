@@ -12,14 +12,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import CenteredDivider from "../../comman/CenteredDivider";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useGoogleLogin } from "@react-oauth/google";
 import useUserMutations from "../../../mutations/user";
 import useNotification from "../../../hooks/useNotification";
-import { storeTokenDetails } from "../../../utils/Comman/auth";
+import { AuthStorage, decodeFromBase64, encodeToBase64, storeTokenDetails } from "../../../utils/Comman/auth";
 import { useAppDispatch } from "../../../store";
 import { setUserInfo } from "../../../store/slices/userSlice";
 import { AuthStorageDTO } from "../../../types/comman/Auth";
@@ -50,11 +50,16 @@ const Login: React.FC<LoginProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { showSnackBar } = useNotification();
+  const [isChecked, setIsChecked] = useState<boolean>(true);
   const { loginUserMutation, googleLoginUserMutation } = useUserMutations();
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: localStorage.getItem(AuthStorage.EMAIL)
+        ? decodeFromBase64(localStorage.getItem(AuthStorage.EMAIL) as string)
+        : "",
+      password: localStorage.getItem(AuthStorage.PASSWORD)
+        ? decodeFromBase64(localStorage.getItem(AuthStorage.PASSWORD) as string)
+        : "",
       keepSignedIn: false,
     },
     validationSchema: validationSchema,
@@ -62,6 +67,19 @@ const Login: React.FC<LoginProps> = ({
       loginUserMutation.mutate(values, {
         onSuccess: (data) => {
           showSnackBar({ message: data!.message });
+          if (isChecked) {
+            localStorage.setItem(
+              AuthStorage.EMAIL,
+              encodeToBase64(values.email)
+            );
+            localStorage.setItem(
+              AuthStorage.PASSWORD,
+              encodeToBase64(values.password)
+            );
+          } else {
+            localStorage.removeItem(AuthStorage.EMAIL);
+            localStorage.removeItem(AuthStorage.PASSWORD);
+          }
           let user: AuthStorageDTO = {
             token: data!.data.token,
             refreshToken: data!.data.user.refreshToken,
@@ -69,7 +87,7 @@ const Login: React.FC<LoginProps> = ({
           };
           storeTokenDetails(user);
           dispatch(setUserInfo(user));
-          handleCloseLoginDialog(!data!.data.user.isPhoneVerify ? 'Phone' :'');
+          handleCloseLoginDialog(!data!.data.user.isPhoneVerify ? "Phone" : "");
         },
         onError: (error: Error) => {
           showSnackBar({ message: error.message, variant: "error" });
@@ -93,7 +111,9 @@ const Login: React.FC<LoginProps> = ({
             };
             storeTokenDetails(user);
             dispatch(setUserInfo(user));
-            handleCloseLoginDialog(!data!.data.user.isPhoneVerify ? 'Phone' :'');
+            handleCloseLoginDialog(
+              !data!.data.user.isPhoneVerify ? "Phone" : ""
+            );
           },
           onError: (error: Error) => {
             showSnackBar({ message: error.message, variant: "error" });
@@ -186,7 +206,12 @@ const Login: React.FC<LoginProps> = ({
                 justifyContent={"space-between"}
               >
                 <FormControlLabel
-                  control={<Checkbox />}
+                  control={
+                    <Checkbox
+                      checked={isChecked}
+                      onChange={(e) => setIsChecked(e.target.checked)}
+                    />
+                  }
                   label="Keep me signed in"
                 />
                 <Button

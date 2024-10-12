@@ -94,6 +94,7 @@ const hunterSchema = Yup.object().shape({
     .length(2, "Rent range should have two values"),
   maximumDeposit: Yup.number()
     .min(0, "Deposit must be non-negative")
+    .max(50000, "Deposit max should 50000")
     .nullable(),
   whenYouWouldLikeMoveIn: Yup.number()
     .nullable()
@@ -106,18 +107,19 @@ const hunterSchema = Yup.object().shape({
     .nullable(),
   minimumPropertySize: Yup.number()
     .min(0, "Minimum property size must be non-negative")
+    .max(1000, "Minimum property size should be 1000")
     .nullable(),
   minimumNumberOfTenants: Yup.string(),
   roomAmount: Yup.string(),
   bathroomAmount: Yup.string(),
-  parking: Yup.string(),
+  parking: Yup.array().of(Yup.string()),
   furnished: Yup.string(),
   kitchen: Yup.string(),
   balcony: Yup.string(),
   maximumNumberOfpeople: Yup.number()
     .min(0, "Range must be non-negative")
     .nullable(),
-  minimumRoomSize: Yup.number().min(0, "Range must be non-negative").nullable(),
+  minimumRoomSize: Yup.number().min(0, "Range must be non-negative").max(100, "Maximum room size should be 100").nullable(),
   furnishedRoom: Yup.string(),
   privateBathroom: Yup.string(),
   balconyInRoom: Yup.string(),
@@ -139,7 +141,6 @@ const Step1: React.FC<Step1Props> = () => {
   const { showSnackBar } = useNotification();
   const {
     accommodation,
-    bathroomsAmount,
     propertyTypes,
     roomsAmount,
     tenants,
@@ -155,7 +156,7 @@ const Step1: React.FC<Step1Props> = () => {
     initialValues: {
       accommodation: "ENTIREROOM",
       typeOfProperty: "FLAT",
-      acceptableRentRange: [300, 600],
+      acceptableRentRange: [3000, 6000],
       maximumDeposit: "",
       whenYouWouldLikeMoveIn: null,
       isAvailableNow: true,
@@ -177,7 +178,7 @@ const Step1: React.FC<Step1Props> = () => {
       minimumNumberOfTenants: "02",
       roomAmount: "02+",
       bathroomAmount: "01",
-      parking: "DEDICATED",
+      parking: ["DEDICATED"],
       furnished: "NO_PREFERENCE",
       kitchen: "NO_PREFERENCE",
       balcony: "NO_PREFERENCE",
@@ -249,6 +250,8 @@ const Step1: React.FC<Step1Props> = () => {
     }
   }, [params.id]);
 
+  console.log(formik.errors)
+
   return (
     <Box component={"form"}>
       <Grid container spacing={2} mt={2} mb={2}>
@@ -301,8 +304,9 @@ const Step1: React.FC<Step1Props> = () => {
         <Grid item xs={12}>
           <Slider
             getAriaLabel={() => "Temperature range"}
-            min={0}
-            max={1000}
+            min={1}
+            step={5}
+            max={10000}
             valueLabelDisplay="auto"
             value={formik.values.acceptableRentRange}
             onChange={(_, newValue) => {
@@ -317,11 +321,16 @@ const Step1: React.FC<Step1Props> = () => {
         <Grid item xs={12}>
           <OutlinedInput
             fullWidth
+            inputProps={{
+              min: "0",
+              max: "50000",
+            }}
             placeholder="No Preferences"
             value={formik.values.maximumDeposit}
             onChange={(e) =>
               formik.setFieldValue("maximumDeposit", e.target.value)
             }
+            type="number"
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -359,6 +368,7 @@ const Step1: React.FC<Step1Props> = () => {
                     "whenYouWouldLikeMoveIn",
                     newValue?.valueOf()
                   );
+                  formik.setFieldValue("isAvailableNow", false);
                 }}
               />
             </DemoContainer>
@@ -449,8 +459,13 @@ const Step1: React.FC<Step1Props> = () => {
             onChange={(e) =>
               formik.setFieldValue("minimumPropertySize", e.target.value)
             }
+            type="number"
             fullWidth
             placeholder="100"
+            inputProps={{
+              min: "0",
+              max: "1000",
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -477,7 +492,7 @@ const Step1: React.FC<Step1Props> = () => {
             options={roomsAmount}
           />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <CommanTypography title={t("bathroomAmountQuestion")} />
         </Grid>
         <Grid item xs={12}>
@@ -488,12 +503,13 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.bathroomAmount}
             options={bathroomsAmount}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <CommanTypography title={t("parkingQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
+            multiSelect
             optionClick={(e: string[] | string) => {
               formik.setFieldValue("parking", e);
             }}
@@ -574,6 +590,11 @@ const Step1: React.FC<Step1Props> = () => {
             onChange={(e) =>
               formik.setFieldValue("minimumRoomSize", e.target.value)
             }
+            inputProps={{
+              min: "0",
+              max: "100"
+            }}
+            type="number"
             fullWidth
             placeholder="100"
           />
