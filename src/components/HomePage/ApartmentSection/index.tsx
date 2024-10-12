@@ -33,7 +33,7 @@ const ApartmentSection: React.FC = () => {
                 </Typography>
                 <Button
                   type="button"
-                  onClick={() => navigate("/hunter/1")}
+                  onClick={() => navigate("/landlord/1")}
                   startIcon={<AddIcon />}
                   sx={{
                     backgroundColor: "#44ABEB",
@@ -88,7 +88,7 @@ const ApartmentSection: React.FC = () => {
                 </Typography>
                 <Button
                   type="button"
-                  onClick={() => navigate("/landlord/1")}
+                  onClick={() => navigate("/hunter/1")}
                   startIcon={<AddIcon />}
                   sx={{
                     backgroundColor: "#E152B9",
