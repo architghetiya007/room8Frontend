@@ -1,4 +1,4 @@
-import { GoogleMap, Marker } from "@react-google-maps/api";
+import { GoogleMap, MarkerF } from "@react-google-maps/api";
 const containerStyle = {
   width: "100%",
   height: "400px",
@@ -21,7 +21,7 @@ const GoogleMaps: React.FC<GoogleMapsProps> = ({
       center={{ lat: lat, lng: lng }}
       zoom={10}
     >
-      <Marker position={{ lat: lat, lng: lng }} />
+      <MarkerF position={{ lat: lat, lng: lng }} />
     </GoogleMap>
   );
 };
