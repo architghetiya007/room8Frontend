@@ -6,6 +6,7 @@ import { AdvertisementType } from "../../../../utils/advertisement";
 import AddHomeOutlinedIcon from "@mui/icons-material/AddHomeOutlined";
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useNavigate } from "react-router-dom";
 const ProfileListing: React.FC = () => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ const ProfileListing: React.FC = () => {
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={2}>
-          {hunterData.map((item) => {
+          {landlordData.map((item) => {
             return (
               <Grid item xs={12} key={item._id}>
                 <Stack
@@ -59,12 +60,12 @@ const ProfileListing: React.FC = () => {
                 >
                   <IconButton
                     type="button"
-                    onClick={() => navigate(`/hunter/1/${item._id}`)}
+                    onClick={() => navigate(`/landlord/1/${item._id}`)}
                   >
                     <BorderColorOutlinedIcon sx={{ color: "black" }} />
                   </IconButton>
                   <Typography variant="body1" sx={{ color: "black" }}>
-                    {item.hunterData?.address?.formattedAddress}
+                    {item.landlordData?.address?.formattedAddress}
                   </Typography>
                   <Chip
                     sx={{
@@ -75,6 +76,12 @@ const ProfileListing: React.FC = () => {
                     color={item.isActive ? "primary" : "error"}
                     label={item.isActive ? "Active" : "Inactive"}
                   />
+                  <IconButton
+                    type="button"
+                    onClick={() => navigate(`/landlord-preview/${item._id}`)}
+                  >
+                    <VisibilityOutlinedIcon sx={{ color: "black" }} />
+                  </IconButton>
                 </Stack>
               </Grid>
             );
@@ -92,7 +99,7 @@ const ProfileListing: React.FC = () => {
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={1}>
-          {landlordData.map((item) => {
+          {hunterData.map((item) => {
             return (
               <Grid item xs={12} key={item._id}>
                 <Stack
@@ -105,12 +112,12 @@ const ProfileListing: React.FC = () => {
                 >
                   <IconButton
                     type="button"
-                    onClick={() => navigate(`/landlord/1/${item._id}`)}
+                    onClick={() => navigate(`/hunter/1/${item._id}`)}
                   >
                     <BorderColorOutlinedIcon sx={{ color: "black" }} />
                   </IconButton>{" "}
                   <Typography variant="body1" sx={{ color: "black" }}>
-                    {item.landlordData?.address?.formattedAddress}
+                    {item.hunterData?.address?.formattedAddress}
                   </Typography>
                   <Chip
                     sx={{
@@ -120,6 +127,12 @@ const ProfileListing: React.FC = () => {
                     }}
                     label={item.isActive ? "Active" : "Inactive"}
                   />
+                  <IconButton
+                    type="button"
+                    onClick={() => navigate(`/hunter-preview/${item._id}`)}
+                  >
+                    <VisibilityOutlinedIcon sx={{ color: "black" }} />
+                  </IconButton>
                 </Stack>
               </Grid>
             );
