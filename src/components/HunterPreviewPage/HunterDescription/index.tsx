@@ -292,7 +292,8 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                         p: 1,
                       }}
                     >
-                      Furnished: {previewData.hunterData?.furnished}
+                      Furnished: {" "}
+                      {t(`commanOptions.${previewData.hunterData?.furnished}`)}
                     </Typography>
                   </Box>
                 </Grid>
@@ -310,7 +311,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                         p: 1,
                       }}
                     >
-                      Parking: {t(`parking.${previewData.hunterData?.parking}`)}
+                      Parking: {previewData.hunterData?.parking?.map((item) => t(`parking.${item}`)).toString()}
                     </Typography>
                   </Box>
                 </Grid>
@@ -364,7 +365,8 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                         p: 1,
                       }}
                     >
-                      Balcony in the property: {previewData.hunterData?.balcony}
+                      Balcony in the property: 
+                      {t(`commanOptions.${previewData.hunterData?.balcony}`)}
                     </Typography>
                   </Box>
                 </Grid>
@@ -437,7 +439,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                         p: 1,
                       }}
                     >
-                      Furnished: {previewData.hunterData?.furnishedRoom}
+                      Furnished: {t(`commanOptions.${previewData.hunterData?.furnishedRoom}`)}
                     </Typography>
                   </Box>
                 </Grid>
@@ -456,7 +458,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       }}
                     >
                       Balcony in the room:{" "}
-                      {previewData.hunterData?.balconyInRoom}
+                      {t(`commanOptions.${previewData.hunterData?.balconyInRoom}`)}
                     </Typography>
                   </Box>
                 </Grid>
