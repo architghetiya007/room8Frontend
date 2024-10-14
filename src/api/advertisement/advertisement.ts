@@ -50,7 +50,6 @@ const getAllAdvertisementAPI = async () => {
   try {
     const response = await axiosInstance.post<ListAdvertisementResponseDTO>(
       apiPaths.ADVERTISEMENT.getAllAdvertisement,
-      {page: -1,limit: -1}
     );
     return response.data;
   } catch (error) {
@@ -76,7 +75,7 @@ const getUserAdvertisementAPI = async () => {
   try {
     const response = await axiosInstance.post<ListAdvertisementResponseDTO>(
       apiPaths.ADVERTISEMENT.getUserAdvertisement,
-      {page: -1,limit: -1}
+      {limit: -1}
     );
     return response.data;
   } catch (error) {

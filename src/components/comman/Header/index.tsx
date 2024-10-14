@@ -126,7 +126,7 @@ const Header: React.FC = () => {
             <Drawer open={open} onClose={toggleDrawer(false)}>
               {DrawerList}
             </Drawer>
-            <Typography sx={{ fontWeight: "bold", fontSize: "24px" }}>
+            <Typography onClick={() => navigate('/')} sx={{ fontWeight: "bold", fontSize: "24px",cursor: 'pointer' }}>
               Room8
             </Typography>
           </Box>
