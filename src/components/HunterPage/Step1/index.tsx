@@ -305,7 +305,7 @@ const Step1: React.FC<Step1Props> = () => {
           <Slider
             getAriaLabel={() => "Temperature range"}
             min={1}
-            step={5}
+            step={50}
             max={10000}
             valueLabelDisplay="auto"
             value={formik.values.acceptableRentRange}
