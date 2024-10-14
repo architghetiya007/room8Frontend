@@ -122,7 +122,13 @@ const Step2: React.FC<Step2Props> = () => {
       let stringFiles = previewState.files.filter(
         (file): file is string => typeof file === "string"
       );
-
+      if (array.length > 5) {
+        showSnackBar({
+          message: "Maximum 5 image upload at a time.",
+          variant: "error",
+        });
+        return;
+      }
       if (array.length > 0) {
         let formData = new FormData();
         array.forEach((e) => {
@@ -188,8 +194,27 @@ const Step2: React.FC<Step2Props> = () => {
     const files = event.target.files;
     if (!files) return;
 
+    const MAX_FILE_SIZE_MB = 2; // Maximum allowed file size in MB
+    const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024; // Convert MB to bytes
+
     const newFiles = Array.from(files); // Convert FileList to array
-    const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
+
+    const validFiles = newFiles.filter(
+      (file) => file.size <= MAX_FILE_SIZE_BYTES
+    ); // Validate file size
+    const invalidFiles = newFiles.filter(
+      (file) => file.size > MAX_FILE_SIZE_BYTES
+    ); //
+    if (invalidFiles.length > 0) {
+      showSnackBar({
+        message: `Some files are too large. Maximum size is ${MAX_FILE_SIZE_MB}MB.`,
+        variant: "error",
+      });
+      return;
+      // Optionally handle or display a message about rejected files
+      // You can add more specific error handling here if needed.
+    }
+    const newPreviews = validFiles.map((file) => URL.createObjectURL(file));
 
     // Update state to store file previews and uploaded files
     setPreviewState((prevState) => ({
