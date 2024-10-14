@@ -15,6 +15,7 @@ import LIVING_WITH_OWNER from "../../../assets/hunter/LIVING_WITH_OWNER.png";
 import MAXIMUM_FLATMATES from "../../../assets/hunter/MAXIMUM_FLATMATES.png";
 import MINIMUM_PROPERY_SIZE from "../../../assets/hunter/MINIMUM_PROPERY_SIZE.png";
 import NUMBER_OF_ROOMS from "../../../assets/hunter/NUMBER_OF_ROOMS.png";
+import ROOM_SIZE from "../../../assets/hunter/ROOM_SIZE.png";
 import PARKING from "../../../assets/hunter/PARKING.png";
 import SMOKER from "../../../assets/hunter/SMOKER.png";
 import WITH_CHILDREN from "../../../assets/hunter/WITH_CHILDREN.png";
@@ -392,7 +393,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                     <Box
                       sx={{ width: "25px", height: "25px" }}
                       component={"img"}
-                      src={NUMBER_OF_ROOMS}
+                      src={ROOM_SIZE}
                     ></Box>
                     <Typography
                       sx={{
@@ -524,7 +525,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
             <Typography
               sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
             >
-              Living with owner?: {previewData.hunterData?.livingWithOwner}
+              Living with owner?: {t(`commanOptions.${previewData.hunterData?.livingWithOwner}`)}
             </Typography>
           </Box>
         </Grid>
