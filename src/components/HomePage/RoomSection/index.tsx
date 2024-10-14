@@ -14,7 +14,7 @@ const RoomSection: React.FC = () => {
   const getAllAdvertisementAPI = () => {
     getAllAdvertisementMutation.mutate(undefined, {
       onSuccess: (data) => {
-        setRoomData(data!.data);
+        setRoomData(data!.data.page);
       },
     });
   };

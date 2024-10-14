@@ -100,8 +100,8 @@ const useLandlord = () => {
       value: "IN_THE_GARAGE",
     },
     {
-      name: t("parking.NO_PREFERENCE"),
-      value: "NO_PREFERENCE",
+      name: t("parking.NO"),
+      value: "NO",
     },
   ];
 

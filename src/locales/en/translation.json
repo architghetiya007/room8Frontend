@@ -73,7 +73,7 @@
     "PUBLIC": "PUBLIC/ON THE STREET",
     "DEDICATED": "DEDICATED",
     "IN_THE_GARAGE": "IN THE GARAGE",
-    "NO_PREFERENCE": "NO PREFERENCES"
+    "NO": "NO"
   },
   "kitchen": {
     "SEPERATE": "SEPERATE",

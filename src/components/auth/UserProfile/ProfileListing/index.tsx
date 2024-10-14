@@ -18,12 +18,12 @@ const ProfileListing: React.FC = () => {
     getUserAdvertisementMutation.mutate(undefined, {
       onSuccess: (data) => {
         setHunterData(
-          data!.data.filter(
+          data!.data.page.filter(
             (item) => item.advertiseType === AdvertisementType.HUNTER
           )
         );
         setLandlordData(
-          data!.data.filter(
+          data!.data.page.filter(
             (item) => item.advertiseType === AdvertisementType.LANDLORD
           )
         );

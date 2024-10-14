@@ -48,8 +48,9 @@ const getAdvertisementAPI = async (advertisementId: string) => {
 
 const getAllAdvertisementAPI = async () => {
   try {
-    const response = await axiosInstance.get<ListAdvertisementResponseDTO>(
-      apiPaths.ADVERTISEMENT.getAllAdvertisement
+    const response = await axiosInstance.post<ListAdvertisementResponseDTO>(
+      apiPaths.ADVERTISEMENT.getAllAdvertisement,
+      {page: -1,limit: -1}
     );
     return response.data;
   } catch (error) {
@@ -73,8 +74,9 @@ const updateStatusAdvertisementAPI = async (
 
 const getUserAdvertisementAPI = async () => {
   try {
-    const response = await axiosInstance.get<ListAdvertisementResponseDTO>(
-      apiPaths.ADVERTISEMENT.getUserAdvertisement
+    const response = await axiosInstance.post<ListAdvertisementResponseDTO>(
+      apiPaths.ADVERTISEMENT.getUserAdvertisement,
+      {page: -1,limit: -1}
     );
     return response.data;
   } catch (error) {

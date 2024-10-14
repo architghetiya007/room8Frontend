@@ -139,7 +139,10 @@ export interface AdvertisementResponseDTO extends BaseResponse {
 }
 
 export interface ListAdvertisementResponseDTO extends BaseResponse {
-  data: AdvertisementData[];
+  data: {
+    page: AdvertisementData[];
+    count: number;
+  }
 }
 
 export interface AdvertisementStatusRequestDTO {

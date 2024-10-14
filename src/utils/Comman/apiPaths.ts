@@ -21,6 +21,6 @@ export const apiPaths = {
     getAdvertisement: "/advertisement/advertisement/",
     getAllAdvertisement: "/advertisement/all",
     updateStatusAdvertisement: "/advertisement/status",
-    getUserAdvertisement: "/advertisement",
+    getUserAdvertisement: "/advertisement/pagination",
   },
 };

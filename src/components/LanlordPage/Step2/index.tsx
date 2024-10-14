@@ -260,7 +260,7 @@ const Step2: React.FC<Step2Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Room Size</Typography>
+          <Typography variant="h5">Room Size </Typography>
         </Grid>
         <Grid item xs={12}>
           <OutlinedInput
@@ -268,6 +268,7 @@ const Step2: React.FC<Step2Props> = () => {
             placeholder="No Preferences"
             value={formik.values.roomSize}
             onChange={(e) => formik.setFieldValue("roomSize", e.target.value)}
+            type="number"
           />
         </Grid>
         <Grid item xs={12}>
@@ -363,7 +364,11 @@ const Step2: React.FC<Step2Props> = () => {
                     : null
                 }
                 onChange={(newValue) => {
-                  formik.setFieldValue("dateAvailable", newValue?.valueOf());
+                  formik.setFieldValue(
+                    "dateAvailable",
+                    newValue?.valueOf()
+                  );
+                  formik.setFieldValue("isAvailableNow", false);
                 }}
               />
             </DemoContainer>
@@ -441,6 +446,10 @@ const Step2: React.FC<Step2Props> = () => {
               onChange={(e) =>
                 formik.setFieldValue("rentPerMonth", e.target.value)
               }
+              inputProps={{
+                min: 0,
+                max: 2000
+              }}
             />
             <Typography>Bill included in rent</Typography>
             <CustomButtonGroup

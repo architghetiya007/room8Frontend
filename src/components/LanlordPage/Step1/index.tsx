@@ -315,7 +315,7 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("landlordQ.propertySize")}</Typography>
+          <Typography variant="h5">{t("landlordQ.propertySize")} (m²)</Typography>
         </Grid>
         <Grid item xs={12}>
           <OutlinedInput
@@ -325,6 +325,11 @@ const Step1: React.FC<Step1Props> = () => {
             }
             fullWidth
             placeholder="100"
+            type="number"
+            inputProps={{
+              min: "0",
+              max:"1000"
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -351,6 +356,11 @@ const Step1: React.FC<Step1Props> = () => {
                   }
                   fullWidth
                   placeholder="100"
+                  type="number"
+                  inputProps={{
+                    min: 0,
+                    max: 100
+                  }}
                 />
               </Stack>
             </Grid>
@@ -364,6 +374,7 @@ const Step1: React.FC<Step1Props> = () => {
                   }
                   fullWidth
                   placeholder="100"
+                  type="number"
                 />
               </Stack>
             </Grid>
