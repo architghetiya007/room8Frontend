@@ -100,22 +100,25 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12} mt={1} mb={2}>
           <Grid container spacing={1}>
-            <Grid item xs={12} md={2}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Box
-                  component={"img"}
-                  sx={{ width: "25px", height: "25px" }}
-                  src={HYBRID_WORK}
-                ></Box>
-                <Typography
-                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-                >
-                  {t(
-                    `typeofEmployment.${previewData.hunterData?.typeOfEmployment}`
-                  )}
-                </Typography>
-              </Box>
-            </Grid>
+            {previewData.hunterData?.typeOfEmployment && (
+              <Grid item xs={12} md={2}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                  <Box
+                    component={"img"}
+                    sx={{ width: "25px", height: "25px" }}
+                    src={HYBRID_WORK}
+                  ></Box>
+                  <Typography
+                    sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
+                  >
+                    {t(
+                      `typeofEmployment.${previewData.hunterData?.typeOfEmployment}`
+                    )}
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
+
             <Grid item xs={12} md={2}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <Box
@@ -168,7 +171,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12} md={7}>
           <Box sx={{ p: 1 }}>
-            <Typography variant="h6" sx={{ wordWrap: 'break-word'}}>
+            <Typography variant="h6" sx={{ wordWrap: "break-word" }}>
               {previewData.hunterData?.describeYourSelf}
             </Typography>
           </Box>
@@ -293,7 +296,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                         p: 1,
                       }}
                     >
-                      Furnished: {" "}
+                      Furnished:{" "}
                       {t(`commanOptions.${previewData.hunterData?.furnished}`)}
                     </Typography>
                   </Box>
@@ -312,7 +315,10 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                         p: 1,
                       }}
                     >
-                      Parking: {previewData.hunterData?.parking?.map((item) => t(`parking.${item}`)).toString()}
+                      Parking:{" "}
+                      {previewData.hunterData?.parking
+                        ?.map((item) => t(`parking.${item}`))
+                        .toString()}
                     </Typography>
                   </Box>
                 </Grid>
@@ -366,7 +372,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                         p: 1,
                       }}
                     >
-                      Balcony in the property: 
+                      Balcony in the property:
                       {t(`commanOptions.${previewData.hunterData?.balcony}`)}
                     </Typography>
                   </Box>
@@ -440,7 +446,10 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                         p: 1,
                       }}
                     >
-                      Furnished: {t(`commanOptions.${previewData.hunterData?.furnishedRoom}`)}
+                      Furnished:{" "}
+                      {t(
+                        `commanOptions.${previewData.hunterData?.furnishedRoom}`
+                      )}
                     </Typography>
                   </Box>
                 </Grid>
@@ -459,7 +468,9 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       }}
                     >
                       Balcony in the room:{" "}
-                      {t(`commanOptions.${previewData.hunterData?.balconyInRoom}`)}
+                      {t(
+                        `commanOptions.${previewData.hunterData?.balconyInRoom}`
+                      )}
                     </Typography>
                   </Box>
                 </Grid>
@@ -525,7 +536,8 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
             <Typography
               sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
             >
-              Living with owner?: {t(`commanOptions.${previewData.hunterData?.livingWithOwner}`)}
+              Living with owner?:{" "}
+              {t(`commanOptions.${previewData.hunterData?.livingWithOwner}`)}
             </Typography>
           </Box>
         </Grid>
