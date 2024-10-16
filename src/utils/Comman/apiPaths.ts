@@ -10,7 +10,7 @@ export const apiPaths = {
     deleteAccount: "/user/delete-account",
     logout: "/user/logout",
     imageUpload: "/user/image-upload",
-    refreshToken: "/user/reset-password",
+    refreshToken: "/user/refresh-token",
     sendOtp: "/user/send-otp",
     verifyOtp: "/user/verify-otp",
     verifyEmail: "/user/verify-email",

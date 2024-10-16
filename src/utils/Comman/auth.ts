@@ -13,6 +13,11 @@ export const storeTokenDetails = (data: AuthStorageDTO) => {
   localStorage.setItem(AuthStorage.USER, JSON.stringify(data.user));
 };
 
+export const storeRefreshTokenDetails = (data: AuthStorageDTO) => {
+  localStorage.setItem(AuthStorage.TOKEN, data.token);
+  localStorage.setItem(AuthStorage.REFRESHTOKEN, data.refreshToken);
+};
+
 export const removeTokenDetails = () => {
   localStorage.removeItem(AuthStorage.TOKEN);
   localStorage.removeItem(AuthStorage.REFRESHTOKEN);
