@@ -3,8 +3,12 @@ import AddIcon from "@mui/icons-material/Add";
 import RoomMatePng from "../../../assets/images/roommate.png";
 import ApartmentPng from "../../../assets/images/apartment.png";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../store";
+import { useSelector } from "react-redux";
+import { eventEmitter } from "../../../utils/Comman/eventEmitter";
 
 const ApartmentSection: React.FC = () => {
+  const userSlice = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   return (
     <Box>
@@ -33,7 +37,13 @@ const ApartmentSection: React.FC = () => {
                 </Typography>
                 <Button
                   type="button"
-                  onClick={() => navigate("/landlord/1")}
+                  onClick={() => {
+                    if (userSlice.user) {
+                      navigate("/landlord/1");
+                    } else {
+                      eventEmitter.emit("Header", "openLoginDialog");
+                    }
+                  }}
                   startIcon={<AddIcon />}
                   sx={{
                     backgroundColor: "#44ABEB",
@@ -88,7 +98,13 @@ const ApartmentSection: React.FC = () => {
                 </Typography>
                 <Button
                   type="button"
-                  onClick={() => navigate("/hunter/1")}
+                  onClick={() => {
+                    if (userSlice.user) {
+                      navigate("/hunter/1");
+                    } else {
+                      eventEmitter.emit("Header", "openLoginDialog");
+                    }
+                  }}
                   startIcon={<AddIcon />}
                   sx={{
                     backgroundColor: "#E152B9",

@@ -13,6 +13,9 @@ import CustomLoadingButton from "../../comman/CustomLoadingButton";
 import GoogleMapsAutocomplete from "../../comman/GoogleMapsAutoComplete";
 import { useNavigate, useParams } from "react-router-dom";
 import { AdvertisementData } from "../../../types/advertisement";
+import { eventEmitter } from "../../../utils/Comman/eventEmitter";
+import { RootState } from "../../../store";
+import { useSelector } from "react-redux";
 
 const addressSchema = Yup.object().shape({
   streetNumber: Yup.string().optional(), // Corresponds to streetNumber in interface
@@ -80,6 +83,7 @@ interface Step1Props {
   updateTabIndex: Function;
 }
 const Step1: React.FC<Step1Props> = () => {
+  const userSlice = useSelector((state: RootState) => state.user);
   const [advertisementData, setAdvertisementData] =
     useState<AdvertisementData>();
   const params = useParams();
@@ -135,6 +139,10 @@ const Step1: React.FC<Step1Props> = () => {
         showSnackBar({ message: t("messages.address") });
         return;
       }
+      if (!userSlice.user) {
+        eventEmitter.emit("Header", "openLoginDialog");
+        return;
+      }
       const body = {
         advertiseType: AdvertisementType.LANDLORD,
         landlordData: { ...advertisementData?.landlordData, ...values },
@@ -146,7 +154,7 @@ const Step1: React.FC<Step1Props> = () => {
             onSuccess: (data) => {
               // showSnackBar({ message: data!.message });
               navigate(`/landlord/2/${data?.data._id}`);
-              window.scrollTo({top: 0, behavior: 'smooth'})
+              window.scrollTo({ top: 0, behavior: "smooth" });
             },
             onError: (error: Error) => {
               showSnackBar({ message: error.message, variant: "error" });
@@ -158,7 +166,7 @@ const Step1: React.FC<Step1Props> = () => {
           onSuccess: (data) => {
             // showSnackBar({ message: data!.message });
             navigate(`/landlord/2/${data?.data._id}`);
-            window.scrollTo({top: 0, behavior: 'smooth'})
+            window.scrollTo({ top: 0, behavior: "smooth" });
           },
           onError: (error: Error) => {
             showSnackBar({ message: error.message, variant: "error" });
@@ -214,7 +222,7 @@ const Step1: React.FC<Step1Props> = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">
-          {t("landlordQ.whatTypefPropertyOffer")}
+            {t("landlordQ.whatTypefPropertyOffer")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -243,7 +251,7 @@ const Step1: React.FC<Step1Props> = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="body1">
-          {t("landlordQ.addressSubTitle")}
+            {t("landlordQ.addressSubTitle")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -299,7 +307,7 @@ const Step1: React.FC<Step1Props> = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">
-          {t("landlordQ.howManyPeopleLiveInthisProperty")}
+            {t("landlordQ.howManyPeopleLiveInthisProperty")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -315,7 +323,9 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("landlordQ.propertySize")} (m²)</Typography>
+          <Typography variant="h5">
+            {t("landlordQ.propertySize")} (m²)
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <OutlinedInput
@@ -328,7 +338,7 @@ const Step1: React.FC<Step1Props> = () => {
             type="number"
             inputProps={{
               min: "0",
-              max:"1000"
+              max: "1000",
             }}
           />
         </Grid>
@@ -359,7 +369,7 @@ const Step1: React.FC<Step1Props> = () => {
                   type="number"
                   inputProps={{
                     min: 0,
-                    max: 100
+                    max: 100,
                   }}
                 />
               </Stack>

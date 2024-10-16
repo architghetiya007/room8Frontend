@@ -1,6 +1,7 @@
 import {
   Box,
   FormControl,
+  FormHelperText,
   Grid,
   MenuItem,
   OutlinedInput,
@@ -30,6 +31,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AdvertisementData } from "../../../types/advertisement";
 import CommanTypography from "../../comman/CommonTypography";
 import dayjs from "dayjs";
+import { RootState } from "../../../store";
+import { useSelector } from "react-redux";
+import { eventEmitter } from "../../../utils/Comman/eventEmitter";
 const marks = [
   {
     value: 1,
@@ -95,9 +99,9 @@ const hunterSchema = Yup.object().shape({
   maximumDeposit: Yup.number()
     .min(0, "Deposit must be non-negative")
     .max(50000, "Deposit max should 50000")
-    .nullable(),
+    .required("Maximum Deposit is required"),
   whenYouWouldLikeMoveIn: Yup.number()
-    .nullable()
+    .required("When You Would Like MoveIn is required")
     .typeError("Invalid timestamp for move-in date"),
   isAvailableNow: Yup.boolean(),
   preferredLengthToStay: Yup.string(),
@@ -108,7 +112,7 @@ const hunterSchema = Yup.object().shape({
   minimumPropertySize: Yup.number()
     .min(0, "Minimum property size must be non-negative")
     .max(1000, "Minimum property size should be 1000")
-    .nullable(),
+    .required("Minimum property size is required"),
   minimumNumberOfTenants: Yup.string(),
   roomAmount: Yup.string(),
   bathroomAmount: Yup.string(),
@@ -116,10 +120,11 @@ const hunterSchema = Yup.object().shape({
   furnished: Yup.string(),
   kitchen: Yup.string(),
   balcony: Yup.string(),
-  maximumNumberOfpeople: Yup.number()
+  maximumNumberOfpeople: Yup.string(),
+  minimumRoomSize: Yup.number()
     .min(0, "Range must be non-negative")
+    .max(100, "Maximum room size should be 100")
     .nullable(),
-  minimumRoomSize: Yup.number().min(0, "Range must be non-negative").max(100, "Maximum room size should be 100").nullable(),
   furnishedRoom: Yup.string(),
   privateBathroom: Yup.string(),
   balconyInRoom: Yup.string(),
@@ -128,6 +133,7 @@ interface Step1Props {
   updateTabIndex?: Function;
 }
 const Step1: React.FC<Step1Props> = () => {
+  const userSlice = useSelector((state: RootState) => state.user);
   const [advertisementData, setAdvertisementData] =
     useState<AdvertisementData>();
   const params = useParams();
@@ -175,14 +181,14 @@ const Step1: React.FC<Step1Props> = () => {
 
       rangeFromCoordinate: 3,
       minimumPropertySize: "",
-      minimumNumberOfTenants: "02",
-      roomAmount: "02+",
+      minimumNumberOfTenants: "NO_PREFERENCE",
+      roomAmount: "NO_PREFERENCE",
       bathroomAmount: "01",
-      parking: ["DEDICATED"],
+      parking: ["NO_PREFERENCE"],
       furnished: "NO_PREFERENCE",
       kitchen: "NO_PREFERENCE",
       balcony: "NO_PREFERENCE",
-      maximumNumberOfpeople: "01",
+      maximumNumberOfpeople: "NO_PREFERENCE",
       minimumRoomSize: "",
       furnishedRoom: "NO_PREFERENCE",
       privateBathroom: "YES",
@@ -192,6 +198,10 @@ const Step1: React.FC<Step1Props> = () => {
     onSubmit: (values: any) => {
       if (!formik.values.address.formattedAddress) {
         showSnackBar({ message: t("messages.address") });
+        return;
+      }
+      if (!userSlice.user) {
+        eventEmitter.emit("Header", "openLoginDialog");
         return;
       }
       const body = {
@@ -207,7 +217,7 @@ const Step1: React.FC<Step1Props> = () => {
               navigate(`/hunter/2/${data?.data._id}`);
               setTimeout(() => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
-              }, 0);
+              }, 100);
             },
             onError: (error: Error) => {
               showSnackBar({ message: error.message, variant: "error" });
@@ -250,7 +260,7 @@ const Step1: React.FC<Step1Props> = () => {
     }
   }, [params.id]);
 
-  console.log(formik.errors)
+  console.log(formik.errors);
 
   return (
     <Box component={"form"}>
@@ -331,7 +341,15 @@ const Step1: React.FC<Step1Props> = () => {
               formik.setFieldValue("maximumDeposit", e.target.value)
             }
             type="number"
+            error={
+              formik.touched.maximumDeposit && !!formik.errors.maximumDeposit
+            }
           />
+          {formik.errors.maximumDeposit && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.maximumDeposit.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12} md={6}>
           <CommanTypography title={t("whenYouWouldLikeMoveInQuestion")} />
@@ -356,6 +374,8 @@ const Step1: React.FC<Step1Props> = () => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker", "DatePicker"]}>
               <DatePicker
+                minDate={dayjs(new Date())}
+                maxDate={dayjs(new Date()).add(1, "year")}
                 sx={{ width: "100%" }}
                 label="Date"
                 value={
@@ -373,6 +393,11 @@ const Step1: React.FC<Step1Props> = () => {
               />
             </DemoContainer>
           </LocalizationProvider>
+          {formik.errors.whenYouWouldLikeMoveIn && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.whenYouWouldLikeMoveIn.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">{t("preferredLengthToStay")}</Typography>
@@ -466,7 +491,16 @@ const Step1: React.FC<Step1Props> = () => {
               min: "0",
               max: "1000",
             }}
+            error={
+              formik.touched.minimumPropertySize &&
+              !!formik.errors.minimumPropertySize
+            }
           />
+          {formik.errors.minimumPropertySize && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.minimumPropertySize.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("minimumNumberOfTenantsQuestion")} />
@@ -553,88 +587,102 @@ const Step1: React.FC<Step1Props> = () => {
             options={commanPreferenceOptions}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography
-            sx={{
-              background:
-                "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              fontSize: "44px",
-            }}
-          >
-            {t("describeIdelRoom")}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CommanTypography title={t("maximumNumberOfpeopleQuestion")} />
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("maximumNumberOfpeople", e);
-            }}
-            selectionOption={formik.values.maximumNumberOfpeople}
-            options={maximumNumberOfpeopleOptions}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <CommanTypography title={t("minimumRoomSizeQuestion")} />
-        </Grid>
-        <Grid item xs={12}>
-          <OutlinedInput
-            value={formik.values.minimumRoomSize}
-            onChange={(e) =>
-              formik.setFieldValue("minimumRoomSize", e.target.value)
-            }
-            inputProps={{
-              min: "0",
-              max: "100"
-            }}
-            type="number"
-            fullWidth
-            placeholder="100"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <CommanTypography title={t("furnishedRoomQuestion")} />
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("furnishedRoom", e);
-            }}
-            selectionOption={formik.values.furnishedRoom}
-            options={commanPreferenceOptions}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <CommanTypography title={t("privateBathroomQuestion")} />
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            options={yesNoOptions}
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("privateBathroom", e);
-            }}
-            selectionOption={formik.values.privateBathroom}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <CommanTypography title={t("balconyInRoomQuestion")} />
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            options={commanPreferenceOptions}
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("balconyInRoom", e);
-            }}
-            selectionOption={formik.values.balconyInRoom}
-          />
-        </Grid>
+        {formik.values.accommodation !== "WHOLEPROPERTY" && (
+          <>
+            <Grid item xs={12}>
+              <Box sx={{ borderBottom: "1px solid black" }}></Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                sx={{
+                  background:
+                    "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+                  backgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  fontSize: "44px",
+                }}
+              >
+                {t("describeIdelRoom")}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <CommanTypography title={t("maximumNumberOfpeopleQuestion")} />
+            </Grid>
+            <Grid item xs={12}>
+              <CustomButtonGroup
+                optionClick={(e: string[] | string) => {
+                  formik.setFieldValue("maximumNumberOfpeople", e);
+                }}
+                selectionOption={formik.values.maximumNumberOfpeople}
+                options={maximumNumberOfpeopleOptions}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <CommanTypography title={t("minimumRoomSizeQuestion")} />
+            </Grid>
+            <Grid item xs={12}>
+              <OutlinedInput
+                value={formik.values.minimumRoomSize}
+                onChange={(e) =>
+                  formik.setFieldValue("minimumRoomSize", e.target.value)
+                }
+                inputProps={{
+                  min: "0",
+                  max: "100",
+                }}
+                type="number"
+                fullWidth
+                placeholder="100"
+                error={
+                  formik.touched.minimumRoomSize &&
+                  !!formik.errors.minimumRoomSize
+                }
+              />
+              {formik.errors.minimumRoomSize && (
+                <FormHelperText sx={{ color: "red" }}>
+                  {formik.errors.minimumRoomSize.toString()}
+                </FormHelperText>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <CommanTypography title={t("furnishedRoomQuestion")} />
+            </Grid>
+            <Grid item xs={12}>
+              <CustomButtonGroup
+                optionClick={(e: string[] | string) => {
+                  formik.setFieldValue("furnishedRoom", e);
+                }}
+                selectionOption={formik.values.furnishedRoom}
+                options={commanPreferenceOptions}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <CommanTypography title={t("privateBathroomQuestion")} />
+            </Grid>
+            <Grid item xs={12}>
+              <CustomButtonGroup
+                options={yesNoOptions}
+                optionClick={(e: string[] | string) => {
+                  formik.setFieldValue("privateBathroom", e);
+                }}
+                selectionOption={formik.values.privateBathroom}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <CommanTypography title={t("balconyInRoomQuestion")} />
+            </Grid>
+            <Grid item xs={12}>
+              <CustomButtonGroup
+                options={commanPreferenceOptions}
+                optionClick={(e: string[] | string) => {
+                  formik.setFieldValue("balconyInRoom", e);
+                }}
+                selectionOption={formik.values.balconyInRoom}
+              />
+            </Grid>
+          </>
+        )}
+
         <Grid item xs={12} md={6}>
           <OutlinedButton type="button" onClick={() => navigate("/")}>
             {t("CANCEL_BUTTON_TEXT")}

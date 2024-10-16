@@ -13,7 +13,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EastIcon from "@mui/icons-material/East";
 import { HeaderMenus } from "../../../utils/Header";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import PhoneNumberDialog from "../../auth/PhoneNumberDialog";
 import MenuIcon from "@mui/icons-material/Menu";
+import { eventEmitter } from "../../../utils/Comman/eventEmitter";
 const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
 
@@ -68,6 +69,22 @@ const Header: React.FC = () => {
       setPhoneNumberDialog(true);
     }
   };
+
+  useEffect(() => {
+    const handleEvent = (data: string) => {
+      if (data === "openLoginDialog") {
+        handleLoginDialog(true);
+      }
+    };
+
+    // Subscribe to the event
+    eventEmitter.on("Header", handleEvent);
+
+    // Cleanup listener on unmount
+    return () => {
+      eventEmitter.off("Header", handleEvent);
+    };
+  }, []);
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
@@ -126,7 +143,10 @@ const Header: React.FC = () => {
             <Drawer open={open} onClose={toggleDrawer(false)}>
               {DrawerList}
             </Drawer>
-            <Typography onClick={() => navigate('/')} sx={{ fontWeight: "bold", fontSize: "24px",cursor: 'pointer' }}>
+            <Typography
+              onClick={() => navigate("/")}
+              sx={{ fontWeight: "bold", fontSize: "24px", cursor: "pointer" }}
+            >
               Room8
             </Typography>
           </Box>

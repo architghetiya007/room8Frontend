@@ -265,7 +265,7 @@ const Step2: React.FC<Step2Props> = () => {
                 onChange={(e) => formik.setFieldValue("age", e.target.value)}
                 fullWidth
                 inputProps={{
-                  min: "0"
+                  min: "0",
                 }}
                 placeholder="Your age"
                 type="number"
@@ -312,9 +312,7 @@ const Step2: React.FC<Step2Props> = () => {
                   formik.setFieldValue("typeOfEmployment", e.target.value);
                 }}
               >
-                <MenuItem value=''>
-                    Select
-                  </MenuItem>
+                <MenuItem value="">Select</MenuItem>
                 {typeOfEmployment.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {t(option.name)}
@@ -335,110 +333,142 @@ const Step2: React.FC<Step2Props> = () => {
               options={smokingOptions}
             />
           </Grid>
-          <Grid item xs={12}>
-            {formik.values.anotherPerson.length > 0 && (
-              <Typography variant="h6">Another Persons</Typography>
-            )}
-            <FieldArray name="anotherPerson">
-              {({ remove }) => {
-                return (
-                  <div>
-                    {formik.values.anotherPerson.map((person, index) => (
-                      <Stack
-                        sx={{
-                          border: "1px solid #f6f6f6",
-                          borderRadius: 1,
-                          p: 1,
-                        }}
-                        key={person.name}
-                        display={"flex"}
-                        flexDirection={"row"}
-                        justifyContent={"space-between"}
-                        alignItems={"center"}
-                      >
-                        <Typography>{index + 1}</Typography>
-                        <Typography>{person.name}</Typography>
-                        <Typography>{person.age}</Typography>
-                        <Typography>{person.gender}</Typography>
-                        <IconButton type="button" onClick={() => remove(index)}>
-                          <DeleteOutlineIcon />
-                        </IconButton>
-                      </Stack>
-                    ))}
-                  </div>
-                );
-              }}
-            </FieldArray>
-          </Grid>
+          {(formik.values.whoAreYou === "GROUP_FRIEND" ||
+            formik.values.whoAreYou === "COUPLE") && (
+            <>
+              <Grid item xs={12}>
+                {formik.values.anotherPerson.length > 0 && (
+                  <Typography variant="h5">Another Persons</Typography>
+                )}
+                <FieldArray name="anotherPerson">
+                  {({ remove }) => {
+                    return (
+                      <div>
+                        {formik.values.anotherPerson.map((person, index) => (
+                          <Stack
+                            sx={{
+                              border: "1px solid #f6f6f6",
+                              borderRadius: 1,
+                              py: 1,
+                            }}
+                            key={person.name}
+                            display={"flex"}
+                            flexDirection={"row"}
+                            justifyContent={"space-between"}
+                            alignItems={"center"}
+                          >
+                            <Box
+                              sx={{ display: "flex", flexDirection: "column" }}
+                            >
+                              <Typography variant="h3">
+                                {person.name}
+                              </Typography>
+                              <Box
+                                sx={{ display: "flex", alignItems: "center" }}
+                              >
+                                <Typography variant="h5">
+                                  {person.age} years old,{" "}
+                                </Typography>
+                                <Typography variant="h5">
+                                  {person.gender}
+                                </Typography>
+                              </Box>
+                            </Box>
 
-          <Grid item xs={12} md={6}>
-            <Stack direction={"column"} spacing={1}>
-              <Typography variant="h5">
-                {t("anotherPersonQuestion.name")}
-              </Typography>
-              <OutlinedInput
-                value={anotherPerson.name}
-                onChange={(e) =>
-                  setAnotherPerson({ ...anotherPerson, name: e.target.value })
-                }
-                fullWidth
-                placeholder="No Preferences"
-              />
-            </Stack>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Stack direction={"column"} spacing={1}>
-              <Typography variant="h5">
-                {t("anotherPersonQuestion.age")}
-              </Typography>
-              <OutlinedInput
-                type="number"
-                value={anotherPerson.age}
-                onChange={(e) =>
-                  setAnotherPerson({ ...anotherPerson, age: e.target.value })
-                }
-                inputProps={{
-                  min: "0"
-                }}
-                fullWidth
-                placeholder="No Preferences"
-              />
-            </Stack>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="h5">
-              {t("anotherPersonQuestion.gender")}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <CustomButtonGroup
-              optionClick={(e: string[] | string) => {
-                setAnotherPerson({ ...anotherPerson, gender: e as string });
-              }}
-              selectionOption={anotherPerson.gender}
-              options={genderOptions}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <LoadingButton
-              onClick={() => addPerson()}
-              sx={{
-                background:
-                  "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
-                width: "100%",
-                p: 1,
-                borderRadius: "8px",
-                color: "white",
-                textTransform: "none",
-                letterSpacing: "1px",
-                fontWeight: "600",
-                fontSize: "24px",
-              }}
-              type="button"
-            >
-              {t("anotherPersonQuestion.addAnotherPerson")}
-            </LoadingButton>
-          </Grid>
+                            <IconButton
+                              type="button"
+                              onClick={() => remove(index)}
+                            >
+                              <DeleteOutlineIcon />
+                            </IconButton>
+                          </Stack>
+                        ))}
+                      </div>
+                    );
+                  }}
+                </FieldArray>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Stack direction={"column"} spacing={1}>
+                  <Typography variant="h5">
+                    {t("anotherPersonQuestion.name")}
+                  </Typography>
+                  <OutlinedInput
+                    value={anotherPerson.name}
+                    onChange={(e) =>
+                      setAnotherPerson({
+                        ...anotherPerson,
+                        name: e.target.value,
+                      })
+                    }
+                    fullWidth
+                    placeholder="No Preferences"
+                  />
+                </Stack>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Stack direction={"column"} spacing={1}>
+                  <Typography variant="h5">
+                    {t("anotherPersonQuestion.age")}
+                  </Typography>
+                  <OutlinedInput
+                    type="number"
+                    value={anotherPerson.age}
+                    onChange={(e) =>
+                      setAnotherPerson({
+                        ...anotherPerson,
+                        age: e.target.value,
+                      })
+                    }
+                    inputProps={{
+                      min: "0",
+                    }}
+                    fullWidth
+                    placeholder="No Preferences"
+                  />
+                </Stack>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h5">
+                  {t("anotherPersonQuestion.gender")}
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <CustomButtonGroup
+                  optionClick={(e: string[] | string) => {
+                    setAnotherPerson({
+                      ...anotherPerson,
+                      gender: e as string,
+                    });
+                  }}
+                  selectionOption={anotherPerson.gender}
+                  options={genderOptions}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <LoadingButton
+                  onClick={() => addPerson()}
+                  sx={{
+                    background:
+                      "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
+                    width: "100%",
+                    p: 1,
+                    borderRadius: "8px",
+                    color: "white",
+                    textTransform: "none",
+                    letterSpacing: "1px",
+                    fontWeight: "600",
+                    fontSize: "24px",
+                  }}
+                  type="button"
+                >
+                  {t("anotherPersonQuestion.addAnotherPerson")}
+                </LoadingButton>
+              </Grid>
+            </>
+          )}
+
           <Grid item xs={12}>
             <Box sx={{ borderBottom: "1px solid black" }}></Box>
           </Grid>

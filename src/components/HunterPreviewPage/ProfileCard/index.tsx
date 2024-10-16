@@ -10,6 +10,9 @@ interface ProfileCardProps {
 }
 const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
   const { t } = useCommonTranslation();
+
+  const mainPrice = ((previewData?.hunterData?.acceptableRentRange?.at(0) ?? 0) + (previewData?.hunterData?.acceptableRentRange?.at(1) ?? 0)) /2;
+  const price = ((previewData?.hunterData?.acceptableRentRange?.at(1) ?? 0) - mainPrice)
   return (
     <Box
       sx={{
@@ -56,20 +59,16 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
             </Typography>
             <Typography
               sx={{
-                fontSize: "46px",
+                fontSize: "40px",
                 background:
                   "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
             >
-              {previewData!.hunterData!.acceptableRentRange!.length > 0
-                ? previewData?.hunterData?.acceptableRentRange?.at(0)
-                : ""}{" "}
+              {mainPrice}{" "}
               zł/month ±{" "}
-              {previewData!.hunterData!.acceptableRentRange!.length > 0
-                ? previewData?.hunterData?.acceptableRentRange?.at(1)
-                : ""}{" "}
+              {price}{" "}
               zł
             </Typography>
             <Typography variant="h6" mt={"0 !important"}>
