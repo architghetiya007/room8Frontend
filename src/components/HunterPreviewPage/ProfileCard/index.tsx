@@ -107,7 +107,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
                 ? "Available Immediately"
                 : previewData?.hunterData?.whenYouWouldLikeMoveIn
                 ? dayjs(previewData.hunterData?.whenYouWouldLikeMoveIn).format(
-                    "MM/DD/YYYY"
+                    "DD/MM/YYYY"
                   )
                 : ""}
             </Typography>

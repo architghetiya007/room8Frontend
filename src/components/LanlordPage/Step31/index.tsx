@@ -1,8 +1,11 @@
 import {
   Avatar,
   Box,
+  FormControl,
   Grid,
+  MenuItem,
   OutlinedInput,
+  Select,
   Slider,
   Stack,
   Typography,
@@ -22,6 +25,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useCommonTranslation from "../../../hooks/useCommonTranslation";
 import { AdvertisementData } from "../../../types/advertisement";
 import useUserMutations from "../../../mutations/user";
+import useHunterData from "../../../hooks/useHunter";
 const landlordSchema = Yup.object().shape({
   profilePhoto: Yup.string(),
   genderOfCurrentTenants: Yup.string(),
@@ -63,6 +67,7 @@ const Step31: React.FC<Step31Props> = () => {
     commanPreferenceOptions,
     smokingOptions,
   } = useLandlord();
+  const { typeOfEmployment } = useHunterData();
   const formik = useFormik({
     initialValues: {
       profilePhoto: "",
@@ -71,7 +76,7 @@ const Step31: React.FC<Step31Props> = () => {
       ageOfCurrentTenants: "",
       doChildrenLiveHere: "YES",
       isPetLivingInApartment: "YES",
-      currentTenantsEmployment: "HYBRID_WORK",
+      currentTenantsEmployment: "",
       tenantsSmoking: "YES",
       preferenceOfFutureTenants: ["WOMAN"],
       ageRangeOfFutureRoommate: [18, 35],
@@ -303,6 +308,26 @@ const Step31: React.FC<Step31Props> = () => {
             What do current tenant do/type of employment?
           </Typography>
         </Grid>
+        <Grid item xs={12}>
+            <FormControl fullWidth>
+              <Select
+                displayEmpty
+                labelId="work-status-label"
+                id="work-status"
+                value={formik.values.currentTenantsEmployment}
+                onChange={(e) => {
+                  formik.setFieldValue("currentTenantsEmployment", e.target.value);
+                }}
+              >
+                <MenuItem value="">Select</MenuItem>
+                {typeOfEmployment.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {t(option.name)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">Are the tenants smoking?</Typography>
         </Grid>

@@ -1,8 +1,12 @@
 import {
   Avatar,
   Box,
+  FormControl,
+  FormHelperText,
   Grid,
+  MenuItem,
   OutlinedInput,
+  Select,
   Slider,
   Stack,
   Typography,
@@ -22,10 +26,16 @@ import CustomLoadingButton from "../../comman/CustomLoadingButton";
 import OutlinedButton from "../../comman/OutlinedButton";
 import useCommonTranslation from "../../../hooks/useCommonTranslation";
 import useUserMutations from "../../../mutations/user";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import useHunterData from "../../../hooks/useHunter";
 const landlordSchema = Yup.object().shape({
   whoAreYou: Yup.string(),
   name: Yup.string(),
-  age: Yup.number(),
+  age: Yup.number()
+    .min(0, "Age must be non-negative")
+    .max(100, "Age should be 100")
+    .required("Age is required"),
   haveAnychildren: Yup.string(),
   havePet: Yup.string(),
   typeOfEmployment: Yup.string(),
@@ -45,6 +55,7 @@ interface Step3Props {
   updateTabIndex: Function;
 }
 const Step3: React.FC<Step3Props> = () => {
+  const userSlice = useSelector((state: RootState) => state.user);
   const { t } = useCommonTranslation();
   const params = useParams();
   const navigate = useNavigate();
@@ -64,10 +75,11 @@ const Step3: React.FC<Step3Props> = () => {
     commanPreferenceOptions,
     smokingOptions,
   } = useLandlord();
+  const { typeOfEmployment } = useHunterData();
   const formik = useFormik({
     initialValues: {
       whoAreYou: "WOMEN",
-      name: "",
+      name: userSlice?.user?.fullName ?? "",
       age: "",
       haveAnychildren: "YES",
       havePet: "NO",
@@ -213,7 +225,18 @@ const Step3: React.FC<Step3Props> = () => {
               onChange={(e) => formik.setFieldValue("age", e.target.value)}
               fullWidth
               placeholder="Your age"
+              type="number"
+              inputProps={{
+                min: 0,
+                max: 100,
+              }}
+              error={formik.touched.age && !!formik.errors.age}
             />
+            {formik.errors.age && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.age.toString()}
+              </FormHelperText>
+            )}{" "}
           </Stack>
         </Grid>
         <Grid item xs={12}>
@@ -245,6 +268,26 @@ const Step3: React.FC<Step3Props> = () => {
             What do you do/type of employment?
           </Typography>
         </Grid>
+        <Grid item xs={12}>
+            <FormControl fullWidth>
+              <Select
+                displayEmpty
+                labelId="work-status-label"
+                id="work-status"
+                value={formik.values.typeOfEmployment}
+                onChange={(e) => {
+                  formik.setFieldValue("typeOfEmployment", e.target.value);
+                }}
+              >
+                <MenuItem value="">Select</MenuItem>
+                {typeOfEmployment.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {t(option.name)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">Do you smoke?</Typography>
         </Grid>
@@ -425,7 +468,10 @@ const Step3: React.FC<Step3Props> = () => {
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
             sx={{ width: "100%" }}
-            loading={updateAdvertisementMutation.isPending || uploadImageMutation.isPending}
+            loading={
+              updateAdvertisementMutation.isPending ||
+              uploadImageMutation.isPending
+            }
             onClick={() => formik.handleSubmit()}
           >
             {t("PREVIEW_BUTTON_TEXT")}

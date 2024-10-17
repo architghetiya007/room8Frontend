@@ -1,4 +1,11 @@
-import { Box, FormHelperText, Grid, OutlinedInput, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  FormHelperText,
+  Grid,
+  OutlinedInput,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -37,12 +44,19 @@ const landlordSchema = Yup.object().shape({
   doYouLiveHere: Yup.string().required("Do you live here is required"),
   ownerLiveHere: Yup.string().required("Owner live here is required"),
   howmanyPeopleLive: Yup.string().required("How many people live is required"),
-  propertySize: Yup.number().min(0, "Minimum property size must be non-negative")
-  .max(1000, "Minimum property size should be 1000")
-  .required("Minimum property size is required"),
+  propertySize: Yup.number()
+    .min(0, "Proerty Size must be non-negative")
+    .max(100, "Proerty Size should be 1000")
+    .required("Proerty Size is required"),
   roomsAmount: Yup.string().required("Rooms amount is required"),
-  floor: Yup.number().required("Floor is required").min(0),
-  numberOfFloor: Yup.number(),
+  floor: Yup.number()
+    .min(0, "Floor must be non-negative")
+    .max(100, "Floor should be 100")
+    .nullable(),
+  numberOfFloor: Yup.number()
+    .min(0, "Number of floor must be non-negative")
+    .max(100, "Number of floor should be 100")
+    .nullable(),
   liftInBuilding: Yup.string().required("Lift in building is required"),
   IsApartmentFurnished: Yup.string().required(
     "Is apartment furnished is required"
@@ -264,63 +278,72 @@ const Step1: React.FC<Step1Props> = () => {
             selectedAddress={formik.values.address?.formattedAddress ?? ""}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography
-            sx={{
-              background:
-                "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              fontSize: "44px",
-            }}
-          >
-            {t("landlordQ.tellmeAboutYourProperty")}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">{t("landlordQ.doYouLeaveHere")}</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            options={yesNoOptions}
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("doYouLiveHere", e);
-            }}
-            selectionOption={formik.values.doYouLiveHere}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">{t("landlordQ.liveOwenerHere")}</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            options={yesNoOptions}
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("ownerLiveHere", e);
-            }}
-            selectionOption={formik.values.ownerLiveHere}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">
-            {t("landlordQ.howManyPeopleLiveInthisProperty")}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            options={howmanyPeopleLive}
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("howmanyPeopleLive", e);
-            }}
-            selectionOption={formik.values.howmanyPeopleLive}
-          />
-        </Grid>
+        {formik.values.propertyOffer !== "WHOLEPROPERTY" && (
+          <>
+            <Grid item xs={12}>
+              <Box sx={{ borderBottom: "1px solid black" }}></Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                sx={{
+                  background:
+                    "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+                  backgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  fontSize: "44px",
+                }}
+              >
+                {t("landlordQ.tellmeAboutYourProperty")}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ borderBottom: "1px solid black" }}></Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h5">
+                {t("landlordQ.doYouLeaveHere")}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <CustomButtonGroup
+                options={yesNoOptions}
+                optionClick={(e: string[] | string) => {
+                  formik.setFieldValue("doYouLiveHere", e);
+                }}
+                selectionOption={formik.values.doYouLiveHere}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h5">
+                {t("landlordQ.liveOwenerHere")}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <CustomButtonGroup
+                options={yesNoOptions}
+                optionClick={(e: string[] | string) => {
+                  formik.setFieldValue("ownerLiveHere", e);
+                }}
+                selectionOption={formik.values.ownerLiveHere}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h5">
+                {t("landlordQ.howManyPeopleLiveInthisProperty")}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <CustomButtonGroup
+                options={howmanyPeopleLive}
+                optionClick={(e: string[] | string) => {
+                  formik.setFieldValue("howmanyPeopleLive", e);
+                }}
+                selectionOption={formik.values.howmanyPeopleLive}
+              />
+            </Grid>
+          </>
+        )}
+
         <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
@@ -342,10 +365,7 @@ const Step1: React.FC<Step1Props> = () => {
               min: "0",
               max: "1000",
             }}
-            error={
-              formik.touched.propertySize &&
-              !!formik.errors.propertySize
-            }
+            error={formik.touched.propertySize && !!formik.errors.propertySize}
           />
           {formik.errors.propertySize && (
             <FormHelperText sx={{ color: "red" }}>
@@ -365,56 +385,82 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.roomsAmount}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} md={6}>
-              <Stack flexDirection={"column"} spacing={2}>
-                <Typography>Floor</Typography>
-                <OutlinedInput
-                  value={formik.values.floor}
-                  onChange={(e) =>
-                    formik.setFieldValue("floor", e.target.value)
-                  }
-                  fullWidth
-                  placeholder="100"
-                  type="number"
-                  inputProps={{
-                    min: 0,
-                    max: 100,
-                  }}
-                />
-              </Stack>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Stack flexDirection={"column"} spacing={2}>
-                <Typography>Number of floors in the building</Typography>
-                <OutlinedInput
-                  value={formik.values.numberOfFloor}
-                  onChange={(e) =>
-                    formik.setFieldValue("numberOfFloor", e.target.value)
-                  }
-                  fullWidth
-                  placeholder="100"
-                  type="number"
-                />
-              </Stack>
+        {formik.values.typeofProperty !== "HOUSE" && (
+          <Grid item xs={12}>
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={6}>
+                <Stack flexDirection={"column"} spacing={2}>
+                  <Typography>Floor</Typography>
+                  <OutlinedInput
+                    value={formik.values.floor}
+                    onChange={(e) =>
+                      formik.setFieldValue("floor", e.target.value)
+                    }
+                    fullWidth
+                    placeholder="100"
+                    type="number"
+                    inputProps={{
+                      min: 0,
+                      max: 100,
+                    }}
+                    error={formik.touched.floor && !!formik.errors.floor}
+                  />
+                  {formik.errors.floor && (
+                    <FormHelperText sx={{ color: "red" }}>
+                      {formik.errors.floor.toString()}
+                    </FormHelperText>
+                  )}
+                </Stack>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Stack flexDirection={"column"} spacing={2}>
+                  <Typography>Number of floors in the building</Typography>
+                  <OutlinedInput
+                    value={formik.values.numberOfFloor}
+                    onChange={(e) =>
+                      formik.setFieldValue("numberOfFloor", e.target.value)
+                    }
+                    fullWidth
+                    placeholder="100"
+                    type="number"
+                    inputProps={{
+                      min: 0,
+                      max: 100,
+                    }}
+                    error={
+                      formik.touched.numberOfFloor &&
+                      !!formik.errors.numberOfFloor
+                    }
+                  />
+                  {formik.errors.numberOfFloor && (
+                    <FormHelperText sx={{ color: "red" }}>
+                      {formik.errors.numberOfFloor.toString()}
+                    </FormHelperText>
+                  )}
+                </Stack>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        )}
+        {formik.values.typeofProperty !== "HOUSE" && (
+          <>
+            <Grid item xs={12}>
+              <Typography variant="h5">Lift in the building?</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <CustomButtonGroup
+                options={yesNoOptions}
+                optionClick={(e: string[] | string) => {
+                  formik.setFieldValue("liftInBuilding", e);
+                }}
+                selectionOption={formik.values.liftInBuilding}
+              />
+            </Grid>
+          </>
+        )}
+
         <Grid item xs={12}>
-          <Typography variant="h5">Lift in the building?</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            options={yesNoOptions}
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("liftInBuilding", e);
-            }}
-            selectionOption={formik.values.liftInBuilding}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">Is the apartment furnished?</Typography>
+          <Typography variant="h5">Is the property furnished?</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -450,7 +496,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Balcony in the apartment?</Typography>
+          <Typography variant="h5">Balcony in the property?</Typography>
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -478,7 +524,7 @@ const Step1: React.FC<Step1Props> = () => {
             sx={{ width: "100%" }}
             onClick={() => formik.handleSubmit()}
           >
-            {t("landlord.GO_TO_ROOM_DESCRIPTION")}
+            {t("NEXT")}
           </CustomLoadingButton>
         </Grid>
       </Grid>

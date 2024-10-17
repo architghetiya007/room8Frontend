@@ -43,11 +43,11 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
                   }}
                 >
                   {previewData.landlordData?.address?.city +
-                    "," +
+                    "  ,  " +
                     previewData.landlordData?.address?.state}
                 </Typography>
                 <Typography variant="h5" fontWeight={"bold"}>
-                  {previewData.landlordData?.propertyOffer} in a{" "}
+                  {t(`landlord.propertyOfferOptions.${previewData.landlordData?.propertyOffer}`)} in a{" "}
                   {previewData.landlordData?.typeofProperty}
                 </Typography>
               </Stack>
@@ -130,8 +130,9 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <AddLocationAltOutlinedIcon />
                 <Typography
+                  onClick={() => window.top?.open(`https://www.google.com/maps?q=${previewData.landlordData?.address?.coordinates?.at(1)},${previewData.landlordData?.address?.coordinates?.at(0)}`)}
                   variant="h6"
-                  sx={{ borderBottom: "1px solid black" }}
+                  sx={{ borderBottom: "1px solid black", cursor: 'pointer' }}
                 >
                   CHECK ON MAP
                 </Typography>

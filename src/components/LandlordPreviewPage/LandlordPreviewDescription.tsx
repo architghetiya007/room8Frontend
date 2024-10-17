@@ -61,19 +61,6 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
               WebkitTextFillColor: "transparent",
             }}
           >
-            A few facts about me
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography
-            sx={{
-              fontSize: "46px",
-              background:
-                "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
             I'm looking for a flatmate to my apartment
           </Typography>
         </Grid>
@@ -122,9 +109,9 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                 >
                   {previewData.landlordData?.currentTenantsName}
                 </Typography>
-                <Typography>
-                  {previewData.landlordData?.ageOfCurrentTenants} years old{" "}
-                  {previewData.landlordData?.genderOfCurrentTenants}
+                <Typography variant="h6">
+                  {previewData.landlordData?.age} years old{" "}<br/ >
+                  {previewData.landlordData?.name}
                 </Typography>
               </Box>
             </Stack>
@@ -466,7 +453,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       }}
                     >
                       Max people in the room:{" "}
-                      {previewData.landlordData?.maximumStay}
+                      {previewData.landlordData?.howManyPeopleInRoom}
                     </Typography>
                   </Box>
                 </Grid>

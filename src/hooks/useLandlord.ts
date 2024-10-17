@@ -120,17 +120,17 @@ const useLandlord = () => {
     },
   ];
 
-  const howManyPropleInRoom: ButtonGroupInterface[] = [
+  const howManyPeopleInRoom: ButtonGroupInterface[] = [
     {
-      name: t("landlord.howManyPropleInRoom.01"),
+      name: t("landlord.howManyPeopleInRoom.01"),
       value: "01",
     },
     {
-      name: t("landlord.howManyPropleInRoom.02"),
+      name: t("landlord.howManyPeopleInRoom.02"),
       value: "02",
     },
     {
-      name: t("landlord.howManyPropleInRoom.03+"),
+      name: t("landlord.howManyPeopleInRoom.03+"),
       value: "03+",
     },
   ];
@@ -269,7 +269,7 @@ const useLandlord = () => {
     IsApartmentFurnished,
     kitchenOptions,
     parkingOptions,
-    howManyPropleInRoom,
+    howManyPeopleInRoom,
     yesNoPartiallyOptions,
     bedOptions,
     yesNoOutside,

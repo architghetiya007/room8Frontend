@@ -378,6 +378,7 @@ const Step1: React.FC<Step1Props> = () => {
                 minDate={dayjs(new Date())}
                 maxDate={dayjs(new Date()).add(1, "year")}
                 sx={{ width: "100%" }}
+                format="DD/MM/YYYY"
                 label="Date"
                 value={
                   formik.values.whenYouWouldLikeMoveIn

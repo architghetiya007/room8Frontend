@@ -23,7 +23,10 @@ const LanlordPreviewPage: React.FC = () => {
         isActive: previewData?.isActive ? false : true,
       },
       {
-        onSuccess: () => {},
+        onSuccess: (data) => {
+          showSnackBar({ message: data!.message });
+          navigate(`/`);
+        },
       }
     );
   };

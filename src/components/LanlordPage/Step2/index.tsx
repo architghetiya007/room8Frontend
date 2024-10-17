@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   FormControl,
+  FormHelperText,
   Grid,
   MenuItem,
   OutlinedInput,
@@ -33,8 +34,11 @@ import { t } from "i18next";
 import useHunterData from "../../../hooks/useHunter";
 import useUserMutations from "../../../mutations/user";
 const landlordSchema = Yup.object().shape({
-  roomSize: Yup.string().nullable(),
-  howManyPropleInRoom: Yup.string(),
+  roomSize: Yup.number()
+    .min(0, "Room Size must be non-negative")
+    .max(100, "Room Size should be 100")
+    .required("Room Size is required"),
+  howManyPeopleInRoom: Yup.string(),
   isRoomFurnished: Yup.string().required("Is room furnished is required"),
   bed: Yup.string(),
   privateBathroom: Yup.string(),
@@ -43,16 +47,22 @@ const landlordSchema = Yup.object().shape({
   dateAvailable: Yup.string().nullable(),
   minimumStay: Yup.string(),
   maximumStay: Yup.string(),
-  rentPerMonth: Yup.string(),
+  rentPerMonth: Yup.number()
+    .min(0, "Rent per month must be non-negative")
+    .max(50000, "Rent per month should be 50000")
+    .required("Rent per month is required"),
   billIncludeInRent: Yup.string().required("Bill included in rent is required"),
-  deposit: Yup.string(),
+  deposit: Yup.number()
+    .min(0, "Deposit must be non-negative")
+    .max(50000, "Deposit should be 50000")
+    .required("Deposit is required"),
   descriptionOfFlat: Yup.string(),
   photosOfPlace: Yup.array().of(Yup.string()),
 });
 
 interface RoomFormValues {
   roomSize: string; // Assuming roomSize is a string (you may want to specify number if it's numeric)
-  howManyPropleInRoom: string; // Keeping as string; consider using number if it's always numeric
+  howManyPeopleInRoom: string; // Keeping as string; consider using number if it's always numeric
   isRoomFurnished: string; // Assuming it's a string, could also be a boolean
   bed: string; // Bed type as string
   privateBathroom: string; // Assuming it's a string (could also be a boolean)
@@ -83,7 +93,7 @@ const Step2: React.FC<Step2Props> = () => {
     useAdvertisementMutations();
   const { showSnackBar } = useNotification();
   const {
-    howManyPropleInRoom,
+    howManyPeopleInRoom,
     yesNoPartiallyOptions,
     bedOptions,
     yesNoOptions,
@@ -99,7 +109,7 @@ const Step2: React.FC<Step2Props> = () => {
   const formik = useFormik<RoomFormValues>({
     initialValues: {
       roomSize: "",
-      howManyPropleInRoom: "02",
+      howManyPeopleInRoom: "02",
       isRoomFurnished: "YES",
       bed: "DOUBLE",
       privateBathroom: "YES",
@@ -265,11 +275,21 @@ const Step2: React.FC<Step2Props> = () => {
         <Grid item xs={12}>
           <OutlinedInput
             fullWidth
-            placeholder="No Preferences"
+            placeholder="100"
             value={formik.values.roomSize}
             onChange={(e) => formik.setFieldValue("roomSize", e.target.value)}
             type="number"
+            inputProps={{
+              min: 0,
+              max: 100,
+            }}
+            error={formik.touched.roomSize && !!formik.errors.roomSize}
           />
+          {formik.errors.roomSize && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.roomSize.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">
@@ -279,10 +299,10 @@ const Step2: React.FC<Step2Props> = () => {
         <Grid item xs={12}>
           <CustomButtonGroup
             optionClick={(e: string[] | string) => {
-              formik.setFieldValue("howManyPropleInRoom", e);
+              formik.setFieldValue("howManyPeopleInRoom", e);
             }}
-            selectionOption={formik.values.howManyPropleInRoom}
-            options={howManyPropleInRoom}
+            selectionOption={formik.values.howManyPeopleInRoom}
+            options={howManyPeopleInRoom}
           />
         </Grid>
         <Grid item xs={12}>
@@ -297,18 +317,23 @@ const Step2: React.FC<Step2Props> = () => {
             options={yesNoPartiallyOptions}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5"> Bed</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomButtonGroup
-            optionClick={(e: string[] | string) => {
-              formik.setFieldValue("bed", e);
-            }}
-            selectionOption={formik.values.bed}
-            options={bedOptions}
-          />
-        </Grid>
+        {formik.values.isRoomFurnished !== "NO" && (
+          <>
+            <Grid item xs={12}>
+              <Typography variant="h5"> Bed</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <CustomButtonGroup
+                optionClick={(e: string[] | string) => {
+                  formik.setFieldValue("bed", e);
+                }}
+                selectionOption={formik.values.bed}
+                options={bedOptions}
+              />
+            </Grid>
+          </>
+        )}
+
         <Grid item xs={12}>
           <Typography variant="h5"> Private bathroom?</Typography>
         </Grid>
@@ -358,16 +383,16 @@ const Step2: React.FC<Step2Props> = () => {
               <DatePicker
                 sx={{ width: "100%" }}
                 label="Date"
+                format="DD/MM/YYYY"
+                minDate={dayjs(new Date())}
+                maxDate={dayjs(new Date()).add(1, "year")}
                 value={
                   formik.values?.dateAvailable
                     ? dayjs(formik.values?.dateAvailable)
                     : null
                 }
                 onChange={(newValue) => {
-                  formik.setFieldValue(
-                    "dateAvailable",
-                    newValue?.valueOf()
-                  );
+                  formik.setFieldValue("dateAvailable", newValue?.valueOf());
                   formik.setFieldValue("isAvailableNow", false);
                 }}
               />
@@ -437,7 +462,7 @@ const Step2: React.FC<Step2Props> = () => {
             justifyContent={"center"}
             sx={{ border: "1px solid red", borderRadius: "8px", p: 4 }}
           >
-            <Typography>Rent per month</Typography>
+            <Typography>Rent per month (zł)</Typography>
             <OutlinedInput
               fullWidth
               placeholder="Rent per month"
@@ -448,9 +473,17 @@ const Step2: React.FC<Step2Props> = () => {
               }
               inputProps={{
                 min: 0,
-                max: 2000
+                max: 50000,
               }}
+              error={
+                formik.touched.rentPerMonth && !!formik.errors.rentPerMonth
+              }
             />
+            {formik.errors.rentPerMonth && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.rentPerMonth.toString()}
+              </FormHelperText>
+            )}
             <Typography>Bill included in rent</Typography>
             <CustomButtonGroup
               optionClick={(e: string[] | string) => {
@@ -481,11 +514,17 @@ const Step2: React.FC<Step2Props> = () => {
         <Grid item xs={12}>
           <OutlinedInput
             fullWidth
-            placeholder="Your Message"
+            placeholder="100"
             value={formik.values.deposit}
             type="number"
             onChange={(e) => formik.setFieldValue("deposit", e.target.value)}
+            error={formik.touched.deposit && !!formik.errors.deposit}
           />
+          {formik.errors.deposit && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.deposit.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">

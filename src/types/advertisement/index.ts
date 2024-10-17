@@ -75,7 +75,7 @@ export interface LandlordRequestDTO {
   parking?: string; // Made optional
   balconyInApartment?: string;
   roomSize?: string; // Kept as number, can be refined further
-  howManyPeopleInRoom?: number; // Changed to number for numeric value
+  howManyPeopleInRoom?: string; // Changed to number for numeric value
   isRoomFurnished?: string; // Using enum for better type safety
   bed?: string; // Made optional
   privateBathroom?: string;
