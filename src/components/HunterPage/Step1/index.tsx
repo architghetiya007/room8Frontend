@@ -334,6 +334,7 @@ const Step1: React.FC<Step1Props> = () => {
             inputProps={{
               min: "0",
               max: "50000",
+              step: 100
             }}
             placeholder="No Preferences"
             value={formik.values.maximumDeposit}

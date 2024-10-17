@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   FormControl,
+  FormHelperText,
   Grid,
   IconButton,
   MenuItem,
@@ -37,7 +38,7 @@ const anotherPersonSchema = Yup.object().shape({
 const step2Schema = Yup.object().shape({
   whoAreYou: Yup.string(),
   name: Yup.string(),
-  age: Yup.number().min(0, "Age must be positive").nullable(),
+  age: Yup.number().min(1, "Age must be positive").required(),
   withChild: Yup.string(),
   havePet: Yup.string(),
   typeOfEmployment: Yup.string(),
@@ -269,7 +270,16 @@ const Step2: React.FC<Step2Props> = () => {
                 }}
                 placeholder="Your age"
                 type="number"
+                error={
+                  formik.touched.age &&
+                  !!formik.errors.age
+                }
               />
+              {formik.errors.age && (
+                <FormHelperText sx={{ color: "red" }}>
+                  {formik.errors.age.toString()}
+                </FormHelperText>
+              )}
             </Stack>
           </Grid>
           <Grid item xs={12}>
@@ -403,7 +413,6 @@ const Step2: React.FC<Step2Props> = () => {
                       })
                     }
                     fullWidth
-                    placeholder="No Preferences"
                   />
                 </Stack>
               </Grid>
@@ -425,7 +434,6 @@ const Step2: React.FC<Step2Props> = () => {
                       min: "0",
                     }}
                     fullWidth
-                    placeholder="No Preferences"
                   />
                 </Stack>
               </Grid>

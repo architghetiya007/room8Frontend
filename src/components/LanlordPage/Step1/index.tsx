@@ -1,4 +1,4 @@
-import { Box, Grid, OutlinedInput, Stack, Typography } from "@mui/material";
+import { Box, FormHelperText, Grid, OutlinedInput, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -37,7 +37,9 @@ const landlordSchema = Yup.object().shape({
   doYouLiveHere: Yup.string().required("Do you live here is required"),
   ownerLiveHere: Yup.string().required("Owner live here is required"),
   howmanyPeopleLive: Yup.string().required("How many people live is required"),
-  propertySize: Yup.number().required("Property size is required").min(0),
+  propertySize: Yup.number().min(0, "Minimum property size must be non-negative")
+  .max(1000, "Minimum property size should be 1000")
+  .required("Minimum property size is required"),
   roomsAmount: Yup.string().required("Rooms amount is required"),
   floor: Yup.number().required("Floor is required").min(0),
   numberOfFloor: Yup.number(),
@@ -340,7 +342,16 @@ const Step1: React.FC<Step1Props> = () => {
               min: "0",
               max: "1000",
             }}
+            error={
+              formik.touched.propertySize &&
+              !!formik.errors.propertySize
+            }
           />
+          {formik.errors.propertySize && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.propertySize.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">Rooms Amount</Typography>

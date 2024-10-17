@@ -171,7 +171,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12} md={7}>
           <Box sx={{ p: 1 }}>
-            <Typography variant="h6" sx={{ wordWrap: "break-word" }}>
+            <Typography variant="h6" sx={{ wordWrap: "break-word", whiteSpace: 'pre-wrap' }}>
               {previewData.hunterData?.describeYourSelf}
             </Typography>
           </Box>
