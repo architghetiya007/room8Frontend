@@ -119,12 +119,14 @@ const ProfileListing: React.FC = () => {
                     label={item.isActive ? "Active" : "Inactive"}
                   />
                   <IconButton
+                    sx={{ ml: "8px !important" }}
                     type="button"
                     onClick={() => navigate(`/landlord-preview/${item._id}`)}
                   >
                     <VisibilityOutlinedIcon sx={{ color: "black" }} />
                   </IconButton>
                   <IconButton
+                    sx={{ ml: "8px !important" }}
                     type="button"
                     onClick={() => {
                       handleOpenDialog(item);
@@ -178,10 +180,20 @@ const ProfileListing: React.FC = () => {
                     label={item.isActive ? "Active" : "Inactive"}
                   />
                   <IconButton
+                    sx={{ ml: "8px !important" }}
                     type="button"
                     onClick={() => navigate(`/hunter-preview/${item._id}`)}
                   >
                     <VisibilityOutlinedIcon sx={{ color: "black" }} />
+                  </IconButton>
+                  <IconButton
+                    sx={{ ml: "8px !important" }}
+                    type="button"
+                    onClick={() => {
+                      handleOpenDialog(item);
+                    }}
+                  >
+                    <DeleteOutlined sx={{ color: "black" }} />
                   </IconButton>
                 </Stack>
               </Grid>
