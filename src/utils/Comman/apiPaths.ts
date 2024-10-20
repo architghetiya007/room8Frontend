@@ -22,5 +22,6 @@ export const apiPaths = {
     getAllAdvertisement: "/advertisement/all",
     updateStatusAdvertisement: "/advertisement/status",
     getUserAdvertisement: "/advertisement/user-wise-list",
+    deleteAdvertisement: (advertisementId: string)=> `/advertisement/${advertisementId}`
   },
 };

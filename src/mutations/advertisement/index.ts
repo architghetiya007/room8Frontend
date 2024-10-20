@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import {
   createAdvertisementAPI,
+  deleteAdvertisementAPI,
   getAdvertisementAPI,
   getAllAdvertisementAPI,
   getUserAdvertisementAPI,
@@ -41,6 +42,10 @@ const useAdvertisementMutations = () => {
     mutationFn: getUserAdvertisementAPI,
   });
 
+  const deleteAdvertisementMutation = useMutation({
+    mutationFn: deleteAdvertisementAPI,
+  });
+
   return {
     createAdvertisementMutation,
     getAdvertisementMutation,
@@ -48,6 +53,7 @@ const useAdvertisementMutations = () => {
     getAllAdvertisementMutation,
     updateStatusAdvertisementMutation,
     getUserAdvertisementMutation,
+    deleteAdvertisementMutation
   };
 };
 

@@ -97,7 +97,7 @@
   "availableNow": "Available Now :",
   "preferredLengthToStayQuestion": "Preferred length of stay",
   "addressQuestion": "Where would you like to live?",
-  "addressSubTitle": "Type in address or choose a point on the map",
+  "addressSubTitle": "Type in address",
   "rangeFromCoordinateQuestion": "Distance from reference point (km)",
   "describeYourPlace": "Describe your ideal place",
   "minimumPropertySizeQuestion": "Minimum propety size (m²)",

@@ -4,6 +4,7 @@ import {
   AdvertisementStatusRequestDTO,
   ListAdvertisementResponseDTO,
 } from "../../types/advertisement";
+import { BaseResponse } from "../../types/comman/BaseResponse";
 import { apiPaths } from "../../utils/Comman/apiPaths";
 import { getErrorMessage } from "../../utils/Comman/errorHandler";
 import axiosInstance from "../axiosInstance";
@@ -83,6 +84,17 @@ const getUserAdvertisementAPI = async () => {
   }
 };
 
+const deleteAdvertisementAPI = async (advertisementId: string) => {
+  try {
+    const response = await axiosInstance.delete<BaseResponse>(
+      apiPaths.ADVERTISEMENT.deleteAdvertisement(advertisementId),
+    );
+    return response.data;
+  } catch (error) {
+    getErrorMessage(error);
+  }
+};
+
 export {
   createAdvertisementAPI,
   updateAdvertisementAPI,
@@ -90,4 +102,5 @@ export {
   getAllAdvertisementAPI,
   updateStatusAdvertisementAPI,
   getUserAdvertisementAPI,
+  deleteAdvertisementAPI
 };

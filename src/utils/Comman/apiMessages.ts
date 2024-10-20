@@ -8,4 +8,7 @@ export const apiMessages = {
     logout: "Logout Successfully",
     deleteAccount: "Your Account has been Successfully",
   },
+  advertisement: {
+    delete: "Advertisement deleted Successfully"
+  }
 };
