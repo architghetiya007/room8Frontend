@@ -314,7 +314,7 @@ const Step1: React.FC<Step1Props> = () => {
         <Grid item xs={12}>
           <Slider
             getAriaLabel={() => "Temperature range"}
-            min={1}
+            min={0}
             step={50}
             max={10000}
             valueLabelDisplay="auto"
