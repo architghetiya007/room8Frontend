@@ -3,13 +3,15 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  databaseURL: "YOUR_DATABASE_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyDfJma8G42X4m7eFShCWr5S83pNVyqH_KQ",
+  authDomain: "room8-chat.firebaseapp.com",
+  databaseURL:
+    "https://room8-chat-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "room8-chat",
+  storageBucket: "room8-chat.appspot.com",
+  messagingSenderId: "658419432276",
+  appId: "1:658419432276:web:ceaf6cdb42b38c732666c1",
+  measurementId: "G-ZNGTCG4LCH",
 };
 
 const app = initializeApp(firebaseConfig);
