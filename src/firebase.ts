@@ -1,6 +1,6 @@
 // src/firebase.ts
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { Firestore, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDfJma8G42X4m7eFShCWr5S83pNVyqH_KQ",
@@ -15,6 +15,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const db: Firestore = getFirestore(app); // Explicitly specify Firestore type
 
 export { db };

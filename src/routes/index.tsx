@@ -17,6 +17,7 @@ const UserProfilePage = lazy(() => import("../pages/UserProfilePage"));
 const EmailVerifyPage = lazy(() => import("../pages/EmailVerifyPage"));
 const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
 const ChatsPage = lazy(() => import("../pages/ChatsPage"));
+const ChatDetailPage = lazy(() => import("../pages/ChatDetailPage"));
 
 const routes: RouteObject[] = [
   {
@@ -148,6 +149,16 @@ const routes: RouteObject[] = [
         </GuestLayout>
       </SuspenseWrapper>
     ),
+    children: [
+      {
+        path: ":chatId/:recipientId",
+        element: (
+          <SuspenseWrapper>
+            <ChatDetailPage />
+          </SuspenseWrapper>
+        ),
+      },
+    ],
   },
   {
     path: "/aboutus",

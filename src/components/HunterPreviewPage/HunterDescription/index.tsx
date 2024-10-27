@@ -1,6 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, Grid, OutlinedInput, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import OutlinedButton from "../../comman/OutlinedButton";
 import CustomLoadingButton from "../../comman/CustomLoadingButton";
 import { AdvertisementData } from "../../../types/advertisement";
@@ -24,6 +24,19 @@ import useCommonTranslation from "../../../hooks/useCommonTranslation";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { useNavigate } from "react-router-dom";
+import { db } from "../../../firebase";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  increment,
+  query,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 interface HunterDescriptionProps {
   updateStatusAPI: () => void;
   loading: boolean;
@@ -34,9 +47,71 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
   loading,
   previewData,
 }) => {
+  const [newMessage, setNewMessage] = useState("");
   const userSlice = useSelector((state: RootState) => state.user);
   const { t } = useCommonTranslation();
   const navigate = useNavigate();
+
+  const userId = userSlice.user?._id ?? "";
+  const recipientId = previewData.userId ?? "";
+
+  const checkChatExists = async () => {
+    const chatQuery = query(
+      collection(db, "userChats"),
+      where("userId1", "in", [userId, recipientId]),
+      where("userId2", "in", [userId, recipientId])
+    );
+
+    const chatSnapshot = await getDocs(chatQuery);
+
+    let chatId;
+    if (chatSnapshot.empty) {
+      // Create a new chat document if it doesn't exist
+      const newChatRef = await addDoc(collection(db, "userChats"), {
+        userIds: [userId, recipientId], // Store user IDs in an array
+        timestamp: serverTimestamp(),
+      });
+      chatId = newChatRef.id; // Retrieve the chatId from the new document reference
+    } else {
+      // Get the existing chatId (the document ID of the first matched document)
+      chatId = chatSnapshot.docs[0].id;
+    }
+
+    return chatId;
+  };
+
+  const sendMessage = async () => {
+    const chatId = checkChatExists();
+    if (!chatId) {
+      console.error("chatId is not defined");
+      return;
+    }
+
+    const chatDocRef = doc(db, "userChats",(await chatId).toString());
+
+    // Reference to the messages sub-collection within the chat
+    const messagesCollectionRef = collection(db, "userChats", (await chatId).toString(), "messages");
+
+    const newMessageRef = doc(messagesCollectionRef); // Creates a new document reference
+
+    await setDoc(newMessageRef, {
+      senderId: userId,
+      text: newMessage,
+      timestamp: serverTimestamp(),
+      readBy: [userId],
+    });
+
+    await updateDoc(chatDocRef, {
+      lastMessage: {
+        text: newMessage,
+        senderId: userId,
+        timestamp: serverTimestamp(),
+      },
+      [`unreadCount.${recipientId}`]: increment(1),
+    });
+
+    setNewMessage("");
+  };
   return (
     <Box
       sx={{
@@ -171,43 +246,59 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         </Grid>
         <Grid item xs={12} md={7}>
           <Box sx={{ p: 1 }}>
-            <Typography variant="h6" sx={{ wordWrap: "break-word", whiteSpace: 'pre-wrap' }}>
+            <Typography
+              variant="h6"
+              sx={{ wordWrap: "break-word", whiteSpace: "pre-wrap" }}
+            >
               {previewData.hunterData?.describeYourSelf}
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} md={5}>
-          <Stack
-            sx={{
-              borderRadius: 5,
-              display: "flex",
-              boxShadow: 3, // Predefined MUI box shadow (3 is moderate depth)
-              width: "100%",
-              p: 3,
-            }}
-            spacing={2}
-          >
-            <Typography variant="h4">Write a Message</Typography>
-            <OutlinedInput placeholder="Your Message" multiline minRows={4} />
-            <LoadingButton
-              sx={{
-                background:
-                  "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
-                width: "100%",
-                p: 1,
-                borderRadius: "8px",
-                color: "white",
-                textTransform: "none",
-                letterSpacing: "1px",
-                fontWeight: "600",
-                fontSize: "24px",
-              }}
-              type="button"
-            >
-              Send a Message
-            </LoadingButton>
-          </Stack>
-        </Grid>
+        {userSlice.user &&
+          previewData.userId &&
+          userSlice.user?._id !== previewData.userId && (
+            <Grid item xs={12} md={5}>
+              <Stack
+                sx={{
+                  borderRadius: 5,
+                  display: "flex",
+                  boxShadow: 3, // Predefined MUI box shadow (3 is moderate depth)
+                  width: "100%",
+                  p: 3,
+                }}
+                spacing={2}
+              >
+                <Typography variant="h4">Write a Message</Typography>
+                <OutlinedInput
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  value={newMessage}
+                  placeholder="Your Message"
+                  multiline
+                  minRows={4}
+                />
+                <LoadingButton
+                  sx={{
+                    background:
+                      "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
+                    width: "100%",
+                    p: 1,
+                    borderRadius: "8px",
+                    color: "white",
+                    textTransform: "none",
+                    letterSpacing: "1px",
+                    fontWeight: "600",
+                    fontSize: "24px",
+                  }}
+                  type="button"
+                  disabled={!newMessage.toString().trim()}
+                  onClick={() => sendMessage()}
+                >
+                  Send a Message
+                </LoadingButton>
+              </Stack>
+            </Grid>
+          )}
+
         <Grid item xs={12}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
