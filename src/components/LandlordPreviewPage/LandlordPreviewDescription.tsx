@@ -22,6 +22,20 @@ import ANIMAL from "../../assets/hunter/ANIMAL.png";
 import SMOKER from "../../assets/hunter/SMOKER.png";
 import WITH_CHILDREN from "../../assets/hunter/WITH_CHILDREN.png";
 import HYBRID_WORK from "../../assets/hunter/HYBRID_WORK.png";
+import {
+  query,
+  collection,
+  where,
+  getDocs,
+  addDoc,
+  serverTimestamp,
+  doc,
+  setDoc,
+  updateDoc,
+  increment,
+} from "firebase/firestore";
+import { db } from "../../firebase";
+import { useState } from "react";
 interface LandlordPreviewDescriptionProps {
   updateStatusAPI: () => void;
   loading: boolean;
@@ -32,9 +46,81 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
   loading,
   updateStatusAPI,
 }) => {
+  const [newMessage, setNewMessage] = useState("");
   const { t } = useCommonTranslation();
   const userSlice = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
+
+  const userId = userSlice.user?._id ?? "";
+  const recipientId = previewData.userId ?? "";
+
+  const checkChatExists = async () => {
+    const chatQuery = query(
+      collection(db, "userChats"),
+      where("userIds", "array-contains", userId) // First check for one user ID
+    );
+
+    const chatSnapshot = await getDocs(chatQuery);
+
+    // Check if the recipientId is also present in the same chat document
+    const chatDoc = chatSnapshot.docs.find((doc) => {
+      const chatData = doc.data();
+      return chatData.userIds.includes(recipientId); // Check if recipientId is also in the userIds array
+    });
+
+    let chatId;
+    if (chatDoc) {
+      // If a matching document is found, use its ID
+      chatId = chatDoc.id;
+    } else {
+      // If no document exists, create a new chat
+      const newChatRef = await addDoc(collection(db, "userChats"), {
+        userIds: [userId, recipientId], // Store both user IDs in an array
+        timestamp: serverTimestamp(),
+      });
+      chatId = newChatRef.id; // Retrieve the new chatId
+    }
+
+    return chatId;
+  };
+
+  const sendMessage = async () => {
+    const chatId = checkChatExists();
+    if (!chatId) {
+      console.error("chatId is not defined");
+      return;
+    }
+
+    const chatDocRef = doc(db, "userChats", (await chatId).toString());
+
+    // Reference to the messages sub-collection within the chat
+    const messagesCollectionRef = collection(
+      db,
+      "userChats",
+      (await chatId).toString(),
+      "messages"
+    );
+
+    const newMessageRef = doc(messagesCollectionRef); // Creates a new document reference
+
+    await setDoc(newMessageRef, {
+      senderId: userId,
+      text: newMessage,
+      timestamp: serverTimestamp(),
+      readBy: [userId],
+    });
+
+    await updateDoc(chatDocRef, {
+      lastMessage: {
+        text: newMessage,
+        senderId: userId,
+        timestamp: serverTimestamp(),
+      },
+      [`unreadCount.${recipientId}`]: increment(1),
+    });
+
+    setNewMessage("");
+  };
   return (
     <Box
       sx={{
@@ -88,7 +174,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
             }}
             spacing={2}
           >
-            <Stack direction={"row"} alignItems={'center'}>
+            <Stack direction={"row"} alignItems={"center"}>
               <Box
                 sx={{
                   width: "150px",
@@ -110,98 +196,128 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                   {previewData.landlordData?.currentTenantsName}
                 </Typography>
                 <Typography variant="h6">
-                  {previewData.landlordData?.age} years old{" "}<br/ >
+                  {previewData.landlordData?.age} years old <br />
                   {previewData.landlordData?.name}
                 </Typography>
               </Box>
             </Stack>
             <Stack>
-            <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Box
-                  component={"img"}
-                  sx={{ width: "25px", height: "25px" }}
-                  src={HYBRID_WORK}
-                ></Box>
-                <Typography
-                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-                >
-                  {t(
-                    `typeofEmployment.${previewData.landlordData?.typeOfEmployment}`
-                  )}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Box
-                  component={"img"}
-                  sx={{ width: "25px", height: "25px" }}
-                  src={WITH_CHILDREN}
-                ></Box>
-                <Typography
-                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-                >
-                  {previewData.landlordData?.haveAnyChildren
-                    ? "With Children"
-                    : "No Children"}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Box
-                  component={"img"}
-                  sx={{ width: "25px", height: "25px" }}
-                  src={SMOKER}
-                ></Box>
-                <Typography
-                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-                >
-                  {previewData.landlordData?.tenantsSmoking
-                    ? "Smoker"
-                    : "Not a Smoker"}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Box
-                  component={"img"}
-                  sx={{ width: "25px", height: "25px" }}
-                  src={ANIMAL}
-                ></Box>
-                <Typography
-                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-                >
-                  {previewData.hunterData?.havePet
-                    ? "Animal"
-                    : "Not a Animal"}
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <Box
+                      component={"img"}
+                      sx={{ width: "25px", height: "25px" }}
+                      src={HYBRID_WORK}
+                    ></Box>
+                    <Typography
+                      sx={{
+                        border: "1px solid #FBE0EA",
+                        borderRadius: 2,
+                        p: 1,
+                      }}
+                    >
+                      {t(
+                        `typeofEmployment.${previewData.landlordData?.typeOfEmployment}`
+                      )}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <Box
+                      component={"img"}
+                      sx={{ width: "25px", height: "25px" }}
+                      src={WITH_CHILDREN}
+                    ></Box>
+                    <Typography
+                      sx={{
+                        border: "1px solid #FBE0EA",
+                        borderRadius: 2,
+                        p: 1,
+                      }}
+                    >
+                      {previewData.landlordData?.haveAnyChildren
+                        ? "With Children"
+                        : "No Children"}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <Box
+                      component={"img"}
+                      sx={{ width: "25px", height: "25px" }}
+                      src={SMOKER}
+                    ></Box>
+                    <Typography
+                      sx={{
+                        border: "1px solid #FBE0EA",
+                        borderRadius: 2,
+                        p: 1,
+                      }}
+                    >
+                      {previewData.landlordData?.tenantsSmoking
+                        ? "Smoker"
+                        : "Not a Smoker"}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <Box
+                      component={"img"}
+                      sx={{ width: "25px", height: "25px" }}
+                      src={ANIMAL}
+                    ></Box>
+                    <Typography
+                      sx={{
+                        border: "1px solid #FBE0EA",
+                        borderRadius: 2,
+                        p: 1,
+                      }}
+                    >
+                      {previewData.hunterData?.havePet
+                        ? "Animal"
+                        : "Not a Animal"}
+                    </Typography>
+                  </Box>
+                </Grid>
+              </Grid>
             </Stack>
-            <Typography variant="h4">Write a Message</Typography>
-            <OutlinedInput placeholder="Your Message" multiline minRows={4} />
-            <LoadingButton
-              sx={{
-                background:
-                  "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
-                width: "100%",
-                p: 1,
-                borderRadius: "8px",
-                color: "white",
-                textTransform: "none",
-                letterSpacing: "1px",
-                fontWeight: "600",
-                fontSize: "24px",
-              }}
-              type="button"
-            >
-              Send a Message
-            </LoadingButton>
+            {userSlice.user &&
+              previewData.userId &&
+              userSlice.user?._id !== previewData.userId && (
+                <>
+                  <Typography variant="h4">Write a Message</Typography>
+                  <OutlinedInput
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    value={newMessage}
+                    placeholder="Your Message"
+                    multiline
+                    minRows={4}
+                  />
+                  <LoadingButton
+                    sx={{
+                      background:
+                        "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
+                      width: "100%",
+                      p: 1,
+                      borderRadius: "8px",
+                      color: "white",
+                      textTransform: "none",
+                      letterSpacing: "1px",
+                      fontWeight: "600",
+                      fontSize: "24px",
+                    }}
+                    type="button"
+                    disabled={!newMessage.toString().trim()}
+                    onClick={() => sendMessage()}
+                  >
+                    Send a Message
+                  </LoadingButton>
+                </>
+              )}
           </Stack>
         </Grid>
         <Grid item xs={12}>
@@ -545,37 +661,50 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Stack
-            sx={{
-              borderRadius: 5,
-              display: "flex",
-              width: "100%",
-              p: 1,
-            }}
-            spacing={2}
-          >
-            <Typography variant="h4">Write a Message</Typography>
-            <OutlinedInput placeholder="Your Message" multiline minRows={4} />
-            <LoadingButton
-              sx={{
-                background:
-                  "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
-                width: "100%",
-                p: 1,
-                borderRadius: "8px",
-                color: "white",
-                textTransform: "none",
-                letterSpacing: "1px",
-                fontWeight: "600",
-                fontSize: "24px",
-              }}
-              type="button"
-            >
-              Send a Message
-            </LoadingButton>
-          </Stack>
-        </Grid>
+        {userSlice.user &&
+          previewData.userId &&
+          userSlice.user?._id !== previewData.userId && (
+            <Grid item xs={12}>
+              <Stack
+                sx={{
+                  borderRadius: 5,
+                  display: "flex",
+                  width: "100%",
+                  p: 1,
+                }}
+                spacing={2}
+              >
+                <Typography variant="h4">Write a Message</Typography>
+                <OutlinedInput
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  value={newMessage}
+                  placeholder="Your Message"
+                  multiline
+                  minRows={4}
+                />
+                <LoadingButton
+                  sx={{
+                    background:
+                      "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
+                    width: "100%",
+                    p: 1,
+                    borderRadius: "8px",
+                    color: "white",
+                    textTransform: "none",
+                    letterSpacing: "1px",
+                    fontWeight: "600",
+                    fontSize: "24px",
+                  }}
+                  type="button"
+                  disabled={!newMessage.toString().trim()}
+                  onClick={() => sendMessage()}
+                >
+                  Send a Message
+                </LoadingButton>
+              </Stack>
+            </Grid>
+          )}
+
         {previewData?.userId && userSlice?.user?._id === previewData.userId && (
           <Grid item xs={12} mt={2} mb={2}>
             <Box sx={{ borderBottom: "1px solid lightgray" }}></Box>
