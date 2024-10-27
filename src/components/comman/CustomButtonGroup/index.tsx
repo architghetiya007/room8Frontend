@@ -77,6 +77,21 @@ const CustomButtonGroup: React.FC<CustomButtonGroupProps> = ({
                 borderImage:
                   "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51) 1",
               },
+              // "&::before": {
+              //   content: '""',
+              //   position: "absolute",
+              //   top: 0,
+              //   left: 0,
+              //   right: 0,
+              //   bottom: 0,
+              //   zIndex: -1,
+              //   borderRadius: "inherit",
+              //   padding: "1px", // Adjust to control border thickness
+              //   background: "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
+              //   WebkitMask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
+              //   WebkitMaskComposite: "xor",
+              //   maskComposite: "exclude",
+              // },
             }}
             onClick={() => handleOptionClick(item.value)}
             key={item.value}

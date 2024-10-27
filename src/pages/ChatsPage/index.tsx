@@ -25,6 +25,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 const ChatsPage: React.FC = () => {
   const userSlice = useSelector((state: RootState) => state.user);
   const [chatUsers, setChatUsers] = useState<any[]>([]);
+  const [searchText, setSearchText] = useState<string>("");
   const navigate = useNavigate();
   useEffect(() => {
     const fetchChatUsers = () => {
@@ -100,6 +101,10 @@ const ChatsPage: React.FC = () => {
 
     return () => unsubscribe();
   }, [userSlice.user?._id]);
+
+  const filterChats = chatUsers.filter((item) => {
+    return item.fullName.toString().toLowerCase().includes(searchText);
+  });
   return (
     <Box>
       <Container>
@@ -120,12 +125,14 @@ const ChatsPage: React.FC = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <OutlinedInput
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
                   fullWidth
                   size="small"
                   placeholder="Search By Name"
                 />
               </Grid>
-              {chatUsers.map((item) => {
+              {filterChats.map((item) => {
                 return (
                   <Grid key={item} item xs={12} px={2} py={1}>
                     <Stack

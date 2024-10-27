@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import {
   Box,
+  IconButton,
   List,
   ListItem,
   ListItemText,
-  Typography,
   TextField,
-  Button,
+  Typography,
 } from "@mui/material";
 import {
   collection,
@@ -21,9 +21,12 @@ import {
 } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
 import { useParams } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
+import CustomLoadingButton from "../../components/comman/CustomLoadingButton";
+import { PhotoCamera } from "@mui/icons-material";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const ChatList = () => {
   const { chatId, recipientId } = useParams();
@@ -31,7 +34,9 @@ const ChatList = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState("");
   const [userDetails, setUserDetails] = useState<any>({}); // Store user details keyed by userId
-  console.log(userDetails)
+  const [image, setImage] = useState<File | null>(null); // State for the selected image file
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  console.log(userDetails);
 
   // Fetch messages based on selected chatId
   useEffect(() => {
@@ -87,6 +92,12 @@ const ChatList = () => {
   // Function to send a message
   const sendMessage = async () => {
     if (message.trim() === "" || !chatId) return;
+    let imageUrl = null;
+    if (image) {
+      const imageRef = ref(storage, `chatImages/${chatId}/${image.name}`);
+      await uploadBytes(imageRef, image);
+      imageUrl = await getDownloadURL(imageRef);
+    }
 
     const chatDocRef = doc(db, "userChats", (await chatId).toString());
 
@@ -105,6 +116,7 @@ const ChatList = () => {
       text: message,
       timestamp: serverTimestamp(),
       readBy: [userSlice.user?._id],
+      imageUrl, // Include the image URL if uploaded
     });
 
     await updateDoc(chatDocRef, {
@@ -117,13 +129,32 @@ const ChatList = () => {
     });
 
     setMessage("");
+    handleRemoveImage(); // Clear the image preview
+  };
+
+  const handleImageChange = (e: any) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file)); // Generate preview URL
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImage(null);
+    setImagePreview(null); // Clear the image preview
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Box sx={{ padding: 2, borderTop: "1px solid #ccc" }}>
-        <Typography variant="h6">Chat ID: {chatId}</Typography>
-        <List sx={{ maxHeight: 200, overflowY: "auto", marginBottom: 2 }}>
+        <List
+          sx={{
+            maxHeight: "calc(100vh - 300px)",
+            overflowY: "auto",
+            marginBottom: 2,
+          }}
+        >
           {messages.map((msg) => {
             // const senderDetail = userDetails[msg.senderId]; // Get sender details from userDetails state
 
@@ -139,9 +170,7 @@ const ChatList = () => {
               >
                 <Box
                   sx={{
-                    backgroundColor: isCurrentUser
-                      ? "primary.main"
-                      : "grey.300", // Change background color based on sender
+                    backgroundColor: isCurrentUser ? "#FF445E" : "grey.300", // Change background color based on sender
                     color: isCurrentUser ? "white" : "black",
                     borderRadius: 2,
                     padding: 1,
@@ -163,6 +192,14 @@ const ChatList = () => {
                     }
                     sx={{ margin: 0 }} // Remove default margin
                   />
+                  {msg.imageUrl && (
+                    <Box
+                      component={"img"}
+                      src={msg.imageUrl}
+                      alt="chat attachment"
+                      style={{ maxWidth: "200px" }}
+                    />
+                  )}
                 </Box>
               </ListItem>
             );
@@ -176,9 +213,71 @@ const ChatList = () => {
           onChange={(e) => setMessage(e.target.value)}
           sx={{ marginBottom: 2 }}
         />
-        <Button variant="contained" onClick={sendMessage}>
-          Send
-        </Button>
+        {image && (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 1,
+            }}
+          >
+            {image && (
+              <CustomLoadingButton
+                sx={{ height: "40px" }}
+                onClick={handleRemoveImage}
+              >
+                Remove Image
+              </CustomLoadingButton>
+            )}
+            {imagePreview && (
+              <Box
+                mt={1}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+              >
+                <Typography variant="caption">
+                  Selected Image Preview:
+                </Typography>
+                <Box
+                  component="img"
+                  src={imagePreview}
+                  alt="Preview"
+                  sx={{ width: 100, height: "auto", mt: 1, borderRadius: 1 }}
+                />
+              </Box>
+            )}
+          </Box>
+        )}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <input
+            accept="image/*"
+            style={{ display: "none" }}
+            id="icon-button-file"
+            type="file"
+            onChange={handleImageChange}
+          />
+          <label htmlFor="icon-button-file">
+            <IconButton color="primary" component="span">
+              <PhotoCamera />
+            </IconButton>
+          </label>
+          <CustomLoadingButton
+            sx={{ minWidth: "120px", height: "45px" }}
+            type="button"
+            onClick={sendMessage}
+            disabled={!message}
+          >
+            Send
+          </CustomLoadingButton>
+        </Box>
       </Box>
     </Box>
   );

@@ -8,6 +8,7 @@ interface CustomLoadingButtonProps {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   sx?: SxProps<Theme>; // Optional additional styles
+  disabled?: boolean;
 }
 
 const CustomLoadingButton: React.FC<CustomLoadingButtonProps> = ({
@@ -16,6 +17,7 @@ const CustomLoadingButton: React.FC<CustomLoadingButtonProps> = ({
   onClick,
   type = "button",
   sx = {},
+  disabled = false,
 }) => {
   return (
     <LoadingButton
@@ -38,6 +40,7 @@ const CustomLoadingButton: React.FC<CustomLoadingButtonProps> = ({
       type={type}
       onClick={onClick}
       loading={loading}
+      disabled={disabled}
     >
       {children}
     </LoadingButton>
