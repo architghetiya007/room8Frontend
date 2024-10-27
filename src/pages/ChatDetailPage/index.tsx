@@ -37,8 +37,12 @@ const ChatList = () => {
       const messagesQuery = query(
         collection(db, "userChats", chatId, "messages")
       );
+      const chatDocRef = doc(db, "userChats", chatId);
 
       const unsubscribeMessages = onSnapshot(messagesQuery, (snapshot) => {
+        updateDoc(chatDocRef, {
+          [`unreadCount.${userSlice.user?._id}`]: 0, // Reset unread count to zero
+        });
         const messageData = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),

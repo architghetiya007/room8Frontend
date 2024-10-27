@@ -58,23 +58,28 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
   const checkChatExists = async () => {
     const chatQuery = query(
       collection(db, "userChats"),
-      where("userId1", "in", [userId, recipientId]),
-      where("userId2", "in", [userId, recipientId])
+      where("userIds", "array-contains", userId) // First check for one user ID
     );
 
     const chatSnapshot = await getDocs(chatQuery);
 
+    // Check if the recipientId is also present in the same chat document
+    const chatDoc = chatSnapshot.docs.find((doc) => {
+      const chatData = doc.data();
+      return chatData.userIds.includes(recipientId); // Check if recipientId is also in the userIds array
+    });
+
     let chatId;
-    if (chatSnapshot.empty) {
-      // Create a new chat document if it doesn't exist
+    if (chatDoc) {
+      // If a matching document is found, use its ID
+      chatId = chatDoc.id;
+    } else {
+      // If no document exists, create a new chat
       const newChatRef = await addDoc(collection(db, "userChats"), {
-        userIds: [userId, recipientId], // Store user IDs in an array
+        userIds: [userId, recipientId], // Store both user IDs in an array
         timestamp: serverTimestamp(),
       });
-      chatId = newChatRef.id; // Retrieve the chatId from the new document reference
-    } else {
-      // Get the existing chatId (the document ID of the first matched document)
-      chatId = chatSnapshot.docs[0].id;
+      chatId = newChatRef.id; // Retrieve the new chatId
     }
 
     return chatId;
@@ -87,10 +92,15 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
       return;
     }
 
-    const chatDocRef = doc(db, "userChats",(await chatId).toString());
+    const chatDocRef = doc(db, "userChats", (await chatId).toString());
 
     // Reference to the messages sub-collection within the chat
-    const messagesCollectionRef = collection(db, "userChats", (await chatId).toString(), "messages");
+    const messagesCollectionRef = collection(
+      db,
+      "userChats",
+      (await chatId).toString(),
+      "messages"
+    );
 
     const newMessageRef = doc(messagesCollectionRef); // Creates a new document reference
 

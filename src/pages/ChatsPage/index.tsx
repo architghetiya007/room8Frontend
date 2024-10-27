@@ -7,6 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { formatDistanceToNow } from "date-fns"; // Import date-fns for time formatting
 import {
   query,
   collection,
@@ -145,7 +146,17 @@ const ChatsPage: React.FC = () => {
                         </Typography>
                       </Stack>
                       <Stack direction={"column"} alignItems={"flex-end"}>
-                        <Typography variant="subtitle1">4:00 PM</Typography>
+                        <Typography variant="subtitle1">
+                          {item.threadData.lastMessage &&
+                          item.threadData.lastMessage.timestamp?.seconds
+                            ? formatDistanceToNow(
+                                new Date(
+                                  item.threadData.lastMessage.timestamp
+                                    ?.seconds * 1000
+                                )
+                              ) + " ago"
+                            : ""}
+                        </Typography>
                         <Avatar
                           sx={{
                             width: "20px",
@@ -155,7 +166,9 @@ const ChatsPage: React.FC = () => {
                             fontSize: "10px",
                           }}
                         >
-                          2
+                          {item.threadData.unreadCount[
+                            userSlice.user?._id?.toString() ?? ""
+                          ] || 0}
                         </Avatar>
                       </Stack>
                     </Stack>
