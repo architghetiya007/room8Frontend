@@ -23,6 +23,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { db } from "../../firebase";
 import { useParams } from "react-router-dom";
+import { formatDistanceToNow } from "date-fns";
 
 const ChatList = () => {
   const { chatId, recipientId } = useParams();
@@ -30,6 +31,7 @@ const ChatList = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState("");
   const [userDetails, setUserDetails] = useState<any>({}); // Store user details keyed by userId
+  console.log(userDetails)
 
   // Fetch messages based on selected chatId
   useEffect(() => {
@@ -123,7 +125,7 @@ const ChatList = () => {
         <Typography variant="h6">Chat ID: {chatId}</Typography>
         <List sx={{ maxHeight: 200, overflowY: "auto", marginBottom: 2 }}>
           {messages.map((msg) => {
-            const senderDetail = userDetails[msg.senderId]; // Get sender details from userDetails state
+            // const senderDetail = userDetails[msg.senderId]; // Get sender details from userDetails state
 
             // Determine if the message is from the current user or the recipient
             const isCurrentUser = msg.senderId === userSlice.user?._id;
@@ -149,8 +151,15 @@ const ChatList = () => {
                 >
                   <ListItemText
                     primary={msg.text}
+                    // secondary={
+                    //   senderDetail ? senderDetail.fullName : msg.senderId
+                    // }
                     secondary={
-                      senderDetail ? senderDetail.fullName : msg.senderId
+                      msg.timestamp?.seconds
+                        ? formatDistanceToNow(
+                            new Date(msg.timestamp?.seconds * 1000)
+                          ) + " ago"
+                        : ""
                     }
                     sx={{ margin: 0 }} // Remove default margin
                   />
