@@ -52,6 +52,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
               position: "absolute",
               left: "20px",
               top: "20px",
+              height: "25px",
+              fontWeight: "600",
             }}
           ></Chip>
         </Box>
@@ -84,6 +86,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
               position: "absolute",
               left: "20px",
               top: "20px",
+              height: "25px",
+              fontWeight: "600",
             }}
           ></Chip>
         </Box>
@@ -102,6 +106,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
                 ? "60px"
                 : "90px",
             overflow: "hidden",
+            color: "#6D778A",
           }}
         >
           {advertisement.advertiseType === AdvertisementType.HUNTER

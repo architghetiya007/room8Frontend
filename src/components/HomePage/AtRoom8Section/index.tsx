@@ -7,11 +7,11 @@ const AtRoom8Section: React.FC = () => {
       sx={{
         px: {
           xs: 1,
-          md: 4
+          md: 4,
         },
         py: {
           xs: 1,
-          md: 10
+          md: 10,
         },
       }}
     >
@@ -30,11 +30,11 @@ const AtRoom8Section: React.FC = () => {
             borderRadius: "20px",
             px: {
               xs: 1,
-              md: 4
+              md: 4,
             },
             py: {
               xs: 1,
-              md: 10
+              md: 10,
             },
             textAlign: "center",
           }}
@@ -47,6 +47,7 @@ const AtRoom8Section: React.FC = () => {
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
               textAlign: "center",
+              fontWeight: "bold",
             }}
           >
             <GradientMark />
@@ -56,6 +57,7 @@ const AtRoom8Section: React.FC = () => {
             sx={{
               mt: 2,
               fontSize: "24px",
+              color: "#6D778A",
             }}
             variant="subtitle1"
           >

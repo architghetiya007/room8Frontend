@@ -22,7 +22,9 @@ const EasyStepSection: React.FC = () => {
                 mr: "auto",
               }}
             >
-              <Typography sx={{ marginRight: 2, fontSize: "40px" }}>
+              <Typography
+                sx={{ marginRight: 2, fontSize: "40px", fontWeight: "bold" }}
+              >
                 Find the
               </Typography>
               <Typography
@@ -33,11 +35,14 @@ const EasyStepSection: React.FC = () => {
                   backgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   marginRight: 2, // Space between the text
+                  fontWeight: "bold",
                 }}
               >
                 Perfect Roommate
               </Typography>
-              <Typography sx={{ marginRight: 2, fontSize: "40px" }}>
+              <Typography
+                sx={{ marginRight: 2, fontSize: "40px", fontWeight: "bold" }}
+              >
                 Room or Apartment in
               </Typography>
               <Typography
@@ -47,13 +52,21 @@ const EasyStepSection: React.FC = () => {
                     "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                   backgroundClip: "text",
                   WebkitTextFillColor: "transparent",
+                  fontWeight: "bold",
                 }}
               >
                 3 Easy Steps
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={6} display={'flex'} gap={2} flexDirection={'column'}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            display={"flex"}
+            gap={2}
+            flexDirection={"column"}
+          >
             <Typography
               sx={{
                 fontSize: "24px",
@@ -62,14 +75,15 @@ const EasyStepSection: React.FC = () => {
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 textAlign: "start",
+                fontWeight: "bold",
               }}
             >
               STEP 1
             </Typography>
-            <Typography variant="h4">
+            <Typography variant="h4" sx={{ fontWeight: "bold" }}>
               Create a Profile and specify your preferences
             </Typography>
-            <Typography>
+            <Typography sx={{ color: "#6D778A" }}>
               Create your Room8 account and immerse yourself in the ocean of
               possibilities by adding your preferences regarding accommodation
               and flatmate.
@@ -107,7 +121,14 @@ const EasyStepSection: React.FC = () => {
               ></Box>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={6} display={'flex'} gap={2} flexDirection={'column'}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            display={"flex"}
+            gap={2}
+            flexDirection={"column"}
+          >
             <Typography
               sx={{
                 fontSize: "24px",
@@ -116,20 +137,28 @@ const EasyStepSection: React.FC = () => {
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 textAlign: "start",
+                fontWeight: "bold",
               }}
             >
               STEP 2
             </Typography>
-            <Typography variant="h4">
+            <Typography variant="h4" sx={{ fontWeight: "bold" }}>
               Discover Matches - Don't waste time searching
             </Typography>
-            <Typography>
+            <Typography sx={{ color: "#6D778A" }}>
               Find or be found. Thanks to the intelligent matching system, we
               will quickly match you with a place or roommate that perfectly
               suits your preferences.
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6} display={'flex'} gap={2} flexDirection={'column'}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            display={"flex"}
+            gap={2}
+            flexDirection={"column"}
+          >
             <Typography
               sx={{
                 fontSize: "24px",
@@ -138,14 +167,15 @@ const EasyStepSection: React.FC = () => {
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 textAlign: "start",
+                fontWeight: "bold",
               }}
             >
               STEP 3
             </Typography>
-            <Typography variant="h4">
+            <Typography variant="h4" sx={{ fontWeight: "bold" }}>
               Contact and Build a Harmonious Community
             </Typography>
-            <Typography>
+            <Typography sx={{ color: "#6D778A" }}>
               Communicate with the person or property of your choice to arrange
               details and support a harmonious living experience for both
               parties.

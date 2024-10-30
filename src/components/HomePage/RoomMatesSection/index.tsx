@@ -18,11 +18,12 @@ const RoomMatesSection: React.FC = () => {
                   backgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   marginRight: 2, // Space between the text
+                  fontWeight: 'bold'
                 }}
               >
                 Join Room8 and find the perfect roommates
               </Typography>
-              <Typography variant="body1" sx={{ fontSize: "20px" }}>
+              <Typography variant="body1" sx={{ fontSize: "20px",color: "#6D778A" }}>
                 and a stress-free apartment! Create profiles, browse offers and
                 meet new people in a friendly way.{" "}
                 <b>Start your adventure today!</b>
@@ -39,14 +40,14 @@ const RoomMatesSection: React.FC = () => {
                   letterSpacing: "1px",
                   fontWeight: "600",
                   fontSize: "24px",
-                  maxWidth: "300px",
+                  maxWidth: "240px",
                 }}
                 type="button"
                 endIcon={
                   <ArrowForwardIcon sx={{ fontSize: "30px !important" }} />
                 }
               >
-                Get Started
+                Get Started!
               </LoadingButton>
             </Stack>
           </Grid>

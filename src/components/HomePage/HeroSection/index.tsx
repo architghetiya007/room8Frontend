@@ -26,13 +26,14 @@ const HeroSection: React.FC = () => {
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 textAlign: "center",
+                fontWeight: 'bold'
               }}
             >
               Get to Know Your Roommate <br /> Before You Move In
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography sx={{ textAlign: "center" }} variant="subtitle1">
+            <Typography sx={{ textAlign: "center" ,color: "#5E646E", fontSize: '18px'}} variant="subtitle1">
               Lorem ipsum dolor sit amet laoreet quis imperdiet quis, consequat
               id lorem.
             </Typography>

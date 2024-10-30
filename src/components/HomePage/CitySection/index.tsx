@@ -79,13 +79,22 @@ const CitySection: React.FC = () => {
                   key={item.city}
                   sx={{
                     m: 1,
-                    p: {
+                    px: {
+                      xs: 0,
+                      md: 2,
+                    },
+                    py: {
                       xs: 0,
                       md: 3,
                     },
                     borderRadius: 8,
+                    backgroundColor: "#E8EDF5",
                   }}
-                  label={item.city}
+                  label={
+                    <Typography sx={{ color: "#6D778A" }}>
+                      {item.city}
+                    </Typography>
+                  }
                 ></Chip>
               );
             })}

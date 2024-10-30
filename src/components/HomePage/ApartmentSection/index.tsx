@@ -30,8 +30,8 @@ const ApartmentSection: React.FC = () => {
               }}
             >
               <Stack direction={"column"} spacing={2} p={2}>
-                <Typography variant="h4">Looking For a Roomate?</Typography>
-                <Typography>
+                <Typography variant="h4" sx={{ fontWeight: 'bold'}}>Looking For a Roomate?</Typography>
+                <Typography sx={{ fontSize: '16px'}}>
                   Post your listing and find the perfect roommate for your
                   place.
                 </Typography>
@@ -49,9 +49,13 @@ const ApartmentSection: React.FC = () => {
                     backgroundColor: "#44ABEB",
                     color: "white",
                     borderRadius: 10,
-                    p: 1,
+                    px: 2,
+                    py: 1,
                     width: "auto",
                     height: "55px",
+                    textTransform: 'none',
+                    fontWeight: 'bold',
+                    fontSize: '16px'
                   }}
                   variant="contained"
                 >
@@ -64,7 +68,7 @@ const ApartmentSection: React.FC = () => {
                   sx={{
                     maxWidth: {
                       xs: "100%",
-                      md: "330px",
+                      md: "300px",
                     },
                     height: "285px",
                   }}
@@ -89,10 +93,10 @@ const ApartmentSection: React.FC = () => {
               }}
             >
               <Stack direction={"column"} spacing={2} p={2}>
-                <Typography variant="h4">
+                <Typography variant="h4" sx={{ fontWeight: 'bold',fontSize: '24px'}}>
                   Looking for a room or apartment?
                 </Typography>
-                <Typography>
+                <Typography sx={{ fontSize: '16px'}}>
                   Fill out a quick form, meet potential roommates, and find your
                   ideal place.
                 </Typography>
@@ -110,9 +114,13 @@ const ApartmentSection: React.FC = () => {
                     backgroundColor: "#E152B9",
                     color: "white",
                     borderRadius: 10,
-                    p: 1,
+                    px: 2,
+                    py: 1,
                     width: "auto",
-                    height: "50px",
+                    height: "55px",
+                    textTransform: 'none',
+                    fontWeight: 'bold',
+                    fontSize: '16px'
                   }}
                   variant="contained"
                 >

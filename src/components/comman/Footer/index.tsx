@@ -24,6 +24,7 @@ const Footer: React.FC = () => {
               mb={1}
               variant="h5"
               color={"white"}
+              fontWeight={"bold"}
             >
               Room8
             </Typography>
@@ -83,9 +84,9 @@ const Footer: React.FC = () => {
               justifyContent={"space-between"}
               sx={{
                 flexDirection: {
-                  xs: 'column',
-                  md: 'row'
-                }
+                  xs: "column",
+                  md: "row",
+                },
               }}
             >
               <Typography color={"white"} variant="subtitle1">

@@ -47,6 +47,7 @@ const RoomRentalSection: React.FC = () => {
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
               textAlign: "center",
+              fontWeight: 'bold'
             }}
           >
             Room8 is more than just a rental app
@@ -55,6 +56,9 @@ const RoomRentalSection: React.FC = () => {
             sx={{
               mt: 2,
               fontSize: "24px",
+              color: "#6D778A",
+              fontWeight: '600',
+              textAlign: 'center'
             }}
             variant="subtitle1"
           >
