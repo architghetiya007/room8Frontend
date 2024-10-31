@@ -30,8 +30,10 @@ const ApartmentSection: React.FC = () => {
               }}
             >
               <Stack direction={"column"} spacing={2} p={2}>
-                <Typography variant="h4" sx={{ fontWeight: 'bold'}}>Looking For a Roomate?</Typography>
-                <Typography sx={{ fontSize: '16px'}}>
+                <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+                  Looking For a Roomate?
+                </Typography>
+                <Typography sx={{ fontSize: "16px" }}>
                   Post your listing and find the perfect roommate for your
                   place.
                 </Typography>
@@ -53,9 +55,9 @@ const ApartmentSection: React.FC = () => {
                     py: 1,
                     width: "auto",
                     height: "55px",
-                    textTransform: 'none',
-                    fontWeight: 'bold',
-                    fontSize: '16px'
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    fontSize: "16px",
                   }}
                   variant="contained"
                 >
@@ -93,10 +95,13 @@ const ApartmentSection: React.FC = () => {
               }}
             >
               <Stack direction={"column"} spacing={2} p={2}>
-                <Typography variant="h4" sx={{ fontWeight: 'bold',fontSize: '24px'}}>
+                <Typography
+                  variant="h4"
+                  sx={{ fontWeight: "bold", fontSize: "24px" }}
+                >
                   Looking for a room or apartment?
                 </Typography>
-                <Typography sx={{ fontSize: '16px'}}>
+                <Typography sx={{ fontSize: "16px" }}>
                   Fill out a quick form, meet potential roommates, and find your
                   ideal place.
                 </Typography>
@@ -118,16 +123,16 @@ const ApartmentSection: React.FC = () => {
                     py: 1,
                     width: "auto",
                     height: "55px",
-                    textTransform: 'none',
-                    fontWeight: 'bold',
-                    fontSize: '16px'
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    fontSize: "16px",
                   }}
                   variant="contained"
                 >
                   Add an Announcement
                 </Button>
               </Stack>
-              <Stack>
+              <Stack sx={{ width: "100%" }}>
                 <Box
                   component={"img"}
                   sx={{
