@@ -22,7 +22,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { db } from "../../firebase";
 import { RootState } from "../../store";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Navigate, Outlet, useNavigate, useParams } from "react-router-dom";
 import { Search } from "@mui/icons-material";
 
 const ChatsPage: React.FC = () => {
@@ -31,6 +31,9 @@ const ChatsPage: React.FC = () => {
   const [chatUsers, setChatUsers] = useState<any[]>([]);
   const [searchText, setSearchText] = useState<string>("");
   const navigate = useNavigate();
+  if (!userSlice.user) {
+    return <Navigate to="/" replace />;
+  }
   useEffect(() => {
     const fetchChatUsers = () => {
       const chatQuery = query(
@@ -109,6 +112,7 @@ const ChatsPage: React.FC = () => {
   const filterChats = chatUsers.filter((item) => {
     return item.fullName.toString().toLowerCase().includes(searchText);
   });
+
   return (
     <Container>
       <Card
@@ -230,7 +234,7 @@ const ChatsPage: React.FC = () => {
                               bgcolor: "red",
                               color: "white",
                               fontSize: "10px",
-                              mt: 1
+                              mt: 1,
                             }}
                           >
                             {item.threadData.unreadCount[
