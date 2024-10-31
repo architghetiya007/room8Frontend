@@ -44,7 +44,6 @@ const PersonalInfo: React.FC = () => {
         onSuccess: (data) => {
           showSnackBar({ message: data!.message });
           dispatch(updateUserInfo(data!.data));
-          formik.resetForm();
         },
         onError: (error: Error) => {
           showSnackBar({ message: error.message, variant: "error" });
@@ -160,7 +159,7 @@ const PersonalInfo: React.FC = () => {
         <Grid item xs={12}>
           <LoadingButton
             loading={
-              uploadImageMutation.isPending ??
+              uploadImageMutation.isPending ||
               updateProfileUserMutation.isPending
             }
             sx={{

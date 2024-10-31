@@ -47,6 +47,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
   loading,
   previewData,
 }) => {
+  const [isChatLoading, setIsChatLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const userSlice = useSelector((state: RootState) => state.user);
   const { t } = useCommonTranslation();
@@ -86,8 +87,10 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
   };
 
   const sendMessage = async () => {
+    setIsChatLoading(true);
     const chatId = checkChatExists();
     if (!chatId) {
+      setIsChatLoading(false);
       console.error("chatId is not defined");
       return;
     }
@@ -121,6 +124,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
     });
 
     setNewMessage("");
+    setIsChatLoading(false);
   };
   return (
     <Box
@@ -280,6 +284,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
               >
                 <Typography variant="h4">Write a Message</Typography>
                 <OutlinedInput
+                  disabled={isChatLoading}
                   onChange={(e) => setNewMessage(e.target.value)}
                   value={newMessage}
                   placeholder="Your Message"
@@ -287,6 +292,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                   minRows={4}
                 />
                 <LoadingButton
+                  loading={isChatLoading}
                   sx={{
                     background:
                       "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",

@@ -388,7 +388,8 @@ const Step1: React.FC<Step1Props> = () => {
                 onChange={(newValue) => {
                   formik.setFieldValue(
                     "whenYouWouldLikeMoveIn",
-                    newValue?.valueOf()
+                    newValue?.valueOf(),
+                    true
                   );
                   formik.setFieldValue("isAvailableNow", false);
                 }}

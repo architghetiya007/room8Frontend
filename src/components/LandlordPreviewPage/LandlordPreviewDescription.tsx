@@ -46,6 +46,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
   loading,
   updateStatusAPI,
 }) => {
+  const [isChatLoading ,setIsChatLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const { t } = useCommonTranslation();
   const userSlice = useSelector((state: RootState) => state.user);
@@ -85,8 +86,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
   };
 
   const sendMessage = async () => {
+    setIsChatLoading(true);
     const chatId = checkChatExists();
     if (!chatId) {
+      setIsChatLoading(false);
       console.error("chatId is not defined");
       return;
     }
@@ -120,6 +123,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
     });
 
     setNewMessage("");
+    setIsChatLoading(false);
   };
   return (
     <Box
@@ -291,6 +295,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                 <>
                   <Typography variant="h4">Write a Message</Typography>
                   <OutlinedInput
+                  disabled={isChatLoading}
                     onChange={(e) => setNewMessage(e.target.value)}
                     value={newMessage}
                     placeholder="Your Message"
@@ -298,6 +303,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                     minRows={4}
                   />
                   <LoadingButton
+                   loading={isChatLoading}
                     sx={{
                       background:
                         "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
@@ -675,7 +681,8 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                 spacing={2}
               >
                 <Typography variant="h4">Write a Message</Typography>
-                <OutlinedInput
+                <OutlinedInput 
+                  disabled={isChatLoading}
                   onChange={(e) => setNewMessage(e.target.value)}
                   value={newMessage}
                   placeholder="Your Message"
@@ -683,6 +690,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                   minRows={4}
                 />
                 <LoadingButton
+                 loading={isChatLoading}
                   sx={{
                     background:
                       "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",

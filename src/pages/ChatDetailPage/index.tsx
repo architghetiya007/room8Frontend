@@ -39,6 +39,7 @@ const ChatList = () => {
   const [image, setImage] = useState<File | null>(null); // State for the selected image file
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [recipientData, setRecipientData] = useState<any>(null);
+  const [isMessageLoading, setIsMessageLoading] = useState(false);
   console.log(userDetails);
 
   // Fetch messages based on selected chatId
@@ -100,6 +101,7 @@ const ChatList = () => {
   // Function to send a message
   const sendMessage = async () => {
     if (message.trim() === "" || !chatId) return;
+    setIsMessageLoading(true);
     let imageUrl = null;
     if (image) {
       const imageRef = ref(storage, `chatImages/${chatId}/${image.name}`);
@@ -138,6 +140,7 @@ const ChatList = () => {
 
     setMessage("");
     handleRemoveImage(); // Clear the image preview
+    setIsMessageLoading(false);
   };
 
   const handleImageChange = (e: any) => {
@@ -191,7 +194,7 @@ const ChatList = () => {
       <Box sx={{ padding: 2, borderTop: "1px solid #ccc" }}>
         <List
           sx={{
-            maxHeight: "calc(100vh - 440px)",
+            height: "calc(100vh - 440px)",
             overflowY: "auto",
             marginBottom: 2,
           }}
@@ -315,7 +318,8 @@ const ChatList = () => {
             sx={{ minWidth: "120px", height: "45px" }}
             type="button"
             onClick={sendMessage}
-            disabled={!message}
+            disabled={!message || isMessageLoading}
+            loading={isMessageLoading}
           >
             Send
           </CustomLoadingButton>

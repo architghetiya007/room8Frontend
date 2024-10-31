@@ -35,6 +35,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
               width: {
                 xs: "100%",
               },
+              height: '100%',
+              borderRadius: 2
             }}
             component={"img"}
             src={previewData.hunterData?.photos ?? ProfilePNG}

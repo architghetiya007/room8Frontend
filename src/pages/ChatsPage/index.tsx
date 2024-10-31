@@ -3,6 +3,7 @@ import {
   Box,
   Card,
   CardContent,
+  CircularProgress,
   Container,
   Grid,
   OutlinedInput,
@@ -30,6 +31,7 @@ const ChatsPage: React.FC = () => {
   const userSlice = useSelector((state: RootState) => state.user);
   const [chatUsers, setChatUsers] = useState<any[]>([]);
   const [searchText, setSearchText] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   if (!userSlice.user) {
     return <Navigate to="/" replace />;
@@ -99,6 +101,7 @@ const ChatsPage: React.FC = () => {
 
         console.log(usersWithThreadData, "users");
         setChatUsers(usersWithThreadData); // Set the state with user data including thread data
+        setIsLoading(false);
       });
 
       return unsubscribe;
@@ -137,7 +140,7 @@ const ChatsPage: React.FC = () => {
               xs: 1,
               md: 2,
             },
-            maxHeight: "calc(100vh - 450px)",
+            height: "calc(100vh - 450px)",
           }}
         >
           <Typography
@@ -153,120 +156,156 @@ const ChatsPage: React.FC = () => {
           >
             Chats
           </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} px={2} py={0}>
-                  <OutlinedInput
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    fullWidth
-                    size="small"
-                    placeholder="Search By Name"
-                    endAdornment={
-                      <Box
-                        sx={{
-                          backgroundColor: "black",
-                          height: "40px",
-                          display: "flex",
-                          alignItems: "center",
-                          borderTopRightRadius: "8px",
-                          borderBottomRightRadius: "8px",
-                          width: "50px",
-                          justifyContent: "center",
-                          marginRight: "-15px",
-                        }}
-                      >
-                        <Search sx={{ color: "white" }} />
-                      </Box>
-                    }
-                  />
-                </Grid>
-                {filterChats.map((item) => {
-                  return (
-                    <Grid key={item} item xs={12} px={2} py={1}>
-                      <Stack
-                        onClick={() => navigate(`${item.threadId}/${item.id}`)}
-                        direction={"row"}
-                        alignItems={"center"}
-                        spacing={3}
-                        sx={{
-                          backgroundColor:
-                            chatId === item.threadId ? "#F4F6FA" : "none",
-                          borderRadius: "12px",
-                          px: 2,
-                          py: 2,
-                          borderLeft:
-                            chatId === item.threadId
-                              ? "4px solid #FF445E"
-                              : "none",
-                          cursor: "pointer",
-                          "&:hover": {
-                            backgroundColor: "#F4F6FA",
-                            borderLeft: "4px solid #FF445E",
-                          },
-                        }}
-                      >
-                        {item.profilePic ? (
-                          <Avatar src={item.profilePic}></Avatar>
-                        ) : (
-                          <Avatar>{item.fullName.charAt(0)}</Avatar>
-                        )}
-
-                        <Stack direction={"column"} flex={1}>
-                          <Typography
-                            variant="h6"
-                            sx={{ color: "#3B3D44", fontWeight: "600" }}
-                          >
-                            {item.fullName}
-                          </Typography>
-                          <Typography
-                            variant="subtitle1"
-                            sx={{ color: "#3B3D44", fontWeight: "500" }}
-                          >
-                            {item.threadData.lastMessage.text}
-                          </Typography>
-                        </Stack>
-                        <Stack direction={"column"} alignItems={"flex-end"}>
-                          <Typography
-                            variant="subtitle1"
-                            sx={{ color: "#929BAB", fontWeight: "450" }}
-                          >
-                            {item.threadData.lastMessage &&
-                            item.threadData.lastMessage.timestamp?.seconds
-                              ? formatDistanceToNow(
-                                  new Date(
-                                    item.threadData.lastMessage.timestamp
-                                      ?.seconds * 1000
-                                  )
-                                ) + " ago"
-                              : ""}
-                          </Typography>
-                          <Avatar
+          {isLoading && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "calc(100vh - 400px)",
+                flexDirection: "column",
+                gap: 2,
+              }}
+            >
+              <CircularProgress />
+              <Typography>Loading Chats....</Typography>
+            </Box>
+          )}
+          {!isLoading && chatUsers.length == 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "calc(100vh - 400px)",
+                flexDirection: "column",
+                gap: 2,
+              }}
+            >
+              <Typography>You don't have any conversations with users...</Typography>
+            </Box>
+          )}
+          {!isLoading && chatUsers.length > 0 && (
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Grid container spacing={2}>
+                  {chatUsers.length > 0 && (
+                    <Grid item xs={12} px={2} py={0}>
+                      <OutlinedInput
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        fullWidth
+                        size="small"
+                        placeholder="Search By Name"
+                        endAdornment={
+                          <Box
                             sx={{
-                              width: "20px",
-                              height: "20px",
-                              bgcolor: "red",
-                              color: "white",
-                              fontSize: "10px",
-                              mt: 1,
+                              backgroundColor: "black",
+                              height: "40px",
+                              display: "flex",
+                              alignItems: "center",
+                              borderTopRightRadius: "8px",
+                              borderBottomRightRadius: "8px",
+                              width: "50px",
+                              justifyContent: "center",
+                              marginRight: "-15px",
                             }}
                           >
-                            {item.threadData.unreadCount[
-                              userSlice.user?._id?.toString() ?? ""
-                            ] || 0}
-                          </Avatar>
-                        </Stack>
-                      </Stack>
+                            <Search sx={{ color: "white" }} />
+                          </Box>
+                        }
+                      />
                     </Grid>
-                  );
-                })}
+                  )}
+
+                  {filterChats.map((item) => {
+                    return (
+                      <Grid key={item} item xs={12} px={2} py={1}>
+                        <Stack
+                          onClick={() =>
+                            navigate(`${item.threadId}/${item.id}`)
+                          }
+                          direction={"row"}
+                          alignItems={"center"}
+                          spacing={3}
+                          sx={{
+                            backgroundColor:
+                              chatId === item.threadId ? "#F4F6FA" : "none",
+                            borderRadius: "12px",
+                            px: 2,
+                            py: 2,
+                            borderLeft:
+                              chatId === item.threadId
+                                ? "4px solid #FF445E"
+                                : "none",
+                            cursor: "pointer",
+                            "&:hover": {
+                              backgroundColor: "#F4F6FA",
+                              borderLeft: "4px solid #FF445E",
+                            },
+                          }}
+                        >
+                          {item.profilePic ? (
+                            <Avatar src={item.profilePic}></Avatar>
+                          ) : (
+                            <Avatar>{item.fullName.charAt(0)}</Avatar>
+                          )}
+
+                          <Stack direction={"column"} flex={1}>
+                            <Typography
+                              variant="h6"
+                              sx={{ color: "#3B3D44", fontWeight: "600" }}
+                            >
+                              {item.fullName}
+                            </Typography>
+                            <Typography
+                              variant="subtitle1"
+                              sx={{ color: "#3B3D44", fontWeight: "500" }}
+                            >
+                              {item.threadData.lastMessage?.text}
+                            </Typography>
+                          </Stack>
+                          <Stack direction={"column"} alignItems={"flex-end"}>
+                            <Typography
+                              variant="subtitle1"
+                              sx={{ color: "#929BAB", fontWeight: "450" }}
+                            >
+                              {item.threadData.lastMessage &&
+                              item.threadData.lastMessage.timestamp?.seconds
+                                ? formatDistanceToNow(
+                                    new Date(
+                                      item.threadData.lastMessage.timestamp
+                                        ?.seconds * 1000
+                                    )
+                                  ) + " ago"
+                                : ""}
+                            </Typography>
+                            <Avatar
+                              sx={{
+                                width: "20px",
+                                height: "20px",
+                                bgcolor: "red",
+                                color: "white",
+                                fontSize: "10px",
+                                mt: 1,
+                              }}
+                            >
+                              {item.threadData.unreadCount[
+                                userSlice.user?._id?.toString() ?? ""
+                              ] || 0}
+                            </Avatar>
+                          </Stack>
+                        </Stack>
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Outlet />
               </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Outlet />
-            </Grid>
-          </Grid>
+          )}
         </CardContent>
       </Card>
     </Container>
