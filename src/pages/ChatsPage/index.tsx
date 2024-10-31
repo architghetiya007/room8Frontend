@@ -128,7 +128,7 @@ const ChatsPage: React.FC = () => {
           boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
           borderRadius: "12px",
           height: "calc(100vh - 125px)",
-          mt: "-10px",
+          mt: "-20px",
         }}
       >
         <CardContent

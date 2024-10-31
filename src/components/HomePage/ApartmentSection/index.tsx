@@ -1,7 +1,7 @@
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RoomMatePng from "../../../assets/images/roommate.png";
-import ApartmentPng from "../../../assets/images/apartment.png";
+import ApartmentPng from "../../../assets/images/apartment1.png";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../store";
 import { useSelector } from "react-redux";
