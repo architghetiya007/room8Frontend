@@ -169,7 +169,6 @@ const useLandlord = () => {
     },
   ];
 
-
   const yesNoOutside: ButtonGroupInterface[] = [
     {
       name: t("yesNoOutside.YES"),
@@ -244,6 +243,10 @@ const useLandlord = () => {
 
   const smokingOptions: ButtonGroupInterface[] = [
     {
+      name: t("smokingOptions.NO_PREFERENCE"),
+      value: "NO_PREFERENCE",
+    },
+    {
       name: t("smokingOptions.YES"),
       value: "YES",
     },
@@ -255,10 +258,6 @@ const useLandlord = () => {
       name: t("smokingOptions.OUTSIDE"),
       value: "OUTSIDE",
     },
-    {
-        name: t("smokingOptions.NO_PREFERENCE"),
-        value: "NO_PREFERENCE",
-      },
   ];
 
   return {
@@ -277,7 +276,7 @@ const useLandlord = () => {
     roomsAmount,
     whoAreYou,
     commanPreferenceOptions,
-    smokingOptions
+    smokingOptions,
   };
 };
 

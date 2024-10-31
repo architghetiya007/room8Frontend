@@ -211,7 +211,7 @@ const useHunterData = () => {
     {
       name: t("typeofEmployment.SOMETHING_ELSE"),
       value: "SOMETHING_ELSE",
-    }
+    },
   ];
 
   const genderOptions: ButtonGroupInterface[] = [
@@ -261,6 +261,10 @@ const useHunterData = () => {
 
   const parkingOptions: ButtonGroupInterface[] = [
     {
+      name: t("parking.NO_PREFERENCE"),
+      value: "NO_PREFERENCE",
+    },
+    {
       name: t("parking.PUBLIC"),
       value: "PUBLIC",
     },
@@ -272,13 +276,13 @@ const useHunterData = () => {
       name: t("parking.IN_THE_GARAGE"),
       value: "IN_THE_GARAGE",
     },
-    {
-      name: t("parking.NO_PREFERENCE"),
-      value: "NO_PREFERENCE",
-    },
   ];
 
   const kitchenOptions: ButtonGroupInterface[] = [
+    {
+      name: t("kitchen.NO_PREFERENCE"),
+      value: "NO_PREFERENCE",
+    },
     {
       name: t("kitchen.SEPERATE"),
       value: "PUBLIC",
@@ -286,10 +290,6 @@ const useHunterData = () => {
     {
       name: t("kitchen.KICHENETTE"),
       value: "KICHENETTE",
-    },
-    {
-      name: t("kitchen.NO_PREFERENCE"),
-      value: "NO_PREFERENCE",
     },
   ];
 
@@ -348,7 +348,7 @@ const useHunterData = () => {
     kitchenOptions,
     maximumNumberOfpeopleOptions,
     iamAcceptingOptions,
-    typeOfEmployment
+    typeOfEmployment,
   };
 };
 
