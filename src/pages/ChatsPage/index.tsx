@@ -127,7 +127,7 @@ const ChatsPage: React.FC = () => {
           width: "100%", // Full width for smaller screens
           boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
           borderRadius: "12px",
-          height: "calc(100vh - 140px)",
+          height: "calc(100vh - 125px)",
           mt: "-10px",
         }}
       >

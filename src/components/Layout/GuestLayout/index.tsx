@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Header from "../../comman/Header";
 import Footer from "../../comman/Footer";
 import BackImage from "../../../assets/images/background.svg";

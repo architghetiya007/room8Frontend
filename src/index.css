@@ -11,6 +11,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: Maccan,Arial,sans-serif;
+}
+body {
+  font-weight: 600 !important;
+  font-family: Maccan,Arial,sans-serif !important;
 }
 
 /* For WebKit-based browsers (Chrome, Safari) */
