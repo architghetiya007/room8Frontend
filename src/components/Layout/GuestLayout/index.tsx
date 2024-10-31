@@ -9,6 +9,7 @@ interface GuestLayoutProps {
 }
 const GuestLayout: React.FC<GuestLayoutProps> = ({ children }) => {
   const { pathname } = useLocation();
+  console.log(pathname,'pathname')
   return (
     <Box>
       <Box
@@ -30,7 +31,7 @@ const GuestLayout: React.FC<GuestLayoutProps> = ({ children }) => {
       <Header />
       <Box sx={{ pt: 16 }}>
         {children}
-        {pathname.includes("!messages") && <Footer />}
+        {<Footer />}
       </Box>
     </Box>
   );
