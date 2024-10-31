@@ -25,6 +25,7 @@ import { RootState } from "../../../store";
 import PhoneNumberDialog from "../../auth/PhoneNumberDialog";
 import MenuIcon from "@mui/icons-material/Menu";
 import { eventEmitter } from "../../../utils/Comman/eventEmitter";
+import BackImage from "../../../assets/images/background.svg";
 const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
 
@@ -103,18 +104,41 @@ const Header: React.FC = () => {
   return (
     <Box
       sx={{
-        background: "linear-gradient(to bottom, #FFEBE8, #EDD6F5, #EDF6FD)",
+        // background: "linear-gradient(to bottom, #FFEBE8, #EDD6F5, #EDF6FD)",
+        // background: "linear-gradient(253.04deg, #FF0099 45.78%, #FFD600 123.06%)",
+        // background: "linear-gradient(247.62deg, #16CDEA 24.93%, #AD00FF 96.87%)",
+
+        // background: "linear-gradient(to right, rgba(74, 177, 241, 0.2), rgba(86, 108, 236, 0.2), rgba(215, 73, 175, 0.2), rgba(255, 124, 81, 0.2))",        // backgroundBlendMode: "overlay",
         p: 2,
         position: "fixed",
         width: "100%",
         zIndex: 9,
+        backgroundSize: "center",
+        backgroundPosition: "center",
       }}
     >
+      <Box
+        sx={{
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: "50%",
+          transform: "translateX(-50%)", // Center it horizontally
+          width: "100%", // Central area width
+          height: "600px", // Full height of the container
+          backgroundImage: `url(${BackImage})`, // Use the imported image
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          zIndex: -1,
+          opacity: "1",
+        }}
+      />
       <Container
         sx={{
           p: 2,
           boxShadow: "0 4px 12px 0 #00000026",
           borderRadius: 4,
+          backdropFilter: "blur(41.5px)",
         }}
       >
         <Box

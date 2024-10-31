@@ -65,7 +65,7 @@ const CustomButtonGroup: React.FC<CustomButtonGroupProps> = ({
               background: isSelected(item.value)
                 ? "linear-gradient(to right, rgba(74, 177, 241, 0.2), rgba(86, 108, 236, 0.2), rgba(215, 73, 175, 0.2), rgba(255, 124, 81, 0.2))"
                 : "transparent",
-              border: "2px solid",
+              border: "1px solid",
               borderImage:
                 "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51) 1",
               color: "#000",
