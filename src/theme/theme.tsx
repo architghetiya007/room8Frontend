@@ -3,6 +3,10 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   typography: {
     fontFamily: '"Maccan", "Arial", sans-serif',
+    fontWeightRegular: 600,
+    fontWeightBold: 600,
+    fontWeightMedium: 600,
+    fontWeightLight: 600,
     h1: {
       fontSize: "3rem",
       fontWeight: 700,
@@ -99,23 +103,23 @@ const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        'input:-webkit-autofill': {
-          WebkitBoxShadow: '0 0 0 1000px white inset', // Background for autofill
-          WebkitTextFillColor: 'black', // Text color for autofill
-          cursor: 'text', // Ensure the text cursor shows up
+        "input:-webkit-autofill": {
+          WebkitBoxShadow: "0 0 0 1000px white inset", // Background for autofill
+          WebkitTextFillColor: "black", // Text color for autofill
+          cursor: "text", // Ensure the text cursor shows up
         },
-        'input:-webkit-autofill:focus': {
-          WebkitBoxShadow: '0 0 0 1000px white inset',
-          WebkitTextFillColor: 'black',
-          cursor: 'text', // Ensure the cursor shows up when focused
+        "input:-webkit-autofill:focus": {
+          WebkitBoxShadow: "0 0 0 1000px white inset",
+          WebkitTextFillColor: "black",
+          cursor: "text", // Ensure the cursor shows up when focused
         },
-        'input:-webkit-autofill:hover': {
-          WebkitBoxShadow: '0 0 0 1000px white inset',
-          WebkitTextFillColor: 'black',
-          cursor: 'text', // Ensure the cursor shows up on hover
+        "input:-webkit-autofill:hover": {
+          WebkitBoxShadow: "0 0 0 1000px white inset",
+          WebkitTextFillColor: "black",
+          cursor: "text", // Ensure the cursor shows up on hover
         },
-        'input:focus': {
-          outline: 'none', // Prevent input outline from affecting cursor
+        "input:focus": {
+          outline: "none", // Prevent input outline from affecting cursor
         },
       },
     },
