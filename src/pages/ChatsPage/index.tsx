@@ -164,11 +164,11 @@ const ChatsPage: React.FC = () => {
                 justifyContent: "center",
                 height: "calc(100vh - 400px)",
                 flexDirection: "column",
-                gap: 2,
+                gap: 3,
               }}
             >
               <CircularProgress />
-              <Typography>Loading Chats....</Typography>
+              <Typography variant="h5">Loading Chats....</Typography>
             </Box>
           )}
           {!isLoading && chatUsers.length == 0 && (
