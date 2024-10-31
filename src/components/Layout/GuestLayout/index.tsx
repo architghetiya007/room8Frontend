@@ -3,10 +3,12 @@ import React from "react";
 import Header from "../../comman/Header";
 import Footer from "../../comman/Footer";
 import BackImage from "../../../assets/images/background.svg";
+import { useLocation } from "react-router-dom";
 interface GuestLayoutProps {
   children: React.ReactNode;
 }
 const GuestLayout: React.FC<GuestLayoutProps> = ({ children }) => {
+  const { pathname } = useLocation();
   return (
     <Box>
       <Box
@@ -28,7 +30,7 @@ const GuestLayout: React.FC<GuestLayoutProps> = ({ children }) => {
       <Header />
       <Box sx={{ pt: 16 }}>
         {children}
-        <Footer />
+        {pathname.includes("!messages") && <Footer />}
       </Box>
     </Box>
   );

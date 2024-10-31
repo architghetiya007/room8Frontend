@@ -109,6 +109,13 @@ const ChatsPage: React.FC = () => {
     return () => unsubscribe();
   }, [userSlice.user?._id]);
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = 'auto'
+    }
+  },[])
+
   const filterChats = chatUsers.filter((item) => {
     return item.fullName.toString().toLowerCase().includes(searchText);
   });
@@ -190,6 +197,11 @@ const ChatsPage: React.FC = () => {
                             chatId === item.threadId
                               ? "4px solid #FF445E"
                               : "none",
+                          cursor: "pointer",
+                          "&:hover": {
+                            backgroundColor: "#F4F6FA",
+                            borderLeft: "4px solid #FF445E",
+                          },
                         }}
                       >
                         {item.profilePic ? (
