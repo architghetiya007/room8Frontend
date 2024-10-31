@@ -25,7 +25,6 @@ import { RootState } from "../../../store";
 import PhoneNumberDialog from "../../auth/PhoneNumberDialog";
 import MenuIcon from "@mui/icons-material/Menu";
 import { eventEmitter } from "../../../utils/Comman/eventEmitter";
-import BackImage from "../../../assets/images/background.svg";
 const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
 
@@ -117,22 +116,6 @@ const Header: React.FC = () => {
         backgroundPosition: "center",
       }}
     >
-      <Box
-        sx={{
-          content: '""',
-          position: "absolute",
-          top: 0,
-          left: "50%",
-          transform: "translateX(-50%)", // Center it horizontally
-          width: "100%", // Central area width
-          height: "600px", // Full height of the container
-          backgroundImage: `url(${BackImage})`, // Use the imported image
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          zIndex: -1,
-          opacity: "1",
-        }}
-      />
       <Container
         sx={{
           p: 2,
