@@ -21,6 +21,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useHunterData from "../../../hooks/useHunter";
 import CustomLoadingButton from "../../comman/CustomLoadingButton";
 import { Search } from "@mui/icons-material";
+import CommanTypography from "../../comman/CommonTypography";
 
 const addressSchema = Yup.object().shape({
   streetNumber: Yup.string().optional(), // Corresponds to streetNumber in interface
@@ -73,16 +74,14 @@ const SearchLandlord: React.FC = () => {
     },
     validationSchema: landlordSchema,
     onSubmit: (values) => {
-        console.log(values)
+      console.log(values);
     },
   });
   return (
     <Box component={"form"} mt={2}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            {t("landlordQ.whatTypefPropertyOffer")}
-          </Typography>
+          <CommanTypography title={t("landlordQ.whatTypefPropertyOffer")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -94,7 +93,7 @@ const SearchLandlord: React.FC = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Rent Per Month</Typography>
+          <CommanTypography title={t("landlordQ.rentPerMonth")} />
         </Grid>
         <Grid item xs={12}>
           <OutlinedInput
@@ -113,7 +112,7 @@ const SearchLandlord: React.FC = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("landlordQ.addressofPlace")}</Typography>
+          <CommanTypography title={t("landlordQ.addressofPlace")} />
         </Grid>
         <Grid item xs={12}>
           <GoogleMapsAutocomplete
@@ -130,17 +129,19 @@ const SearchLandlord: React.FC = () => {
               aria-controls="panel1-content"
               id="panel1-header"
             >
-              More Filters
+              <CommanTypography title={"More Filters"} />
             </AccordionSummary>
             <AccordionDetails>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="h5">Date Available</Typography>
+                  <CommanTypography title={t("landlordQ.datesAvailable")} />
                 </Grid>
                 <Grid item xs={12} md={6}></Grid>
                 <Grid item xs={12} md={6}>
                   <Stack>
-                    <Typography variant="h5">Minimum length of stay</Typography>
+                    <CommanTypography
+                      title={t("landlordQ.minimunLengthofStay")}
+                    />
                     <FormControl fullWidth>
                       <Select
                         labelId="work-status-label"
@@ -149,7 +150,9 @@ const SearchLandlord: React.FC = () => {
                         onChange={(e) => {
                           formik.setFieldValue("minimumStay", e.target.value);
                         }}
+                        displayEmpty
                       >
+                        <MenuItem value="">Select</MenuItem>
                         {duration.map((option) => (
                           <MenuItem key={option.value} value={option.value}>
                             {t(option.name)}
@@ -161,7 +164,9 @@ const SearchLandlord: React.FC = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Stack>
-                    <Typography variant="h5">Maximum length of stay</Typography>
+                    <CommanTypography
+                      title={t("landlordQ.maximunLengthofStay")}
+                    />
                     <FormControl fullWidth>
                       <Select
                         labelId="work-status-label"
@@ -170,7 +175,9 @@ const SearchLandlord: React.FC = () => {
                         onChange={(e) => {
                           formik.setFieldValue("minimumStay", e.target.value);
                         }}
+                        displayEmpty
                       >
+                        <MenuItem value="">Select</MenuItem>
                         {duration.map((option) => (
                           <MenuItem key={option.value} value={option.value}>
                             {t(option.name)}
@@ -182,7 +189,9 @@ const SearchLandlord: React.FC = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Stack>
-                    <Typography variant="h5">Furnished</Typography>
+                    <CommanTypography
+                      title={t("landlordQ.furnishedQuestion")}
+                    />
                     <FormControl fullWidth>
                       <Select
                         labelId="work-status-label"
@@ -191,7 +200,9 @@ const SearchLandlord: React.FC = () => {
                         onChange={(e) => {
                           formik.setFieldValue("furnished", e.target.value);
                         }}
+                        displayEmpty
                       >
+                        <MenuItem value="">Select</MenuItem>
                         {yesNoOptions.map((option) => (
                           <MenuItem key={option.value} value={option.value}>
                             {t(option.name)}
@@ -203,7 +214,7 @@ const SearchLandlord: React.FC = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Stack>
-                    <Typography variant="h5">Parking</Typography>
+                    <CommanTypography title={t("landlordQ.parking")} />
                     <FormControl fullWidth>
                       <Select
                         labelId="work-status-label"
@@ -212,7 +223,9 @@ const SearchLandlord: React.FC = () => {
                         onChange={(e) => {
                           formik.setFieldValue("parking", e.target.value);
                         }}
+                        displayEmpty
                       >
+                        <MenuItem value="">Select</MenuItem>
                         {yesNoOptions.map((option) => (
                           <MenuItem key={option.value} value={option.value}>
                             {t(option.name)}
@@ -223,9 +236,7 @@ const SearchLandlord: React.FC = () => {
                   </Stack>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant="h5">
-                    I’m accepting (you can choose many)
-                  </Typography>
+                  <CommanTypography title={t("landlordQ.iamAccepting")} />
                 </Grid>
                 <Grid item xs={12}>
                   <CustomButtonGroup

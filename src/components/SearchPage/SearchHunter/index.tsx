@@ -174,7 +174,7 @@ const SearchHunter: React.FC = () => {
     <Box component={"form"} mt={2}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("accommodationQuestion")}</Typography>
+          <CommanTypography title={t("accommodationQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -248,7 +248,7 @@ const SearchHunter: React.FC = () => {
               aria-controls="panel1-content"
               id="panel1-header"
             >
-              More Filters
+              <CommanTypography title={"More Filters"} />
             </AccordionSummary>
             <AccordionDetails>
               <Grid container spacing={2}>
@@ -309,9 +309,7 @@ const SearchHunter: React.FC = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant="h5">
-                    {t("flatmatePreferenceQuestion")}
-                  </Typography>
+                  <CommanTypography title={t("flatmatePreferenceQuestion")} />
                 </Grid>
                 <Grid item xs={12}>
                   <CustomButtonGroup
@@ -336,9 +334,7 @@ const SearchHunter: React.FC = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant="h5">
-                    {t("preferredLengthToStay")}
-                  </Typography>
+                  <CommanTypography title={t("preferredLengthToStay")} />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth>

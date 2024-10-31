@@ -12,7 +12,7 @@ const SearchPage: React.FC = () => {
   );
   return (
     <Box>
-      <Container sx={{ my: 4}}>
+      <Container sx={{ my: 4 }}>
         <Box sx={{ width: "100%", display: "flex", gap: 1 }}>
           <CustomLoadingButton
             sx={{
@@ -36,7 +36,7 @@ const SearchPage: React.FC = () => {
             }}
             onClick={() => setTypeOfSearch(AdvertisementType.LANDLORD)}
           >
-            I'm Looing for a Roommate
+            I'm Looking for a Roommate
           </CustomLoadingButton>
           <CustomLoadingButton
             sx={{
