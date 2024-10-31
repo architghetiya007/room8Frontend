@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import {
+  Avatar,
   Box,
   IconButton,
   List,
   ListItem,
   ListItemText,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -25,7 +27,7 @@ import { db, storage } from "../../firebase";
 import { useParams } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import CustomLoadingButton from "../../components/comman/CustomLoadingButton";
-import { PhotoCamera } from "@mui/icons-material";
+import { MoreVertOutlined, PhotoCamera } from "@mui/icons-material";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const ChatList = () => {
@@ -36,6 +38,7 @@ const ChatList = () => {
   const [userDetails, setUserDetails] = useState<any>({}); // Store user details keyed by userId
   const [image, setImage] = useState<File | null>(null); // State for the selected image file
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [recipientData, setRecipientData] = useState<any>(null);
   console.log(userDetails);
 
   // Fetch messages based on selected chatId
@@ -45,7 +48,12 @@ const ChatList = () => {
         collection(db, "userChats", chatId, "messages")
       );
       const chatDocRef = doc(db, "userChats", chatId);
-
+      if (recipientId) {
+        getDoc(doc(db, "users", recipientId?.toString() ?? "")).then((res) => {
+          console.log(res.data());
+          setRecipientData(res.data());
+        });
+      }
       const unsubscribeMessages = onSnapshot(messagesQuery, (snapshot) => {
         updateDoc(chatDocRef, {
           [`unreadCount.${userSlice.user?._id}`]: 0, // Reset unread count to zero
@@ -147,6 +155,39 @@ const ChatList = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
+      {recipientData && (
+        <Box sx={{ display: "flex", alignItems: "center", pb: 1, px: 2 }}>
+          {recipientData.profilePic ? (
+            <Avatar src={recipientData.profilePic}></Avatar>
+          ) : (
+            <Avatar>{recipientData.fullName.charAt(0)}</Avatar>
+          )}
+
+          <Stack direction={"column"} flex={1} ml={2}>
+            <Typography
+              variant="h6"
+              sx={{ color: "#3B3D44", fontWeight: "600" }}
+            >
+              {recipientData.fullName}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{ color: "#3B3D44", fontWeight: "500" }}
+            >
+              Online
+            </Typography>
+          </Stack>
+          <IconButton
+            sx={{
+              background:
+                "linear-gradient(0deg, #F7FBFF, #F7FBFF),linear-gradient(0deg, #EDF4FE, #EDF4FE)",
+            }}
+          >
+            <MoreVertOutlined />
+          </IconButton>
+        </Box>
+      )}
+
       <Box sx={{ padding: 2, borderTop: "1px solid #ccc" }}>
         <List
           sx={{
@@ -209,9 +250,10 @@ const ChatList = () => {
           label="Type a message"
           variant="outlined"
           fullWidth
+          size="small"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          sx={{ marginBottom: 2 }}
+          sx={{ marginBottom: 1 }}
         />
         {image && (
           <Box
@@ -224,7 +266,7 @@ const ChatList = () => {
           >
             {image && (
               <CustomLoadingButton
-                sx={{ height: "40px" }}
+                sx={{ height: "40px", fontSize: "14px", px: 2 }}
                 onClick={handleRemoveImage}
               >
                 Remove Image
@@ -232,7 +274,7 @@ const ChatList = () => {
             )}
             {imagePreview && (
               <Box
-                mt={1}
+                mt={0}
                 display="flex"
                 flexDirection="column"
                 alignItems="center"

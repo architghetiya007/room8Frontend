@@ -31,6 +31,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             component={"img"}
             width={"100%"}
             height={"220px"}
+            borderRadius={3}
             src={advertisement.hunterData?.photos ?? RoomImage}
           ></Box>
           <Chip
@@ -65,6 +66,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             component={"img"}
             width={"100%"}
             height={"220px"}
+            borderRadius={3}
             src={advertisement.landlordData?.profilePhoto ?? RoomImage}
           ></Box>
           <Chip
@@ -99,12 +101,12 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
           sx={{
             maxHeight:
               advertisement.advertiseType === AdvertisementType.HUNTER
-                ? "60px"
-                : "90px",
+                ? "30px"
+                : "30px",
             minHeight:
               advertisement.advertiseType === AdvertisementType.HUNTER
-                ? "60px"
-                : "90px",
+                ? "30px"
+                : "30px",
             overflow: "hidden",
             color: "#6D778A",
           }}
@@ -161,7 +163,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
           >
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
               <AddHomeOutlined />
-              <Typography sx={{ ml: 1 }} variant="subtitle2">
+              <Typography sx={{ ml: 1,color: "#6D778A" }} variant="subtitle2">
                 Looking for a room/shared room
               </Typography>
             </Box>
