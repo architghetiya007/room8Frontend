@@ -3,10 +3,10 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   typography: {
     fontFamily: '"Maccan", "Arial", sans-serif',
-    fontWeightRegular: 600,
-    fontWeightBold: 600,
-    fontWeightMedium: 600,
-    fontWeightLight: 600,
+    // fontWeightRegular: 600,
+    // fontWeightBold: 600,
+    // fontWeightMedium: 600,
+    // fontWeightLight: 600,
     h1: {
       fontSize: "3rem",
       fontWeight: 700,
