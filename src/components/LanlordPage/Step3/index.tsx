@@ -29,6 +29,7 @@ import useUserMutations from "../../../mutations/user";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import useHunterData from "../../../hooks/useHunter";
+import CommanTypography from "../../comman/CommonTypography";
 const landlordSchema = Yup.object().shape({
   whoAreYou: Yup.string(),
   name: Yup.string(),
@@ -176,7 +177,11 @@ const Step3: React.FC<Step3Props> = () => {
     <Box component={"form"} onSubmit={formik.handleSubmit}>
       <Grid container spacing={2} mt={2} mb={2}>
         <Grid item xs={12}>
-          <Typography>Step 3/3</Typography>
+          <Typography
+            sx={{ fontSize: "22px", fontWeight: "600", color: "#6D778A" }}
+          >
+            Step 3/3
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography
@@ -185,17 +190,18 @@ const Step3: React.FC<Step3Props> = () => {
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              fontSize: "44px",
+              fontWeight: "700",
+              fontSize: "45px",
             }}
           >
-            Now, tell something about yourself
+            {t("landlordQ.tellmeAboutYourSelf")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Who are you?</Typography>
+          <CommanTypography title={t("landlordQ.whoAreYou")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -208,7 +214,7 @@ const Step3: React.FC<Step3Props> = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Stack direction={"column"} spacing={1}>
-            <Typography variant="h5">What's your name</Typography>
+            <CommanTypography title={t("landlordQ.whatsYourName")} />
             <OutlinedInput
               value={formik.values.name}
               onChange={(e) => formik.setFieldValue("name", e.target.value)}
@@ -219,7 +225,7 @@ const Step3: React.FC<Step3Props> = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Stack direction={"column"} spacing={1}>
-            <Typography variant="h5">Your age</Typography>
+            <CommanTypography title={t("landlordQ.yourAge")} />
             <OutlinedInput
               value={formik.values.age}
               onChange={(e) => formik.setFieldValue("age", e.target.value)}
@@ -240,7 +246,7 @@ const Step3: React.FC<Step3Props> = () => {
           </Stack>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Do any children live with you?</Typography>
+          <CommanTypography title={t("landlordQ.childrenWithYou")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -252,7 +258,7 @@ const Step3: React.FC<Step3Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Do you have a pet?</Typography>
+          <CommanTypography title={t("landlordQ.havePet")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -264,32 +270,30 @@ const Step3: React.FC<Step3Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            What do you do/type of employment?
-          </Typography>
+          <CommanTypography title={t("landlordQ.typeOFEmployment")} />
         </Grid>
         <Grid item xs={12}>
-            <FormControl fullWidth>
-              <Select
-                displayEmpty
-                labelId="work-status-label"
-                id="work-status"
-                value={formik.values.typeOfEmployment}
-                onChange={(e) => {
-                  formik.setFieldValue("typeOfEmployment", e.target.value);
-                }}
-              >
-                <MenuItem value="">Select</MenuItem>
-                {typeOfEmployment.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {t(option.name)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
+          <FormControl fullWidth>
+            <Select
+              displayEmpty
+              labelId="work-status-label"
+              id="work-status"
+              value={formik.values.typeOfEmployment}
+              onChange={(e) => {
+                formik.setFieldValue("typeOfEmployment", e.target.value);
+              }}
+            >
+              <MenuItem value="">Select</MenuItem>
+              {typeOfEmployment.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {t(option.name)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Do you smoke?</Typography>
+          <CommanTypography title={t("landlordQ.doYouSmoke")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -301,14 +305,13 @@ const Step3: React.FC<Step3Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            Write a few sentences about the place you want to rent.
-          </Typography>
+          <CommanTypography title={t("landlordQ.WriteSentence11")} />
         </Grid>
         <Grid item xs={12}>
-          <Typography sx={{ fontSize: "14px" }}>
-            Share a bit about yourself, your roommates, and the vibe of your
-            place to help everyone get a great feel for your home.
+          <Typography
+            sx={{ fontSize: "20px", color: "#6D778A", fontWeight: "500" }}
+          >
+            {t("landlordQ.writeSentence12")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -330,19 +333,18 @@ const Step3: React.FC<Step3Props> = () => {
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              fontSize: "44px",
+              fontSize: "45px",
+              fontWeight: "700",
             }}
           >
-            Your flatmate preferences
+            {t("landlordQ.yourFlateMatePref")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            I’m accepting (you can choose many)
-          </Typography>
+          <CommanTypography title={t("landlordQ.iamAccepting")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -355,7 +357,7 @@ const Step3: React.FC<Step3Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Age of your future roommate</Typography>
+          <CommanTypography title={t("landlordQ.AgeOFYourMate")} />
         </Grid>
         <Grid item xs={12}>
           <Slider
@@ -371,9 +373,7 @@ const Step3: React.FC<Step3Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            Do you accept tenants with children?
-          </Typography>
+          <CommanTypography title={t("landlordQ.acceptTenantsWithChildren")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -385,7 +385,7 @@ const Step3: React.FC<Step3Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Do you accept pets?</Typography>
+          <CommanTypography title={t("landlordQ.acceptPets")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -397,7 +397,7 @@ const Step3: React.FC<Step3Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Do you accept smoking?</Typography>
+          <CommanTypography title={t("landlordQ.acceptSmoking")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -416,9 +416,13 @@ const Step3: React.FC<Step3Props> = () => {
             justifyContent={"center"}
             sx={{ border: "1px solid red", borderRadius: "8px", p: 4 }}
           >
-            <Typography variant="h6">Add photos of your place</Typography>
+            <CommanTypography title={t("landlordQ.photos11")} />
             {/* <Typography>{t("photosHunterQuestion.subTitle1")}</Typography> */}
-            <Typography>(you can also add them later)</Typography>
+            <Typography
+              sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A" }}
+            >
+              {t("landlordQ.photos22")}
+            </Typography>
             <Avatar
               sx={{
                 width: 80, // Set the width
@@ -453,7 +457,7 @@ const Step3: React.FC<Step3Props> = () => {
               }}
               type="button"
             >
-              Upload Photos
+              {t("landlordQ.uploadPhotos1")}
             </LoadingButton>
           </Stack>
         </Grid>

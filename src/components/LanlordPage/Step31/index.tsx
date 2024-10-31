@@ -26,6 +26,7 @@ import useCommonTranslation from "../../../hooks/useCommonTranslation";
 import { AdvertisementData } from "../../../types/advertisement";
 import useUserMutations from "../../../mutations/user";
 import useHunterData from "../../../hooks/useHunter";
+import CommanTypography from "../../comman/CommonTypography";
 const landlordSchema = Yup.object().shape({
   profilePhoto: Yup.string(),
   genderOfCurrentTenants: Yup.string(),
@@ -167,7 +168,11 @@ const Step31: React.FC<Step31Props> = () => {
     <Box component={"form"}>
       <Grid container spacing={2} mt={2} mb={2}>
         <Grid item xs={12}>
-          <Typography>Step 3/3</Typography>
+          <Typography
+            sx={{ fontSize: "22px", fontWeight: "600", color: "#6D778A" }}
+          >
+            Step 3/3
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography
@@ -176,10 +181,11 @@ const Step31: React.FC<Step31Props> = () => {
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              fontSize: "44px",
+              fontWeight: "700",
+              fontSize: "45px",
             }}
           >
-            Tell us something about current tenants and your preferences
+            {t("landlordQ.tellmeYourRef")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -193,11 +199,11 @@ const Step31: React.FC<Step31Props> = () => {
             justifyContent={"center"}
             sx={{ border: "1px solid red", borderRadius: "8px", p: 4 }}
           >
-            <Typography variant="h6">Add your profile picture</Typography>
-            {/* <Typography>{t("photosHunterQuestion.subTitle1")}</Typography> */}
-            <Typography>
-              (A profile with a photo builds more trust – stand out and find the
-              right tenant faster!)
+            <CommanTypography title={t("landlordQ.photos12")} />
+            <Typography
+              sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A" }}
+            >
+              {t("landlordQ.photos123")}
             </Typography>
             <Avatar
               sx={{
@@ -233,14 +239,12 @@ const Step31: React.FC<Step31Props> = () => {
               }}
               type="button"
             >
-              Upload Photo
+              {t("landlordQ.uploadPhotos2")}
             </LoadingButton>
           </Stack>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            Information about current tenants
-          </Typography>
+          <CommanTypography title={t("landlordQ.currentTenantInfo")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -253,7 +257,7 @@ const Step31: React.FC<Step31Props> = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Stack direction={"column"} spacing={1}>
-            <Typography variant="h5">Current tenant's name</Typography>
+            <CommanTypography title={t("landlordQ.currentTenantName")} />
             <OutlinedInput
               value={formik.values.currentTenantsName}
               onChange={(e) =>
@@ -266,7 +270,7 @@ const Step31: React.FC<Step31Props> = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Stack direction={"column"} spacing={1}>
-            <Typography variant="h5">Age of current tenant</Typography>
+            <CommanTypography title={t("landlordQ.currentTenantAge")} />
             <OutlinedInput
               value={formik.values.ageOfCurrentTenants}
               onChange={(e) =>
@@ -278,7 +282,7 @@ const Step31: React.FC<Step31Props> = () => {
           </Stack>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Do children live here?</Typography>
+          <CommanTypography title={t("landlordQ.childrenLiveHere")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -290,9 +294,7 @@ const Step31: React.FC<Step31Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            Is there a pet living in the apartment?
-          </Typography>
+          <CommanTypography title={t("landlordQ.petLivingApartment")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -304,32 +306,33 @@ const Step31: React.FC<Step31Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            What do current tenant do/type of employment?
-          </Typography>
+          <CommanTypography title={t("landlordQ.tenantEmployment")} />
         </Grid>
         <Grid item xs={12}>
-            <FormControl fullWidth>
-              <Select
-                displayEmpty
-                labelId="work-status-label"
-                id="work-status"
-                value={formik.values.currentTenantsEmployment}
-                onChange={(e) => {
-                  formik.setFieldValue("currentTenantsEmployment", e.target.value);
-                }}
-              >
-                <MenuItem value="">Select</MenuItem>
-                {typeOfEmployment.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {t(option.name)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
+          <FormControl fullWidth>
+            <Select
+              displayEmpty
+              labelId="work-status-label"
+              id="work-status"
+              value={formik.values.currentTenantsEmployment}
+              onChange={(e) => {
+                formik.setFieldValue(
+                  "currentTenantsEmployment",
+                  e.target.value
+                );
+              }}
+            >
+              <MenuItem value="">Select</MenuItem>
+              {typeOfEmployment.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {t(option.name)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Are the tenants smoking?</Typography>
+          <CommanTypography title={t("landlordQ.tenantSmoking")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -347,19 +350,18 @@ const Step31: React.FC<Step31Props> = () => {
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              fontSize: "44px",
+              fontSize: "45px",
+              fontWeight: "700",
             }}
           >
-            Your flatmate preferences
+            {t("landlordQ.yourFlateMatePref11")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            I’m accepting (you can choose many)
-          </Typography>
+          <CommanTypography title={t("landlordQ.AcceptPref")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -372,7 +374,7 @@ const Step31: React.FC<Step31Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Age of your future roommate</Typography>
+          <CommanTypography title={t("landlordQ.futureRoommate")} />
         </Grid>
         <Grid item xs={12}>
           <Slider
@@ -388,9 +390,7 @@ const Step31: React.FC<Step31Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            Do you accept tenants with children?
-          </Typography>
+          <CommanTypography title={t("landlordQ.AcceptTenantChildren")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -402,7 +402,7 @@ const Step31: React.FC<Step31Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Do you accept pets?</Typography>
+          <CommanTypography title={t("landlordQ.acceptPets1")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -414,7 +414,7 @@ const Step31: React.FC<Step31Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Do you accept smoking?</Typography>
+          <CommanTypography title={t("landlordQ.acceptSmoking1")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup

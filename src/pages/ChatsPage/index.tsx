@@ -182,7 +182,7 @@ const ChatsPage: React.FC = () => {
                 gap: 2,
               }}
             >
-              <Typography>You don't have any conversations with users...</Typography>
+              <Typography>You don't have any conversations yet...</Typography>
             </Box>
           )}
           {!isLoading && chatUsers.length > 0 && (

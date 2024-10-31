@@ -23,6 +23,7 @@ import { AdvertisementData } from "../../../types/advertisement";
 import { eventEmitter } from "../../../utils/Comman/eventEmitter";
 import { RootState } from "../../../store";
 import { useSelector } from "react-redux";
+import CommanTypography from "../../comman/CommonTypography";
 
 const addressSchema = Yup.object().shape({
   streetNumber: Yup.string().optional(), // Corresponds to streetNumber in interface
@@ -218,7 +219,11 @@ const Step1: React.FC<Step1Props> = () => {
     <Box component={"form"} onSubmit={formik.handleSubmit}>
       <Grid container spacing={2} mt={2} mb={2}>
         <Grid item xs={12}>
-          <Typography>Step 1/3</Typography>
+          <Typography
+            sx={{ fontSize: "22px", fontWeight: "600", color: "#6D778A" }}
+          >
+            Step 1/3
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography
@@ -227,7 +232,8 @@ const Step1: React.FC<Step1Props> = () => {
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              fontSize: "44px",
+              fontWeight: "700",
+              fontSize: "45px",
             }}
           >
             {t("landlordQ.rentOutOfyourPlace")}
@@ -237,9 +243,7 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            {t("landlordQ.whatTypefPropertyOffer")}
-          </Typography>
+          <CommanTypography title={t("landlordQ.whatTypefPropertyOffer")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -251,7 +255,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("landlordQ.typeOfProperty")}</Typography>
+          <CommanTypography title={t("landlordQ.typeOfProperty")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -263,10 +267,12 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("landlordQ.addressofPlace")}</Typography>
+          <CommanTypography title={t("landlordQ.addressofPlace")} />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="body1">
+          <Typography
+            sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A" }}
+          >
             {t("landlordQ.addressSubTitle")}
           </Typography>
         </Grid>
@@ -300,9 +306,7 @@ const Step1: React.FC<Step1Props> = () => {
               <Box sx={{ borderBottom: "1px solid black" }}></Box>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5">
-                {t("landlordQ.doYouLeaveHere")}
-              </Typography>
+              <CommanTypography title={t("landlordQ.doYouLeaveHere")} />
             </Grid>
             <Grid item xs={12}>
               <CustomButtonGroup
@@ -314,9 +318,7 @@ const Step1: React.FC<Step1Props> = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5">
-                {t("landlordQ.liveOwenerHere")}
-              </Typography>
+              <CommanTypography title={t("landlordQ.liveOwenerHere")} />
             </Grid>
             <Grid item xs={12}>
               <CustomButtonGroup
@@ -328,9 +330,9 @@ const Step1: React.FC<Step1Props> = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5">
-                {t("landlordQ.howManyPeopleLiveInthisProperty")}
-              </Typography>
+              <CommanTypography
+                title={t("landlordQ.howManyPeopleLiveInthisProperty")}
+              />
             </Grid>
             <Grid item xs={12}>
               <CustomButtonGroup
@@ -348,9 +350,7 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            {t("landlordQ.propertySize")} (m²)
-          </Typography>
+          <CommanTypography title={t("landlordQ.propertySize") + "(m²)"} />
         </Grid>
         <Grid item xs={12}>
           <OutlinedInput
@@ -374,7 +374,7 @@ const Step1: React.FC<Step1Props> = () => {
           )}
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Rooms Amount</Typography>
+          <CommanTypography title={t("landlordQ.roomsAmount")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -390,7 +390,7 @@ const Step1: React.FC<Step1Props> = () => {
             <Grid container spacing={1}>
               <Grid item xs={12} md={6}>
                 <Stack flexDirection={"column"} spacing={2}>
-                  <Typography>Floor</Typography>
+                  <CommanTypography title={t("landlordQ.floor")} />
                   <OutlinedInput
                     value={formik.values.floor}
                     onChange={(e) =>
@@ -414,7 +414,9 @@ const Step1: React.FC<Step1Props> = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Stack flexDirection={"column"} spacing={2}>
-                  <Typography>Number of floors in the building</Typography>
+                  <CommanTypography
+                    title={t("landlordQ.numberOFFloorsintheBuilding")}
+                  />
                   <OutlinedInput
                     value={formik.values.numberOfFloor}
                     onChange={(e) =>
@@ -445,7 +447,7 @@ const Step1: React.FC<Step1Props> = () => {
         {formik.values.typeofProperty !== "HOUSE" && (
           <>
             <Grid item xs={12}>
-              <Typography variant="h5">Lift in the building?</Typography>
+              <CommanTypography title={t("landlordQ.liftinthebuilding")} />
             </Grid>
             <Grid item xs={12}>
               <CustomButtonGroup
@@ -460,7 +462,7 @@ const Step1: React.FC<Step1Props> = () => {
         )}
 
         <Grid item xs={12}>
-          <Typography variant="h5">Is the property furnished?</Typography>
+          <CommanTypography title={t("landlordQ.IstheApartmentFurnished")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -472,7 +474,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Kitchen</Typography>
+          <CommanTypography title={t("landlordQ.kitchen")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -484,7 +486,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Parking</Typography>
+          <CommanTypography title={t("landlordQ.parking")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -496,7 +498,7 @@ const Step1: React.FC<Step1Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Balcony in the property?</Typography>
+          <CommanTypography title={t("landlordQ.balconyIntheApartment")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup

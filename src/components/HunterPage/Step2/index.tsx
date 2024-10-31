@@ -29,6 +29,7 @@ import useUserMutations from "../../../mutations/user";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { RootState } from "../../../store";
 import { useSelector } from "react-redux";
+import CommanTypography from "../../comman/CommonTypography";
 const anotherPersonSchema = Yup.object().shape({
   name: Yup.string(),
   age: Yup.number().min(0, "Age must be a positive number"),
@@ -36,21 +37,21 @@ const anotherPersonSchema = Yup.object().shape({
 });
 
 const step2Schema = Yup.object().shape({
-  whoAreYou: Yup.string(),
-  name: Yup.string(),
-  age: Yup.number().min(1, "Age must be positive").required(),
-  withChild: Yup.string(),
-  havePet: Yup.string(),
-  typeOfEmployment: Yup.string(),
-  areYouSmoking: Yup.string(),
+  whoAreYou: Yup.string().required("Who are you is required"),
+  name: Yup.string().required("Name is required"),
+  age: Yup.number().min(1, "Age must be positive").required("Age is required"),
+  withChild: Yup.string().required("With Child is required"),
+  havePet: Yup.string().required("Have pet is required"),
+  typeOfEmployment: Yup.string().required("TypeOfEmployment is required"),
+  areYouSmoking: Yup.string().required("AreYouSmoking is required"),
   anotherPerson: Yup.array().of(anotherPersonSchema),
-  flatmatePreference: Yup.array().of(Yup.string()).nullable(), // Assuming string values are allowed
-  livingWithOwner: Yup.string(),
-  tenantsWithChildren: Yup.string(),
-  acceptPet: Yup.string(),
-  acceptSmoking: Yup.string(),
-  photos: Yup.string().url("Invalid photo URL"),
-  describeYourSelf: Yup.string(),
+  flatmatePreference: Yup.array().of(Yup.string()), // Assuming string values are allowed
+  livingWithOwner: Yup.string().required("LivingWithOwner is required"),
+  tenantsWithChildren: Yup.string().required("TenantsWithChildren is required"),
+  acceptPet: Yup.string().required("AcceptPet is required"),
+  acceptSmoking: Yup.string().required("AcceptSmoking is required"),
+  photos: Yup.string().url("Invalid photo URL").required("photos is required"),
+  describeYourSelf: Yup.string().required("Describe your self is required"),
 });
 interface Step2Props {
   updateTabIndex: Function;
@@ -87,13 +88,13 @@ const Step2: React.FC<Step2Props> = () => {
 
   const formik = useFormik({
     initialValues: {
-      whoAreYou: "WOMEN", // e.g., "MEN"
+      whoAreYou: "", // e.g., "MEN"
       name: userSlice?.user?.fullName ?? "", // e.g., "John Doe"
       age: 0, // e.g., 30
-      withChild: "YES", // e.g., "YES"
-      havePet: "NO", // e.g., "YES"
+      withChild: "", // e.g., "YES"
+      havePet: "", // e.g., "YES"
       typeOfEmployment: "", // e.g., "HYBRID_WORK"
-      areYouSmoking: "YES", // e.g., "YES"
+      areYouSmoking: "", // e.g., "YES"
       anotherPerson: [
         {
           name: "", // e.g., "Jane Doe"
@@ -101,11 +102,11 @@ const Step2: React.FC<Step2Props> = () => {
           gender: "", // e.g., "FEMALE"
         },
       ],
-      flatmatePreference: ["WOMAN"], // e.g., ["string"]
-      livingWithOwner: "NO_PREFERENCE", // e.g., "NO"
-      tenantsWithChildren: "NO_PREFERENCE", // e.g., "NO"
-      acceptPet: "NO_PREFERENCE", // e.g., "NO"
-      acceptSmoking: "YES", // e.g., "YES"
+      flatmatePreference: [], // e.g., ["string"]
+      livingWithOwner: "", // e.g., "NO"
+      tenantsWithChildren: "", // e.g., "NO"
+      acceptPet: "", // e.g., "NO"
+      acceptSmoking: "", // e.g., "YES"
       photos: "", // e.g., "url_to_photo.jpg"
       describeYourSelf: "",
     },
@@ -176,9 +177,8 @@ const Step2: React.FC<Step2Props> = () => {
         formik.setValues({
           ...formik.values,
           ...data!.data.hunterData,
-          flatmatePreference: data!.data!.hunterData?.flatmatePreference ?? [
-            "WOMAN",
-          ],
+          flatmatePreference: data!.data!.hunterData
+            ?.flatmatePreference as never[],
         });
       },
       onError: (error: Error) => {
@@ -217,7 +217,11 @@ const Step2: React.FC<Step2Props> = () => {
       <Box component={"form"} onSubmit={formik.handleSubmit}>
         <Grid container spacing={2} mt={2} mb={2}>
           <Grid item xs={12}>
-            <Typography>Step 2/2</Typography>
+            <Typography
+              sx={{ fontSize: "22px", fontWeight: "600", color: "#6D778A" }}
+            >
+              Step 2/2
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography
@@ -227,6 +231,8 @@ const Step2: React.FC<Step2Props> = () => {
                   "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
+                fontWeight: "700",
+                fontSize: "45px",
               }}
             >
               {t("hunterStep2Title")}
@@ -236,7 +242,7 @@ const Step2: React.FC<Step2Props> = () => {
             <Box sx={{ borderBottom: "1px solid black" }}></Box>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">{t("whoAreYouQuestion")}</Typography>
+            <CommanTypography title={t("whoAreYouQuestion")} />
           </Grid>
           <Grid item xs={12}>
             <CustomButtonGroup
@@ -249,7 +255,7 @@ const Step2: React.FC<Step2Props> = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Stack direction={"column"} spacing={1}>
-              <Typography variant="h5">{t("nameQuestion")}</Typography>
+              <CommanTypography title={t("nameQuestion")} />
               <OutlinedInput
                 value={formik.values.name}
                 onChange={(e) => formik.setFieldValue("name", e.target.value)}
@@ -260,7 +266,7 @@ const Step2: React.FC<Step2Props> = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Stack direction={"column"} spacing={1}>
-              <Typography variant="h5">{t("ageQuestion")}</Typography>
+              <CommanTypography title={t("ageQuestion")} />
               <OutlinedInput
                 value={formik.values.age}
                 onChange={(e) => formik.setFieldValue("age", e.target.value)}
@@ -270,10 +276,7 @@ const Step2: React.FC<Step2Props> = () => {
                 }}
                 placeholder="Your age"
                 type="number"
-                error={
-                  formik.touched.age &&
-                  !!formik.errors.age
-                }
+                error={formik.touched.age && !!formik.errors.age}
               />
               {formik.errors.age && (
                 <FormHelperText sx={{ color: "red" }}>
@@ -283,7 +286,7 @@ const Step2: React.FC<Step2Props> = () => {
             </Stack>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">{t("withChildQuestion")}</Typography>
+            <CommanTypography title={t("withChildQuestion")} />
           </Grid>
           <Grid item xs={12}>
             <CustomButtonGroup
@@ -295,7 +298,7 @@ const Step2: React.FC<Step2Props> = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">{t("havePetQuestion")}</Typography>
+            <CommanTypography title={t("havePetQuestion")} />
           </Grid>
           <Grid item xs={12}>
             <CustomButtonGroup
@@ -307,9 +310,7 @@ const Step2: React.FC<Step2Props> = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">
-              {t("typeOfEmploymentQuestion")}
-            </Typography>
+            <CommanTypography title={t("typeOfEmploymentQuestion")} />
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth>
@@ -332,7 +333,7 @@ const Step2: React.FC<Step2Props> = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">{t("areYouSmokingQuestion")}</Typography>
+            <CommanTypography title={t("areYouSmokingQuestion")} />
           </Grid>
           <Grid item xs={12}>
             <CustomButtonGroup
@@ -401,9 +402,7 @@ const Step2: React.FC<Step2Props> = () => {
 
               <Grid item xs={12} md={6}>
                 <Stack direction={"column"} spacing={1}>
-                  <Typography variant="h5">
-                    {t("anotherPersonQuestion.name")}
-                  </Typography>
+                  <CommanTypography title={t("anotherPersonQuestion.name")} />
                   <OutlinedInput
                     value={anotherPerson.name}
                     onChange={(e) =>
@@ -418,9 +417,8 @@ const Step2: React.FC<Step2Props> = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Stack direction={"column"} spacing={1}>
-                  <Typography variant="h5">
-                    {t("anotherPersonQuestion.age")}
-                  </Typography>
+                  <CommanTypography title={t("anotherPersonQuestion.age")} />
+
                   <OutlinedInput
                     type="number"
                     value={anotherPerson.age}
@@ -438,9 +436,7 @@ const Step2: React.FC<Step2Props> = () => {
                 </Stack>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="h5">
-                  {t("anotherPersonQuestion.gender")}
-                </Typography>
+                <CommanTypography title={t("anotherPersonQuestion.gender")} />
               </Grid>
               <Grid item xs={12}>
                 <CustomButtonGroup
@@ -497,9 +493,7 @@ const Step2: React.FC<Step2Props> = () => {
             <Box sx={{ borderBottom: "1px solid black" }}></Box>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">
-              {t("flatmatePreferenceQuestion")}
-            </Typography>
+            <CommanTypography title={t("flatmatePreferenceQuestion")} />
           </Grid>
           <Grid item xs={12}>
             <CustomButtonGroup
@@ -512,7 +506,7 @@ const Step2: React.FC<Step2Props> = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">{t("livingWithOwnerQuestion")}</Typography>
+            <CommanTypography title={t("livingWithOwnerQuestion")} />
           </Grid>
           <Grid item xs={12}>
             <CustomButtonGroup
@@ -524,9 +518,7 @@ const Step2: React.FC<Step2Props> = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">
-              {t("tenantsWithChildrenQuestion")}
-            </Typography>
+            <CommanTypography title={t("tenantsWithChildrenQuestion")} />
           </Grid>
           <Grid item xs={12}>
             <CustomButtonGroup
@@ -538,7 +530,7 @@ const Step2: React.FC<Step2Props> = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">{t("acceptPetQuestion")}</Typography>
+            <CommanTypography title={t("acceptPetQuestion")} />
           </Grid>
           <Grid item xs={12}>
             <CustomButtonGroup
@@ -550,7 +542,7 @@ const Step2: React.FC<Step2Props> = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">{t("acceptSmokingQuestion")}</Typography>
+            <CommanTypography title={t("acceptSmokingQuestion")} />
           </Grid>
           <Grid item xs={12}>
             <CustomButtonGroup
@@ -566,17 +558,23 @@ const Step2: React.FC<Step2Props> = () => {
           </Grid>
           <Grid item xs={12}>
             <Stack
-              spacing={2}
+              spacing={1}
               direction={"column"}
               alignItems={"center"}
               justifyContent={"center"}
               sx={{ border: "1px solid red", borderRadius: "8px", p: 4 }}
             >
-              <Typography variant="h6">
-                {t("photosHunterQuestion.title")}
+              <CommanTypography title={t("photosHunterQuestion.title")} />
+              <Typography
+                sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A" }}
+              >
+                {t("photosHunterQuestion.subTitle1")}
               </Typography>
-              <Typography>{t("photosHunterQuestion.subTitle1")}</Typography>
-              <Typography>{t("photosHunterQuestion.subTitle2")}</Typography>
+              <Typography
+                sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A" }}
+              >
+                {t("photosHunterQuestion.subTitle2")}
+              </Typography>
               <Avatar
                 sx={{
                   width: 80, // Set the width
@@ -616,12 +614,12 @@ const Step2: React.FC<Step2Props> = () => {
             </Stack>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">
-              {t("describeYourSelfQuestion.title")}
-            </Typography>
+            <CommanTypography title={t("describeYourSelfQuestion.title")} />
           </Grid>
           <Grid item xs={12}>
-            <Typography sx={{ fontSize: "14px" }}>
+            <Typography
+              sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A" }}
+            >
               {t("describeYourSelfQuestion.subTitle")}
             </Typography>
           </Grid>
@@ -647,6 +645,7 @@ const Step2: React.FC<Step2Props> = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <CustomLoadingButton
+              disabled={!formik.isValid}
               sx={{ width: "100%" }}
               loading={
                 updateAdvertisementMutation.isPending ||

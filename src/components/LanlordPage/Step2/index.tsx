@@ -33,6 +33,7 @@ import dayjs from "dayjs";
 import { t } from "i18next";
 import useHunterData from "../../../hooks/useHunter";
 import useUserMutations from "../../../mutations/user";
+import { Info } from "@mui/icons-material";
 const landlordSchema = Yup.object().shape({
   roomSize: Yup.number()
     .min(0, "Room Size must be non-negative")
@@ -251,7 +252,11 @@ const Step2: React.FC<Step2Props> = () => {
     <Box component={"form"} onSubmit={formik.handleSubmit}>
       <Grid container spacing={2} mt={2} mb={2}>
         <Grid item xs={12}>
-          <Typography>Step 2/3</Typography>
+          <Typography
+            sx={{ fontSize: "22px", fontWeight: "600", color: "#6D778A" }}
+          >
+            Step 2/3
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography
@@ -260,17 +265,18 @@ const Step2: React.FC<Step2Props> = () => {
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              fontSize: "44px",
+              fontWeight: "700",
+              fontSize: "45px",
             }}
           >
-            Room information
+            <CommanTypography title={t("landlordQ.roomInformation")} />
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Room Size </Typography>
+          <CommanTypography title={t("landlordQ.roomSize")} />
         </Grid>
         <Grid item xs={12}>
           <OutlinedInput
@@ -292,9 +298,7 @@ const Step2: React.FC<Step2Props> = () => {
           )}
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            How many people can the room accommodate?
-          </Typography>
+          <CommanTypography title={t("landlordQ.howmanypeopleaccomodate")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -306,7 +310,7 @@ const Step2: React.FC<Step2Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Is the room furnished?</Typography>
+          <CommanTypography title={t("landlordQ.roomfurnished")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -320,7 +324,7 @@ const Step2: React.FC<Step2Props> = () => {
         {formik.values.isRoomFurnished !== "NO" && (
           <>
             <Grid item xs={12}>
-              <Typography variant="h5"> Bed</Typography>
+              <CommanTypography title={t("landlordQ.bed")} />
             </Grid>
             <Grid item xs={12}>
               <CustomButtonGroup
@@ -335,7 +339,7 @@ const Step2: React.FC<Step2Props> = () => {
         )}
 
         <Grid item xs={12}>
-          <Typography variant="h5"> Private bathroom?</Typography>
+          <CommanTypography title={t("landlordQ.privatebathroom")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -347,7 +351,7 @@ const Step2: React.FC<Step2Props> = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5"> Does the room have a balcony?</Typography>
+          <CommanTypography title={t("landlordQ.doestheroomhasbalcony")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -400,7 +404,7 @@ const Step2: React.FC<Step2Props> = () => {
           </LocalizationProvider>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5"> Minimum length of stay</Typography>
+          <CommanTypography title={t("landlordQ.minimunLengthofStay")} />
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
@@ -421,7 +425,7 @@ const Step2: React.FC<Step2Props> = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5"> Maximum length of stay</Typography>
+          <CommanTypography title={t("landlordQ.maximunLengthofStay")} />
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
@@ -448,10 +452,11 @@ const Step2: React.FC<Step2Props> = () => {
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              fontSize: "44px",
+              fontSize: "45px",
+              fontWeight: "700",
             }}
           >
-            Price
+            <CommanTypography title={t("landlordQ.price")} />
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -462,7 +467,7 @@ const Step2: React.FC<Step2Props> = () => {
             justifyContent={"center"}
             sx={{ border: "1px solid red", borderRadius: "8px", p: 4 }}
           >
-            <Typography>Rent per month (zł)</Typography>
+            <CommanTypography title={t("landlordQ.rentPerMonth")} />
             <OutlinedInput
               fullWidth
               placeholder="Rent per month"
@@ -484,7 +489,7 @@ const Step2: React.FC<Step2Props> = () => {
                 {formik.errors.rentPerMonth.toString()}
               </FormHelperText>
             )}
-            <Typography>Bill included in rent</Typography>
+            <CommanTypography title={t("landlordQ.billIncludedinrent")} />
             <CustomButtonGroup
               optionClick={(e: string[] | string) => {
                 formik.setFieldValue("billIncludeInRent", e);
@@ -499,17 +504,20 @@ const Step2: React.FC<Step2Props> = () => {
                 p: 4,
                 width: "100%",
               }}
+              spacing={1}
+              direction={"row"}
             >
-              <Typography>
-                (It is good practice to include information in the ad
-                description about how much the bills are. You will be able to
-                add this information below)
+              <Info sx={{ color: "#FF445E", fontSize: "50px" }} />
+              <Typography
+                sx={{ fontWeight: "500", color: "#3B3D44", fontSize: "20px" }}
+              >
+                {t("landlordQ.billIncludedInfo")}
               </Typography>
             </Stack>
           </Stack>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Deposit</Typography>
+          <CommanTypography title={t("landlordQ.deposit")} />
         </Grid>
         <Grid item xs={12}>
           <OutlinedInput
@@ -527,14 +535,13 @@ const Step2: React.FC<Step2Props> = () => {
           )}
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">
-            Write a few sentences about the place you want to rent.
-          </Typography>
+          <CommanTypography title={t("landlordQ.writeSentence")} />
         </Grid>
         <Grid item xs={12}>
-          <Typography sx={{ fontSize: "14px" }}>
-            Share a bit about yourself, your roommates, and the vibe of your
-            place to help everyone get a great feel for your home.
+          <Typography
+            sx={{ fontSize: "20px", fontWeight: "500", color: "#6D778A" }}
+          >
+            {t("landlordQ.wtiteDescInfo")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -557,9 +564,13 @@ const Step2: React.FC<Step2Props> = () => {
             justifyContent={"center"}
             sx={{ border: "1px solid red", borderRadius: "8px", p: 4 }}
           >
-            <Typography variant="h6">Add photos of your place</Typography>
+            <CommanTypography title={t("landlordQ.addPhotosYourPlace")} />
             {/* <Typography>{t("photosHunterQuestion.subTitle1")}</Typography> */}
-            <Typography>(you can also add them later)</Typography>
+            <Typography
+              sx={{ fontWeight: "500", color: "#3B3D44", fontSize: "20px" }}
+            >
+              {t("landlordQ.addThemLater")}
+            </Typography>
             {previewState.previews.length > 0 && (
               <Stack direction="row" spacing={2}>
                 {previewState.previews.map((preview, index) => (
@@ -624,7 +635,7 @@ const Step2: React.FC<Step2Props> = () => {
             type="button"
             onClick={() => navigate(`/landlord/1/${advertisementData?._id}`)}
           >
-            BACK
+            {t("BACK")}
           </OutlinedButton>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -636,7 +647,7 @@ const Step2: React.FC<Step2Props> = () => {
             sx={{ width: "100%" }}
             onClick={() => formik.handleSubmit()}
           >
-            NEXT
+            {t("NEXT")}
           </CustomLoadingButton>
         </Grid>
       </Grid>

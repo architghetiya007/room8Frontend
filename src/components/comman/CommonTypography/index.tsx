@@ -5,7 +5,13 @@ interface CommanTypographyProps {
 }
 
 const CommanTypography: React.FC<CommanTypographyProps> = ({ title }) => {
-  return <Typography variant="h5">{title}</Typography>;
+  return (
+    <Typography
+      sx={{ fontWeight: 600, color: "#3B3D44", fontSize: "28px" }}
+    >
+      {title}
+    </Typography>
+  );
 };
 
 export default CommanTypography;

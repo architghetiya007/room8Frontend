@@ -91,8 +91,8 @@ const addressSchema = Yup.object().shape({
 });
 
 const hunterSchema = Yup.object().shape({
-  accommodation: Yup.string(),
-  typeOfProperty: Yup.string(),
+  accommodation: Yup.string().required("Accommodation is required"),
+  typeOfProperty: Yup.string().required("TypeOfProperty is required"),
   acceptableRentRange: Yup.array()
     .of(Yup.number().min(0, "Rent must be non-negative"))
     .length(2, "Rent range should have two values"),
@@ -104,7 +104,9 @@ const hunterSchema = Yup.object().shape({
     .required("When You Would Like MoveIn is required")
     .typeError("Invalid timestamp for move-in date"),
   isAvailableNow: Yup.boolean(),
-  preferredLengthToStay: Yup.string(),
+  preferredLengthToStay: Yup.string().required(
+    "PreferredLengthToStay is required"
+  ),
   address: addressSchema,
   rangeFromCoordinate: Yup.number()
     .min(0, "Range must be non-negative")
@@ -113,21 +115,44 @@ const hunterSchema = Yup.object().shape({
     .min(0, "Minimum property size must be non-negative")
     .max(1000, "Minimum property size should be 1000")
     .required("Minimum property size is required"),
-  minimumNumberOfTenants: Yup.string(),
-  roomAmount: Yup.string(),
+  minimumNumberOfTenants: Yup.string().required(
+    "MinimumNumberOfTenants is required"
+  ),
+  roomAmount: Yup.string().required("RoomAmount is required"),
   bathroomAmount: Yup.string(),
-  parking: Yup.array().of(Yup.string()),
-  furnished: Yup.string(),
-  kitchen: Yup.string(),
-  balcony: Yup.string(),
-  maximumNumberOfpeople: Yup.string(),
-  minimumRoomSize: Yup.number()
-    .min(0, "Range must be non-negative")
-    .max(100, "Maximum room size should be 100")
-    .nullable(),
-  furnishedRoom: Yup.string(),
-  privateBathroom: Yup.string(),
-  balconyInRoom: Yup.string(),
+  parking: Yup.array()
+    .of(Yup.string())
+    .min(1, "At least one parking option is required")
+    .required("Parking is required"),
+  furnished: Yup.string().required("Furnished is required"),
+  kitchen: Yup.string().required("Kitchen is required"),
+  balcony: Yup.string().required("Balcony is required"),
+  maximumNumberOfpeople: Yup.string().when("accommodation", {
+    is: (value: string) => value !== "WHOLEPROPERTY",
+    then: (schema) =>
+      schema.defined().required("MaximumNumberOfpeople is required"),
+  }),
+  minimumRoomSize: Yup.number().when("accommodation", {
+    is: (value: string) => value !== "WHOLEPROPERTY",
+    then: (schema) =>
+      schema
+        .min(0, "Range must be non-negative")
+        .max(100, "Maximum room size should be 100")
+        .required("Minimum room size is required"),
+    otherwise: (schema) => schema.nullable(),
+  }),
+  furnishedRoom: Yup.string().when("accommodation", {
+    is: (value: string) => value !== "WHOLEPROPERTY",
+    then: (schema) => schema.defined().required("FurnishedRoom is required"),
+  }),
+  privateBathroom: Yup.string().when("accommodation", {
+    is: (value: string) => value !== "WHOLEPROPERTY",
+    then: (schema) => schema.defined().required("PrivateBathroom is required"),
+  }),
+  balconyInRoom: Yup.string().when("accommodation", {
+    is: (value: string) => value !== "WHOLEPROPERTY",
+    then: (schema) => schema.defined().required("BalconyInRoom is required"),
+  }),
 });
 interface Step1Props {
   updateTabIndex?: Function;
@@ -160,13 +185,13 @@ const Step1: React.FC<Step1Props> = () => {
 
   const formik = useFormik({
     initialValues: {
-      accommodation: "ENTIREROOM",
-      typeOfProperty: "FLAT",
+      accommodation: "",
+      typeOfProperty: "",
       acceptableRentRange: [3000, 6000],
       maximumDeposit: "",
       whenYouWouldLikeMoveIn: null,
       isAvailableNow: true,
-      preferredLengthToStay: "NO_PREFERENCE",
+      preferredLengthToStay: "",
       address: {
         streetNumber: "",
         streetName: "",
@@ -181,18 +206,18 @@ const Step1: React.FC<Step1Props> = () => {
 
       rangeFromCoordinate: 3,
       minimumPropertySize: "",
-      minimumNumberOfTenants: "NO_PREFERENCE",
-      roomAmount: "NO_PREFERENCE",
-      bathroomAmount: "01",
-      parking: ["NO_PREFERENCE"],
-      furnished: "NO_PREFERENCE",
-      kitchen: "NO_PREFERENCE",
-      balcony: "NO_PREFERENCE",
-      maximumNumberOfpeople: "NO_PREFERENCE",
+      minimumNumberOfTenants: "",
+      roomAmount: "",
+      bathroomAmount: "",
+      parking: [],
+      furnished: "",
+      kitchen: "",
+      balcony: "",
+      maximumNumberOfpeople: "",
       minimumRoomSize: "",
-      furnishedRoom: "NO_PREFERENCE",
-      privateBathroom: "YES",
-      balconyInRoom: "NO_PREFERENCE",
+      furnishedRoom: "",
+      privateBathroom: "",
+      balconyInRoom: "",
     },
     validationSchema: hunterSchema,
     onSubmit: (values: any) => {
@@ -217,7 +242,7 @@ const Step1: React.FC<Step1Props> = () => {
               navigate(`/hunter/2/${data?.data._id}`);
               setTimeout(() => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
-              }, 100);
+              }, 300);
             },
             onError: (error: Error) => {
               showSnackBar({ message: error.message, variant: "error" });
@@ -237,6 +262,8 @@ const Step1: React.FC<Step1Props> = () => {
       }
     },
   });
+
+  console.log(formik.errors);
 
   const getAdvertisementAPI = () => {
     getAdvertisementMutation.mutate(params?.id ?? "", {
@@ -266,7 +293,11 @@ const Step1: React.FC<Step1Props> = () => {
     <Box component={"form"}>
       <Grid container spacing={2} mt={2} mb={2}>
         <Grid item xs={12}>
-          <Typography>Step 1/2</Typography>
+          <Typography
+            sx={{ fontSize: "22px", fontWeight: "600", color: "#6D778A" }}
+          >
+            Step 1/2
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography
@@ -276,6 +307,8 @@ const Step1: React.FC<Step1Props> = () => {
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
+              fontWeight: "700",
+              fontSize: "45px",
             }}
           >
             {t("hunterStep1Title")}
@@ -285,7 +318,7 @@ const Step1: React.FC<Step1Props> = () => {
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("accommodationQuestion")}</Typography>
+          <CommanTypography title={t("accommodationQuestion")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -295,6 +328,11 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.accommodation}
             options={accommodation}
           />
+          {formik.errors.accommodation && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.accommodation.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("typeOfPropertyQuestion")} />
@@ -307,6 +345,11 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.typeOfProperty}
             options={propertyTypes}
           />
+          {formik.errors.typeOfProperty && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.typeOfProperty.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("acceptableRentRangeQuestion")} />
@@ -334,7 +377,7 @@ const Step1: React.FC<Step1Props> = () => {
             inputProps={{
               min: "0",
               max: "50000",
-              step: 100
+              step: 100,
             }}
             placeholder="No Preferences"
             value={formik.values.maximumDeposit}
@@ -403,18 +446,25 @@ const Step1: React.FC<Step1Props> = () => {
           )}
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">{t("preferredLengthToStay")}</Typography>
+          <CommanTypography title={t("preferredLengthToStay")} />
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
             <Select
+              displayEmpty
+              placeholder="Select"
               labelId="work-status-label"
               id="work-status"
               value={formik.values.preferredLengthToStay}
               onChange={(e) => {
-                formik.setFieldValue("preferredLengthToStay", e.target.value);
+                formik.setFieldValue(
+                  "preferredLengthToStay",
+                  e.target.value,
+                  true
+                );
               }}
             >
+              <MenuItem value="">Select</MenuItem>
               {duration.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {t(option.name)}
@@ -422,6 +472,11 @@ const Step1: React.FC<Step1Props> = () => {
               ))}
             </Select>
           </FormControl>
+          {formik.errors.preferredLengthToStay && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.preferredLengthToStay.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12} md={6}>
           <CommanTypography title={t("addressQuestion")} />
@@ -516,6 +571,11 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.minimumNumberOfTenants}
             options={tenants}
           />
+          {formik.errors.minimumNumberOfTenants && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.minimumNumberOfTenants.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("roomAmountQuestion")} />
@@ -528,6 +588,11 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.roomAmount}
             options={roomsAmount}
           />
+          {formik.errors.roomAmount && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.roomAmount.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         {/* <Grid item xs={12}>
           <CommanTypography title={t("bathroomAmountQuestion")} />
@@ -553,6 +618,11 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.parking}
             options={parkingOptions}
           />
+          {formik.errors.parking && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.parking.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("furnishedQuestion")} />
@@ -565,6 +635,11 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.furnished}
             options={commanPreferenceOptions}
           />
+          {formik.errors.furnished && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.furnished.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("kitchenQuestion")} />
@@ -577,6 +652,11 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.kitchen}
             options={kitchenOptions}
           />
+          {formik.errors.kitchen && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.kitchen.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("balconyQuestion")} />
@@ -589,6 +669,11 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.balcony}
             options={commanPreferenceOptions}
           />
+          {formik.errors.balcony && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.balcony.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         {formik.values.accommodation !== "WHOLEPROPERTY" && (
           <>
@@ -619,6 +704,11 @@ const Step1: React.FC<Step1Props> = () => {
                 selectionOption={formik.values.maximumNumberOfpeople}
                 options={maximumNumberOfpeopleOptions}
               />
+              {formik.errors.maximumNumberOfpeople && (
+                <FormHelperText sx={{ color: "red" }}>
+                  {formik.errors.maximumNumberOfpeople.toString()}
+                </FormHelperText>
+              )}
             </Grid>
             <Grid item xs={12}>
               <CommanTypography title={t("minimumRoomSizeQuestion")} />
@@ -658,6 +748,11 @@ const Step1: React.FC<Step1Props> = () => {
                 selectionOption={formik.values.furnishedRoom}
                 options={commanPreferenceOptions}
               />
+              {formik.errors.furnishedRoom && (
+                <FormHelperText sx={{ color: "red" }}>
+                  {formik.errors.furnishedRoom.toString()}
+                </FormHelperText>
+              )}
             </Grid>
             <Grid item xs={12}>
               <CommanTypography title={t("privateBathroomQuestion")} />
@@ -670,6 +765,11 @@ const Step1: React.FC<Step1Props> = () => {
                 }}
                 selectionOption={formik.values.privateBathroom}
               />
+              {formik.errors.privateBathroom && (
+                <FormHelperText sx={{ color: "red" }}>
+                  {formik.errors.privateBathroom.toString()}
+                </FormHelperText>
+              )}
             </Grid>
             <Grid item xs={12}>
               <CommanTypography title={t("balconyInRoomQuestion")} />
@@ -678,10 +778,15 @@ const Step1: React.FC<Step1Props> = () => {
               <CustomButtonGroup
                 options={commanPreferenceOptions}
                 optionClick={(e: string[] | string) => {
-                  formik.setFieldValue("balconyInRoom", e);
+                  formik.setFieldValue("balconyInRoom", e, true);
                 }}
                 selectionOption={formik.values.balconyInRoom}
               />
+              {formik.errors.balconyInRoom && (
+                <FormHelperText sx={{ color: "red" }}>
+                  {formik.errors.balconyInRoom.toString()}
+                </FormHelperText>
+              )}
             </Grid>
           </>
         )}
@@ -693,6 +798,7 @@ const Step1: React.FC<Step1Props> = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
+            disabled={!formik.isValid}
             loading={
               createAdvertisementMutation.isPending ||
               updateAdvertisementMutation.isPending
