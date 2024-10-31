@@ -110,11 +110,11 @@ const ChatsPage: React.FC = () => {
   }, [userSlice.user?._id]);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden'
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = 'auto'
-    }
-  },[])
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   const filterChats = chatUsers.filter((item) => {
     return item.fullName.toString().toLowerCase().includes(searchText);
@@ -127,6 +127,8 @@ const ChatsPage: React.FC = () => {
           width: "100%", // Full width for smaller screens
           boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
           borderRadius: "12px",
+          height: "calc(100vh - 140px)",
+          mt: "-10px",
         }}
       >
         <CardContent
@@ -135,6 +137,7 @@ const ChatsPage: React.FC = () => {
               xs: 1,
               md: 2,
             },
+            maxHeight: "calc(100vh - 450px)",
           }}
         >
           <Typography

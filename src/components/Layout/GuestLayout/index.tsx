@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../comman/Header";
 import Footer from "../../comman/Footer";
 import BackImage from "../../../assets/images/background.svg";
@@ -9,7 +9,6 @@ interface GuestLayoutProps {
 }
 const GuestLayout: React.FC<GuestLayoutProps> = ({ children }) => {
   const { pathname } = useLocation();
-  console.log(pathname,'pathname')
   return (
     <Box>
       <Box
@@ -31,7 +30,7 @@ const GuestLayout: React.FC<GuestLayoutProps> = ({ children }) => {
       <Header />
       <Box sx={{ pt: 16 }}>
         {children}
-        {<Footer />}
+        {!pathname.includes("messages") && <Footer />}
       </Box>
     </Box>
   );
