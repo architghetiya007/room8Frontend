@@ -35,11 +35,12 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
               <Stack direction={"column"}>
                 <Typography
                   sx={{
-                    fontSize: "46px",
                     background:
                       "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                     backgroundClip: "text",
                     WebkitTextFillColor: "transparent",
+                    fontWeight: "700",
+                    fontSize: "45px",
                   }}
                 >
                   {previewData.landlordData?.address?.city +
@@ -47,8 +48,10 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
                     previewData.landlordData?.address?.state}
                 </Typography>
                 <Typography variant="h5" fontWeight={"bold"}>
-                  {t(`landlord.propertyOfferOptions.${previewData.landlordData?.propertyOffer}`)} in a{" "}
-                  {previewData.landlordData?.typeofProperty}
+                  {t(
+                    `landlord.propertyOfferOptions.${previewData.landlordData?.propertyOffer}`
+                  )}{" "}
+                  in a {previewData.landlordData?.typeofProperty}
                 </Typography>
               </Stack>
             </Grid>
@@ -130,9 +133,17 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <AddLocationAltOutlinedIcon />
                 <Typography
-                  onClick={() => window.top?.open(`https://www.google.com/maps?q=${previewData.landlordData?.address?.coordinates?.at(1)},${previewData.landlordData?.address?.coordinates?.at(0)}`)}
+                  onClick={() =>
+                    window.top?.open(
+                      `https://www.google.com/maps?q=${previewData.landlordData?.address?.coordinates?.at(
+                        1
+                      )},${previewData.landlordData?.address?.coordinates?.at(
+                        0
+                      )}`
+                    )
+                  }
                   variant="h6"
-                  sx={{ borderBottom: "1px solid black", cursor: 'pointer' }}
+                  sx={{ borderBottom: "1px solid black", cursor: "pointer" }}
                 >
                   CHECK ON MAP
                 </Typography>

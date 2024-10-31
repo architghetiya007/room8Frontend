@@ -31,24 +31,26 @@ import { RootState } from "../../../store";
 import useHunterData from "../../../hooks/useHunter";
 import CommanTypography from "../../comman/CommonTypography";
 const landlordSchema = Yup.object().shape({
-  whoAreYou: Yup.string(),
-  name: Yup.string(),
+  whoAreYou: Yup.string().required("WhoAreYou is required"),
+  name: Yup.string().required("Name is required"),
   age: Yup.number()
     .min(0, "Age must be non-negative")
     .max(100, "Age should be 100")
     .required("Age is required"),
-  haveAnychildren: Yup.string(),
-  havePet: Yup.string(),
-  typeOfEmployment: Yup.string(),
-  doYouSmoke: Yup.string(),
-  descriptionAbout: Yup.string(),
+  haveAnychildren: Yup.string().required("WhoAreYou is required"),
+  havePet: Yup.string().required("HavePet is required"),
+  typeOfEmployment: Yup.string().required("TypeOfEmployment is required"),
+  doYouSmoke: Yup.string().required("DoYouSmoke is required"),
+  descriptionAbout: Yup.string().required("DescriptionAbout is required"),
   flatmateAccepting: Yup.array().of(
     Yup.string().required("Flatmate accepting value is required")
   ),
   ageOfFutureRoomMate: Yup.array().of(Yup.number()),
-  flatmateAcceptTenantWithChildren: Yup.string(),
-  acceptPets: Yup.string(),
-  acceptSmoking: Yup.string(),
+  flatmateAcceptTenantWithChildren: Yup.string().required(
+    "DlatmateAcceptTenantWithChildren is required"
+  ),
+  acceptPets: Yup.string().required("AcceptPets is required"),
+  acceptSmoking: Yup.string().required("AcceptSmoking is required"),
   flatmatePhoto: Yup.string(),
 });
 
@@ -79,19 +81,19 @@ const Step3: React.FC<Step3Props> = () => {
   const { typeOfEmployment } = useHunterData();
   const formik = useFormik({
     initialValues: {
-      whoAreYou: "WOMEN",
+      whoAreYou: "",
       name: userSlice?.user?.fullName ?? "",
       age: "",
-      haveAnychildren: "YES",
-      havePet: "NO",
+      haveAnychildren: "",
+      havePet: "",
       typeOfEmployment: "",
-      doYouSmoke: "YES",
+      doYouSmoke: "",
       descriptionAbout: "",
-      flatmateAccepting: ["WOMAN"],
+      flatmateAccepting: [],
       ageOfFutureRoomMate: [18, 35],
-      acceptTenantWithChilder: "NO_PREFERENCE",
-      acceptPets: "NO_PREFERENCE",
-      acceptSmoking: "YES",
+      acceptTenantWithChilder: "",
+      acceptPets: "",
+      acceptSmoking: "",
       flatmatePhoto: "",
     },
     validationSchema: landlordSchema,
@@ -140,6 +142,9 @@ const Step3: React.FC<Step3Props> = () => {
               ? data?.data?.landlordData?.ageOfFutureRoomMate
               : [18, 35],
         });
+        setTimeout(() => {
+          formik.setErrors({});
+        }, 0);
       },
       onError: (error: Error) => {
         showSnackBar({ message: error.message, variant: "error" });
@@ -211,6 +216,11 @@ const Step3: React.FC<Step3Props> = () => {
             selectionOption={formik.values.whoAreYou}
             options={whoAreYou}
           />
+          {formik.errors.whoAreYou && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.whoAreYou.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12} md={6}>
           <Stack direction={"column"} spacing={1}>
@@ -221,6 +231,11 @@ const Step3: React.FC<Step3Props> = () => {
               fullWidth
               placeholder="Your Name"
             />
+            {formik.errors.name && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.name.toString()}
+              </FormHelperText>
+            )}
           </Stack>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -256,6 +271,11 @@ const Step3: React.FC<Step3Props> = () => {
             selectionOption={formik.values.haveAnychildren}
             options={yesNoOptions}
           />
+          {formik.errors.haveAnychildren && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.haveAnychildren.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.havePet")} />
@@ -268,6 +288,11 @@ const Step3: React.FC<Step3Props> = () => {
             selectionOption={formik.values.havePet}
             options={yesNoOptions}
           />
+          {formik.errors.havePet && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.havePet.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.typeOFEmployment")} />
@@ -291,6 +316,11 @@ const Step3: React.FC<Step3Props> = () => {
               ))}
             </Select>
           </FormControl>
+          {formik.errors.typeOfEmployment && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.typeOfEmployment.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.doYouSmoke")} />
@@ -303,6 +333,11 @@ const Step3: React.FC<Step3Props> = () => {
             selectionOption={formik.values.doYouSmoke}
             options={yesNoOutside}
           />
+          {formik.errors.doYouSmoke && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.doYouSmoke.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.WriteSentence11")} />
@@ -325,6 +360,11 @@ const Step3: React.FC<Step3Props> = () => {
               formik.setFieldValue("descriptionAbout", e.target.value)
             }
           />
+          {formik.errors.descriptionAbout && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.descriptionAbout.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <Typography
@@ -355,6 +395,11 @@ const Step3: React.FC<Step3Props> = () => {
             selectionOption={formik.values.flatmateAccepting}
             options={iamAcceptingOptions}
           />
+          {formik.errors.flatmateAccepting && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.flatmateAccepting.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.AgeOFYourMate")} />
@@ -383,6 +428,11 @@ const Step3: React.FC<Step3Props> = () => {
             selectionOption={formik.values.flatmateAcceptTenantWithChildren}
             options={commanPreferenceOptions}
           />
+          {formik.errors.flatmateAcceptTenantWithChildren && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.flatmateAcceptTenantWithChildren.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.acceptPets")} />
@@ -395,6 +445,11 @@ const Step3: React.FC<Step3Props> = () => {
             selectionOption={formik.values.acceptPets}
             options={commanPreferenceOptions}
           />
+          {formik.errors.acceptPets && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.acceptPets.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.acceptSmoking")} />
@@ -407,6 +462,11 @@ const Step3: React.FC<Step3Props> = () => {
             selectionOption={formik.values.acceptSmoking}
             options={smokingOptions}
           />
+          {formik.errors.acceptSmoking && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.acceptSmoking.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <Stack

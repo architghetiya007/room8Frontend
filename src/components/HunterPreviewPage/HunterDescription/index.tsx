@@ -147,6 +147,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
             <Typography
               sx={{
                 fontSize: "46px",
+                fontWeight: "700",
                 background:
                   "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                 backgroundClip: "text",
@@ -178,6 +179,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
           <Typography
             sx={{
               fontSize: "46px",
+              fontWeight: "700",
               background:
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
@@ -323,6 +325,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                   <Typography
                     sx={{
                       fontSize: "46px",
+                      fontWeight: "700",
                       background:
                         "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                       backgroundClip: "text",
@@ -492,6 +495,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                   <Typography
                     sx={{
                       fontSize: "46px",
+                      fontWeight: "700",
                       background:
                         "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                       backgroundClip: "text",
@@ -610,6 +614,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
           <Typography
             sx={{
               fontSize: "46px",
+              fontWeight: "700",
               background:
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",

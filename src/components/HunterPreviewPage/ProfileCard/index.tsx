@@ -25,7 +25,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
           xs: "wrap",
           md: "nowrap",
         },
-        p: 1,
+        p: 2,
       }}
     >
       <Grid container spacing={1}>
@@ -42,11 +42,12 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
             src={previewData.hunterData?.photos ?? ProfilePNG}
           ></Box>
         </Grid>
-        <Grid item xs={12} md={5} pl={2}>
-          <Stack spacing={1}>
+        <Grid item xs={12} md={5}>
+          <Stack spacing={1} pl={1}>
             <Typography
               sx={{
-                fontSize: "46px",
+                fontSize: "36px",
+                fontWeight: '700',
                 background:
                   "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                 backgroundClip: "text",
@@ -55,13 +56,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
             >
               {previewData.hunterData!.name}{" "}
             </Typography>
-            <Typography variant="h6" mt={"0 !important"}>
+            <Typography variant="h6" sx={{fontWeight: '600',fontSize: '20px',color: "#3B3D44"}} mt={"0 !important"}>
               {previewData.hunterData!.age} years old,{" "}
               {previewData.hunterData!.whoAreYou}
             </Typography>
             <Typography
               sx={{
-                fontSize: "40px",
+                fontSize: "36px",
+                fontWeight: '700',
                 background:
                   "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                 backgroundClip: "text",
@@ -73,7 +75,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ previewData }) => {
               {price}{" "}
               zł
             </Typography>
-            <Typography variant="h6" mt={"0 !important"}>
+            <Typography sx={{fontWeight: '600',fontSize: '20px',color: "#3B3D44"}} variant="h6" mt={"0 !important"}>
               Looking for a {previewData?.hunterData!.accommodation} in{" "}
               {previewData?.hunterData!.address?.city}
             </Typography>

@@ -45,12 +45,12 @@ const step2Schema = Yup.object().shape({
   typeOfEmployment: Yup.string().required("TypeOfEmployment is required"),
   areYouSmoking: Yup.string().required("AreYouSmoking is required"),
   anotherPerson: Yup.array().of(anotherPersonSchema),
-  flatmatePreference: Yup.array().of(Yup.string()), // Assuming string values are allowed
+  flatmatePreference: Yup.array().of(Yup.string()).nullable(), // Assuming string values are allowed
   livingWithOwner: Yup.string().required("LivingWithOwner is required"),
   tenantsWithChildren: Yup.string().required("TenantsWithChildren is required"),
   acceptPet: Yup.string().required("AcceptPet is required"),
   acceptSmoking: Yup.string().required("AcceptSmoking is required"),
-  photos: Yup.string().url("Invalid photo URL").required("photos is required"),
+  photos: Yup.string(),
   describeYourSelf: Yup.string().required("Describe your self is required"),
 });
 interface Step2Props {
@@ -119,6 +119,11 @@ const Step2: React.FC<Step2Props> = () => {
         if (response?.status === true) {
           values.photos = response.data[0];
         }
+      } else {
+        if (!advertisementData?.hunterData?.photos) {
+          showSnackBar({ message: "Please select photo", variant: "error" });
+          return;
+        }
       }
       const body = {
         advertiseType: AdvertisementType.HUNTER,
@@ -180,6 +185,9 @@ const Step2: React.FC<Step2Props> = () => {
           flatmatePreference: data!.data!.hunterData
             ?.flatmatePreference as never[],
         });
+        setTimeout(() => {
+          formik.setErrors({});
+        }, 0);
       },
       onError: (error: Error) => {
         showSnackBar({ message: error.message, variant: "error" });
@@ -211,7 +219,7 @@ const Step2: React.FC<Step2Props> = () => {
   useEffect(() => {
     getAdvertisementAPI();
   }, []);
-
+  console.log(formik.errors);
   return (
     <FormikProvider value={formik}>
       <Box component={"form"} onSubmit={formik.handleSubmit}>
@@ -252,6 +260,11 @@ const Step2: React.FC<Step2Props> = () => {
               selectionOption={formik.values.whoAreYou}
               options={whoAreYou}
             />
+            {formik.errors.whoAreYou && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.whoAreYou.toString()}
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
             <Stack direction={"column"} spacing={1}>
@@ -262,6 +275,11 @@ const Step2: React.FC<Step2Props> = () => {
                 fullWidth
                 placeholder="Your Name"
               />
+              {formik.errors.name && (
+                <FormHelperText sx={{ color: "red" }}>
+                  {formik.errors.name.toString()}
+                </FormHelperText>
+              )}
             </Stack>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -296,6 +314,11 @@ const Step2: React.FC<Step2Props> = () => {
               selectionOption={formik.values.withChild}
               options={yesNoOptions}
             />
+            {formik.errors.withChild && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.withChild.toString()}
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={12}>
             <CommanTypography title={t("havePetQuestion")} />
@@ -308,6 +331,11 @@ const Step2: React.FC<Step2Props> = () => {
               selectionOption={formik.values.havePet}
               options={yesNoOptions}
             />
+            {formik.errors.havePet && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.havePet.toString()}
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={12}>
             <CommanTypography title={t("typeOfEmploymentQuestion")} />
@@ -331,6 +359,11 @@ const Step2: React.FC<Step2Props> = () => {
                 ))}
               </Select>
             </FormControl>
+            {formik.errors.typeOfEmployment && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.typeOfEmployment.toString()}
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={12}>
             <CommanTypography title={t("areYouSmokingQuestion")} />
@@ -343,6 +376,11 @@ const Step2: React.FC<Step2Props> = () => {
               selectionOption={formik.values.areYouSmoking}
               options={smokingOptions}
             />
+            {formik.errors.areYouSmoking && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.areYouSmoking.toString()}
+              </FormHelperText>
+            )}
           </Grid>
           {(formik.values.whoAreYou === "GROUP_FRIEND" ||
             formik.values.whoAreYou === "COUPLE") && (
@@ -504,6 +542,11 @@ const Step2: React.FC<Step2Props> = () => {
               selectionOption={formik.values?.flatmatePreference ?? []}
               options={iamAcceptingOptions}
             />
+            {formik.errors.flatmatePreference && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.flatmatePreference.toString()}
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={12}>
             <CommanTypography title={t("livingWithOwnerQuestion")} />
@@ -516,6 +559,11 @@ const Step2: React.FC<Step2Props> = () => {
               selectionOption={formik.values.livingWithOwner}
               options={commanPreferenceOptions}
             />
+            {formik.errors.livingWithOwner && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.livingWithOwner.toString()}
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={12}>
             <CommanTypography title={t("tenantsWithChildrenQuestion")} />
@@ -528,6 +576,11 @@ const Step2: React.FC<Step2Props> = () => {
               selectionOption={formik.values.tenantsWithChildren}
               options={commanPreferenceOptions}
             />
+            {formik.errors.tenantsWithChildren && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.tenantsWithChildren.toString()}
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={12}>
             <CommanTypography title={t("acceptPetQuestion")} />
@@ -540,6 +593,11 @@ const Step2: React.FC<Step2Props> = () => {
               selectionOption={formik.values.acceptPet}
               options={commanPreferenceOptions}
             />
+            {formik.errors.acceptPet && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.acceptPet.toString()}
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={12}>
             <CommanTypography title={t("acceptSmokingQuestion")} />
@@ -552,6 +610,11 @@ const Step2: React.FC<Step2Props> = () => {
               selectionOption={formik.values.acceptSmoking}
               options={smokingOptions}
             />
+            {formik.errors.acceptSmoking && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.acceptSmoking.toString()}
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={12}>
             <Box sx={{ borderBottom: "1px solid black" }}></Box>
@@ -634,6 +697,11 @@ const Step2: React.FC<Step2Props> = () => {
                 formik.setFieldValue("describeYourSelf", e.target.value)
               }
             />
+            {formik.errors.describeYourSelf && (
+              <FormHelperText sx={{ color: "red" }}>
+                {formik.errors.describeYourSelf.toString()}
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
             <OutlinedButton

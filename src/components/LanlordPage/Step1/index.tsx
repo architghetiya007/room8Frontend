@@ -53,11 +53,11 @@ const landlordSchema = Yup.object().shape({
   floor: Yup.number()
     .min(0, "Floor must be non-negative")
     .max(100, "Floor should be 100")
-    .nullable(),
+    .required("Floor Required"),
   numberOfFloor: Yup.number()
     .min(0, "Number of floor must be non-negative")
     .max(100, "Number of floor should be 100")
-    .nullable(),
+    .required("Number of Floor Required"),
   liftInBuilding: Yup.string().required("Lift in building is required"),
   IsApartmentFurnished: Yup.string().required(
     "Is apartment furnished is required"
@@ -124,8 +124,8 @@ const Step1: React.FC<Step1Props> = () => {
   } = useLandlord();
   const formik = useFormik<PropertyFormValues>({
     initialValues: {
-      propertyOffer: "ENTIREROOM",
-      typeofProperty: "FLAT",
+      propertyOffer: "",
+      typeofProperty: "",
       address: {
         streetNumber: "",
         streetName: "",
@@ -137,18 +137,18 @@ const Step1: React.FC<Step1Props> = () => {
         formattedAddress: "",
         coordinates: [],
       },
-      doYouLiveHere: "YES",
-      ownerLiveHere: "YES",
-      howmanyPeopleLive: "02",
+      doYouLiveHere: "",
+      ownerLiveHere: "",
+      howmanyPeopleLive: "",
       propertySize: 0,
-      roomsAmount: "01",
-      floor: "01",
+      roomsAmount: "",
+      floor: "",
       numberOfFloor: "",
-      liftInBuilding: "YES",
-      IsApartmentFurnished: "FULLY",
-      kitchen: "SEPARATE",
-      parking: "DEDICATED",
-      balconyInApartment: "YES",
+      liftInBuilding: "",
+      IsApartmentFurnished: "",
+      kitchen: "",
+      parking: "",
+      balconyInApartment: "",
     },
     validationSchema: landlordSchema,
     onSubmit: (values) => {
@@ -201,6 +201,9 @@ const Step1: React.FC<Step1Props> = () => {
           ...formik.values,
           ...data!.data.landlordData,
         });
+        setTimeout(() => {
+          formik.setErrors({});
+        }, 0);
       },
       onError: (error: Error) => {
         showSnackBar({ message: error.message, variant: "error" });
@@ -253,6 +256,11 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.propertyOffer}
             options={propertyOfferOptions}
           />
+          {formik.errors.propertyOffer && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.propertyOffer.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.typeOfProperty")} />
@@ -265,6 +273,11 @@ const Step1: React.FC<Step1Props> = () => {
             selectionOption={formik.values.typeofProperty}
             options={propertyTypes}
           />
+          {formik.errors.typeofProperty && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.typeofProperty.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.addressofPlace")} />
@@ -316,6 +329,11 @@ const Step1: React.FC<Step1Props> = () => {
                 }}
                 selectionOption={formik.values.doYouLiveHere}
               />
+              {formik.errors.doYouLiveHere && (
+                <FormHelperText sx={{ color: "red" }}>
+                  {formik.errors.doYouLiveHere.toString()}
+                </FormHelperText>
+              )}
             </Grid>
             <Grid item xs={12}>
               <CommanTypography title={t("landlordQ.liveOwenerHere")} />
@@ -328,6 +346,11 @@ const Step1: React.FC<Step1Props> = () => {
                 }}
                 selectionOption={formik.values.ownerLiveHere}
               />
+              {formik.errors.ownerLiveHere && (
+                <FormHelperText sx={{ color: "red" }}>
+                  {formik.errors.ownerLiveHere.toString()}
+                </FormHelperText>
+              )}
             </Grid>
             <Grid item xs={12}>
               <CommanTypography
@@ -342,6 +365,11 @@ const Step1: React.FC<Step1Props> = () => {
                 }}
                 selectionOption={formik.values.howmanyPeopleLive}
               />
+              {formik.errors.howmanyPeopleLive && (
+                <FormHelperText sx={{ color: "red" }}>
+                  {formik.errors.howmanyPeopleLive.toString()}
+                </FormHelperText>
+              )}
             </Grid>
           </>
         )}
@@ -384,6 +412,11 @@ const Step1: React.FC<Step1Props> = () => {
             }}
             selectionOption={formik.values.roomsAmount}
           />
+          {formik.errors.roomsAmount && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.roomsAmount.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         {formik.values.typeofProperty !== "HOUSE" && (
           <Grid item xs={12}>
@@ -457,6 +490,11 @@ const Step1: React.FC<Step1Props> = () => {
                 }}
                 selectionOption={formik.values.liftInBuilding}
               />
+              {formik.errors.liftInBuilding && (
+                <FormHelperText sx={{ color: "red" }}>
+                  {formik.errors.liftInBuilding.toString()}
+                </FormHelperText>
+              )}
             </Grid>
           </>
         )}
@@ -472,6 +510,11 @@ const Step1: React.FC<Step1Props> = () => {
             }}
             selectionOption={formik.values.IsApartmentFurnished}
           />
+          {formik.errors.IsApartmentFurnished && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.IsApartmentFurnished.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.kitchen")} />
@@ -484,6 +527,11 @@ const Step1: React.FC<Step1Props> = () => {
             }}
             selectionOption={formik.values.kitchen}
           />
+          {formik.errors.kitchen && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.kitchen.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.parking")} />
@@ -496,6 +544,11 @@ const Step1: React.FC<Step1Props> = () => {
             }}
             selectionOption={formik.values.parking}
           />
+          {formik.errors.parking && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.parking.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.balconyIntheApartment")} />
@@ -508,6 +561,11 @@ const Step1: React.FC<Step1Props> = () => {
             }}
             selectionOption={formik.values.balconyInApartment}
           />
+          {formik.errors.balconyInApartment && (
+            <FormHelperText sx={{ color: "red" }}>
+              {formik.errors.balconyInApartment.toString()}
+            </FormHelperText>
+          )}
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
@@ -519,6 +577,7 @@ const Step1: React.FC<Step1Props> = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
+            disabled={!formik.isValid}
             loading={
               createAdvertisementMutation.isPending ||
               updateAdvertisementMutation.isPending

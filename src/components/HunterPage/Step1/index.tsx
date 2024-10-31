@@ -273,6 +273,9 @@ const Step1: React.FC<Step1Props> = () => {
           ...formik.values,
           ...data!.data.hunterData,
         });
+        setTimeout(() => {
+          formik.setErrors({});
+        }, 0);
       },
       onError: (error: Error) => {
         showSnackBar({ message: error.message, variant: "error" });
