@@ -1,33 +1,24 @@
 import { Box, Chip, Container, Typography, useTheme } from "@mui/material";
-import React from "react";
-
-interface CityProps {
-  city: string;
-}
-
-const CityData: CityProps[] = [
-  {
-    city: "Warsaw (1200)",
-  },
-  {
-    city: "Gdansk (732)",
-  },
-  {
-    city: "Wroclaw (326)",
-  },
-  {
-    city: "Poznan (480)",
-  },
-  {
-    city: "Krakow (213)",
-  },
-  {
-    city: "Lubin (79)",
-  },
-];
+import React, { useEffect, useState } from "react";
+import useAdvertisementMutations from "../../../mutations/advertisement";
+import { CityDTO } from "../../../types/advertisement";
 
 const CitySection: React.FC = () => {
+  const { topCitiesMutation } = useAdvertisementMutations();
+  const [cities, setCities] = useState<CityDTO[]>([]);
   const theme = useTheme();
+
+  const fetchCities = () => {
+    topCitiesMutation.mutate(undefined, {
+      onSuccess: (data) => {
+        setCities(data?.data ?? []);
+      },
+    });
+  };
+
+  useEffect(() => {
+    fetchCities();
+  }, []);
   return (
     <Box
       sx={{
@@ -73,10 +64,10 @@ const CitySection: React.FC = () => {
               },
             }}
           >
-            {CityData.map((item) => {
+            {cities.map((item) => {
               return (
                 <Chip
-                  key={item.city}
+                  key={item._id}
                   sx={{
                     m: 1,
                     px: {
@@ -92,7 +83,7 @@ const CitySection: React.FC = () => {
                   }}
                   label={
                     <Typography sx={{ color: "#6D778A" }}>
-                      {item.city}
+                      {item._id} ({item.totalCityCount})
                     </Typography>
                   }
                 ></Chip>

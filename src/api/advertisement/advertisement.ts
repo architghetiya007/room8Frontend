@@ -2,6 +2,7 @@ import {
   AdvertisementRequestDTO,
   AdvertisementResponseDTO,
   AdvertisementStatusRequestDTO,
+  CitiesResponseDTO,
   ListAdvertisementResponseDTO,
 } from "../../types/advertisement";
 import { BaseResponse } from "../../types/comman/BaseResponse";
@@ -95,6 +96,17 @@ const deleteAdvertisementAPI = async (advertisementId: string) => {
   }
 };
 
+const getTopCitiesAPI = async () => {
+  try {
+    const response = await axiosInstance.get<CitiesResponseDTO>(
+      apiPaths.ADVERTISEMENT.getCities,
+    );
+    return response.data;
+  } catch (error) {
+    getErrorMessage(error);
+  }
+}
+
 export {
   createAdvertisementAPI,
   updateAdvertisementAPI,
@@ -102,5 +114,6 @@ export {
   getAllAdvertisementAPI,
   updateStatusAdvertisementAPI,
   getUserAdvertisementAPI,
-  deleteAdvertisementAPI
+  deleteAdvertisementAPI,
+  getTopCitiesAPI
 };

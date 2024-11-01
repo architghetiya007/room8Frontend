@@ -149,3 +149,11 @@ export interface AdvertisementStatusRequestDTO {
   id: string;
   isActive: boolean;
 }
+
+export interface CityDTO {
+  _id: string;
+  totalCityCount: number;
+}
+export interface CitiesResponseDTO extends BaseResponse {
+  data: CityDTO[]
+}

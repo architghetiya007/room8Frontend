@@ -4,6 +4,7 @@ import {
   deleteAdvertisementAPI,
   getAdvertisementAPI,
   getAllAdvertisementAPI,
+  getTopCitiesAPI,
   getUserAdvertisementAPI,
   updateAdvertisementAPI,
   updateStatusAdvertisementAPI,
@@ -46,6 +47,10 @@ const useAdvertisementMutations = () => {
     mutationFn: deleteAdvertisementAPI,
   });
 
+  const topCitiesMutation = useMutation({
+    mutationFn: getTopCitiesAPI
+  })
+
   return {
     createAdvertisementMutation,
     getAdvertisementMutation,
@@ -53,7 +58,8 @@ const useAdvertisementMutations = () => {
     getAllAdvertisementMutation,
     updateStatusAdvertisementMutation,
     getUserAdvertisementMutation,
-    deleteAdvertisementMutation
+    deleteAdvertisementMutation,
+    topCitiesMutation
   };
 };
 
