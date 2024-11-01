@@ -1,11 +1,11 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import { AdvertisementData } from "../../types/advertisement";
-import MONTHiMG from "../../assets/hunter/6_MONTH.png";
 import AvailableImg from "../../assets/hunter/AVAILABLE.png";
 import dayjs from "dayjs";
 import useCommonTranslation from "../../hooks/useCommonTranslation";
 import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
 import ImageSlider from "./ImageSlider";
+import DEPOSIT from "../../assets/landlord/deposit.png";
 interface LandlordProfileCardProps {
   previewData: AdvertisementData;
 }
@@ -80,7 +80,9 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
                   gap: 2,
                 }}
               >
-                <Typography>
+                <Typography
+                  sx={{ color: "#3B3D44", fontSize: "18px", fontWeight: "600" }}
+                >
                   {previewData?.landlordData?.isAvailableNow
                     ? "Available Immediately"
                     : previewData?.landlordData?.dateAvailable
@@ -107,13 +109,15 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
                   gap: 2,
                 }}
               >
-                <Typography>
+                <Typography
+                  sx={{ color: "#3B3D44", fontSize: "18px", fontWeight: "600" }}
+                >
                   Deposit: {previewData.landlordData?.deposit} zl
                 </Typography>
                 <Box
                   sx={{ width: "25px", height: "25px" }}
                   component={"img"}
-                  src={MONTHiMG}
+                  src={DEPOSIT}
                 ></Box>
               </Box>
             </Grid>
@@ -174,10 +178,9 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
                   gap: 1,
                 }}
               >
-                <Typography>
+                <Typography sx={{ color: "#3B3D44", fontSize: '18px',fontWeight: '600'}}>
                   Minimum Stay:{" "}
                   {t(`duration.${previewData?.landlordData?.minimumStay}`)}{" "}
-                  months
                 </Typography>
                 <Box
                   sx={{ width: "25px", height: "25px" }}

@@ -10,7 +10,7 @@ import BATHROOM from "../../../assets/hunter/BATHROOM.png";
 import FURNISHED from "../../../assets/hunter/FURNISHED.png";
 import HYBRID_WORK from "../../../assets/hunter/HYBRID_WORK.png";
 import KITCHEN from "../../../assets/hunter/KITCHEN.png";
-import LIFT from "../../../assets/hunter/LIFT.png";
+// import LIFT from "../../../assets/hunter/LIFT.png";
 import LIVING_WITH_OWNER from "../../../assets/hunter/LIVING_WITH_OWNER.png";
 import MAXIMUM_FLATMATES from "../../../assets/hunter/MAXIMUM_FLATMATES.png";
 import MINIMUM_PROPERY_SIZE from "../../../assets/hunter/MINIMUM_PROPERY_SIZE.png";
@@ -37,6 +37,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+import PreviewTypography from "../../comman/PreviewTypography";
 interface HunterDescriptionProps {
   updateStatusAPI: () => void;
   loading: boolean;
@@ -199,31 +200,29 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                     sx={{ width: "25px", height: "25px" }}
                     src={HYBRID_WORK}
                   ></Box>
-                  <Typography
-                    sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-                  >
-                    {t(
+                  <PreviewTypography
+                    title={t(
                       `typeofEmployment.${previewData.hunterData?.typeOfEmployment}`
                     )}
-                  </Typography>
+                  />
                 </Box>
               </Grid>
             )}
 
             <Grid item xs={12} md={2}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Box
                   component={"img"}
                   sx={{ width: "25px", height: "25px" }}
                   src={WITH_CHILDREN}
                 ></Box>
-                <Typography
-                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-                >
-                  {previewData.hunterData?.withChild
-                    ? "With Children"
-                    : "No Children"}
-                </Typography>
+                <PreviewTypography
+                  title={
+                    previewData.hunterData?.withChild
+                      ? "With Children"
+                      : "No Children"
+                  }
+                />
               </Box>
             </Grid>
             <Grid item xs={12} md={2}>
@@ -233,13 +232,13 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                   sx={{ width: "25px", height: "25px" }}
                   src={SMOKER}
                 ></Box>
-                <Typography
-                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-                >
-                  {previewData.hunterData?.areYouSmoking
-                    ? "Smoker"
-                    : "Not a Smoker"}
-                </Typography>
+                <PreviewTypography
+                  title={
+                    previewData.hunterData?.areYouSmoking
+                      ? "Smoker"
+                      : "Not a Smoker"
+                  }
+                />
               </Box>
             </Grid>
             <Grid item xs={12} md={2}>
@@ -249,13 +248,13 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                   sx={{ width: "25px", height: "25px" }}
                   src={ANIMAL}
                 ></Box>
-                <Typography
-                  sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-                >
-                  {previewData.hunterData?.acceptPet
-                    ? "Animal"
-                    : "Not a Animal"}
-                </Typography>
+                <PreviewTypography
+                  title={
+                    previewData.hunterData?.acceptPet
+                      ? "Animal"
+                      : "Not a Animal"
+                  }
+                />
               </Box>
             </Grid>
           </Grid>
@@ -342,16 +341,12 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       component={"img"}
                       src={MINIMUM_PROPERY_SIZE}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Minimum property size:{" "}
-                      {previewData.hunterData?.minimumPropertySize} (m²)
-                    </Typography>
+                    <PreviewTypography
+                      title={"Minimum property size: "}
+                      desc={
+                        previewData.hunterData?.minimumPropertySize + " (m²)"
+                      }
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -361,16 +356,12 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       sx={{ width: "25px", height: "25px" }}
                       src={MAXIMUM_FLATMATES}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Maximum flatmates:{" "}
-                      {previewData.hunterData?.minimumNumberOfTenants}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Maximum flatmates: "}
+                      desc={t(
+                        `tenants.${previewData.hunterData?.maximumNumberOfpeople}`
+                      )}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -380,16 +371,13 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       component={"img"}
                       src={NUMBER_OF_ROOMS}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Minimum number of rooms:{" "}
-                      {previewData.hunterData?.minimumRoomSize}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Minimum number of rooms: "}
+                      desc={
+                        previewData.hunterData?.minimumRoomSize?.toString() ??
+                        ""
+                      }
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -399,16 +387,12 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       component={"img"}
                       src={FURNISHED}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Furnished:{" "}
-                      {t(`commanOptions.${previewData.hunterData?.furnished}`)}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Furnished: "}
+                      desc={t(
+                        `commanOptions.${previewData.hunterData?.furnished}`
+                      )}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -418,18 +402,14 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       component={"img"}
                       src={PARKING}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Parking:{" "}
-                      {previewData.hunterData?.parking
-                        ?.map((item) => t(`parking.${item}`))
-                        .toString()}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Parking: "}
+                      desc={t(
+                        `${previewData.hunterData?.parking
+                          ?.map((item) => t(`parking.${item}`))
+                          .toString()}`
+                      )}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -439,35 +419,27 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       component={"img"}
                       src={KITCHEN}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Kitchen: {t(`kitchen.${previewData.hunterData?.kitchen}`)}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Kitchen: "}
+                      desc={t(`kitchen.${previewData.hunterData?.kitchen}`)}
+                    />
                   </Box>
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                     <Box
                       sx={{ width: "25px", height: "25px" }}
                       component={"img"}
                       src={LIFT}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Lift: {previewData.hunterData?.minimumNumberOfTenants}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Lift: "}
+                      desc={
+                        previewData.hunterData?.minimumNumberOfTenants ?? ""
+                      }
+                    />
                   </Box>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                     <Box
@@ -475,16 +447,12 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       component={"img"}
                       src={BALCONY_PROPERTY}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Balcony in the property:
-                      {t(`commanOptions.${previewData.hunterData?.balcony}`)}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Balcony in the property: "}
+                      desc={t(
+                        `commanOptions.${previewData.hunterData?.balcony}`
+                      )}
+                    />
                   </Box>
                 </Grid>
               </Grid>
@@ -512,16 +480,10 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       component={"img"}
                       src={ROOM_SIZE}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Minimum room size:{" "}
-                      {previewData.hunterData?.minimumRoomSize} (m²)
-                    </Typography>
+                    <PreviewTypography
+                      title={"Minimum room size: "}
+                      desc={previewData.hunterData?.minimumRoomSize + " (m²)"}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -531,16 +493,12 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       sx={{ width: "25px", height: "25px" }}
                       src={MAXIMUM_FLATMATES}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Maximum number of tenants:{" "}
-                      {previewData.hunterData?.minimumNumberOfTenants}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Maximum number of tenants: "}
+                      desc={t(
+                        `tenants.${previewData.hunterData?.minimumNumberOfTenants}`
+                      )}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -550,18 +508,12 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       component={"img"}
                       src={FURNISHED}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Furnished:{" "}
-                      {t(
+                    <PreviewTypography
+                      title={"Furnished: "}
+                      desc={t(
                         `commanOptions.${previewData.hunterData?.furnishedRoom}`
                       )}
-                    </Typography>
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -571,18 +523,12 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       component={"img"}
                       src={BALCONY_PROPERTY}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Balcony in the room:{" "}
-                      {t(
+                    <PreviewTypography
+                      title={"Balcony in the room: "}
+                      desc={t(
                         `commanOptions.${previewData.hunterData?.balconyInRoom}`
                       )}
-                    </Typography>
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -592,17 +538,13 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       component={"img"}
                       src={BATHROOM}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      {previewData.hunterData?.privateBathroom
-                        ? "Private Bathroom"
-                        : "Shared Bathroom"}
-                    </Typography>
+                    <PreviewTypography
+                      title={
+                        previewData.hunterData?.privateBathroom
+                          ? "Private Bathroom"
+                          : "Shared Bathroom"
+                      }
+                    />
                   </Box>
                 </Grid>
               </Grid>
@@ -631,11 +573,11 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
               sx={{ width: "25px", height: "25px" }}
               src={WOMAN_MAN}
             ></Box>
-            <Typography
-              sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-            >
-              {t(`accommodation.${previewData!.hunterData!.accommodation}`)}
-            </Typography>
+            <PreviewTypography
+              title={t(
+                `accommodation.${previewData!.hunterData!.accommodation}`
+              )}
+            />
           </Box>
         </Grid>
         <Grid item xs={12} mb={1}>
@@ -645,12 +587,12 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
               sx={{ width: "25px", height: "25px" }}
               src={LIVING_WITH_OWNER}
             ></Box>
-            <Typography
-              sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-            >
-              Living with owner?:{" "}
-              {t(`commanOptions.${previewData.hunterData?.livingWithOwner}`)}
-            </Typography>
+            <PreviewTypography
+              title={"Living with owner? : "}
+              desc={t(
+                `commanOptions.${previewData.hunterData?.livingWithOwner}`
+              )}
+            />
           </Box>
         </Grid>
         <Grid item xs={12} mb={1}>
@@ -660,13 +602,13 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
               sx={{ width: "25px", height: "25px" }}
               src={WITH_CHILDREN}
             ></Box>
-            <Typography
-              sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-            >
-              {previewData.hunterData?.withChild
-                ? "With Children"
-                : "Without children"}
-            </Typography>
+            <PreviewTypography
+              title={
+                previewData.hunterData?.withChild
+                  ? "With Children"
+                  : "Without children"
+              }
+            />
           </Box>
         </Grid>
         <Grid item xs={12} mb={1}>
@@ -676,13 +618,13 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
               sx={{ width: "25px", height: "25px" }}
               src={SMOKER}
             ></Box>
-            <Typography
-              sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-            >
-              {previewData.hunterData?.acceptSmoking
-                ? "Smoker"
-                : "Not a smoker"}
-            </Typography>
+            <PreviewTypography
+              title={
+                previewData.hunterData?.acceptSmoking
+                  ? "Smoker"
+                  : "Not a smoker"
+              }
+            />
           </Box>
         </Grid>
         <Grid item xs={12}>
@@ -692,13 +634,13 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
               sx={{ width: "25px", height: "25px" }}
               src={ANIMAL}
             ></Box>
-            <Typography
-              sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
-            >
-              {previewData.hunterData?.acceptPet
-                ? "Pets accepted"
-                : "Pets not accepted"}
-            </Typography>
+            <PreviewTypography
+              title={
+                previewData.hunterData?.acceptPet
+                  ? "Pets accepted"
+                  : "Pets not accepted"
+              }
+            />
           </Box>
         </Grid>
         {previewData?.userId && userSlice?.user?._id === previewData.userId && (

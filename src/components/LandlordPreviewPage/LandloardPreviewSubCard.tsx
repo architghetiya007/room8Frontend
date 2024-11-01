@@ -1,9 +1,9 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { AdvertisementData } from "../../types/advertisement";
-import ANIMAL from "../../assets/hunter/ANIMAL.png";
-import HYBRID_WORK from "../../assets/hunter/HYBRID_WORK.png";
-import WITH_CHILDREN from "../../assets/hunter/WITH_CHILDREN.png";
-import SMOKER from "../../assets/hunter/SMOKER.png";
+import ROOMSIZE from "../../assets/landlord/roomsize.png";
+import PROPERTY from "../../assets/landlord/property.png";
+import ROOMS from "../../assets/landlord/rooms.png";
+import flatmates from "../../assets/landlord/flatmates.png";
 interface LandlordPreviewDescriptionProps {
   previewData: AdvertisementData;
 }
@@ -32,10 +32,17 @@ const LandloardPreviewSubCard: React.FC<LandlordPreviewDescriptionProps> = ({
               <Box
                 component={"img"}
                 sx={{ width: "25px", height: "25px" }}
-                src={HYBRID_WORK}
+                src={ROOMSIZE}
               ></Box>
               <Typography
-                sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
+                sx={{
+                  border: "1px solid #FBE0EA",
+                  borderRadius: 2,
+                  p: 1,
+                  color: "#3B3D44",
+                  fontSize: "18px",
+                  fontWeight: "600",
+                }}
               >
                 room: {previewData.landlordData?.roomSize} (m²)
               </Typography>
@@ -46,10 +53,17 @@ const LandloardPreviewSubCard: React.FC<LandlordPreviewDescriptionProps> = ({
               <Box
                 component={"img"}
                 sx={{ width: "25px", height: "25px" }}
-                src={WITH_CHILDREN}
+                src={PROPERTY}
               ></Box>
               <Typography
-                sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
+                sx={{
+                  border: "1px solid #FBE0EA",
+                  borderRadius: 2,
+                  p: 1,
+                  color: "#3B3D44",
+                  fontSize: "18px",
+                  fontWeight: "600",
+                }}
               >
                 property: {previewData.landlordData?.propertySize} (m²)
               </Typography>
@@ -60,10 +74,17 @@ const LandloardPreviewSubCard: React.FC<LandlordPreviewDescriptionProps> = ({
               <Box
                 component={"img"}
                 sx={{ width: "25px", height: "25px" }}
-                src={SMOKER}
+                src={ROOMS}
               ></Box>
               <Typography
-                sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
+                sx={{
+                  border: "1px solid #FBE0EA",
+                  borderRadius: 2,
+                  p: 1,
+                  color: "#3B3D44",
+                  fontSize: "18px",
+                  fontWeight: "600",
+                }}
               >
                 {previewData.landlordData?.roomsAmount} rooms
               </Typography>
@@ -74,10 +95,17 @@ const LandloardPreviewSubCard: React.FC<LandlordPreviewDescriptionProps> = ({
               <Box
                 component={"img"}
                 sx={{ width: "25px", height: "25px" }}
-                src={ANIMAL}
+                src={flatmates}
               ></Box>
               <Typography
-                sx={{ border: "1px solid #FBE0EA", borderRadius: 2, p: 1 }}
+                sx={{
+                  border: "1px solid #FBE0EA",
+                  borderRadius: 2,
+                  p: 1,
+                  color: "#3B3D44",
+                  fontSize: "18px",
+                  fontWeight: "600",
+                }}
               >
                 {previewData?.landlordData?.howmanyPeopleLive} flatmates
               </Typography>

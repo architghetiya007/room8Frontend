@@ -46,7 +46,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
   loading,
   updateStatusAPI,
 }) => {
-  const [isChatLoading ,setIsChatLoading] = useState(false);
+  const [isChatLoading, setIsChatLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const { t } = useCommonTranslation();
   const userSlice = useSelector((state: RootState) => state.user);
@@ -144,24 +144,29 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
         <Grid item xs={12}>
           <Typography
             sx={{
-              fontSize: "46px",
               background:
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
+              fontSize: "45px",
+              fontWeight: "700",
             }}
           >
             I'm looking for a flatmate to my apartment
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5" fontWeight={"bold"}>
+          <Typography
+            sx={{ fontWeight: "700", color: "#3B3D44", fontSize: "26px" }}
+          >
             Few words about myself:
           </Typography>
         </Grid>
         <Grid item xs={12} md={7}>
           <Box sx={{ p: 1 }}>
-            <Typography variant="h6">
+            <Typography
+              sx={{ fontWeight: "450", fontSize: "22px", color: "#5E646F" }}
+            >
               {previewData.landlordData?.descriptionAbout}
             </Typography>
           </Box>
@@ -190,7 +195,8 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
               <Box sx={{ ml: 1 }}>
                 <Typography
                   sx={{
-                    fontSize: "30px",
+                    fontSize: "26px",
+                    fontWeight: "700",
                     background:
                       "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                     backgroundClip: "text",
@@ -199,7 +205,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                 >
                   {previewData.landlordData?.currentTenantsName}
                 </Typography>
-                <Typography variant="h6">
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: "600", color: "#3B3D44" }}
+                >
                   {previewData.landlordData?.age} years old <br />
                   {previewData.landlordData?.name}
                 </Typography>
@@ -219,31 +228,15 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                         border: "1px solid #FBE0EA",
                         borderRadius: 2,
                         p: 1,
+                        fontWeight: "600",
+                        fontSize: "20px",
+                        color: "#3B3D44",
                       }}
                     >
+                      I{" "}
                       {t(
                         `typeofEmployment.${previewData.landlordData?.typeOfEmployment}`
                       )}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <Box
-                      component={"img"}
-                      sx={{ width: "25px", height: "25px" }}
-                      src={WITH_CHILDREN}
-                    ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      {previewData.landlordData?.haveAnyChildren
-                        ? "With Children"
-                        : "No Children"}
                     </Typography>
                   </Box>
                 </Grid>
@@ -259,11 +252,15 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                         border: "1px solid #FBE0EA",
                         borderRadius: 2,
                         p: 1,
+                        fontWeight: "600",
+                        fontSize: "20px",
+                        color: "#3B3D44",
                       }}
                     >
+                      I{" "}
                       {previewData.landlordData?.tenantsSmoking
-                        ? "Smoker"
-                        : "Not a Smoker"}
+                        ? "smoke"
+                        : "don't smoke"}
                     </Typography>
                   </Box>
                 </Grid>
@@ -279,11 +276,39 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                         border: "1px solid #FBE0EA",
                         borderRadius: 2,
                         p: 1,
+                        fontWeight: "600",
+                        fontSize: "20px",
+                        color: "#3B3D44",
                       }}
                     >
+                      I{" "}
                       {previewData.hunterData?.havePet
-                        ? "Animal"
-                        : "Not a Animal"}
+                        ? "have Animal"
+                        : "don't have Animal"}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <Box
+                      component={"img"}
+                      sx={{ width: "25px", height: "25px" }}
+                      src={WITH_CHILDREN}
+                    ></Box>
+                    <Typography
+                      sx={{
+                        border: "1px solid #FBE0EA",
+                        borderRadius: 2,
+                        p: 1,
+                        fontWeight: "600",
+                        fontSize: "20px",
+                        color: "#3B3D44",
+                      }}
+                    >
+                      I{" "}
+                      {previewData.landlordData?.haveAnyChildren
+                        ? "have Children"
+                        : "don't have Children"}
                     </Typography>
                   </Box>
                 </Grid>
@@ -295,7 +320,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                 <>
                   <Typography variant="h4">Write a Message</Typography>
                   <OutlinedInput
-                  disabled={isChatLoading}
+                    disabled={isChatLoading}
                     onChange={(e) => setNewMessage(e.target.value)}
                     value={newMessage}
                     placeholder="Your Message"
@@ -303,7 +328,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                     minRows={4}
                   />
                   <LoadingButton
-                   loading={isChatLoading}
+                    loading={isChatLoading}
                     sx={{
                       background:
                         "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
@@ -341,7 +366,8 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
           >
             <Typography
               sx={{
-                fontSize: "46px",
+                fontSize: "45px",
+                fontWeight: "700",
                 background:
                   "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                 backgroundClip: "text",
@@ -350,7 +376,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
             >
               A few words about the apartment
             </Typography>
-            <Typography variant="body1">
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: "450", fontSize: "22px", color: "#5E646F" }}
+            >
               {previewData.landlordData?.descriptionOfFlat}
             </Typography>
           </Stack>
@@ -362,7 +391,8 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                 <Grid item xs={12}>
                   <Typography
                     sx={{
-                      fontSize: "46px",
+                      fontSize: "45px",
+                      fontWeight: "700",
                       background:
                         "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                       backgroundClip: "text",
@@ -532,7 +562,8 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                 <Grid item xs={12}>
                   <Typography
                     sx={{
-                      fontSize: "46px",
+                      fontSize: "45px",
+                      fontWeight: "700",
                       background:
                         "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                       backgroundClip: "text",
@@ -681,7 +712,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                 spacing={2}
               >
                 <Typography variant="h4">Write a Message</Typography>
-                <OutlinedInput 
+                <OutlinedInput
                   disabled={isChatLoading}
                   onChange={(e) => setNewMessage(e.target.value)}
                   value={newMessage}
@@ -690,7 +721,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                   minRows={4}
                 />
                 <LoadingButton
-                 loading={isChatLoading}
+                  loading={isChatLoading}
                   sx={{
                     background:
                       "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
