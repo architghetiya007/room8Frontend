@@ -1,9 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, Grid, OutlinedInput, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
-import OutlinedButton from "../../comman/OutlinedButton";
-import CustomLoadingButton from "../../comman/CustomLoadingButton";
-import { AdvertisementData } from "../../../types/advertisement";
 import ANIMAL from "../../../assets/hunter/ANIMAL.png";
 import BALCONY_PROPERTY from "../../../assets/hunter/BALCONY_PROPERTY.png";
 import BATHROOM from "../../../assets/hunter/BATHROOM.png";
@@ -20,11 +17,6 @@ import PARKING from "../../../assets/hunter/PARKING.png";
 import SMOKER from "../../../assets/hunter/SMOKER.png";
 import WITH_CHILDREN from "../../../assets/hunter/WITH_CHILDREN.png";
 import WOMAN_MAN from "../../../assets/hunter/WOMAN_MAN.png";
-import useCommonTranslation from "../../../hooks/useCommonTranslation";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
-import { useNavigate } from "react-router-dom";
-import { db } from "../../../firebase";
 import {
   addDoc,
   collection,
@@ -37,7 +29,15 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import PreviewTypography from "../../comman/PreviewTypography";
+import PreviewTypography from "../comman/PreviewTypography";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { db } from "../../firebase";
+import useCommonTranslation from "../../hooks/useCommonTranslation";
+import { RootState } from "../../store";
+import { AdvertisementData } from "../../types/advertisement";
+import CustomLoadingButton from "../comman/CustomLoadingButton";
+import OutlinedButton from "../comman/OutlinedButton";
 interface HunterDescriptionProps {
   updateStatusAPI: () => void;
   loading: boolean;
@@ -159,7 +159,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
             </Typography>
           </Grid>
         )}
-        {previewData!.hunterData!.anotherPerson!.map((item) => {
+        {previewData!.hunterData!.anotherPerson!.map((item: any) => {
           return (
             <Box key={item.name} pl={1}>
               <Grid item xs={12}>
@@ -283,7 +283,12 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                 }}
                 spacing={2}
               >
-                <Typography sx={{fontSize: '20px',fontWeight: '600',color: "#3B3D44"}} variant="h4">Write a Message</Typography>
+                <Typography
+                  sx={{ fontSize: "20px", fontWeight: "600", color: "#3B3D44" }}
+                  variant="h4"
+                >
+                  coordinate Message
+                </Typography>
                 <OutlinedInput
                   disabled={isChatLoading}
                   onChange={(e) => setNewMessage(e.target.value)}
@@ -406,7 +411,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                       title={"Parking: "}
                       desc={t(
                         `${previewData.hunterData?.parking
-                          ?.map((item) => t(`parking.${item}`))
+                          ?.map((item: string) => t(`parking.${item}`))
                           .toString()}`
                       )}
                     />

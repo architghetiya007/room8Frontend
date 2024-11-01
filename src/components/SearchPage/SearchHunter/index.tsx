@@ -22,7 +22,7 @@ import GoogleMapsAutocomplete from "../../comman/GoogleMapsAutoComplete";
 import { Search } from "@mui/icons-material";
 import CustomLoadingButton from "../../comman/CustomLoadingButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
+import FILTERSIMG from "../../../assets/landlord/filters.png";
 const marks = [
   {
     value: 1,
@@ -143,7 +143,7 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
       searchAPI(values);
     },
   });
-  console.log(formik.errors)
+  console.log(formik.errors);
   return (
     <Box component={"form"} mt={2}>
       <Grid container spacing={1}>
@@ -222,7 +222,22 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
               aria-controls="panel1-content"
               id="panel1-header"
             >
-              <CommanTypography title={"More Filters"} />
+              <Box
+                sx={{
+                  width: "25px",
+                  height: "25px",
+                  textAlign: "center",
+                  mt: 1,
+                  mr: 1,
+                }}
+                component={"img"}
+                src={FILTERSIMG}
+              ></Box>
+              <Typography
+                sx={{ fontSize: "24px", fontWeight: "600", color: "#3B3D44" }}
+              >
+                More Filters
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Grid container spacing={2}>

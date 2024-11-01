@@ -27,6 +27,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+import FILTERSIMG from "../../../assets/landlord/filters.png";
 
 const addressSchema = Yup.object().shape({
   streetNumber: Yup.string().optional(), // Corresponds to streetNumber in interface
@@ -140,7 +141,22 @@ const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
               aria-controls="panel1-content"
               id="panel1-header"
             >
-              <CommanTypography title={"More Filters"} />
+              <Box
+                sx={{
+                  width: "25px",
+                  height: "25px",
+                  textAlign: "center",
+                  mt: 1,
+                  mr: 1,
+                }}
+                component={"img"}
+                src={FILTERSIMG}
+              ></Box>
+              <Typography
+                sx={{ fontSize: "24px", fontWeight: "600", color: "#3B3D44" }}
+              >
+                More Filters
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Grid container spacing={2}>

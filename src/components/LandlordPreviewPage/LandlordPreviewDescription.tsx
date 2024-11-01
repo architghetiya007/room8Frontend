@@ -22,6 +22,10 @@ import ANIMAL from "../../assets/hunter/ANIMAL.png";
 import SMOKER from "../../assets/hunter/SMOKER.png";
 import WITH_CHILDREN from "../../assets/hunter/WITH_CHILDREN.png";
 import HYBRID_WORK from "../../assets/hunter/HYBRID_WORK.png";
+import FLOORIMG from "../../assets/landlord/floor.png";
+import BEDIMG from "../../assets/landlord/bed.png";
+import HOMEIMG from "../../assets/landlord/home.png";
+import WOMAN_MAN from "../../assets/hunter/WOMAN_MAN.png";
 import {
   query,
   collection,
@@ -36,6 +40,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useState } from "react";
+import PreviewTypography from "../comman/PreviewTypography";
 interface LandlordPreviewDescriptionProps {
   updateStatusAPI: () => void;
   loading: boolean;
@@ -163,12 +168,83 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
           </Typography>
         </Grid>
         <Grid item xs={12} md={7}>
-          <Box sx={{ p: 1 }}>
+          <Box
+            sx={{
+              p: 1,
+              display: "flex",
+              alignItems: "flex-start",
+              flexDirection: "column",
+              gap: 2,
+            }}
+          >
             <Typography
               sx={{ fontWeight: "450", fontSize: "22px", color: "#5E646F" }}
             >
               {previewData.landlordData?.descriptionAbout}
             </Typography>
+            <Typography
+              sx={{ fontWeight: "700", fontSize: "28px", color: "#3B3D44" }}
+            >
+              My Ideal Flatmate
+            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Box
+                sx={{ width: "25px", height: "25px" }}
+                component={"img"}
+                src={MINIMUM_PROPERY_SIZE}
+              ></Box>
+              <PreviewTypography
+                title={"Age : "}
+                desc={
+                  previewData.landlordData?.ageOfCurrentTenants?.toString() ??
+                  ""
+                }
+              />
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Box
+                sx={{ width: "25px", height: "25px" }}
+                component={"img"}
+                src={WOMAN_MAN}
+              ></Box>
+              <PreviewTypography
+                title={previewData.landlordData?.genderOfCurrentTenants?.toString() ??
+                  ""}
+              />
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Box
+                sx={{ width: "25px", height: "25px" }}
+                component={"img"}
+                src={SMOKER}
+              ></Box>
+              <PreviewTypography
+                title={previewData.landlordData?.tenantsSmoking?.toString() ??
+                  ""}
+              />
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Box
+                sx={{ width: "25px", height: "25px" }}
+                component={"img"}
+                src={ANIMAL}
+              ></Box>
+              <PreviewTypography
+                title={previewData.landlordData?.acceptPets?.toString() === "YES" ?
+                  "I accept living with animals" : "Animals not allowed"}
+              />
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Box
+                sx={{ width: "25px", height: "25px" }}
+                component={"img"}
+                src={WITH_CHILDREN}
+              ></Box>
+              <PreviewTypography
+                title={previewData.landlordData?.acceptTenantWithChildren?.toString() === "YES" ?
+                  "I accept tenants with children" : "Tenants with children not allowed"}
+              />
+            </Box>
           </Box>
         </Grid>
 
@@ -318,7 +394,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
               previewData.userId &&
               userSlice.user?._id !== previewData.userId && (
                 <>
-                  <Typography variant="h4">Write a Message</Typography>
+                  <Typography sx={{fontSize: '20px',fontWeight: '600',color: "#3B3D44"}} variant="h4">Write a Message</Typography>
                   <OutlinedInput
                     disabled={isChatLoading}
                     onChange={(e) => setNewMessage(e.target.value)}
@@ -409,16 +485,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       component={"img"}
                       src={MINIMUM_PROPERY_SIZE}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Property size: {previewData.landlordData?.propertySize}{" "}
-                      (m²)
-                    </Typography>
+                    <PreviewTypography
+                      title={"Property size : "}
+                      desc={previewData.landlordData?.propertySize + " (m²)"}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -428,15 +498,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       component={"img"}
                       src={FURNISHED}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Furnished: {previewData.landlordData?.isRoomFurnished}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Furnished : "}
+                      desc={previewData.landlordData?.isRoomFurnished}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -446,16 +511,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       component={"img"}
                       src={PARKING}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Parking:{" "}
-                      {t(`parking.${previewData.landlordData?.parking}`)}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Parking : "}
+                      desc={t(`parking.${previewData.landlordData?.parking}`)}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -463,20 +522,16 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                     <Box
                       component={"img"}
                       sx={{ width: "25px", height: "25px" }}
-                      src={MAXIMUM_FLATMATES}
+                      src={FLOORIMG}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Floor:{" "}
-                      {previewData.landlordData?.floor +
+                    <PreviewTypography
+                      title={"Floor : "}
+                      desc={
+                        previewData.landlordData?.floor +
                         "/" +
-                        previewData.landlordData?.numberOfFloor}
-                    </Typography>
+                        previewData.landlordData?.numberOfFloor
+                      }
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -486,16 +541,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       component={"img"}
                       src={LIFT}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Lift in the building:{" "}
-                      {previewData.landlordData?.liftInBuilding}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Lift in the building : "}
+                      desc={previewData.landlordData?.liftInBuilding}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -505,16 +554,12 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       component={"img"}
                       src={KITCHEN}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Kitchen:{" "}
-                      {t(`kitchen.${previewData.landlordData?.kitchen}`)}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Kitchen : "}
+                      desc={t(
+                        `landlord.kitchen.${previewData.landlordData?.kitchen}`
+                      )}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -524,16 +569,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       component={"img"}
                       src={BALCONY_PROPERTY}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Kids in the apartment:{" "}
-                      {previewData.landlordData?.doChildrenLiveHere}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Balcony in the property : "}
+                      desc={previewData.landlordData?.balconyInApartment}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -541,18 +580,25 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                     <Box
                       sx={{ width: "25px", height: "25px" }}
                       component={"img"}
-                      src={BALCONY_PROPERTY}
+                      src={WITH_CHILDREN}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Owner lives here:{" "}
-                      {previewData.landlordData?.ownerLiveHere}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Kids in the apartment : "}
+                      desc={previewData.landlordData?.doChildrenLiveHere}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <Box
+                      sx={{ width: "25px", height: "25px" }}
+                      component={"img"}
+                      src={HOMEIMG}
+                    ></Box>
+                    <PreviewTypography
+                      title={"Owner lives here : "}
+                      desc={previewData.landlordData?.ownerLiveHere}
+                    />
                   </Box>
                 </Grid>
               </Grid>
@@ -580,15 +626,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       component={"img"}
                       src={NUMBER_OF_ROOMS}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      room: {previewData.landlordData?.roomSize} (m²)
-                    </Typography>
+                    <PreviewTypography
+                      title={"room : "}
+                      desc={previewData.landlordData?.roomSize + " (m²)"}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -598,16 +639,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       sx={{ width: "25px", height: "25px" }}
                       src={MAXIMUM_FLATMATES}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Max people in the room:{" "}
-                      {previewData.landlordData?.howManyPeopleInRoom}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Max people in the room : "}
+                      desc={previewData.landlordData?.howManyPeopleInRoom}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -617,15 +652,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       component={"img"}
                       src={FURNISHED}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Furnished: {previewData.landlordData?.isRoomFurnished}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Furnished : "}
+                      desc={previewData.landlordData?.isRoomFurnished}
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -633,17 +663,12 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                     <Box
                       sx={{ width: "25px", height: "25px" }}
                       component={"img"}
-                      src={FURNISHED}
+                      src={BEDIMG}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Bed: {previewData.landlordData?.bed}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Bed : "}
+                      desc={previewData.landlordData?.bed}
+                    />
                   </Box>
                 </Grid>
 
@@ -654,17 +679,13 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       component={"img"}
                       src={BATHROOM}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      {previewData.landlordData?.privateBathroom
-                        ? "Private Bathroom"
-                        : "Shared Bathroom"}
-                    </Typography>
+                    <PreviewTypography
+                      title={
+                        previewData.landlordData?.privateBathroom
+                          ? "Private Bathroom"
+                          : "Shared Bathroom"
+                      }
+                    />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
@@ -674,16 +695,10 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                       component={"img"}
                       src={BALCONY_PROPERTY}
                     ></Box>
-                    <Typography
-                      sx={{
-                        border: "1px solid #FBE0EA",
-                        borderRadius: 2,
-                        p: 1,
-                      }}
-                    >
-                      Balcony in the room:{" "}
-                      {previewData.landlordData?.balconyInApartment}
-                    </Typography>
+                    <PreviewTypography
+                      title={"Balcony in the room : "}
+                      desc={previewData.landlordData?.balconyInApartment}
+                    />
                   </Box>
                 </Grid>
               </Grid>
@@ -711,7 +726,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
                 }}
                 spacing={2}
               >
-                <Typography variant="h4">Write a Message</Typography>
+                <Typography sx={{fontSize: '20px',fontWeight: '600',color: "#3B3D44"}} variant="h4">Write a Message</Typography>
                 <OutlinedInput
                   disabled={isChatLoading}
                   onChange={(e) => setNewMessage(e.target.value)}

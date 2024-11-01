@@ -3,9 +3,9 @@ import { AdvertisementData } from "../../types/advertisement";
 import AvailableImg from "../../assets/hunter/AVAILABLE.png";
 import dayjs from "dayjs";
 import useCommonTranslation from "../../hooks/useCommonTranslation";
-import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
 import ImageSlider from "./ImageSlider";
 import DEPOSIT from "../../assets/landlord/deposit.png";
+import MAPIMG from "../../assets/landlord/map.png";
 interface LandlordProfileCardProps {
   previewData: AdvertisementData;
 }
@@ -135,7 +135,11 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
           <Grid container spacing={1} mt={1}>
             <Grid item xs={12} md={8}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <AddLocationAltOutlinedIcon />
+                <Box
+                  sx={{ width: "25px", height: "25px" }}
+                  component={"img"}
+                  src={MAPIMG}
+                ></Box>
                 <Typography
                   onClick={() =>
                     window.top?.open(
@@ -147,7 +151,7 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
                     )
                   }
                   variant="h6"
-                  sx={{ borderBottom: "1px solid black", cursor: "pointer" }}
+                  sx={{ borderBottom: "1px solid black", cursor: "pointer",color: "#3B3D44", fontSize: '20px',fontWeight: '600' }}
                 >
                   CHECK ON MAP
                 </Typography>
