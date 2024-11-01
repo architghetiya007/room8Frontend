@@ -152,7 +152,13 @@ const Header: React.FC = () => {
             </Drawer>
             <Typography
               onClick={() => navigate("/")}
-              sx={{ fontWeight: "bold", fontSize: "24px", cursor: "pointer" }}
+              sx={{
+                fontWeight: "700",
+                fontSize: "22px",
+                cursor: "pointer",
+                color: "#373940",
+                letterSpacing: "1.1px",
+              }}
             >
               Room8
             </Typography>
@@ -169,9 +175,12 @@ const Header: React.FC = () => {
               return (
                 <Link
                   sx={{
-                    color: theme.palette.custom.blackDark,
+                    color: "#485368",
                     textDecoration: "none",
-                    letterSpacing: "1px",
+                    letterSpacing: "1.1px",
+                    fontWeight: "450",
+                    fontSize: "14px",
+                    lineHeight: "24px",
                   }}
                   padding={"1rem"}
                   component={RouterLink}
@@ -190,7 +199,17 @@ const Header: React.FC = () => {
               sx={{ cursor: "pointer" }}
               onClick={() => navigate("/profile")}
             >
-              <Typography sx={{ mr: 2 }}>{userSlice.user.fullName}</Typography>
+              <Typography
+                sx={{
+                  mr: 2,
+                  color: "#373940",
+                  fontWeight: "700",
+                  fontSize: "14px",
+                  letterSpacing: "1.1px",
+                }}
+              >
+                {userSlice.user.fullName}
+              </Typography>
               {userSlice.user.profilePic ? (
                 <Avatar src={userSlice.user.profilePic}></Avatar>
               ) : (
