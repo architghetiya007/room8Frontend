@@ -5,11 +5,30 @@ import CustomLoadingButton from "../../components/comman/CustomLoadingButton";
 import SearchLandlord from "../../components/SearchPage/SearchLandlord";
 import { AdvertisementType } from "../../utils/advertisement";
 import SearchResults from "../../components/SearchPage/SearchResults";
+import useAdvertisementMutations from "../../mutations/advertisement";
+import { AdvertisementData } from "../../types/advertisement";
 
 const SearchPage: React.FC = () => {
+  const [roomData, setRoomData] = useState<AdvertisementData[]>([]);
   const [typeOfSearch, setTypeOfSearch] = useState<string>(
     AdvertisementType.LANDLORD
   );
+  const { getAllAdvertisementMutation } = useAdvertisementMutations();
+  const getAllAdvertisementAPI = (data: any) => {
+    getAllAdvertisementMutation.mutate(
+      { ...data, advertiseType: typeOfSearch },
+      {
+        onSuccess: (data) => {
+          setRoomData(data!.data.page);
+        },
+      }
+    );
+  };
+
+  const searchAPI = (data: any) => {
+    getAllAdvertisementAPI(data);
+  };
+
   return (
     <Box>
       <Container sx={{ my: 4 }}>
@@ -63,9 +82,13 @@ const SearchPage: React.FC = () => {
             I'm Looking for a Place
           </CustomLoadingButton>
         </Box>
-        {typeOfSearch === AdvertisementType.HUNTER && <SearchHunter />}
-        {typeOfSearch === AdvertisementType.LANDLORD && <SearchLandlord />}
-        <SearchResults />
+        {typeOfSearch === AdvertisementType.HUNTER && (
+          <SearchHunter searchAPI={searchAPI} />
+        )}
+        {typeOfSearch === AdvertisementType.LANDLORD && (
+          <SearchLandlord searchAPI={searchAPI} />
+        )}
+        <SearchResults roomData={roomData} />
       </Container>
     </Box>
   );

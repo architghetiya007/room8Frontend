@@ -74,8 +74,8 @@ const addressSchema = Yup.object().shape({
   postalCode: Yup.string(), // Updated for postalCode (was zipCode)
   addressLine: Yup.string(), // Corresponds to addressLine in interface
   formattedAddress: Yup.string(), // Corresponds to formattedAddress in interface
-  coordinates: Yup.array().of(Yup.number()),
-  // .length(2, "Must provide latitude and longitude coordinates") // Coordinates as [latitude, longitude]
+  coordinate: Yup.array().of(Yup.number()),
+  // .length(2, "Must provide latitude and longitude coordinate") // Coordinates as [latitude, longitude]
 });
 
 const hunterSchema = Yup.object().shape({
@@ -84,41 +84,24 @@ const hunterSchema = Yup.object().shape({
   acceptableRentRange: Yup.array()
     .of(Yup.number().min(0, "Rent must be non-negative"))
     .length(2, "Rent range should have two values"),
-  maximumDeposit: Yup.number()
-    .min(0, "Deposit must be non-negative")
-    .max(50000, "Deposit max should 50000")
-    .required("Maximum Deposit is required"),
-  whenYouWouldLikeMoveIn: Yup.number()
-    .required("When You Would Like MoveIn is required")
-    .typeError("Invalid timestamp for move-in date"),
-  isAvailableNow: Yup.boolean(),
-  preferredLengthToStay: Yup.string(),
   address: addressSchema,
-  flatmatePreference: Yup.array(Yup.string()),
   rangeFromCoordinate: Yup.number()
     .min(0, "Range must be non-negative")
     .nullable(),
   minimumPropertySize: Yup.number()
     .min(0, "Minimum property size must be non-negative")
-    .max(1000, "Minimum property size should be 1000")
-    .required("Minimum property size is required"),
-  minimumNumberOfTenants: Yup.string(),
+    .max(1000, "Minimum property size should be 1000"),
   roomAmount: Yup.string(),
-  bathroomAmount: Yup.string(),
-  parking: Yup.array().of(Yup.string()),
+  minimumNumberOfTenants: Yup.string(),
+  flatmatePreference: Yup.array(Yup.string()),
   furnished: Yup.string(),
-  kitchen: Yup.string(),
-  balcony: Yup.string(),
-  maximumNumberOfpeople: Yup.string(),
-  minimumRoomSize: Yup.number()
-    .min(0, "Range must be non-negative")
-    .max(100, "Maximum room size should be 100")
-    .nullable(),
-  furnishedRoom: Yup.string(),
-  privateBathroom: Yup.string(),
-  balconyInRoom: Yup.string(),
+  whenYouWouldLikeMoveIn: Yup.number().nullable(),
+  preferredLengthToStay: Yup.string(),
 });
-const SearchHunter: React.FC = () => {
+interface SearchHunterProps {
+  searchAPI: (data: any) => void;
+}
+const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
   const {
     accommodation,
     propertyTypes,
@@ -134,10 +117,6 @@ const SearchHunter: React.FC = () => {
       accommodation: "ENTIREROOM",
       typeOfProperty: "FLAT",
       acceptableRentRange: [3000, 6000],
-      maximumDeposit: "",
-      whenYouWouldLikeMoveIn: null,
-      isAvailableNow: true,
-      preferredLengthToStay: "NO_PREFERENCE",
       address: {
         streetNumber: "",
         streetName: "",
@@ -147,29 +126,24 @@ const SearchHunter: React.FC = () => {
         postalCode: "",
         addressLine: "",
         formattedAddress: "",
-        coordinates: [],
+        coordinate: [],
       },
-      flatmatePreference: [],
       rangeFromCoordinate: 3,
-      minimumPropertySize: "",
-      minimumNumberOfTenants: "NO_PREFERENCE",
+      minimumPropertySize: 0,
       roomAmount: "NO_PREFERENCE",
-      bathroomAmount: "01",
-      parking: ["NO_PREFERENCE"],
+      minimumNumberOfTenants: "NO_PREFERENCE",
+      flatmatePreference: [],
       furnished: "NO_PREFERENCE",
-      kitchen: "NO_PREFERENCE",
-      balcony: "NO_PREFERENCE",
-      maximumNumberOfpeople: "NO_PREFERENCE",
-      minimumRoomSize: "",
-      furnishedRoom: "NO_PREFERENCE",
-      privateBathroom: "YES",
-      balconyInRoom: "NO_PREFERENCE",
+      whenYouWouldLikeMoveIn: null,
+      preferredLengthToStay: "",
     },
     validationSchema: hunterSchema,
     onSubmit: (values) => {
       console.log(values);
+      searchAPI(values);
     },
   });
+  console.log(formik.errors)
   return (
     <Box component={"form"} mt={2}>
       <Grid container spacing={1}>
@@ -283,6 +257,18 @@ const SearchHunter: React.FC = () => {
                   )}
                 </Grid>
                 <Grid item xs={12}>
+                  <CommanTypography title={t("roomAmountQuestion")} />
+                </Grid>
+                <Grid item xs={12}>
+                  <CustomButtonGroup
+                    optionClick={(e: string[] | string) => {
+                      formik.setFieldValue("roomAmount", e);
+                    }}
+                    selectionOption={formik.values.roomAmount}
+                    options={roomsAmount}
+                  />
+                </Grid>
+                <Grid item xs={12}>
                   <CommanTypography
                     title={t("minimumNumberOfTenantsQuestion")}
                   />
@@ -296,18 +282,7 @@ const SearchHunter: React.FC = () => {
                     options={tenants}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <CommanTypography title={t("roomAmountQuestion")} />
-                </Grid>
-                <Grid item xs={12}>
-                  <CustomButtonGroup
-                    optionClick={(e: string[] | string) => {
-                      formik.setFieldValue("roomAmount", e);
-                    }}
-                    selectionOption={formik.values.roomAmount}
-                    options={roomsAmount}
-                  />
-                </Grid>
+
                 <Grid item xs={12}>
                   <CommanTypography title={t("flatmatePreferenceQuestion")} />
                 </Grid>
@@ -363,6 +338,7 @@ const SearchHunter: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           <CustomLoadingButton
+            onClick={() => formik.handleSubmit()}
             sx={{ width: "100%", height: "60px" }}
             type="button"
           >

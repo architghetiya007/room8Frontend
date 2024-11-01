@@ -220,6 +220,7 @@
     "address" : "Please Select Address"
   },
   "landlordQ" : {
+    "searchFurnished" : "Furnished",
     "rentOutOfyourPlace" : "So you want to rent out your place...",
     "whatTypefPropertyOffer" : "What type of property do you offer?",
     "typeOfProperty" : "Type of the property",

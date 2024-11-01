@@ -1,27 +1,14 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useAdvertisementMutations from "../../../mutations/advertisement";
 import { AdvertisementData } from "../../../types/advertisement";
 import { AdvertisementType } from "../../../utils/advertisement";
 import RoomCard from "../../Room/RoomCard";
-
-const SearchResults: React.FC = () => {
+interface SearchResultsProps {
+  roomData: AdvertisementData[];
+}
+const SearchResults: React.FC<SearchResultsProps> = ({ roomData }) => {
   const navigate = useNavigate();
-  const { getAllAdvertisementMutation } = useAdvertisementMutations();
-  const [roomData, setRoomData] = useState<AdvertisementData[]>([]);
 
-  const getAllAdvertisementAPI = () => {
-    getAllAdvertisementMutation.mutate(undefined, {
-      onSuccess: (data) => {
-        setRoomData(data!.data.page);
-      },
-    });
-  };
-
-  useEffect(() => {
-    getAllAdvertisementAPI();
-  }, []);
   return (
     <Box>
       <Container>

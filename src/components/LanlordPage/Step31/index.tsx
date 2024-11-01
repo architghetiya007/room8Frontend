@@ -104,6 +104,11 @@ const Step31: React.FC<Step31Props> = () => {
         if (response?.status === true) {
           values.profilePhoto = response.data[0];
         }
+      } else {
+        if (!advertisementData?.landlordData?.profilePhoto) {
+          showSnackBar({ message: "Please select photo", variant: "error" });
+          return;
+        }
       }
       const body = {
         advertiseType: AdvertisementType.LANDLORD,

@@ -17,7 +17,7 @@ interface AddressDetails {
   postalCode?: string;
   addressLine?: string;
   formattedAddress?: string;
-  coordinates?: [number, number]; // Coordinates array [latitude, longitude]
+  coordinate?: [number, number]; // Coordinates array [latitude, longitude]
 }
 
 interface GoogleMapsAutocompleteProps {
@@ -90,7 +90,7 @@ const GoogleMapsAutocomplete: React.FC<GoogleMapsAutocompleteProps> = ({
         placeId: placeId,
         fields: [
           "name",
-          "geometry", // Include geometry for coordinates
+          "geometry", // Include geometry for coordinate
           "formatted_address", // Include formatted address
           "place_id",
           "address_component",
@@ -135,9 +135,9 @@ const GoogleMapsAutocomplete: React.FC<GoogleMapsAutocompleteProps> = ({
       // Add formatted_address from the API response
       addressComponents.formattedAddress = place.formatted_address || "";
 
-      // Extract coordinates (latitude and longitude) and store as an array
+      // Extract coordinate (latitude and longitude) and store as an array
       if (place.geometry && place.geometry.location) {
-        addressComponents.coordinates = [
+        addressComponents.coordinate = [
           place.geometry.location.lng(),
           place.geometry.location.lat(),
         ];

@@ -41,7 +41,11 @@ const landlordSchema = Yup.object().shape({
     .required("Room Size is required"),
   howManyPeopleInRoom: Yup.string().required("Is room furnished is required"),
   isRoomFurnished: Yup.string().required("Is room furnished is required"),
-  bed: Yup.string().required("Is room furnished is required"),
+  bed: Yup.string().when("isRoomFurnished", {
+    is: (value: string) => value !== "NO",
+    then: (schema) => schema.required("Is room furnished is required"),
+    otherwise: (schema) => schema.nullable(),
+  }),
   privateBathroom: Yup.string().required("Is room furnished is required"),
   doesRoomHaveBalcony: Yup.string().required("Is room furnished is required"),
   isAvailableNow: Yup.boolean().required("Is room furnished is required"),
@@ -140,6 +144,13 @@ const Step2: React.FC<Step2Props> = () => {
         });
         return;
       }
+      if (array.length === 0 && stringFiles.length === 0) {
+        showSnackBar({
+          message: "Please upload photos of places",
+          variant: "error",
+        });
+        return;
+      }
       if (array.length > 0) {
         let formData = new FormData();
         array.forEach((e) => {
@@ -152,6 +163,7 @@ const Step2: React.FC<Step2Props> = () => {
       } else {
         values.photosOfPlace = stringFiles;
       }
+
       const body = {
         advertiseType: AdvertisementType.LANDLORD,
         landlordData: { ...advertisementData?.landlordData, ...values },

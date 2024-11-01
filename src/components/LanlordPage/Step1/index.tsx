@@ -34,31 +34,57 @@ const addressSchema = Yup.object().shape({
   postalCode: Yup.string(), // Updated for postalCode (was zipCode)
   addressLine: Yup.string(), // Corresponds to addressLine in interface
   formattedAddress: Yup.string(), // Corresponds to formattedAddress in interface
-  coordinates: Yup.array().of(Yup.number()),
-  // .length(2, "Must provide latitude and longitude coordinates") // Coordinates as [latitude, longitude]
+  coordinate: Yup.array().of(Yup.number()),
+  // .length(2, "Must provide latitude and longitude coordinate") // Coordinates as [latitude, longitude]
 });
 
 const landlordSchema = Yup.object().shape({
   propertyOffer: Yup.string().required("Property offer is required"),
   typeofProperty: Yup.string().required("Type of property is required"),
   address: addressSchema,
-  doYouLiveHere: Yup.string().required("Do you live here is required"),
-  ownerLiveHere: Yup.string().required("Owner live here is required"),
-  howmanyPeopleLive: Yup.string().required("How many people live is required"),
+  doYouLiveHere: Yup.string().when("propertyOffer", {
+    is: (value: string) => value !== "WHOLEPROPERTY",
+    then: (schema) => schema.required("Do you live here is required"),
+    otherwise: (schema) => schema.nullable(),
+  }),
+  ownerLiveHere: Yup.string().when("propertyOffer", {
+    is: (value: string) => value !== "WHOLEPROPERTY",
+    then: (schema) => schema.required("Owner live here is required"),
+    otherwise: (schema) => schema.nullable(),
+  }),
+  howmanyPeopleLive: Yup.string().when("propertyOffer", {
+    is: (value: string) => value !== "WHOLEPROPERTY",
+    then: (schema) => schema.required("How many people live is required"),
+    otherwise: (schema) => schema.nullable(),
+  }),
   propertySize: Yup.number()
-    .min(0, "Proerty Size must be non-negative")
+    .min(1, "Proerty Size must be non-negative")
     .max(100, "Proerty Size should be 1000")
     .required("Proerty Size is required"),
   roomsAmount: Yup.string().required("Rooms amount is required"),
-  floor: Yup.number()
-    .min(0, "Floor must be non-negative")
-    .max(100, "Floor should be 100")
-    .required("Floor Required"),
-  numberOfFloor: Yup.number()
-    .min(0, "Number of floor must be non-negative")
-    .max(100, "Number of floor should be 100")
-    .required("Number of Floor Required"),
-  liftInBuilding: Yup.string().required("Lift in building is required"),
+  floor: Yup.number().when("typeofProperty", {
+    is: (value: string) => value !== "HOUSE",
+    then: (schema) =>
+      schema
+        .min(0, "Floor must be non-negative")
+        .max(100, "Floor should be 100")
+        .required("Floor Required"),
+    otherwise: (schema) => schema.nullable(),
+  }),
+  numberOfFloor: Yup.number().when("typeofProperty", {
+    is: (value: string) => value !== "HOUSE",
+    then: (schema) =>
+      schema
+        .min(0, "Number of floor must be non-negative")
+        .max(100, "Number of floor should be 100")
+        .required("Number of Floor Required"),
+    otherwise: (schema) => schema.nullable(),
+  }),
+  liftInBuilding: Yup.number().when("typeofProperty", {
+    is: (value: string) => value !== "HOUSE",
+    then: (schema) => schema.required("Minimum room size is required"),
+    otherwise: (schema) => schema.nullable(),
+  }),
   IsApartmentFurnished: Yup.string().required(
     "Is apartment furnished is required"
   ),
@@ -76,7 +102,7 @@ interface Address {
   postalCode?: string;
   addressLine?: string;
   formattedAddress?: string;
-  coordinates?: number[]; // Assuming coordinates are represented as an array of numbers (latitude, longitude)
+  coordinate?: number[]; // Assuming coordinate are represented as an array of numbers (latitude, longitude)
 }
 
 interface PropertyFormValues {
@@ -135,12 +161,12 @@ const Step1: React.FC<Step1Props> = () => {
         postalCode: "",
         addressLine: "",
         formattedAddress: "",
-        coordinates: [],
+        coordinate: [],
       },
       doYouLiveHere: "",
       ownerLiveHere: "",
       howmanyPeopleLive: "",
-      propertySize: 0,
+      propertySize: 1,
       roomsAmount: "",
       floor: "",
       numberOfFloor: "",
@@ -309,7 +335,8 @@ const Step1: React.FC<Step1Props> = () => {
                     "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
                   backgroundClip: "text",
                   WebkitTextFillColor: "transparent",
-                  fontSize: "44px",
+                  fontWeight: "700",
+                  fontSize: "45px",
                 }}
               >
                 {t("landlordQ.tellmeAboutYourProperty")}

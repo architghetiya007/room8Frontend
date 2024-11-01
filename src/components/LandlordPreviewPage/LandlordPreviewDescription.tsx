@@ -659,9 +659,9 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
             </Grid>
             <Grid item xs={12}>
               <GoogleMaps
-                {...(previewData.landlordData?.address?.coordinates && {
-                  lat: previewData.landlordData.address.coordinates[1],
-                  lng: previewData.landlordData.address.coordinates[0],
+                {...(previewData.landlordData?.address?.coordinate && {
+                  lat: previewData.landlordData.address.coordinate[1],
+                  lng: previewData.landlordData.address.coordinate[0],
                 })}
               />
             </Grid>

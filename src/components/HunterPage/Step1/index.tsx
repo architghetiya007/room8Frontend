@@ -86,8 +86,8 @@ const addressSchema = Yup.object().shape({
   postalCode: Yup.string(), // Updated for postalCode (was zipCode)
   addressLine: Yup.string(), // Corresponds to addressLine in interface
   formattedAddress: Yup.string(), // Corresponds to formattedAddress in interface
-  coordinates: Yup.array().of(Yup.number()),
-  // .length(2, "Must provide latitude and longitude coordinates") // Coordinates as [latitude, longitude]
+  coordinate: Yup.array().of(Yup.number()),
+  // .length(2, "Must provide latitude and longitude coordinate") // Coordinates as [latitude, longitude]
 });
 
 const hunterSchema = Yup.object().shape({
@@ -201,7 +201,7 @@ const Step1: React.FC<Step1Props> = () => {
         postalCode: "",
         addressLine: "",
         formattedAddress: "",
-        coordinates: [],
+        coordinate: [],
       },
 
       rangeFromCoordinate: 3,
@@ -497,9 +497,9 @@ const Step1: React.FC<Step1Props> = () => {
         </Grid>
         <Grid item xs={12}>
           <GoogleMaps
-            {...(formik.values?.address?.coordinates && {
-              lat: formik.values.address.coordinates[1],
-              lng: formik.values.address.coordinates[0],
+            {...(formik.values?.address?.coordinate && {
+              lat: formik.values.address.coordinate[1],
+              lng: formik.values.address.coordinate[0],
             })}
           />
         </Grid>
@@ -527,7 +527,8 @@ const Step1: React.FC<Step1Props> = () => {
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              fontSize: "44px",
+              fontWeight: "700",
+              fontSize: "45px",
             }}
           >
             {t("describeYourPlace")}

@@ -105,6 +105,11 @@ const Step3: React.FC<Step3Props> = () => {
         if (response?.status === true) {
           values.flatmatePhoto = response.data[0];
         }
+      } else {
+        if (!advertisementData?.landlordData?.flatmatePhoto) {
+          showSnackBar({ message: "Please select photo", variant: "error" });
+          return;
+        }
       }
       const body = {
         advertiseType: AdvertisementType.LANDLORD,

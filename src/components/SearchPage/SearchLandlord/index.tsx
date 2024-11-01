@@ -22,6 +22,11 @@ import useHunterData from "../../../hooks/useHunter";
 import CustomLoadingButton from "../../comman/CustomLoadingButton";
 import { Search } from "@mui/icons-material";
 import CommanTypography from "../../comman/CommonTypography";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
 const addressSchema = Yup.object().shape({
   streetNumber: Yup.string().optional(), // Corresponds to streetNumber in interface
@@ -32,21 +37,25 @@ const addressSchema = Yup.object().shape({
   postalCode: Yup.string(), // Updated for postalCode (was zipCode)
   addressLine: Yup.string(), // Corresponds to addressLine in interface
   formattedAddress: Yup.string(), // Corresponds to formattedAddress in interface
-  coordinates: Yup.array().of(Yup.number()),
-  // .length(2, "Must provide latitude and longitude coordinates") // Coordinates as [latitude, longitude]
+  coordinate: Yup.array().of(Yup.number()),
+  // .length(2, "Must provide latitude and longitude coordinate") // Coordinates as [latitude, longitude]
 });
 const landlordSchema = Yup.object().shape({
-  propertyOffer: Yup.string().required("Property offer is required"),
+  propertyOffer: Yup.string(),
   rentPerMonth: Yup.number(),
-  typeofProperty: Yup.string().required("Type of property is required"),
+  typeofProperty: Yup.string(),
   address: addressSchema,
+  dateAvailable: Yup.number().nullable(),
   minimumStay: Yup.string(),
   maximumStay: Yup.string(),
   furnished: Yup.string(),
   parking: Yup.string(),
   flatmateAccepting: Yup.string(),
 });
-const SearchLandlord: React.FC = () => {
+interface SearchLandlordProps {
+  searchAPI: (data: any) => void;
+}
+const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
   const { t } = useCommonTranslation();
   const { propertyOfferOptions, yesNoOptions, iamAcceptingOptions } =
     useLandlord();
@@ -54,12 +63,7 @@ const SearchLandlord: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       propertyOffer: "ENTIREROOM",
-      rentPerMonth: "FLAT",
-      minimumStay: "",
-      maximumStay: "",
-      parking: "",
-      furnished: "",
-      flatmateAccepting: "",
+      rentPerMonth: 0,
       address: {
         streetNumber: "",
         streetName: "",
@@ -69,12 +73,19 @@ const SearchLandlord: React.FC = () => {
         postalCode: "",
         addressLine: "",
         formattedAddress: "",
-        coordinates: [],
+        coordinate: [],
       },
+      dateAvailable: null,
+      minimumStay: "",
+      maximumStay: "",
+      parking: "",
+      furnished: "",
+      flatmateAccepting: "",
     },
     validationSchema: landlordSchema,
     onSubmit: (values) => {
       console.log(values);
+      searchAPI(values);
     },
   });
   return (
@@ -136,7 +147,31 @@ const SearchLandlord: React.FC = () => {
                 <Grid item xs={12} md={6}>
                   <CommanTypography title={t("landlordQ.datesAvailable")} />
                 </Grid>
-                <Grid item xs={12} md={6}></Grid>
+                <Grid item xs={12} md={6}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={["DatePicker", "DatePicker"]}>
+                      <DatePicker
+                        sx={{ width: "100%" }}
+                        label="Date"
+                        format="DD/MM/YYYY"
+                        minDate={dayjs(new Date())}
+                        maxDate={dayjs(new Date()).add(1, "year")}
+                        value={
+                          formik.values?.dateAvailable
+                            ? dayjs(formik.values?.dateAvailable)
+                            : null
+                        }
+                        onChange={(newValue) => {
+                          formik.setFieldValue(
+                            "dateAvailable",
+                            newValue?.valueOf()
+                          );
+                          formik.setFieldValue("isAvailableNow", false);
+                        }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </Grid>
                 <Grid item xs={12} md={6}>
                   <Stack>
                     <CommanTypography
@@ -171,9 +206,9 @@ const SearchLandlord: React.FC = () => {
                       <Select
                         labelId="work-status-label"
                         id="work-status"
-                        value={formik.values.minimumStay}
+                        value={formik.values.maximumStay}
                         onChange={(e) => {
-                          formik.setFieldValue("minimumStay", e.target.value);
+                          formik.setFieldValue("maximumStay", e.target.value);
                         }}
                         displayEmpty
                       >
@@ -189,9 +224,7 @@ const SearchLandlord: React.FC = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Stack>
-                    <CommanTypography
-                      title={t("landlordQ.furnishedQuestion")}
-                    />
+                    <CommanTypography title={t("landlordQ.searchFurnished")} />
                     <FormControl fullWidth>
                       <Select
                         labelId="work-status-label"
@@ -254,6 +287,7 @@ const SearchLandlord: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           <CustomLoadingButton
+            onClick={() => formik.handleSubmit()}
             sx={{ width: "100%", height: "60px" }}
             type="button"
           >

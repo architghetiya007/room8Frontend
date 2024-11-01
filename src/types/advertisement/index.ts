@@ -15,7 +15,7 @@ interface Address {
   postalCode?: string; // Optional: postal code
   addressLine?: string; // Optional: full address line
   formattedAddress?: string; // Optional: formatted address for display
-  coordinates?: number[]; // Allowing any number of coordinates
+  coordinate?: number[]; // Allowing any number of coordinate
 }
 
 export interface HunterRequestDTO {

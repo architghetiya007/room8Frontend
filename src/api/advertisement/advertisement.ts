@@ -48,10 +48,11 @@ const getAdvertisementAPI = async (advertisementId: string) => {
   }
 };
 
-const getAllAdvertisementAPI = async () => {
+const getAllAdvertisementAPI = async (data: any) => {
   try {
     const response = await axiosInstance.post<ListAdvertisementResponseDTO>(
       apiPaths.ADVERTISEMENT.getAllAdvertisement,
+      data
     );
     return response.data;
   } catch (error) {
@@ -77,7 +78,7 @@ const getUserAdvertisementAPI = async () => {
   try {
     const response = await axiosInstance.post<ListAdvertisementResponseDTO>(
       apiPaths.ADVERTISEMENT.getUserAdvertisement,
-      {limit: -1}
+      { limit: -1 }
     );
     return response.data;
   } catch (error) {
@@ -88,7 +89,7 @@ const getUserAdvertisementAPI = async () => {
 const deleteAdvertisementAPI = async (advertisementId: string) => {
   try {
     const response = await axiosInstance.delete<BaseResponse>(
-      apiPaths.ADVERTISEMENT.deleteAdvertisement(advertisementId),
+      apiPaths.ADVERTISEMENT.deleteAdvertisement(advertisementId)
     );
     return response.data;
   } catch (error) {
@@ -99,13 +100,13 @@ const deleteAdvertisementAPI = async (advertisementId: string) => {
 const getTopCitiesAPI = async () => {
   try {
     const response = await axiosInstance.get<CitiesResponseDTO>(
-      apiPaths.ADVERTISEMENT.getCities,
+      apiPaths.ADVERTISEMENT.getCities
     );
     return response.data;
   } catch (error) {
     getErrorMessage(error);
   }
-}
+};
 
 export {
   createAdvertisementAPI,
@@ -115,5 +116,5 @@ export {
   updateStatusAdvertisementAPI,
   getUserAdvertisementAPI,
   deleteAdvertisementAPI,
-  getTopCitiesAPI
+  getTopCitiesAPI,
 };

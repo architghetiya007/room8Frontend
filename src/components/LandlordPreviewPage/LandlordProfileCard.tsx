@@ -135,9 +135,9 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
                 <Typography
                   onClick={() =>
                     window.top?.open(
-                      `https://www.google.com/maps?q=${previewData.landlordData?.address?.coordinates?.at(
+                      `https://www.google.com/maps?q=${previewData.landlordData?.address?.coordinate?.at(
                         1
-                      )},${previewData.landlordData?.address?.coordinates?.at(
+                      )},${previewData.landlordData?.address?.coordinate?.at(
                         0
                       )}`
                     )
