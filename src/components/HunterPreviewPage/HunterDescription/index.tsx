@@ -193,7 +193,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         <Grid item xs={12} mt={1} mb={2}>
           <Grid container spacing={1}>
             {previewData.hunterData?.typeOfEmployment && (
-              <Grid item xs={12} md={2}>
+              <Grid item xs={12} md={3}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                   <Box
                     component={"img"}
@@ -209,7 +209,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
               </Grid>
             )}
 
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Box
                   component={"img"}
@@ -225,7 +225,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                 />
               </Box>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <Box
                   component={"img"}
@@ -241,7 +241,7 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
                 />
               </Box>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <Box
                   component={"img"}

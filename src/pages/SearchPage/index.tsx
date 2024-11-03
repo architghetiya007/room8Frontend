@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SearchHunter from "../../components/SearchPage/SearchHunter";
 import CustomLoadingButton from "../../components/comman/CustomLoadingButton";
 import SearchLandlord from "../../components/SearchPage/SearchLandlord";
-import { AdvertisementType } from "../../utils/advertisement";
+import { LookingForEnum } from "../../utils/advertisement";
 import SearchResults from "../../components/SearchPage/SearchResults";
 import useAdvertisementMutations from "../../mutations/advertisement";
 import { AdvertisementData } from "../../types/advertisement";
@@ -11,12 +11,21 @@ import { AdvertisementData } from "../../types/advertisement";
 const SearchPage: React.FC = () => {
   const [roomData, setRoomData] = useState<AdvertisementData[]>([]);
   const [typeOfSearch, setTypeOfSearch] = useState<string>(
-    AdvertisementType.LANDLORD
+    LookingForEnum.LookingForRoomMates
   );
   const { getAllAdvertisementMutation } = useAdvertisementMutations();
   const getAllAdvertisementAPI = (data: any) => {
+    const obj: any = {
+      advertiseType: typeOfSearch,
+    };
+    if (obj.advertiseType === LookingForEnum.LookingForPlace) {
+      obj[LookingForEnum.LookingForPlace] = data;
+    } else {
+      obj[LookingForEnum.LookingForRoomMates] = data;
+    }
+    console.log(obj);
     getAllAdvertisementMutation.mutate(
-      { ...data, advertiseType: typeOfSearch },
+      { ...obj },
       {
         onSuccess: (data) => {
           setRoomData(data!.data.page);
@@ -37,23 +46,25 @@ const SearchPage: React.FC = () => {
             sx={{
               width: "100%",
               color:
-                typeOfSearch === AdvertisementType.LANDLORD ? "#fff" : "#000",
+                typeOfSearch === LookingForEnum.LookingForRoomMates
+                  ? "#fff"
+                  : "#000",
               background:
-                typeOfSearch === AdvertisementType.LANDLORD
+                typeOfSearch === LookingForEnum.LookingForRoomMates
                   ? "#44ABEB"
                   : "#ffffff",
               border:
-                typeOfSearch !== AdvertisementType.LANDLORD
+                typeOfSearch !== LookingForEnum.LookingForRoomMates
                   ? "1px solid #44ABEB"
                   : "none",
               "&:hover": {
                 background:
-                  typeOfSearch === AdvertisementType.LANDLORD
+                  typeOfSearch === LookingForEnum.LookingForRoomMates
                     ? "#44ABEB"
                     : "#ffffff",
               },
             }}
-            onClick={() => setTypeOfSearch(AdvertisementType.LANDLORD)}
+            onClick={() => setTypeOfSearch(LookingForEnum.LookingForRoomMates)}
           >
             I'm Looking for a Roommate
           </CustomLoadingButton>
@@ -61,31 +72,33 @@ const SearchPage: React.FC = () => {
             sx={{
               width: "100%",
               color:
-                typeOfSearch === AdvertisementType.HUNTER ? "#fff" : "#000",
+                typeOfSearch === LookingForEnum.LookingForPlace
+                  ? "#fff"
+                  : "#000",
               background:
-                typeOfSearch === AdvertisementType.HUNTER
+                typeOfSearch === LookingForEnum.LookingForPlace
                   ? "#E152B9"
                   : "#ffffff",
               border:
-                typeOfSearch !== AdvertisementType.HUNTER
+                typeOfSearch !== LookingForEnum.LookingForPlace
                   ? "1px solid #E152B9"
                   : "none",
               "&:hover": {
                 background:
-                  typeOfSearch === AdvertisementType.HUNTER
+                  typeOfSearch === LookingForEnum.LookingForPlace
                     ? "#E152B9"
                     : "#ffffff",
               },
             }}
-            onClick={() => setTypeOfSearch(AdvertisementType.HUNTER)}
+            onClick={() => setTypeOfSearch(LookingForEnum.LookingForPlace)}
           >
             I'm Looking for a Place
           </CustomLoadingButton>
         </Box>
-        {typeOfSearch === AdvertisementType.HUNTER && (
+        {typeOfSearch === LookingForEnum.LookingForPlace && (
           <SearchHunter searchAPI={searchAPI} />
         )}
-        {typeOfSearch === AdvertisementType.LANDLORD && (
+        {typeOfSearch === LookingForEnum.LookingForRoomMates && (
           <SearchLandlord searchAPI={searchAPI} />
         )}
         <SearchResults roomData={roomData} />
