@@ -49,6 +49,7 @@ const HeroSection: React.FC = () => {
           >
             <OutlinedInput
               fullWidth
+              onKeyDown={() => navigate("/search")}
               placeholder="Search for a town, locality or street"
               startAdornment={
                 <InputAdornment position="start">

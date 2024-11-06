@@ -79,7 +79,7 @@ const addressSchema = Yup.object().shape({
 });
 
 const hunterSchema = Yup.object().shape({
-  accommodation: Yup.string(),
+  propertyOffer: Yup.string(),
   typeOfProperty: Yup.string(),
   acceptableRentRange: Yup.array()
     .of(Yup.number().min(0, "Rent must be non-negative"))
@@ -114,8 +114,8 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
 
   const formik = useFormik({
     initialValues: {
-      accommodation: "ENTIREROOM",
-      typeOfProperty: "FLAT",
+      propertyOffer: "",
+      typeOfProperty: "",
       acceptableRentRange: [3000, 6000],
       address: {
         streetNumber: "",
@@ -130,10 +130,10 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
       },
       rangeFromCoordinate: 3,
       minimumPropertySize: 0,
-      roomAmount: "NO_PREFERENCE",
-      minimumNumberOfTenants: "NO_PREFERENCE",
+      roomAmount: "",
+      minimumNumberOfTenants: "",
       flatmatePreference: [],
-      furnished: "NO_PREFERENCE",
+      furnished: "",
       whenYouWouldLikeMoveIn: null,
       preferredLengthToStay: "",
     },
@@ -153,9 +153,9 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
         <Grid item xs={12}>
           <CustomButtonGroup
             optionClick={(e: string[] | string) => {
-              formik.setFieldValue("accommodation", e);
+              formik.setFieldValue("propertyOffer", e);
             }}
-            selectionOption={formik.values.accommodation}
+            selectionOption={formik.values.propertyOffer}
             options={accommodation}
           />
         </Grid>

@@ -42,7 +42,7 @@ const addressSchema = Yup.object().shape({
   // .length(2, "Must provide latitude and longitude coordinate") // Coordinates as [latitude, longitude]
 });
 const landlordSchema = Yup.object().shape({
-  propertyOffer: Yup.string(),
+  typeOfProperty: Yup.string(),
   rentPerMonth: Yup.number(),
   typeofProperty: Yup.string(),
   address: addressSchema,
@@ -58,12 +58,12 @@ interface SearchLandlordProps {
 }
 const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
   const { t } = useCommonTranslation();
-  const { propertyOfferOptions, yesNoOptions, iamAcceptingOptions } =
+  const { propertyTypes, yesNoOptions, iamAcceptingOptions } =
     useLandlord();
   const { duration } = useHunterData();
   const formik = useFormik({
     initialValues: {
-      propertyOffer: "ENTIREROOM",
+      typeOfProperty: "",
       rentPerMonth: 0,
       address: {
         streetNumber: "",
@@ -98,10 +98,10 @@ const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
         <Grid item xs={12}>
           <CustomButtonGroup
             optionClick={(e: string[] | string) => {
-              formik.setFieldValue("propertyOffer", e);
+              formik.setFieldValue("typeOfProperty", e);
             }}
-            selectionOption={formik.values.propertyOffer}
-            options={propertyOfferOptions}
+            selectionOption={formik.values.typeOfProperty}
+            options={propertyTypes}
           />
         </Grid>
         <Grid item xs={12}>
