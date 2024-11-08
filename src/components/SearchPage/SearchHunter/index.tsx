@@ -10,6 +10,7 @@ import {
   OutlinedInput,
   Select,
   Slider,
+  Stack,
   Typography,
 } from "@mui/material";
 import { t } from "i18next";
@@ -95,6 +96,7 @@ const hunterSchema = Yup.object().shape({
   minimumNumberOfTenants: Yup.string(),
   flatmatePreference: Yup.array(Yup.string()),
   furnished: Yup.string(),
+  parking: Yup.string(),
   whenYouWouldLikeMoveIn: Yup.number().nullable(),
   preferredLengthToStay: Yup.string(),
 });
@@ -110,13 +112,14 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
     commanPreferenceOptions,
     duration,
     iamAcceptingOptions,
+    yesNoOptions,
   } = useHunterData();
 
   const formik = useFormik({
     initialValues: {
       propertyOffer: "",
       typeOfProperty: "",
-      acceptableRentRange: [3000, 6000],
+      acceptableRentRange: [0, 10000],
       address: {
         streetNumber: "",
         streetName: "",
@@ -134,6 +137,7 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
       minimumNumberOfTenants: "",
       flatmatePreference: [],
       furnished: "",
+      parking: "",
       whenYouWouldLikeMoveIn: null,
       preferredLengthToStay: "",
     },
@@ -148,7 +152,7 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
     <Box component={"form"} mt={2}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <CommanTypography title={t("accommodationQuestion")} />
+          <CommanTypography title={t("accommodationQuestionSearch")} />
         </Grid>
         <Grid item xs={12}>
           <CustomButtonGroup
@@ -241,10 +245,8 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
             </AccordionSummary>
             <AccordionDetails>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
                   <CommanTypography title={t("minimumPropertySizeQuestion")} />
-                </Grid>
-                <Grid item xs={12}>
                   <OutlinedInput
                     value={formik.values.minimumPropertySize}
                     onChange={(e) =>
@@ -271,10 +273,28 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                     </FormHelperText>
                   )}
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
                   <CommanTypography title={t("roomAmountQuestion")} />
+                  <FormControl fullWidth>
+                    <Select
+                      labelId="work-status-label"
+                      id="work-status"
+                      value={formik.values.roomAmount}
+                      onChange={(e) => {
+                        formik.setFieldValue("roomAmount", e.target.value);
+                      }}
+                      displayEmpty
+                    >
+                      <MenuItem value="">Select</MenuItem>
+                      {roomsAmount.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {t(option.name)}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <CustomButtonGroup
                     optionClick={(e: string[] | string) => {
                       formik.setFieldValue("roomAmount", e);
@@ -282,20 +302,32 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                     selectionOption={formik.values.roomAmount}
                     options={roomsAmount}
                   />
-                </Grid>
-                <Grid item xs={12}>
+                </Grid> */}
+                <Grid item xs={12} md={8}>
                   <CommanTypography
                     title={t("minimumNumberOfTenantsQuestion")}
                   />
-                </Grid>
-                <Grid item xs={12}>
-                  <CustomButtonGroup
-                    optionClick={(e: string[] | string) => {
-                      formik.setFieldValue("minimumNumberOfTenants", e);
-                    }}
-                    selectionOption={formik.values.minimumNumberOfTenants}
-                    options={tenants}
-                  />
+                  <FormControl fullWidth>
+                    <Select
+                      labelId="work-status-label"
+                      id="work-status"
+                      value={formik.values.minimumNumberOfTenants}
+                      onChange={(e) => {
+                        formik.setFieldValue(
+                          "minimumNumberOfTenants",
+                          e.target.value
+                        );
+                      }}
+                      displayEmpty
+                    >
+                      <MenuItem value="">Select</MenuItem>
+                      {tenants.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {t(option.name)}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -311,17 +343,29 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                     options={iamAcceptingOptions}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <CommanTypography title={t("furnishedQuestion")} />
+                <Grid item xs={12} md={6}>
+                  <Stack>
+                    <CommanTypography title={t("landlordQ.searchFurnished")} />
+                    <CustomButtonGroup
+                      optionClick={(e: string[] | string) => {
+                        formik.setFieldValue("furnished", e);
+                      }}
+                      selectionOption={formik.values.furnished}
+                      options={yesNoOptions}
+                    />
+                  </Stack>
                 </Grid>
-                <Grid item xs={12}>
-                  <CustomButtonGroup
-                    optionClick={(e: string[] | string) => {
-                      formik.setFieldValue("furnished", e);
-                    }}
-                    selectionOption={formik.values.furnished}
-                    options={commanPreferenceOptions}
-                  />
+                <Grid item xs={12} md={6}>
+                  <Stack>
+                    <CommanTypography title={t("landlordQ.parking")} />
+                    <CustomButtonGroup
+                      optionClick={(e: string[] | string) => {
+                        formik.setFieldValue("parking", e);
+                      }}
+                      selectionOption={formik.values.parking}
+                      options={yesNoOptions}
+                    />
+                  </Stack>
                 </Grid>
                 <Grid item xs={12}>
                   <CommanTypography title={t("preferredLengthToStay")} />
@@ -338,7 +382,9 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                           e.target.value
                         );
                       }}
+                      displayEmpty
                     >
+                      <MenuItem value="">Select</MenuItem>
                       {duration.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
                           {t(option.name)}

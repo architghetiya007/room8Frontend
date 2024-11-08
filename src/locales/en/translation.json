@@ -90,6 +90,7 @@
   "hunterStep1Title": "So you’re looking for a place for yourself...",
   "hunterStep2Title": "Now, tell something about yourself...",
   "accommodationQuestion": "What type of accommodation are you interested in?",
+  "accommodationQuestionSearch": "Type of accommodation",
   "typeOfPropertyQuestion": "Type of the property",
   "acceptableRentRangeQuestion": "Acceptable rent (zł/month)",
   "maximumDepositQuestion": "Maximum deposit",

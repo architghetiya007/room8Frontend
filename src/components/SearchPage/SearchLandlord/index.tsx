@@ -58,8 +58,7 @@ interface SearchLandlordProps {
 }
 const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
   const { t } = useCommonTranslation();
-  const { propertyTypes, yesNoOptions, iamAcceptingOptions } =
-    useLandlord();
+  const { propertyTypes, yesNoOptions, iamAcceptingOptions } = useLandlord();
   const { duration } = useHunterData();
   const formik = useFormik({
     initialValues: {
@@ -162,8 +161,6 @@ const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
                   <CommanTypography title={t("landlordQ.datesAvailable")} />
-                </Grid>
-                <Grid item xs={12} md={6}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={["DatePicker", "DatePicker"]}>
                       <DatePicker
@@ -187,6 +184,9 @@ const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
                       />
                     </DemoContainer>
                   </LocalizationProvider>
+                </Grid>
+                <Grid item xs={12} md={6}>
+
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Stack>
@@ -241,47 +241,25 @@ const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
                 <Grid item xs={12} md={6}>
                   <Stack>
                     <CommanTypography title={t("landlordQ.searchFurnished")} />
-                    <FormControl fullWidth>
-                      <Select
-                        labelId="work-status-label"
-                        id="work-status"
-                        value={formik.values.furnished}
-                        onChange={(e) => {
-                          formik.setFieldValue("furnished", e.target.value);
-                        }}
-                        displayEmpty
-                      >
-                        <MenuItem value="">Select</MenuItem>
-                        {yesNoOptions.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {t(option.name)}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                    <CustomButtonGroup
+                      optionClick={(e: string[] | string) => {
+                        formik.setFieldValue("furnished", e);
+                      }}
+                      selectionOption={formik.values.furnished}
+                      options={yesNoOptions}
+                    />
                   </Stack>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Stack>
                     <CommanTypography title={t("landlordQ.parking")} />
-                    <FormControl fullWidth>
-                      <Select
-                        labelId="work-status-label"
-                        id="work-status"
-                        value={formik.values.parking}
-                        onChange={(e) => {
-                          formik.setFieldValue("parking", e.target.value);
-                        }}
-                        displayEmpty
-                      >
-                        <MenuItem value="">Select</MenuItem>
-                        {yesNoOptions.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {t(option.name)}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                    <CustomButtonGroup
+                      optionClick={(e: string[] | string) => {
+                        formik.setFieldValue("parking", e);
+                      }}
+                      selectionOption={formik.values.parking}
+                      options={yesNoOptions}
+                    />
                   </Stack>
                 </Grid>
                 <Grid item xs={12}>
