@@ -109,7 +109,6 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
     propertyTypes,
     roomsAmount,
     tenants,
-    commanPreferenceOptions,
     duration,
     iamAcceptingOptions,
     yesNoOptions,
