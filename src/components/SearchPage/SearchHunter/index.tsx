@@ -223,8 +223,7 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1-content"
-              id="panel1-header"
-            >
+              id="panel1-header">
               <Box
                 sx={{
                   width: "25px",
@@ -234,11 +233,9 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                   mr: 1,
                 }}
                 component={"img"}
-                src={FILTERSIMG}
-              ></Box>
+                src={FILTERSIMG}></Box>
               <Typography
-                sx={{ fontSize: "24px", fontWeight: "600", color: "#3B3D44" }}
-              >
+                sx={{ fontSize: "24px", fontWeight: "600", color: "#3B3D44" }}>
                 More Filters
               </Typography>
             </AccordionSummary>
@@ -282,8 +279,7 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                       onChange={(e) => {
                         formik.setFieldValue("roomAmount", e.target.value);
                       }}
-                      displayEmpty
-                    >
+                      displayEmpty>
                       <MenuItem value="">Select</MenuItem>
                       {roomsAmount.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -317,8 +313,7 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                           e.target.value
                         );
                       }}
-                      displayEmpty
-                    >
+                      displayEmpty>
                       <MenuItem value="">Select</MenuItem>
                       {tenants.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -381,8 +376,7 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                           e.target.value
                         );
                       }}
-                      displayEmpty
-                    >
+                      displayEmpty>
                       <MenuItem value="">Select</MenuItem>
                       {duration.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -400,8 +394,7 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
           <CustomLoadingButton
             onClick={() => formik.handleSubmit()}
             sx={{ width: "100%", height: "60px" }}
-            type="button"
-          >
+            type="button">
             <Search />
             <Typography variant="h5" sx={{ ml: 1 }}>
               Search

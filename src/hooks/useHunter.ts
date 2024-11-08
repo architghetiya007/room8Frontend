@@ -56,15 +56,15 @@ const useHunterData = () => {
     },
     {
       name: t("roomsAmount.01+"),
-      value: "01+",
+      value: "01",
     },
     {
       name: t("roomsAmount.02+"),
-      value: "02+",
+      value: "02",
     },
     {
       name: t("roomsAmount.03+"),
-      value: "03+",
+      value: "03",
     },
   ];
 
