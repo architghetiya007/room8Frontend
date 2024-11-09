@@ -4,10 +4,38 @@ import Step1 from "../../../assets/images/Step1.png";
 import Step2 from "../../../assets/images/Step2.png";
 import Step3 from "../../../assets/images/Step3.png";
 const EasyStepSection: React.FC = () => {
+  const Line = (
+    <Box
+      sx={{
+        position: "absolute",
+        top: 0,
+        left: { xs: "20px", md: "0%" },
+        transform: { xs: "none", md: "translateX(-50%)" },
+        width: { xs: "2px", md: "4px" },
+        height: "100%",
+        backgroundColor: "#DCE6F5",
+        zIndex: 1,
+      }}
+    >
+      <Box
+        sx={{
+          position: "absolute",
+          top: `${33.33 + 16}%`, // Adjust circles position for each step
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "24px",
+          height: "24px",
+          borderRadius: "50%",
+          background:
+            "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
+        }}
+      />
+    </Box>
+  );
   return (
     <Box py={4}>
       <Container>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} p={1}>
           <Grid item xs={12}>
             <Box
               sx={{
@@ -66,7 +94,20 @@ const EasyStepSection: React.FC = () => {
             display={"flex"}
             gap={2}
             flexDirection={"column"}
+            position={"relative"}
+            p={2}
           >
+            <Box
+              sx={{
+                display: {
+                  xs: "block",
+                  md: "none",
+                },
+              }}
+            >
+              {Line}
+            </Box>
+
             <Typography
               sx={{
                 fontSize: "24px",
@@ -89,7 +130,8 @@ const EasyStepSection: React.FC = () => {
               and flatmate.
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} position={"relative"}>
+            {Line}
             <Stack>
               <Box
                 component={"img"}
@@ -105,7 +147,17 @@ const EasyStepSection: React.FC = () => {
               ></Box>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} position={"relative"}>
+            <Box
+              sx={{
+                display: {
+                  xs: "block",
+                  md: "none",
+                },
+              }}
+            >
+              {Line}
+            </Box>
             <Stack>
               <Box
                 component={"img"}
@@ -128,7 +180,10 @@ const EasyStepSection: React.FC = () => {
             display={"flex"}
             gap={2}
             flexDirection={"column"}
+            position={"relative"}
+            p={2}
           >
+            {Line}
             <Typography
               sx={{
                 fontSize: "24px",
@@ -158,7 +213,19 @@ const EasyStepSection: React.FC = () => {
             display={"flex"}
             gap={2}
             flexDirection={"column"}
+            position={"relative"}
+            p={2}
           >
+            <Box
+              sx={{
+                display: {
+                  xs: "block",
+                  md: "none",
+                },
+              }}
+            >
+              {Line}
+            </Box>
             <Typography
               sx={{
                 fontSize: "24px",
@@ -181,7 +248,8 @@ const EasyStepSection: React.FC = () => {
               parties.
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} position={"relative"}>
+            {Line}
             <Stack>
               <Box
                 component={"img"}
