@@ -37,7 +37,11 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             width={"100%"}
             height={"220px"}
             borderRadius={3}
-            src={advertisement.hunterData?.photos ?? RoomImage}
+            src={
+              advertisement.hunterData?.photos
+                ? advertisement.hunterData?.photos
+                : RoomImage
+            }
           ></Box>
           <Chip
             label={
@@ -72,7 +76,11 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             width={"100%"}
             height={"220px"}
             borderRadius={3}
-            src={advertisement.landlordData?.profilePhoto ?? RoomImage}
+            src={
+              advertisement.landlordData?.profilePhoto
+                ? advertisement.landlordData?.profilePhoto
+                : RoomImage
+            }
           ></Box>
           <Chip
             label={
@@ -151,7 +159,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             display={"flex"}
             alignItems={"center"}
             justifyContent={"space-between"}
-            pt={1}
+            pt={1.5}
           >
             {advertisement.landlordData?.propertyOffer !== "ENTIREROOM" && (
               <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
