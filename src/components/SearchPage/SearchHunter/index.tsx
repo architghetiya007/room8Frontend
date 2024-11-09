@@ -24,6 +24,7 @@ import { Search } from "@mui/icons-material";
 import CustomLoadingButton from "../../comman/CustomLoadingButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FILTERSIMG from "../../../assets/landlord/filters.png";
+import useLandlord from "../../../hooks/useLandlord";
 const marks = [
   {
     value: 1,
@@ -95,8 +96,8 @@ const hunterSchema = Yup.object().shape({
   roomAmount: Yup.string(),
   minimumNumberOfTenants: Yup.string(),
   flatmatePreference: Yup.array(Yup.string()),
-  furnished: Yup.string(),
-  parking: Yup.string(),
+  furnished: Yup.array(Yup.string()),
+  parking: Yup.array(Yup.string()),
   whenYouWouldLikeMoveIn: Yup.number().nullable(),
   preferredLengthToStay: Yup.string(),
 });
@@ -105,14 +106,15 @@ interface SearchHunterProps {
 }
 const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
   const {
-    accommodation,
     propertyTypes,
     roomsAmount,
-    tenants,
-    duration,
     iamAcceptingOptions,
-    yesNoOptions,
-  } = useHunterData();
+    parkingOptions,
+    commanPreferenceOptions,
+    propertyOfferOptions,
+  } = useLandlord();
+
+  const { tenants, duration } = useHunterData();
 
   const formik = useFormik({
     initialValues: {
@@ -135,8 +137,8 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
       roomAmount: "",
       minimumNumberOfTenants: "",
       flatmatePreference: [],
-      furnished: "",
-      parking: "",
+      furnished: [],
+      parking: [],
       whenYouWouldLikeMoveIn: null,
       preferredLengthToStay: "",
     },
@@ -159,7 +161,7 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
               formik.setFieldValue("propertyOffer", e);
             }}
             selectionOption={formik.values.propertyOffer}
-            options={accommodation}
+            options={propertyOfferOptions}
           />
         </Grid>
         <Grid item xs={12}>
@@ -223,7 +225,8 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1-content"
-              id="panel1-header">
+              id="panel1-header"
+            >
               <Box
                 sx={{
                   width: "25px",
@@ -233,9 +236,11 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                   mr: 1,
                 }}
                 component={"img"}
-                src={FILTERSIMG}></Box>
+                src={FILTERSIMG}
+              ></Box>
               <Typography
-                sx={{ fontSize: "24px", fontWeight: "600", color: "#3B3D44" }}>
+                sx={{ fontSize: "24px", fontWeight: "600", color: "#3B3D44" }}
+              >
                 More Filters
               </Typography>
             </AccordionSummary>
@@ -279,7 +284,8 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                       onChange={(e) => {
                         formik.setFieldValue("roomAmount", e.target.value);
                       }}
-                      displayEmpty>
+                      displayEmpty
+                    >
                       <MenuItem value="">Select</MenuItem>
                       {roomsAmount.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -313,7 +319,8 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                           e.target.value
                         );
                       }}
-                      displayEmpty>
+                      displayEmpty
+                    >
                       <MenuItem value="">Select</MenuItem>
                       {tenants.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -337,27 +344,29 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                     options={iamAcceptingOptions}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <Stack>
                     <CommanTypography title={t("landlordQ.searchFurnished")} />
                     <CustomButtonGroup
+                      multiSelect={true}
                       optionClick={(e: string[] | string) => {
                         formik.setFieldValue("furnished", e);
                       }}
                       selectionOption={formik.values.furnished}
-                      options={yesNoOptions}
+                      options={commanPreferenceOptions}
                     />
                   </Stack>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <Stack>
                     <CommanTypography title={t("landlordQ.parking")} />
                     <CustomButtonGroup
+                      multiSelect={true}
                       optionClick={(e: string[] | string) => {
                         formik.setFieldValue("parking", e);
                       }}
                       selectionOption={formik.values.parking}
-                      options={yesNoOptions}
+                      options={parkingOptions}
                     />
                   </Stack>
                 </Grid>
@@ -376,7 +385,8 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
                           e.target.value
                         );
                       }}
-                      displayEmpty>
+                      displayEmpty
+                    >
                       <MenuItem value="">Select</MenuItem>
                       {duration.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -394,7 +404,8 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
           <CustomLoadingButton
             onClick={() => formik.handleSubmit()}
             sx={{ width: "100%", height: "60px" }}
-            type="button">
+            type="button"
+          >
             <Search />
             <Typography variant="h5" sx={{ ml: 1 }}>
               Search

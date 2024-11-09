@@ -5,9 +5,9 @@ import Step2 from "../../../assets/images/Step2.png";
 import Step3 from "../../../assets/images/Step3.png";
 const EasyStepSection: React.FC = () => {
   return (
-    <Box>
+    <Box py={4}>
       <Container>
-        <Grid container spacing={2}>
+        <Grid container spacing={4}>
           <Grid item xs={12}>
             <Box
               sx={{

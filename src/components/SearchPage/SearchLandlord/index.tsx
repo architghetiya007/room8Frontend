@@ -15,7 +15,6 @@ import useCommonTranslation from "../../../hooks/useCommonTranslation";
 import CustomButtonGroup from "../../comman/CustomButtonGroup";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import useLandlord from "../../../hooks/useLandlord";
 import GoogleMapsAutocomplete from "../../comman/GoogleMapsAutoComplete";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useHunterData from "../../../hooks/useHunter";
@@ -49,8 +48,8 @@ const landlordSchema = Yup.object().shape({
   dateAvailable: Yup.number().nullable(),
   minimumStay: Yup.string(),
   maximumStay: Yup.string(),
-  furnished: Yup.string(),
-  parking: Yup.string(),
+  furnished: Yup.array(Yup.string()),
+  parking: Yup.array(Yup.string()),
   flatmateAccepting: Yup.array(Yup.string()),
 });
 interface SearchLandlordProps {
@@ -58,8 +57,13 @@ interface SearchLandlordProps {
 }
 const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
   const { t } = useCommonTranslation();
-  const { propertyTypes, yesNoOptions, iamAcceptingOptions } = useLandlord();
-  const { duration } = useHunterData();
+  const {
+    propertyTypes,
+    iamAcceptingOptions,
+    duration,
+    parkingOptions,
+    commanPreferenceOptions,
+  } = useHunterData();
   const formik = useFormik({
     initialValues: {
       typeOfProperty: "",
@@ -185,9 +189,7 @@ const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
                     </DemoContainer>
                   </LocalizationProvider>
                 </Grid>
-                <Grid item xs={12} md={6}>
-
-                </Grid>
+                <Grid item xs={12} md={6}></Grid>
                 <Grid item xs={12} md={6}>
                   <Stack>
                     <CommanTypography
@@ -238,27 +240,29 @@ const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
                     </FormControl>
                   </Stack>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <Stack>
                     <CommanTypography title={t("landlordQ.searchFurnished")} />
                     <CustomButtonGroup
+                      multiSelect={true}
                       optionClick={(e: string[] | string) => {
                         formik.setFieldValue("furnished", e);
                       }}
                       selectionOption={formik.values.furnished}
-                      options={yesNoOptions}
+                      options={commanPreferenceOptions}
                     />
                   </Stack>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <Stack>
                     <CommanTypography title={t("landlordQ.parking")} />
                     <CustomButtonGroup
+                      multiSelect={true}
                       optionClick={(e: string[] | string) => {
                         formik.setFieldValue("parking", e);
                       }}
                       selectionOption={formik.values.parking}
-                      options={yesNoOptions}
+                      options={parkingOptions}
                     />
                   </Stack>
                 </Grid>

@@ -65,7 +65,7 @@ const CustomButtonGroup: React.FC<CustomButtonGroupProps> = ({
               position: "relative",
               background: isSelected(item.value)
                 ? "linear-gradient(to right, rgba(74, 177, 241, 0.2), rgba(86, 108, 236, 0.2), rgba(215, 73, 175, 0.2), rgba(255, 124, 81, 0.2))"
-                : "transparent",
+                : "white",
               // Remove the regular border
               border: "none",
               // Add padding to account for pseudo-element border
@@ -86,9 +86,9 @@ const CustomButtonGroup: React.FC<CustomButtonGroupProps> = ({
                 right: 0,
                 bottom: 0,
                 borderRadius: "8px",
-                padding: "1px", // Border width
+                padding: "1.5px", // Border width
                 background:
-                  "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
+                  isSelected(item.value) ? "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)" : "#DDDEE3",
                 mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                 maskComposite: "exclude",
                 pointerEvents: "none",
