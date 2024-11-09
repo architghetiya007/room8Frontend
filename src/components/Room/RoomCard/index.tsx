@@ -1,17 +1,22 @@
 import { Box, Chip, Stack, Typography } from "@mui/material";
 import React from "react";
 import RoomImage from "../../../assets/room.png";
-import BathtubOutlinedIcon from "@mui/icons-material/BathtubOutlined";
-import BedOutlinedIcon from "@mui/icons-material/BedOutlined";
-import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import { AdvertisementData } from "../../../types/advertisement";
 import { AdvertisementType } from "../../../utils/advertisement";
 import dayjs from "dayjs";
-import AddHomeOutlined from "@mui/icons-material/AddHomeOutlined";
+import BedImg from "../../../assets/roomcard/Bed.svg";
+import EntireImg from "../../../assets/roomcard/Entire.svg";
+import PersonImg from "../../../assets/roomcard/Person.svg";
+import SharedImg from "../../../assets/roomcard/Shared.svg";
+import StayImg from "../../../assets/roomcard/Stay.svg";
+import HomeImg from "../../../assets/roomcard/home.svg";
+import useCommonTranslation from "../../../hooks/useCommonTranslation";
+
 interface RoomCardProps {
   advertisement: AdvertisementData;
 }
 const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
+  const { t } = useCommonTranslation();
   return (
     <Stack
       flexDirection={"column"}
@@ -39,7 +44,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
               advertisement?.hunterData?.isAvailableNow
                 ? "Available Now"
                 : advertisement?.hunterData?.whenYouWouldLikeMoveIn
-                ? "Available From" +
+                ? "Available From " +
                   dayjs(
                     advertisement.hunterData?.whenYouWouldLikeMoveIn
                   ).format("MM/DD/YYYY")
@@ -74,7 +79,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
               advertisement?.landlordData?.isAvailableNow
                 ? "Available Now"
                 : advertisement?.landlordData?.dateAvailable
-                ? "Available From" +
+                ? "Available From " +
                   dayjs(advertisement.landlordData?.dateAvailable).format(
                     "MM/DD/YYYY"
                   )
@@ -116,7 +121,11 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             : advertisement.landlordData?.address?.formattedAddress}
         </Typography>
         {advertisement.advertiseType === AdvertisementType.HUNTER && (
-          <Typography variant="h6" fontWeight={"600"}>
+          <Typography
+            sx={{ fontSize: "22px", color: "#373940" }}
+            variant="h6"
+            fontWeight={"600"}
+          >
             {advertisement!.hunterData!.acceptableRentRange!.length > 0
               ? advertisement?.hunterData?.acceptableRentRange?.at(0)
               : ""}{" "}
@@ -128,28 +137,69 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
           </Typography>
         )}
         {advertisement.advertiseType === AdvertisementType.LANDLORD && (
+          <Typography
+            sx={{ fontSize: "22px", color: "#373940" }}
+            variant="h6"
+            fontWeight={"600"}
+          >
+            {advertisement!.landlordData!.rentPerMonth} zł/month -{" "}
+            {advertisement!.landlordData?.propertySize} m²
+          </Typography>
+        )}
+        {advertisement.advertiseType === AdvertisementType.LANDLORD && (
           <Box
             display={"flex"}
             alignItems={"center"}
             justifyContent={"space-between"}
             pt={1}
           >
+            {advertisement.landlordData?.propertyOffer !== "ENTIREROOM" && (
+              <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
+                <Box
+                  component={"img"}
+                  src={
+                    advertisement.landlordData?.propertyOffer === "SHAREDROOM"
+                      ? SharedImg
+                      : EntireImg
+                  }
+                ></Box>
+                <Typography
+                  sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A" }}
+                  variant="subtitle2"
+                >
+                  {advertisement.landlordData?.propertyOffer}
+                </Typography>
+              </Box>
+            )}
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-              <BathtubOutlinedIcon />
-              <Typography sx={{ ml: 1 }} variant="subtitle2">
-                {advertisement.landlordData?.privateBathroom} baths
+              <Box component={"img"} src={BedImg}></Box>
+              <Typography
+                sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A" }}
+                variant="subtitle2"
+              >
+                {advertisement?.landlordData?.roomsAmount} rooms
               </Typography>
             </Box>
+            {advertisement.landlordData?.propertyOffer === "ENTIREROOM" && (
+              <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
+                <Box component={"img"} src={PersonImg}></Box>
+                <Typography
+                  sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A" }}
+                  variant="subtitle2"
+                >
+                  {advertisement.landlordData?.flatmateAccepting?.length}{" "}
+                  flatmates
+                </Typography>
+              </Box>
+            )}
+
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-              <BedOutlinedIcon />
-              <Typography sx={{ ml: 1 }} variant="subtitle2">
-                {advertisement?.landlordData?.bed} bedrooms
-              </Typography>
-            </Box>
-            <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-              <Person2OutlinedIcon />
-              <Typography sx={{ ml: 1 }} variant="subtitle2">
-                2 sharing
+              <Box component={"img"} src={StayImg}></Box>
+              <Typography
+                sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A" }}
+                variant="subtitle2"
+              >
+                {t(`duration.${advertisement?.landlordData?.minimumStay}`)}
               </Typography>
             </Box>
           </Box>
@@ -162,8 +212,11 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             pt={1}
           >
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
-              <AddHomeOutlined />
-              <Typography sx={{ ml: 1,color: "#6D778A" }} variant="subtitle2">
+              <Box component={"img"} src={HomeImg}></Box>
+              <Typography
+                sx={{ ml: 1, mt: 0.5, color: "#6D778A", fontSize: "14px" }}
+                variant="subtitle2"
+              >
                 Looking for a room/shared room
               </Typography>
             </Box>
