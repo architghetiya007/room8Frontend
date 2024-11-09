@@ -51,7 +51,7 @@ const landlordSchema = Yup.object().shape({
   maximumStay: Yup.string(),
   furnished: Yup.string(),
   parking: Yup.string(),
-  flatmateAccepting: Yup.string(),
+  flatmateAccepting: Yup.array(Yup.string()),
 });
 interface SearchLandlordProps {
   searchAPI: (data: any) => void;
@@ -80,7 +80,7 @@ const SearchLandlord: React.FC<SearchLandlordProps> = ({ searchAPI }) => {
       maximumStay: "",
       parking: "",
       furnished: "",
-      flatmateAccepting: "",
+      flatmateAccepting: [],
     },
     validationSchema: landlordSchema,
     onSubmit: (values) => {
