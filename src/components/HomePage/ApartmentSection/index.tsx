@@ -21,19 +21,29 @@ const ApartmentSection: React.FC = () => {
                 display: "flex",
                 alignItems: "center",
                 border: "2px solid #44ABEB",
-                boxShadow: 3, // Predefined MUI box shadow (3 is moderate depth)
+                boxShadow: "31px 39px 88.17px 0px #5165AB42;", // Predefined MUI box shadow (3 is moderate depth)
                 width: "100%",
+                height: "300px",
                 flexWrap: {
                   xs: "wrap",
                   md: "nowrap",
                 },
+                position: "relative",
               }}
             >
-              <Stack direction={"column"} spacing={2} p={2}>
-                <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+              <Stack
+                direction={"column"}
+                spacing={2}
+                p={2}
+                sx={{ maxWidth: "270px",zIndex: 99 }}
+              >
+                <Typography
+                  variant="h4"
+                  sx={{ fontWeight: "bold", lineHeight: "40px" }}
+                >
                   Looking For a Roomate?
                 </Typography>
-                <Typography sx={{ fontSize: "16px" }}>
+                <Typography sx={{ fontSize: "16px", color: "#6D778A" }}>
                   Post your listing and find the perfect roommate for your
                   place.
                 </Typography>
@@ -52,9 +62,9 @@ const ApartmentSection: React.FC = () => {
                     color: "white",
                     borderRadius: 10,
                     px: 2,
-                    py: 1,
+                    py: 0,
                     width: "auto",
-                    height: "55px",
+                    height: "52px",
                     textTransform: "none",
                     fontWeight: "bold",
                     fontSize: "16px",
@@ -64,13 +74,13 @@ const ApartmentSection: React.FC = () => {
                   Add Room/Apartment
                 </Button>
               </Stack>
-              <Stack>
+              <Stack sx={{ position: "absolute", right: 0, bottom: 0,zIndex: 9  }}>
                 <Box
                   component={"img"}
                   sx={{
                     maxWidth: {
                       xs: "100%",
-                      md: "300px",
+                      md: "338px",
                     },
                     height: "285px",
                   }}
@@ -92,16 +102,34 @@ const ApartmentSection: React.FC = () => {
                   xs: "wrap",
                   md: "nowrap",
                 },
+                position: "relative",
+                height: "300px",
               }}
             >
-              <Stack direction={"column"} spacing={2} p={2}>
+              <Stack
+                direction={"column"}
+                sx={{ maxWidth: "310px", zIndex: 99 }}
+                spacing={2}
+                p={2}
+              >
                 <Typography
                   variant="h4"
-                  sx={{ fontWeight: "bold", fontSize: "24px" }}
+                  sx={{ fontWeight: "bold", lineHeight: "40px" }}
                 >
-                  Looking for a room or apartment?
+                  Looking for a room or{" "}
+                  {/* <Typography
+                    component={"span"}
+                    sx={{
+                      background: "#E152B9",
+                      backdropFilter: "blur(28.2px)",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    
+                  </Typography> */}
+                  apartment?
                 </Typography>
-                <Typography sx={{ fontSize: "16px" }}>
+                <Typography sx={{ fontSize: "16px", color: "#6D778A" }}>
                   Fill out a quick form, meet potential roommates, and find your
                   ideal place.
                 </Typography>
@@ -120,9 +148,9 @@ const ApartmentSection: React.FC = () => {
                     color: "white",
                     borderRadius: 10,
                     px: 2,
-                    py: 1,
+                    py: 0,
                     width: "auto",
-                    height: "55px",
+                    height: "52px",
                     textTransform: "none",
                     fontWeight: "bold",
                     fontSize: "16px",
@@ -132,15 +160,15 @@ const ApartmentSection: React.FC = () => {
                   Add an Announcement
                 </Button>
               </Stack>
-              <Stack sx={{ width: "100%" }}>
+              <Stack sx={{ position: "absolute", right: 0, bottom: 0,zIndex: 9 }}>
                 <Box
                   component={"img"}
                   sx={{
                     maxWidth: {
                       xs: "100%",
-                      md: "298px",
+                      md: "338px",
                     },
-                    height: "282px",
+                    height: "285px",
                   }}
                   src={ApartmentPng}
                 ></Box>

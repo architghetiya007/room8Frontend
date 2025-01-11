@@ -294,7 +294,7 @@ const Step1: React.FC<Step1Props> = () => {
 
   return (
     <Box component={"form"}>
-      <Grid container spacing={2} mt={2} mb={2}>
+      <Grid container spacing={2} mt={2} mb={8}>
         <Grid item xs={12}>
           <Typography
             sx={{ fontSize: "22px", fontWeight: "600", color: "#6D778A" }}

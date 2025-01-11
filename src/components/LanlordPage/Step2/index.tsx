@@ -265,7 +265,7 @@ const Step2: React.FC<Step2Props> = () => {
 
   return (
     <Box component={"form"} onSubmit={formik.handleSubmit}>
-      <Grid container spacing={2} mt={2} mb={2}>
+      <Grid container spacing={2} mt={2} mb={8}>
         <Grid item xs={12}>
           <Typography
             sx={{ fontSize: "22px", fontWeight: "600", color: "#6D778A" }}

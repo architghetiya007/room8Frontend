@@ -5,7 +5,7 @@ import { LoadingButton } from "@mui/lab";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 const RoomMatesSection: React.FC = () => {
   return (
-    <Box sx={{ background: "linear-gradient(to right, #FFE9F4, #EAF3FF)" }}>
+    <Box sx={{ background: "linear-gradient( rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.55) 100%);" }}>
       <Container>
         <Grid container spacing={2} mt={4}>
           <Grid item xs={12} md={8}>
@@ -60,6 +60,7 @@ const RoomMatesSection: React.FC = () => {
                     xs: "100%",
                     md: "266px",
                   },
+                  right: "-1000px",
                   ml: "auto",
                   mr: "auto",
                 }}

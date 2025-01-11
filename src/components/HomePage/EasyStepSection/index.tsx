@@ -112,16 +112,17 @@ const EasyStepSection: React.FC = () => {
               sx={{
                 fontSize: "24px",
                 background:
-                  "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+                  "linear-gradient( #4AB1F1 0.58%, #566CEC 37.22%, #D749AF 73.87%, #FF7C51 112.26%);",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 textAlign: "start",
+                WebkitBackgroundClip: "text", // For WebKit browsers (Chrome, Safari)
                 fontWeight: "bold",
               }}
             >
               STEP 1
             </Typography>
-            <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+            <Typography variant="h4" sx={{ fontWeight: "bold", color: "#3B3D44" }}>
               Create a Profile and specify your preferences
             </Typography>
             <Typography sx={{ color: "#6D778A" }}>
@@ -188,16 +189,17 @@ const EasyStepSection: React.FC = () => {
               sx={{
                 fontSize: "24px",
                 background:
-                  "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+                  "linear-gradient( #4AB1F1 0.58%, #566CEC 37.22%, #D749AF 73.87%, #FF7C51 112.26%);",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 textAlign: "start",
+                WebkitBackgroundClip: "text", // For WebKit browsers (Chrome, Safari)
                 fontWeight: "bold",
               }}
             >
               STEP 2
             </Typography>
-            <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+            <Typography variant="h4" sx={{ fontWeight: "bold", color: "#3B3D44" }}>
               Discover Matches - Don't waste time searching
             </Typography>
             <Typography sx={{ color: "#6D778A" }}>
@@ -230,16 +232,17 @@ const EasyStepSection: React.FC = () => {
               sx={{
                 fontSize: "24px",
                 background:
-                  "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+                  "linear-gradient( #4AB1F1 0.58%, #566CEC 37.22%, #D749AF 73.87%, #FF7C51 112.26%);",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 textAlign: "start",
+                WebkitBackgroundClip: "text", // For WebKit browsers (Chrome, Safari)
                 fontWeight: "bold",
               }}
             >
               STEP 3
             </Typography>
-            <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+            <Typography variant="h4" sx={{ fontWeight: "bold", color: "#3B3D44" }}>
               Contact and Build a Harmonious Community
             </Typography>
             <Typography sx={{ color: "#6D778A" }}>

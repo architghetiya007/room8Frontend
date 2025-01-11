@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
-    fontFamily: '"Maccan", "Arial", sans-serif',
+    fontFamily: '"Macan", "Arial", sans-serif',
     // fontWeightRegular: 600,
     // fontWeightBold: 600,
     // fontWeightMedium: 600,

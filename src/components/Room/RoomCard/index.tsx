@@ -56,8 +56,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             }
             sx={{
               background: advertisement?.hunterData?.isAvailableNow
-                ? "green"
-                : "red",
+                ? "#3EBC61"
+                : "#FF445E",
               color: "white",
               position: "absolute",
               left: "20px",
@@ -95,8 +95,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             }
             sx={{
               background: advertisement?.landlordData?.isAvailableNow
-                ? "green"
-                : "red",
+              ? "#3EBC61"
+              : "#FF445E",
               color: "white",
               position: "absolute",
               left: "20px",

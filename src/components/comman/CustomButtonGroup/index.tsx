@@ -69,7 +69,7 @@ const CustomButtonGroup: React.FC<CustomButtonGroupProps> = ({
               // Remove the regular border
               border: "none",
               // Add padding to account for pseudo-element border
-              padding: "11px 21px", // 1px more than original to account for border
+              padding: "18px 21px", // 1px more than original to account for border
               color: isSelected(item.value) ? "#000000" : "#6D778A",
               letterSpacing: "0.5px",
               borderRadius: "8px",

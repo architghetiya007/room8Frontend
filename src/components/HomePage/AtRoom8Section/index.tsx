@@ -56,8 +56,10 @@ const AtRoom8Section: React.FC = () => {
           <Typography
             sx={{
               mt: 2,
-              fontSize: "24px",
+              fontSize: "22px",
+              lineHeight: '33px',
               color: "#6D778A",
+              fontWeight: 600
             }}
             variant="subtitle1"
           >

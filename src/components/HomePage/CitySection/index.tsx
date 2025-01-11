@@ -22,7 +22,7 @@ const CitySection: React.FC = () => {
   return (
     <Box
       sx={{
-        background: "linear-gradient(to right, #FFEBE8, #EDD6F5, #EDF6FD)",
+        background: "linear-gradient(90deg, rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.55) 100%);",
         p: {
           xs: 1,
           md: 5,

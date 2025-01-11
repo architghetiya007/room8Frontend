@@ -223,6 +223,9 @@ const Header: React.FC = () => {
                   color: theme.palette.custom.blackDark,
                   fontWeight: "bold",
                   marginRight: 2,
+                  textTransform: "none",
+                  lineHeight: "24px",
+                  fontSize: "14px"
                 }}
                 type="button"
                 onClick={() => setOpenLoginDialog(true)}
@@ -236,6 +239,9 @@ const Header: React.FC = () => {
                   color: theme.palette.custom.blackDark,
                   borderColor: theme.palette.custom.blackDark,
                   fontWeight: "bold",
+                  textTransform: "none",
+                  lineHeight: "24px",
+                  fontSize: "14px"
                 }}
                 endIcon={<EastIcon />}
                 type="button"
