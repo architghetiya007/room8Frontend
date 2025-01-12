@@ -29,6 +29,14 @@ const ApartmentSection: React.FC = () => {
                   md: "nowrap",
                 },
                 position: "relative",
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                if (userSlice.user) {
+                  navigate("/landlord/1");
+                } else {
+                  eventEmitter.emit("Header", "openLoginDialog");
+                }
               }}
             >
               <Stack
@@ -49,13 +57,13 @@ const ApartmentSection: React.FC = () => {
                 </Typography>
                 <Button
                   type="button"
-                  onClick={() => {
-                    if (userSlice.user) {
-                      navigate("/landlord/1");
-                    } else {
-                      eventEmitter.emit("Header", "openLoginDialog");
-                    }
-                  }}
+                  // onClick={() => {
+                  //   if (userSlice.user) {
+                  //     navigate("/landlord/1");
+                  //   } else {
+                  //     eventEmitter.emit("Header", "openLoginDialog");
+                  //   }
+                  // }}
                   startIcon={<AddIcon />}
                   sx={{
                     backgroundColor: "#44ABEB",
@@ -106,6 +114,14 @@ const ApartmentSection: React.FC = () => {
                 position: "relative",
                 height: "300px",
                 boxShadow: "31px 39px 88.17px 0px #5165AB42",
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                if (userSlice.user) {
+                  navigate("/hunter/1");
+                } else {
+                  eventEmitter.emit("Header", "openLoginDialog");
+                }
               }}
             >
               <Stack
@@ -137,13 +153,13 @@ const ApartmentSection: React.FC = () => {
                 </Typography>
                 <Button
                   type="button"
-                  onClick={() => {
-                    if (userSlice.user) {
-                      navigate("/hunter/1");
-                    } else {
-                      eventEmitter.emit("Header", "openLoginDialog");
-                    }
-                  }}
+                  // onClick={() => {
+                  //   if (userSlice.user) {
+                  //     navigate("/hunter/1");
+                  //   } else {
+                  //     eventEmitter.emit("Header", "openLoginDialog");
+                  //   }
+                  // }}
                   startIcon={<AddIcon />}
                   sx={{
                     backgroundColor: "#E152B9",
