@@ -36,7 +36,10 @@ const RoomRentalSection: React.FC = () => {
             boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.1)", // White shadow
             transition: "box-shadow 0.3s ease-in-out",
             borderRadius: "20px",
-            p: 1,
+            px: {
+              xs: 1,
+              md: 15,
+            },
           }}
         >
           <Typography
@@ -55,10 +58,11 @@ const RoomRentalSection: React.FC = () => {
           <Typography
             sx={{
               mt: 2,
-              fontSize: "24px",
+              fontSize: "22px",
               color: "#6D778A",
               fontWeight: '600',
-              textAlign: 'center'
+              textAlign: 'center',
+              lineHeight: "33px"
             }}
             variant="subtitle1"
           >

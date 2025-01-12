@@ -80,9 +80,9 @@ const landlordSchema = Yup.object().shape({
         .required("Number of Floor Required"),
     otherwise: (schema) => schema.nullable(),
   }),
-  liftInBuilding: Yup.number().when("typeofProperty", {
+  liftInBuilding: Yup.string().when("typeofProperty", {
     is: (value: string) => value !== "HOUSE",
-    then: (schema) => schema.required("Minimum room size is required"),
+    then: (schema) => schema.required("Lift in the building is required"),
     otherwise: (schema) => schema.nullable(),
   }),
   IsApartmentFurnished: Yup.string().required(

@@ -317,6 +317,7 @@ const Register: React.FC<RegisterProps> = ({
                       fontWeight: "600",
                       p: 0,
                       minWidth: "unset",
+                      marginTop: "-10px"
                     }}
                     type="button"
                     onClick={() => {

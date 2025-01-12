@@ -111,7 +111,7 @@ const Header: React.FC = () => {
         p: 2,
         position: "fixed",
         width: "100%",
-        zIndex: 9,
+        zIndex: 999,
         backgroundSize: "center",
         backgroundPosition: "center",
       }}

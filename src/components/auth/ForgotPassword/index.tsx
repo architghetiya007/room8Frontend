@@ -139,6 +139,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({
                       fontWeight: "600",
                       p: 0,
                       minWidth: "unset",
+                      marginTop: "-10px"
                     }}
                     type="button"
                     onClick={() => {

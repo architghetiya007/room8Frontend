@@ -1,75 +1,98 @@
-import { Box, Container, Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import RoomMate from "../../../assets/images/perfectroommates.png";
 import { LoadingButton } from "@mui/lab";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 const RoomMatesSection: React.FC = () => {
   return (
-    <Box sx={{ background: "linear-gradient( rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.55) 100%);" }}>
-      <Container>
-        <Grid container spacing={2} mt={4}>
-          <Grid item xs={12} md={8}>
-            <Stack spacing={3} pt={4}>
-              <Typography
-                sx={{
-                  fontSize: "36px",
-                  background:
-                    "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
-                  backgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  marginRight: 2, // Space between the text
-                  fontWeight: 'bold'
-                }}
-              >
-                Join Room8 and find the perfect roommates
-              </Typography>
-              <Typography variant="body1" sx={{ fontSize: "20px",color: "#6D778A" }}>
-                and a stress-free apartment! Create profiles, browse offers and
-                meet new people in a friendly way.{" "}
-                <b>Start your adventure today!</b>
-              </Typography>
-              <LoadingButton
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                sx={{
-                  background:
-                    "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
-                  p: 1,
-                  borderRadius: 8,
-                  color: "white",
-                  textTransform: "none",
-                  letterSpacing: "1px",
-                  fontWeight: "600",
-                  fontSize: "24px",
-                  maxWidth: "240px",
-                }}
-                type="button"
-                endIcon={
-                  <ArrowForwardIcon sx={{ fontSize: "30px !important" }} />
-                }
-              >
-                Get Started!
-              </LoadingButton>
-            </Stack>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Stack>
-              <Box
-                component={"img"}
-                sx={{
-                  maxWidth: {
-                    xs: "100%",
-                    md: "266px",
-                  },
-                  right: "-1000px",
-                  ml: "auto",
-                  mr: "auto",
-                }}
-                src={RoomMate}
-              ></Box>
-            </Stack>
-          </Grid>
+    <Box
+      sx={{
+        background:
+          "linear-gradient( rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.55) 100%);",
+        display: "flex",
+        pl: {
+          xs: 0,
+          md: 20,
+        },
+        my: {
+          xs: 4,
+          md: 0,
+        },
+        flexWrap: {
+          xs: "wrap",
+          md: "nowrap",
+        },
+      }}
+    >
+      {/* <Container > */}
+      <Grid container spacing={2} mt={4}>
+        <Grid item xs={12} md={9}>
+          <Stack spacing={3} pt={4}>
+            <Typography
+              sx={{
+                fontSize: "36px",
+                background:
+                  "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+                backgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                marginRight: 2, // Space between the text
+                fontWeight: "bold",
+              }}
+            >
+              Join Room8 and find the perfect roommates
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{ fontSize: "20px", color: "#6D778A" }}
+            >
+              and a stress-free apartment! Create profiles, browse offers and
+              meet new people in a friendly way.{" "}
+              <b>Start your adventure today!</b>
+            </Typography>
+            <LoadingButton
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              sx={{
+                background:
+                  "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
+                p: 1,
+                borderRadius: 8,
+                color: "white",
+                textTransform: "none",
+                letterSpacing: "1px",
+                fontWeight: "600",
+                fontSize: "24px",
+                maxWidth: "240px",
+              }}
+              type="button"
+              endIcon={
+                <ArrowForwardIcon sx={{ fontSize: "30px !important" }} />
+              }
+            >
+              Get Started!
+            </LoadingButton>
+          </Stack>
         </Grid>
-      </Container>
+        {/* <Grid item xs={12} md={4}>
+            <Stack>
+             
+            </Stack>
+          </Grid> */}
+      </Grid>
+      {/* </Container> */}
+      <Box
+        component={"img"}
+        sx={{
+          width: {
+            xs: "100%",
+            md: "400px",
+          },
+          maxHeight: "400px",
+          right: "-1000px",
+          ml: "auto",
+          mr: "auto",
+        }}
+        src={RoomMate}
+      ></Box>
     </Box>
   );
 };

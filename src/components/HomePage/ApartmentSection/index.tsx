@@ -21,7 +21,7 @@ const ApartmentSection: React.FC = () => {
                 display: "flex",
                 alignItems: "center",
                 border: "2px solid #44ABEB",
-                boxShadow: "31px 39px 88.17px 0px #5165AB42;", // Predefined MUI box shadow (3 is moderate depth)
+                boxShadow: "31px 39px 88.17px 0px #5165AB42",
                 width: "100%",
                 height: "300px",
                 flexWrap: {
@@ -96,7 +96,6 @@ const ApartmentSection: React.FC = () => {
                 display: "flex",
                 alignItems: "center",
                 border: "2px solid #E152B9",
-                boxShadow: 3, // Predefined MUI box shadow (3 is moderate depth)
                 width: "100%",
                 flexWrap: {
                   xs: "wrap",
@@ -104,6 +103,7 @@ const ApartmentSection: React.FC = () => {
                 },
                 position: "relative",
                 height: "300px",
+                boxShadow: "31px 39px 88.17px 0px #5165AB42"
               }}
             >
               <Stack

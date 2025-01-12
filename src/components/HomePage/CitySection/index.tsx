@@ -1,4 +1,4 @@
-import { Box, Chip, Container, Typography, useTheme } from "@mui/material";
+import { Box, Chip, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useAdvertisementMutations from "../../../mutations/advertisement";
 import { CityDTO } from "../../../types/advertisement";
@@ -6,7 +6,6 @@ import { CityDTO } from "../../../types/advertisement";
 const CitySection: React.FC = () => {
   const { topCitiesMutation } = useAdvertisementMutations();
   const [cities, setCities] = useState<CityDTO[]>([]);
-  const theme = useTheme();
 
   const fetchCities = () => {
     topCitiesMutation.mutate(undefined, {
@@ -22,10 +21,11 @@ const CitySection: React.FC = () => {
   return (
     <Box
       sx={{
-        background: "linear-gradient(90deg, rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.55) 100%);",
+        background:
+          "linear-gradient(90deg, rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.55) 100%);",
         p: {
           xs: 1,
-          md: 5,
+          md: 4,
         },
       }}
     >
@@ -45,13 +45,15 @@ const CitySection: React.FC = () => {
               xs: "column",
               md: "row",
             },
-            justifyContent: "center",
+            justifyContent: "flex-start",
           }}
         >
           <Typography
             sx={{
-              color: theme.palette.custom.blackDarkGray,
-              fontWeight: "bold",
+              fontWeight: "700",
+              color: "#6D778A",
+              fontSize: "24px",
+              lineHeight: "40px",
             }}
           >
             TOP CITIES
@@ -82,7 +84,13 @@ const CitySection: React.FC = () => {
                     backgroundColor: "#E8EDF5",
                   }}
                   label={
-                    <Typography sx={{ color: "#6D778A" }}>
+                    <Typography
+                      sx={{
+                        color: "#6D778A",
+                        fontWeight: "600",
+                        fontSize: "16px",
+                      }}
+                    >
                       {item._id} ({item.totalCityCount})
                     </Typography>
                   }

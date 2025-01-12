@@ -27,7 +27,7 @@ const HeroSection: React.FC = () => {
                 WebkitTextFillColor: "transparent",
                 textAlign: "center",
                 fontWeight: "bold",
-                lineHeight: "58px"
+                lineHeight: "58px",
               }}
             >
               Get to Know Your Roommate <br /> Before You Move In
@@ -35,7 +35,12 @@ const HeroSection: React.FC = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography
-              sx={{ textAlign: "center", color: "#5E646E", fontSize: "18px",lineHeight: "24px" }}
+              sx={{
+                textAlign: "center",
+                color: "#5E646E",
+                fontSize: "18px",
+                lineHeight: "24px",
+              }}
               variant="subtitle1"
             >
               Lorem ipsum dolor sit amet laoreet quis imperdiet quis, consequat
@@ -45,7 +50,7 @@ const HeroSection: React.FC = () => {
           <Grid
             item
             xs={12}
-            md={6}
+            md={7}
             sx={{
               ml: "auto",
               mr: "auto",
@@ -68,14 +73,16 @@ const HeroSection: React.FC = () => {
                     variant="contained"
                     startIcon={<SearchIcon />}
                     sx={{
-                      borderRadius: "20px",
+                      borderRadius: "40px",
                       backgroundColor: "black", // Black background color
                       color: "white", // White text color
                       textTransform: "none", // Prevent text from being uppercase
                       "&:hover": {
                         backgroundColor: "#333", // Darker shade on hover
                       },
-                      height: "42px",
+                      mr: "-4px",
+                      height: "48px",
+                      width: "140px",
                     }}
                   >
                     Search
@@ -85,7 +92,8 @@ const HeroSection: React.FC = () => {
               sx={{
                 borderRadius: 10, // Add border-radius to the input field
                 paddingRight: "8px", // Adjust padding for better appearance
-                background: "linear-gradient(90deg, rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.55) 100%)"
+                background:
+                  "linear-gradient(90deg, rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.55) 100%)",
               }}
             />
           </Grid>

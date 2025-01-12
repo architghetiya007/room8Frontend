@@ -115,7 +115,7 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
                   Deposit: {previewData.landlordData?.deposit} zl
                 </Typography>
                 <Box
-                  sx={{ width: "25px", height: "25px" }}
+                  sx={{ width: "30px", height: "25px" }}
                   component={"img"}
                   src={DEPOSIT}
                 ></Box>
@@ -134,9 +134,9 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
         <Grid item xs={12}>
           <Grid container spacing={1} mt={1}>
             <Grid item xs={12} md={8}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Box
-                  sx={{ width: "25px", height: "25px" }}
+                  sx={{ width: "25px", height: "30px" }}
                   component={"img"}
                   src={MAPIMG}
                 ></Box>
@@ -151,7 +151,7 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
                     )
                   }
                   variant="h6"
-                  sx={{ borderBottom: "1px solid black", cursor: "pointer",color: "#3B3D44", fontSize: '20px',fontWeight: '600' }}
+                  sx={{ borderBottom: "1px solid black", cursor: "pointer",color: "#3B3D44", fontSize: '20px',fontWeight: '600', lineHeight: "24px" }}
                 >
                   CHECK ON MAP
                 </Typography>
@@ -187,7 +187,7 @@ const LandlordProfileCard: React.FC<LandlordProfileCardProps> = ({
                   {t(`duration.${previewData?.landlordData?.minimumStay}`)}{" "}
                 </Typography>
                 <Box
-                  sx={{ width: "25px", height: "25px" }}
+                  sx={{ width: "26px", height: "25px" }}
                   component={"img"}
                   src={AvailableImg}
                 ></Box>

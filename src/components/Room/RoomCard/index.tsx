@@ -23,11 +23,12 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
       sx={{
         borderRadius: 2,
         backgroundColor: "#fff", // White background to see the shadow clearly
-        boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.1)", // White shadow
+        boxShadow: "31px 39px 88.17px 0px #5165AB1F",
         transition: "box-shadow 0.3s ease-in-out", // Smooth transition for hover effect
         "&:hover": {
-          boxShadow: "0px 8px 16px rgba(255, 20, 147, 0.2)", // Pink shadow on hover
+          boxShadow: "31px 39px 88.17px 0px #5165AB1F",
         },
+        cursor: "pointer",
       }}
     >
       {advertisement.advertiseType === AdvertisementType.HUNTER && (
@@ -95,8 +96,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             }
             sx={{
               background: advertisement?.landlordData?.isAvailableNow
-              ? "#3EBC61"
-              : "#FF445E",
+                ? "#3EBC61"
+                : "#FF445E",
               color: "white",
               position: "absolute",
               left: "20px",
@@ -122,6 +123,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
                 : "30px",
             overflow: "hidden",
             color: "#6D778A",
+            fontWeight: "600",
+            fontSize: "16px"
           }}
         >
           {advertisement.advertiseType === AdvertisementType.HUNTER
@@ -132,7 +135,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
           <Typography
             sx={{ fontSize: "22px", color: "#373940" }}
             variant="h6"
-            fontWeight={"600"}
+            fontWeight={"700"}
           >
             {advertisement!.hunterData!.acceptableRentRange!.length > 0
               ? advertisement?.hunterData?.acceptableRentRange?.at(0)
@@ -172,7 +175,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
                   }
                 ></Box>
                 <Typography
-                  sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A" }}
+                  sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A", fontWeight: "450" }}
                   variant="subtitle2"
                 >
                   {advertisement.landlordData?.propertyOffer}
@@ -182,7 +185,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
               <Box component={"img"} src={BedImg}></Box>
               <Typography
-                sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A" }}
+                sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A", fontWeight: "450" }}
                 variant="subtitle2"
               >
                 {advertisement?.landlordData?.roomsAmount} rooms
@@ -192,7 +195,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
               <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
                 <Box component={"img"} src={PersonImg}></Box>
                 <Typography
-                  sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A" }}
+                  sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A", fontWeight: "450" }}
                   variant="subtitle2"
                 >
                   {advertisement.landlordData?.flatmateAccepting?.length}{" "}
@@ -204,7 +207,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
               <Box component={"img"} src={StayImg}></Box>
               <Typography
-                sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A" }}
+                sx={{ ml: 0.5, fontSize: "14px", color: "#6D778A", fontWeight: "450" }}
                 variant="subtitle2"
               >
                 {t(`duration.${advertisement?.landlordData?.minimumStay}`)}
@@ -222,7 +225,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
               <Box component={"img"} src={HomeImg}></Box>
               <Typography
-                sx={{ ml: 1, mt: 0.5, color: "#6D778A", fontSize: "14px" }}
+                sx={{ ml: 1, mt: 0.5, color: "#6D778A", fontSize: "14px", fontWeight: "450" }}
                 variant="subtitle2"
               >
                 Looking for a room/shared room
