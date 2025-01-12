@@ -20,14 +20,20 @@ const HeroSection: React.FC = () => {
           <Grid item xs={12}>
             <Typography
               sx={{
-                fontSize: "50px",
+                fontSize: {
+                  xs: "38px",
+                  md: "50px"
+                },
                 background:
                   "linear-gradient(90.42deg, #4AB1F1 0.58%, #566CEC 37.22%, #D749AF 73.87%, #FF7C51 112.26%)",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 textAlign: "center",
                 fontWeight: "bold",
-                lineHeight: "58px",
+                lineHeight: {
+                  xs: "43px",
+                  md: "58px"
+                },
               }}
               variant="h2"
             >

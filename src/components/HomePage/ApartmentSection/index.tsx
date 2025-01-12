@@ -35,7 +35,7 @@ const ApartmentSection: React.FC = () => {
                 direction={"column"}
                 spacing={2}
                 p={2}
-                sx={{ maxWidth: "270px",zIndex: 99 }}
+                sx={{ maxWidth: "270px", zIndex: 99 }}
               >
                 <Typography
                   variant="h4"
@@ -74,7 +74,9 @@ const ApartmentSection: React.FC = () => {
                   Add Room/Apartment
                 </Button>
               </Stack>
-              <Stack sx={{ position: "absolute", right: 0, bottom: 0,zIndex: 9  }}>
+              <Stack
+                sx={{ position: "absolute", right: 0, bottom: 0, zIndex: 9 }}
+              >
                 <Box
                   component={"img"}
                   sx={{
@@ -103,7 +105,7 @@ const ApartmentSection: React.FC = () => {
                 },
                 position: "relative",
                 height: "300px",
-                boxShadow: "31px 39px 88.17px 0px #5165AB42"
+                boxShadow: "31px 39px 88.17px 0px #5165AB42",
               }}
             >
               <Stack
@@ -160,7 +162,9 @@ const ApartmentSection: React.FC = () => {
                   Add an Announcement
                 </Button>
               </Stack>
-              <Stack sx={{ position: "absolute", right: 0, bottom: 0,zIndex: 9 }}>
+              <Stack
+                sx={{ position: "absolute", right: 0, bottom: 0, zIndex: 9 }}
+              >
                 <Box
                   component={"img"}
                   sx={{
