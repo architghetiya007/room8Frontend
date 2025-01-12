@@ -90,7 +90,11 @@ const Header: React.FC = () => {
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         {HeaderMenus.map((item) => (
-          <ListItem key={item.route} disablePadding>
+          <ListItem onClick={() => {
+            setTimeout(() => {
+              navigate(item.route)
+            }, 100);
+          }} key={item.route} disablePadding>
             <ListItemButton>
               <ListItemText primary={item.name} />
             </ListItemButton>
