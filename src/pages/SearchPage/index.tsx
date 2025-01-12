@@ -41,7 +41,10 @@ const SearchPage: React.FC = () => {
   return (
     <Box>
       <Container sx={{ my: 4 }}>
-        <Box sx={{ width: "100%", display: "flex", gap: 1 }}>
+        <Box sx={{ width: "100%", display: "flex", gap: 1, flexWrap: {
+          xs: 'wrap',
+          md: "nowrap"
+        } }}>
           <CustomLoadingButton
             sx={{
               width: "100%",
