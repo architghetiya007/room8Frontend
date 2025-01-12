@@ -29,6 +29,7 @@ const HeroSection: React.FC = () => {
                 fontWeight: "bold",
                 lineHeight: "58px",
               }}
+              variant="h2"
             >
               Get to Know Your Roommate <br /> Before You Move In
             </Typography>
