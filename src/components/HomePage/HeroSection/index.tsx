@@ -97,7 +97,7 @@ const HeroSection: React.FC = () => {
                 </InputAdornment>
               }
               sx={{
-                borderRadius: 10, // Add border-radius to the input field
+                borderRadius: '40px !important', // Add border-radius to the input field
                 paddingRight: "8px", // Adjust padding for better appearance
                 background:
                   "linear-gradient(90deg, rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.55) 100%)",
