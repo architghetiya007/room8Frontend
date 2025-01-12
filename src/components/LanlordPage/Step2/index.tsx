@@ -287,9 +287,9 @@ const Step2: React.FC<Step2Props> = () => {
             <CommanTypography title={t("landlordQ.roomInformation")} />
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.roomSize")} />
         </Grid>
@@ -402,9 +402,9 @@ const Step2: React.FC<Step2Props> = () => {
             </FormHelperText>
           )}
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <Box
             display={"flex"}
@@ -694,8 +694,12 @@ const Step2: React.FC<Step2Props> = () => {
             </LoadingButton>
           </Stack>
         </Grid>
+         <Grid item xs={12} mb={2} mt={2}>
+                  <Box sx={{ borderBottom: "1px solid black" }}></Box>
+                </Grid>
         <Grid item xs={12} md={6}>
           <OutlinedButton
+          sx={{ height: "72px"}}
             type="button"
             onClick={() => navigate(`/landlord/1/${advertisementData?._id}`)}
           >
@@ -708,7 +712,7 @@ const Step2: React.FC<Step2Props> = () => {
               updateAdvertisementMutation.isPending ||
               uploadImageMutation.isPending
             }
-            sx={{ width: "100%" }}
+            sx={{ width: "100%",height: "72px" }}
             onClick={() => formik.handleSubmit()}
           >
             {t("NEXT")}

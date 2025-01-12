@@ -246,9 +246,9 @@ const Step2: React.FC<Step2Props> = () => {
               {t("hunterStep2Title")}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Box sx={{ borderBottom: "1px solid black" }}></Box>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <CommanTypography title={t("whoAreYouQuestion")} />
           </Grid>
@@ -511,9 +511,9 @@ const Step2: React.FC<Step2Props> = () => {
             </>
           )}
 
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Box sx={{ borderBottom: "1px solid black" }}></Box>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <Typography
               sx={{
@@ -527,9 +527,9 @@ const Step2: React.FC<Step2Props> = () => {
               {t("flatemateTitle")}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Box sx={{ borderBottom: "1px solid black" }}></Box>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <CommanTypography title={t("flatmatePreferenceQuestion")} />
           </Grid>
@@ -616,9 +616,9 @@ const Step2: React.FC<Step2Props> = () => {
               </FormHelperText>
             )}
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Box sx={{ borderBottom: "1px solid black" }}></Box>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <Stack
               spacing={1}
@@ -703,8 +703,12 @@ const Step2: React.FC<Step2Props> = () => {
               </FormHelperText>
             )}
           </Grid>
+          <Grid item xs={12} mb={2} mt={2}>
+            <Box sx={{ borderBottom: "1px solid black" }}></Box>
+          </Grid>
           <Grid item xs={12} md={6}>
             <OutlinedButton
+              sx={{ height: "72px" }}
               type="button"
               onClick={() => navigate(`/hunter/1/${advertisementData?._id}`)}
             >
@@ -714,7 +718,7 @@ const Step2: React.FC<Step2Props> = () => {
           <Grid item xs={12} md={6}>
             <CustomLoadingButton
               disabled={!formik.isValid}
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", height: "72px" }}
               loading={
                 updateAdvertisementMutation.isPending ||
                 uploadImageMutation.isPending

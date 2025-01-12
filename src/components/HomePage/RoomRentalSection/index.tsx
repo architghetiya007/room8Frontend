@@ -44,7 +44,7 @@ const RoomRentalSection: React.FC = () => {
         >
           <Typography
             sx={{
-              fontSize: "50px",
+              fontSize: "42px",
               background:
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",

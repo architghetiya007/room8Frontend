@@ -400,7 +400,7 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
             </AccordionDetails>
           </Accordion>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} mt={4} mb={2}>
           <CustomLoadingButton
             onClick={() => formik.handleSubmit()}
             sx={{ width: "100%", height: "60px" }}

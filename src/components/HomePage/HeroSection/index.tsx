@@ -57,7 +57,7 @@ const HeroSection: React.FC = () => {
           <Grid
             item
             xs={12}
-            md={7}
+            md={7.5}
             sx={{
               ml: "auto",
               mr: "auto",

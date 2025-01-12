@@ -137,13 +137,13 @@ const Header: React.FC = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "flex-start",
+              justifyContent: "center",
             }}
           >
             <IconButton
               sx={{
                 display: {
-                  xs: "block",
+                  xs: "flex",
                   md: "none",
                 },
               }}
@@ -158,11 +158,16 @@ const Header: React.FC = () => {
               onClick={() => navigate("/")}
               sx={{
                 fontWeight: "700",
-                fontSize: "22px",
+                fontSize: {
+                  xs: "14px",
+                  md: "24px"
+                },
                 cursor: "pointer",
                 color: "#373940",
                 letterSpacing: "1.1px",
+                paddingTop: "-10px"
               }}
+              variant="h4"
             >
               Room8
             </Typography>

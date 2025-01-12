@@ -48,6 +48,7 @@ const SearchPage: React.FC = () => {
           <CustomLoadingButton
             sx={{
               width: "100%",
+              height: "72px",
               color:
                 typeOfSearch === LookingForEnum.LookingForRoomMates
                   ? "#fff"
@@ -74,6 +75,7 @@ const SearchPage: React.FC = () => {
           <CustomLoadingButton
             sx={{
               width: "100%",
+              height: "72px",
               color:
                 typeOfSearch === LookingForEnum.LookingForPlace
                   ? "#fff"

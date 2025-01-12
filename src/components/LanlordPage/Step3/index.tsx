@@ -207,9 +207,9 @@ const Step3: React.FC<Step3Props> = () => {
             {t("landlordQ.tellmeAboutYourSelf")}
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.whoAreYou")} />
         </Grid>
@@ -526,8 +526,12 @@ const Step3: React.FC<Step3Props> = () => {
             </LoadingButton>
           </Stack>
         </Grid>
+         <Grid item xs={12} mb={2} mt={2}>
+                  <Box sx={{ borderBottom: "1px solid black" }}></Box>
+                </Grid>
         <Grid item xs={12} md={6}>
           <OutlinedButton
+          sx={{height: "72px"}}
             type="button"
             onClick={() => navigate(`/landlord/2/${advertisementData?._id}`)}
           >
@@ -536,7 +540,7 @@ const Step3: React.FC<Step3Props> = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
-            sx={{ width: "100%" }}
+            sx={{ width: "100%",height: "72px" }}
             loading={
               updateAdvertisementMutation.isPending ||
               uploadImageMutation.isPending

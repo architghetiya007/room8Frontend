@@ -101,11 +101,16 @@ const PersonalInfo: React.FC = () => {
                 background:
                   "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
                 color: "custom.white",
-                borderRadius: "8px",
+                borderRadius: "16px",
                 textTransform: "none",
                 letterSpacing: "1px",
-                fontWeight: "600",
-                fontSize: "16px",
+                fontWeight: "700",
+                fontSize: {
+                  xs: "16px",
+                  md: "22px"
+                },
+                height: "60px",
+                // width: "50%",
               }}
               type="button"
               variant="contained"
@@ -167,13 +172,20 @@ const PersonalInfo: React.FC = () => {
                 "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
               pl: 2,
               pr: 2,
-              borderRadius: "8px",
+              borderRadius: "16px",
               color: "custom.white",
               textTransform: "none",
               letterSpacing: "1px",
-              fontWeight: "600",
-              fontSize: "16px",
+              fontWeight: "700",
+              fontSize: {
+                xs: "16px",
+                md: "22px"
+              },
               mt: 1,
+              height: "60px",
+              ml: 'auto',
+              mr: "auto",
+              width: "50%",
             }}
             type="button"
             onClick={() => formik.handleSubmit()}

@@ -161,8 +161,10 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
           <Box
             display={"flex"}
             alignItems={"center"}
-            justifyContent={"space-between"}
+            width={"100%"}
+            justifyContent={"flex-start"}
             pt={1.5}
+            gap={0.7}
           >
             {advertisement.landlordData?.propertyOffer !== "ENTIREROOM" && (
               <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>

@@ -112,7 +112,7 @@ const ProfileListing: React.FC = () => {
                   <Chip
                     sx={{
                       ml: "auto !important",
-                      backgroundColor: item.isActive ? "green" : "red",
+                      backgroundColor: item.isActive ? "#3EBC61" : "#FF445E",
                       color: "white",
                     }}
                     color={item.isActive ? "primary" : "error"}
@@ -174,7 +174,7 @@ const ProfileListing: React.FC = () => {
                   <Chip
                     sx={{
                       ml: "auto !important",
-                      backgroundColor: item.isActive ? "green" : "red",
+                      backgroundColor: item.isActive ? "#3EBC61" : "#FF445E",
                       color: "white",
                     }}
                     label={item.isActive ? "Active" : "Inactive"}

@@ -268,9 +268,9 @@ const Step1: React.FC<Step1Props> = () => {
             {t("landlordQ.rentOutOfyourPlace")}
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.whatTypefPropertyOffer")} />
         </Grid>
@@ -325,9 +325,9 @@ const Step1: React.FC<Step1Props> = () => {
         </Grid>
         {formik.values.propertyOffer !== "WHOLEPROPERTY" && (
           <>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Box sx={{ borderBottom: "1px solid black" }}></Box>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <Typography
                 sx={{
@@ -342,9 +342,9 @@ const Step1: React.FC<Step1Props> = () => {
                 {t("landlordQ.tellmeAboutYourProperty")}
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Box sx={{ borderBottom: "1px solid black" }}></Box>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <CommanTypography title={t("landlordQ.doYouLeaveHere")} />
             </Grid>
@@ -401,9 +401,9 @@ const Step1: React.FC<Step1Props> = () => {
           </>
         )}
 
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.propertySize") + "(m²)"} />
         </Grid>
@@ -594,11 +594,11 @@ const Step1: React.FC<Step1Props> = () => {
             </FormHelperText>
           )}
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} mb={2} mt={2}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <OutlinedButton type="button" onClick={() => navigate("/")}>
+          <OutlinedButton sx={{ height: "72px"}} type="button" onClick={() => navigate("/")}>
             {t("CANCEL_BUTTON_TEXT")}
           </OutlinedButton>
         </Grid>
@@ -609,7 +609,7 @@ const Step1: React.FC<Step1Props> = () => {
               createAdvertisementMutation.isPending ||
               updateAdvertisementMutation.isPending
             }
-            sx={{ width: "100%" }}
+            sx={{ width: "100%",height: "72px" }}
             onClick={() => formik.handleSubmit()}
           >
             {t("NEXT")}

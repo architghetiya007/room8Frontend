@@ -128,11 +128,12 @@ const UserProfile: React.FC = () => {
               variant="contained"
               startIcon={<LogoutIcon />}
               sx={{
-                borderRadius: "20px",
+                borderRadius: "50px",
                 textTransform: "none",
-                fontWeight: "600",
-                fontSize: "16px",
+                fontWeight: "700",
+                fontSize: "22px",
                 width: "50%",
+                height: "60px",
                 backgroundColor: "custom.blackDark",
                 color: "custom.white",
               }}

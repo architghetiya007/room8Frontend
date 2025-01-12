@@ -138,12 +138,17 @@ const ChangePassword: React.FC = () => {
                 "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
               pl: 2,
               pr: 2,
-              borderRadius: "8px",
+              borderRadius: "16px",
               color: "white",
               textTransform: "none",
               letterSpacing: "1px",
-              fontWeight: "600",
-              fontSize: "16px",
+              fontWeight: "700",
+              fontSize: {
+                xs: "16px",
+                md: "22px"
+              },
+              height: "60px",
+              width: "50%",
               mt: 1,
             }}
             type="button"

@@ -206,9 +206,9 @@ const Step31: React.FC<Step31Props> = () => {
             {t("landlordQ.tellmeYourRef")}
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <Stack
             spacing={2}
@@ -410,9 +410,9 @@ const Step31: React.FC<Step31Props> = () => {
             {t("landlordQ.yourFlateMatePref11")}
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Box sx={{ borderBottom: "1px solid black" }}></Box>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <CommanTypography title={t("landlordQ.AcceptPref")} />
         </Grid>
@@ -498,8 +498,12 @@ const Step31: React.FC<Step31Props> = () => {
             </FormHelperText>
           )}
         </Grid>
+         <Grid item xs={12} mb={2} mt={2}>
+                  <Box sx={{ borderBottom: "1px solid black" }}></Box>
+                </Grid>
         <Grid item xs={12} md={6}>
           <OutlinedButton
+          sx={{height: "72px"}}
             type="button"
             onClick={() => navigate(`/landlord/2/${advertisementData?._id}`)}
           >
@@ -508,7 +512,7 @@ const Step31: React.FC<Step31Props> = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <CustomLoadingButton
-            sx={{ width: "100%" }}
+            sx={{ width: "100%",height: "72px" }}
             loading={
               updateAdvertisementMutation.isPending ||
               uploadImageMutation.isPending

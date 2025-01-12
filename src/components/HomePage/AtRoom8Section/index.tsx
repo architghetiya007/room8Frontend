@@ -10,7 +10,7 @@ const AtRoom8Section: React.FC = () => {
           md: 4,
         },
         py: {
-          xs: 1,
+          xs: 10,
           md: 10,
         },
       }}
@@ -41,7 +41,7 @@ const AtRoom8Section: React.FC = () => {
         >
           <Typography
             sx={{
-              fontSize: "50px",
+              fontSize: "42px",
               background:
                 "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
               backgroundClip: "text",
@@ -49,6 +49,7 @@ const AtRoom8Section: React.FC = () => {
               textAlign: "center",
               fontWeight: "bold",
             }}
+            variant="h2"
           >
             <GradientMark />
             &nbsp;At Room8,
