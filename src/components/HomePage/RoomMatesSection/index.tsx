@@ -10,10 +10,15 @@ const RoomMatesSection: React.FC = () => {
         background:
           "linear-gradient( rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.55) 100%);",
         display: "flex",
+        p: {
+          xs: 2,
+          md: 0
+        },
         pl: {
-          xs: 0,
+          xs: 2,
           md: 20,
         },
+        
         my: {
           xs: 4,
           md: 0,
