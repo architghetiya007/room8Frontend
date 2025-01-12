@@ -37,7 +37,7 @@ const ImageSlider: React.FC<{
           boxShadow: 2,
         }}
       >
-        <IconButton sx={{ padding: 0 }}>
+        <IconButton sx={{ padding: 0, mr: "16px" }}>
           <ArrowForwardIos />
         </IconButton>
       </Box>
@@ -67,7 +67,7 @@ const ImageSlider: React.FC<{
           boxShadow: 2,
         }}
       >
-        <IconButton sx={{ padding: 0 }}>
+        <IconButton sx={{ padding: 0, ml: "-10px" }}>
           <ArrowBackIos />
         </IconButton>
       </Box>
