@@ -9,7 +9,7 @@ const RoomMatesSection: React.FC = () => {
       <Container>
         <Grid container spacing={2} mt={4}>
           <Grid item xs={12} md={9}>
-            <Stack spacing={3} pt={4}>
+            <Stack spacing={3} pt={4} pb={8}>
               <Typography
                 sx={{
                   fontSize: "36px",
@@ -53,28 +53,22 @@ const RoomMatesSection: React.FC = () => {
             </Stack>
           </Grid>
           <Grid item xs={12} md={3}>
-            <Stack>
               <Box
                 component={"img"}
                 sx={{
-                  maxWidth: {
-                    xs: "100%",
-                    md: "320px",
-                  },
-                  ml: "auto",
-                  mr: "auto",
-                  height: {
-                    xs: "320px",
-                    md: "auto"
-                  },
-                  mt: {
-                    xs: 5,
-                    md: 0
-                  }
+                  // maxWidth: {
+                  //   xs: "100%",
+                  //   md: "320px",
+                  // },
+                  // ml: "auto",
+                  // mr: "auto",
+                  // mt: {
+                  //   xs: 5,
+                  //   md: 0
+                  // }
                 }}
                 src={RoomMate}
               ></Box>
-            </Stack>
           </Grid>
         </Grid>
       </Container>

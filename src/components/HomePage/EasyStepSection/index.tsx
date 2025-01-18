@@ -13,7 +13,7 @@ import Step2 from "../../../assets/images/Step2.png";
 import Step3 from "../../../assets/images/Step3.png";
 const EasyStepSection: React.FC = () => {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const Line = (
     <Box
       sx={{
@@ -55,8 +55,7 @@ const EasyStepSection: React.FC = () => {
         backgroundColor: "#DCE6F5",
         zIndex: 1,
       }}
-    >
-    </Box>
+    ></Box>
   );
   return (
     <Box py={4}>
@@ -176,42 +175,52 @@ const EasyStepSection: React.FC = () => {
               {Line}
             </Box>
 
-           <Box sx={{ display: 'flex',flexDirection: 'column', gap: 2, pl: {
-            xs: 4,
-            md: 0
-           }}}>
-           <Typography
+            <Box
               sx={{
-                fontSize: "24px",
-                background:
-                  "linear-gradient( #4AB1F1 0.58%, #566CEC 37.22%, #D749AF 73.87%, #FF7C51 112.26%);",
-                backgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                textAlign: "start",
-                WebkitBackgroundClip: "text", // For WebKit browsers (Chrome, Safari)
-                fontWeight: "bold",
-                marginTop: "45px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                pl: {
+                  xs: 4,
+                  md: 0,
+                },
+                pr: {
+                  xs: 0,
+                  md: 4,
+                },
               }}
             >
-              STEP 1
-            </Typography>
-            <Typography
-              variant="h4"
-              sx={{ fontWeight: "bold", color: "#3B3D44" }}
-            >
-              Create a Profile and specify your preferences
-            </Typography>
-            <Typography sx={{ color: "#6D778A",mb: {xs: 8, md: 0} }}>
-              Create your Room8 account and immerse yourself in the ocean of
-              possibilities by adding your preferences regarding accommodation
-              and flatmate.
-            </Typography>
-           </Box>
+              <Typography
+                sx={{
+                  fontSize: "24px",
+                  background:
+                    "linear-gradient( #4AB1F1 0.58%, #566CEC 37.22%, #D749AF 73.87%, #FF7C51 112.26%);",
+                  backgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  textAlign: "start",
+                  WebkitBackgroundClip: "text", // For WebKit browsers (Chrome, Safari)
+                  fontWeight: "bold",
+                  marginTop: "45px",
+                }}
+              >
+                STEP 1
+              </Typography>
+              <Typography
+                variant="h4"
+                sx={{ fontWeight: "bold", color: "#3B3D44" }}
+              >
+                Create a Profile and specify your preferences
+              </Typography>
+              <Typography sx={{ color: "#6D778A", mb: { xs: 8, md: 0 } }}>
+                Create your Room8 account and immerse yourself in the ocean of
+                possibilities by adding your preferences regarding accommodation
+                and flatmate.
+              </Typography>
+            </Box>
           </Grid>
           <Grid item xs={12} md={6} position={"relative"}>
             {/* {Line} */}
             {isSmallScreen ? LineWithoutDot : Line}
-            <Stack>
               <Box
                 component={"img"}
                 sx={{
@@ -224,13 +233,12 @@ const EasyStepSection: React.FC = () => {
                   marginTop: "-35px",
                   height: "385px",
                   pl: {
-                    xs: 4,
-                    md: 0
-                  }
+                    xs: 0,
+                    md: 4,
+                  },
                 }}
                 src={Step1}
               ></Box>
-            </Stack>
           </Grid>
           {isSmallScreen ? (
             <>
@@ -307,8 +315,8 @@ const EasyStepSection: React.FC = () => {
                       width: "100%",
                       pl: {
                         xs: 4,
-                        md: 0
-                      }
+                        md: 0,
+                      },
                     }}
                     src={Step2}
                   ></Box>
@@ -328,7 +336,14 @@ const EasyStepSection: React.FC = () => {
                 >
                   {Line}
                 </Box>
-                <Stack>
+                <Stack
+                  sx={{
+                    pr: {
+                      xs: 0,
+                      md: 10,
+                    },
+                  }}
+                >
                   <Box
                     component={"img"}
                     sx={{
@@ -411,45 +426,67 @@ const EasyStepSection: React.FC = () => {
                   xs: "block",
                   md: "none",
                 },
+                pr: {
+                  xs: 0,
+                  md: 4,
+                },
               }}
             >
               {Line}
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pl: {
-              xs: 4,
-              md: 0
-            }}}>
-            <Typography
+            <Box
               sx={{
-                fontSize: "24px",
-                background:
-                  "linear-gradient( #4AB1F1 0.58%, #566CEC 37.22%, #D749AF 73.87%, #FF7C51 112.26%);",
-                backgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                textAlign: "start",
-                WebkitBackgroundClip: "text", // For WebKit browsers (Chrome, Safari)
-                fontWeight: "bold",
-                marginTop: "35px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                pl: {
+                  xs: 4,
+                  md: 0,
+                },
+                pr: {
+                  xs: 0,
+                  md: 4,
+                },
               }}
             >
-              STEP 3
-            </Typography>
-            <Typography
-              variant="h4"
-              sx={{ fontWeight: "bold", color: "#3B3D44" }}
-            >
-              Contact and Build a Harmonious Community
-            </Typography>
-            <Typography sx={{ color: "#6D778A" }}>
-              Communicate with the person or property of your choice to arrange
-              details and support a harmonious living experience for both
-              parties.
-            </Typography>
+              <Typography
+                sx={{
+                  fontSize: "24px",
+                  background:
+                    "linear-gradient( #4AB1F1 0.58%, #566CEC 37.22%, #D749AF 73.87%, #FF7C51 112.26%);",
+                  backgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  textAlign: "start",
+                  WebkitBackgroundClip: "text", // For WebKit browsers (Chrome, Safari)
+                  fontWeight: "bold",
+                  marginTop: "35px",
+                }}
+              >
+                STEP 3
+              </Typography>
+              <Typography
+                variant="h4"
+                sx={{ fontWeight: "bold", color: "#3B3D44" }}
+              >
+                Contact and Build a Harmonious Community
+              </Typography>
+              <Typography sx={{ color: "#6D778A" }}>
+                Communicate with the person or property of your choice to
+                arrange details and support a harmonious living experience for
+                both parties.
+              </Typography>
             </Box>
           </Grid>
           <Grid item xs={12} md={6} position={"relative"}>
             {isSmallScreen ? LineWithoutDot : Line}
-            <Stack>
+            <Stack
+              sx={{
+                pl: {
+                  xs: 0,
+                  md: 4,
+                },
+              }}
+            >
               <Box
                 component={"img"}
                 sx={{
@@ -462,12 +499,12 @@ const EasyStepSection: React.FC = () => {
                   mr: "auto",
                   height: {
                     xs: "240px",
-                    md: "280px"
+                    md: "280px",
                   },
                   pl: {
                     xs: 4,
-                    md: 0
-                  }
+                    md: 0,
+                  },
                 }}
                 src={Step3}
               ></Box>

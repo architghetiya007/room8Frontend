@@ -150,8 +150,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
         {advertisement.advertiseType === AdvertisementType.LANDLORD && (
           <Typography
             sx={{ fontSize: "22px", color: "#373940" }}
-            variant="h6"
-            fontWeight={"600"}
+            variant="h4"
+            fontWeight={"700"}
           >
             {advertisement!.landlordData!.rentPerMonth} zł/month -{" "}
             {advertisement!.landlordData?.propertySize} m²

@@ -76,6 +76,7 @@ const ApartmentSection: React.FC = () => {
                     textTransform: "none",
                     fontWeight: "bold",
                     fontSize: "16px",
+                    minWidth: "278px"
                   }}
                   variant="contained"
                 >
@@ -172,6 +173,7 @@ const ApartmentSection: React.FC = () => {
                     textTransform: "none",
                     fontWeight: "bold",
                     fontSize: "16px",
+                    minWidth: "278px"
                   }}
                   variant="contained"
                 >
