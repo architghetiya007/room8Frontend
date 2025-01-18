@@ -194,7 +194,7 @@ const ChatList = () => {
       <Box sx={{ padding: 2, borderTop: "1px solid #ccc" }}>
         <List
           sx={{
-            height: "calc(100vh - 440px)",
+            height: "calc(100vh - 450px)",
             overflowY: "auto",
             marginBottom: 2,
           }}

@@ -130,8 +130,8 @@ const ChatsPage: React.FC = () => {
           width: "100%", // Full width for smaller screens
           boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
           borderRadius: "12px",
-          height: "calc(100vh - 125px)",
-          mt: "-20px",
+          height: "calc(100vh - 115px)",
+          mt: "-25px",
         }}
       >
         <CardContent
@@ -164,7 +164,7 @@ const ChatsPage: React.FC = () => {
                 justifyContent: "center",
                 height: "calc(100vh - 400px)",
                 flexDirection: "column",
-                gap: 3,
+                gap: 2,
               }}
             >
               <CircularProgress />
@@ -186,7 +186,7 @@ const ChatsPage: React.FC = () => {
             </Box>
           )}
           {!isLoading && chatUsers.length > 0 && (
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <Grid container spacing={2}>
                   {chatUsers.length > 0 && (
@@ -201,12 +201,12 @@ const ChatsPage: React.FC = () => {
                           <Box
                             sx={{
                               backgroundColor: "black",
-                              height: "40px",
+                              height: "65px",
                               display: "flex",
                               alignItems: "center",
                               borderTopRightRadius: "8px",
                               borderBottomRightRadius: "8px",
-                              width: "50px",
+                              width: "60px",
                               justifyContent: "center",
                               marginRight: "-15px",
                             }}
