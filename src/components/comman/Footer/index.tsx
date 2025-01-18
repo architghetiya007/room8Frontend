@@ -7,6 +7,7 @@ const Footer: React.FC = () => {
     <Box
       sx={{
         background: "linear-gradient(to bottom, #141A1D, #351440, #392927)",
+        
         px: 2,
         py: 8,
       }}

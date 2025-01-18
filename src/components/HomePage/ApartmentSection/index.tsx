@@ -41,17 +41,18 @@ const ApartmentSection: React.FC = () => {
             >
               <Stack
                 direction={"column"}
-                spacing={2}
-                p={2}
+                spacing={1}
+                p={1}
+                pl={3}
                 sx={{ maxWidth: "270px", zIndex: 99 }}
               >
                 <Typography
                   variant="h4"
-                  sx={{ fontWeight: "bold", lineHeight: "40px" }}
+                  sx={{ fontWeight: "bold", lineHeight: "40px",fontSize: "30px" }}
                 >
                   Looking For a Roomate?
                 </Typography>
-                <Typography sx={{ fontSize: "16px", color: "#6D778A" }}>
+                <Typography variant="body1" sx={{ fontSize: "16px", color: "#6D778A" }}>
                   Post your listing and find the perfect roommate for your
                   place.
                 </Typography>
@@ -128,12 +129,13 @@ const ApartmentSection: React.FC = () => {
               <Stack
                 direction={"column"}
                 sx={{ maxWidth: "310px", zIndex: 99 }}
-                spacing={2}
-                p={2}
+                spacing={1}
+                p={1}
+                pl={3}
               >
                 <Typography
                   variant="h4"
-                  sx={{ fontWeight: "bold", lineHeight: "40px" }}
+                  sx={{ fontWeight: "bold", lineHeight: "40px",fontSize: "30px" }}
                 >
                   Looking for a room or{" "}
                   {/* <Typography
@@ -148,7 +150,7 @@ const ApartmentSection: React.FC = () => {
                   </Typography> */}
                   apartment?
                 </Typography>
-                <Typography sx={{ fontSize: "16px", color: "#6D778A" }}>
+                <Typography variant="body1" sx={{ fontSize: "16px", color: "#6D778A" }}>
                   Fill out a quick form, meet potential roommates, and find your
                   ideal place.
                 </Typography>
