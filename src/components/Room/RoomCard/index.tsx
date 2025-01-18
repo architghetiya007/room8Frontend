@@ -124,7 +124,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             overflow: "hidden",
             color: "#6D778A",
             fontWeight: "600",
-            fontSize: "16px"
+            fontSize: "16px",
+            letterSpacing: "0.5px"
           }}
         >
           {advertisement.advertiseType === AdvertisementType.HUNTER
@@ -227,7 +228,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ advertisement }) => {
             <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
               <Box component={"img"} src={HomeImg}></Box>
               <Typography
-                sx={{ ml: 1, mt: 0.5, color: "#6D778A", fontSize: "14px", fontWeight: "450" }}
+                sx={{ ml: 1, mt: 0, color: "#6D778A", fontSize: "14px", fontWeight: "450" }}
                 variant="subtitle2"
               >
                 Looking for a room/shared room

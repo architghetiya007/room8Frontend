@@ -27,6 +27,7 @@ const RoomRentalSection: React.FC = () => {
           sx={{
             backgroundColor: "white",
             backgroundImage: `url(${RoomBackImage})`, // URL to your image
+            backgroundSize: "cover",
             width: "100%",
             height: { xs: "auto", md: "230px" },
             display: "flex",
