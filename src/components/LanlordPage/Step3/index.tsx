@@ -475,23 +475,32 @@ const Step3: React.FC<Step3Props> = () => {
         </Grid>
         <Grid item xs={12}>
           <Stack
-            spacing={2}
+            spacing={1}
+            mt={2}
             direction={"column"}
             alignItems={"center"}
             justifyContent={"center"}
-            sx={{ border: "1px solid red", borderRadius: "8px", p: 4 }}
+            sx={{ border: "1px solid red", borderRadius: "8px", p: 4, background: "linear-gradient(90deg, rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.5) 100%)"}}
           >
-            <CommanTypography title={t("landlordQ.photos11")} />
+            <Typography
+              sx={{ fontWeight: "600", fontSize: "30px", color: "#3C3D44" }}
+            >
+              {t("landlordQ.photos11")}
+            </Typography>
             {/* <Typography>{t("photosHunterQuestion.subTitle1")}</Typography> */}
             <Typography
-              sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A" }}
+              sx={{ fontWeight: "500", lineHeight: "35px", fontSize: "20px", textAlign: "center", color: "#6D778A", textTransform: "uppercase", maxWidth: {
+                xs: 'auto',
+                md: "550px"
+              } }}
             >
               {t("landlordQ.photos22")}
             </Typography>
             <Avatar
               sx={{
-                width: 80, // Set the width
-                height: 80, // Set the height
+                width: 135, // Set the width
+                height: 135, // Set the height
+                my: "10px !important"
               }}
               src={
                 preview
@@ -519,6 +528,7 @@ const Step3: React.FC<Step3Props> = () => {
                 letterSpacing: "1px",
                 fontWeight: "600",
                 fontSize: "24px",
+                height: "73px"
               }}
               type="button"
             >

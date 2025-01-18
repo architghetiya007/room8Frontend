@@ -34,6 +34,7 @@ import { t } from "i18next";
 import useHunterData from "../../../hooks/useHunter";
 import useUserMutations from "../../../mutations/user";
 import { Info } from "@mui/icons-material";
+import BuildingImg from "../../../assets/images/building.png";
 const landlordSchema = Yup.object().shape({
   roomSize: Yup.number()
     .min(0, "Room Size must be non-negative")
@@ -503,14 +504,16 @@ const Step2: React.FC<Step2Props> = () => {
           <Typography
             sx={{
               background:
-                "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+                "linear-gradient( #4AB1F1 0.58%, #566CEC 37.22%, #D749AF 73.87%, #FF7C51 112.26%);",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              fontSize: "45px",
+              textAlign: "start",
+              WebkitBackgroundClip: "text",
+              fontSize: "42px",
               fontWeight: "700",
             }}
           >
-            <CommanTypography title={t("landlordQ.price")} />
+            {t("landlordQ.price")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -519,7 +522,13 @@ const Step2: React.FC<Step2Props> = () => {
             direction={"column"}
             alignItems={"flex-start"}
             justifyContent={"center"}
-            sx={{ border: "1px solid red", borderRadius: "8px", p: 4 }}
+            sx={{
+              border: "1px solid red",
+              borderRadius: "8px",
+              p: 4,
+              background:
+                "linear-gradient(90deg, rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.5) 100%)",
+            }}
           >
             <CommanTypography title={t("landlordQ.rentPerMonth")} />
             <OutlinedInput
@@ -568,7 +577,12 @@ const Step2: React.FC<Step2Props> = () => {
             >
               <Info sx={{ color: "#FF445E", fontSize: "50px" }} />
               <Typography
-                sx={{ fontWeight: "500", color: "#3B3D44", fontSize: "20px" }}
+                sx={{
+                  fontWeight: "500",
+                  color: "#3B3D44",
+                  fontSize: "20px",
+                  lineHeight: "27px",
+                }}
               >
                 {t("landlordQ.billIncludedInfo")}
               </Typography>
@@ -622,27 +636,59 @@ const Step2: React.FC<Step2Props> = () => {
         </Grid>
         <Grid item xs={12}>
           <Stack
-            spacing={2}
+            spacing={1}
             direction={"column"}
             alignItems={"center"}
             justifyContent={"center"}
-            sx={{ border: "1px solid red", borderRadius: "8px", p: 4 }}
+            sx={{
+              border: "1px solid red",
+              borderRadius: "8px",
+              p: 4,
+              background:
+                "linear-gradient(90deg, rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.5) 100%)",
+            }}
           >
-            <CommanTypography title={t("landlordQ.addPhotosYourPlace")} />
+            <Typography
+              sx={{
+                fontWeight: "600",
+                fontSize: "30px",
+                color: "#3C3D44",
+              }}
+            >
+              {t("landlordQ.addPhotosYourPlace")}
+            </Typography>
             {/* <Typography>{t("photosHunterQuestion.subTitle1")}</Typography> */}
             <Typography
-              sx={{ fontWeight: "500", color: "#3B3D44", fontSize: "20px" }}
+              sx={{
+                fontWeight: "500",
+                fontSize: "20px",
+                textTransform: "uppercase",
+                color: "#6D778A",
+              }}
             >
               {t("landlordQ.addThemLater")}
             </Typography>
+            {previewState.previews.length === 0 && (
+              // <Stack my={3} flexDirection={'column'}>
+                <Avatar
+                  sx={{
+                    width: 135,
+                    height: 135,
+                    my: "30px !important"
+                  }}
+                  src={BuildingImg}
+                />
+              // </Stack>
+            )}
             {previewState.previews.length > 0 && (
               <Stack direction="row" spacing={2}>
                 {previewState.previews.map((preview, index) => (
                   <Stack key={index} alignItems="center">
                     <Avatar
                       sx={{
-                        width: 80,
-                        height: 80,
+                        width: 135,
+                    height: 135,
+                    mt: 2
                       }}
                       src={preview}
                     />
@@ -657,6 +703,7 @@ const Step2: React.FC<Step2Props> = () => {
                         "&:hover": {
                           background: "#FF7C51",
                         },
+                        mb: 2
                       }}
                     >
                       Remove
@@ -687,6 +734,7 @@ const Step2: React.FC<Step2Props> = () => {
                 letterSpacing: "1px",
                 fontWeight: "600",
                 fontSize: "24px",
+                height: "73px",
               }}
               type="button"
             >
@@ -694,12 +742,12 @@ const Step2: React.FC<Step2Props> = () => {
             </LoadingButton>
           </Stack>
         </Grid>
-         <Grid item xs={12} mb={2} mt={2}>
-                  <Box sx={{ borderBottom: "1px solid black" }}></Box>
-                </Grid>
+        <Grid item xs={12} mb={2} mt={2}>
+          <Box sx={{ borderBottom: "1px solid black" }}></Box>
+        </Grid>
         <Grid item xs={12} md={6}>
           <OutlinedButton
-          sx={{ height: "72px"}}
+            sx={{ height: "72px" }}
             type="button"
             onClick={() => navigate(`/landlord/1/${advertisementData?._id}`)}
           >
@@ -712,7 +760,7 @@ const Step2: React.FC<Step2Props> = () => {
               updateAdvertisementMutation.isPending ||
               uploadImageMutation.isPending
             }
-            sx={{ width: "100%",height: "72px" }}
+            sx={{ width: "100%", height: "72px" }}
             onClick={() => formik.handleSubmit()}
           >
             {t("NEXT")}
