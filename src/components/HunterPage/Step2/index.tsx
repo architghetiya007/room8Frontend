@@ -625,23 +625,25 @@ const Step2: React.FC<Step2Props> = () => {
               direction={"column"}
               alignItems={"center"}
               justifyContent={"center"}
-              sx={{ border: "1px solid red", borderRadius: "8px", p: 4 }}
+              mt={1}
+              sx={{ border: "1px solid red", borderRadius: "8px", p: 4,background: "linear-gradient(90deg, rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.5) 100%)"}}
             >
               <CommanTypography title={t("photosHunterQuestion.title")} />
               <Typography
-                sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A" }}
+                sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A", textTransform: "uppercase", lineHeight: "20px" }}
               >
                 {t("photosHunterQuestion.subTitle1")}
               </Typography>
               <Typography
-                sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A" }}
+                sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A", textTransform: "uppercase", lineHeight: "20px"}}
               >
                 {t("photosHunterQuestion.subTitle2")}
               </Typography>
               <Avatar
                 sx={{
-                  width: 80, // Set the width
-                  height: 80, // Set the height
+                  width: 135, // Set the width
+                  height: 135, // Set the height
+                  marginTop: "30px !important"
                 }}
                 src={
                   preview
@@ -661,13 +663,15 @@ const Step2: React.FC<Step2Props> = () => {
                   background:
                     "linear-gradient(to right, #4AB1F1, #566CEC, #D749AF, #FF7C51)",
                   // width: "100px",
-                  px: 4,
+                  px: 6,
                   borderRadius: "50px",
                   color: "white",
                   textTransform: "none",
                   letterSpacing: "1px",
                   fontWeight: "600",
                   fontSize: "24px",
+                  height: "73px",
+                  marginTop: "30px !important"
                 }}
                 type="button"
                 onClick={handleClick}
@@ -677,11 +681,15 @@ const Step2: React.FC<Step2Props> = () => {
             </Stack>
           </Grid>
           <Grid item xs={12}>
-            <CommanTypography title={t("describeYourSelfQuestion.title")} />
+          <Typography
+              sx={{ fontWeight: "600", fontSize: "28px", color: "#3B3D44", lineHeight:"40px" }}
+            >
+              {t("describeYourSelfQuestion.title")}
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography
-              sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A" }}
+              sx={{ fontWeight: "500", fontSize: "20px", color: "#6D778A", lineHeight:"27px" }}
             >
               {t("describeYourSelfQuestion.subTitle")}
             </Typography>

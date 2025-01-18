@@ -27,8 +27,9 @@ const AtRoom8Section: React.FC = () => {
             alignItems: "center",
             justifyContent: "center",
             flexDirection: "column",
-            boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.1)", // White shadow
+            // boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.1)", // White shadow
             transition: "box-shadow 0.3s ease-in-out",
+            boxShadow: "31px 39px 88.17px 0px #5165AB42",
             borderRadius: "20px",
             px: {
               xs: 1,

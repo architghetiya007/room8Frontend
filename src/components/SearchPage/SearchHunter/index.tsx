@@ -221,7 +221,7 @@ const SearchHunter: React.FC<SearchHunterProps> = ({ searchAPI }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Accordion>
+          <Accordion sx={{ boxShadow: "31px 39px 88.17px 0px #5165AB42", borderRadius: "12px"}}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1-content"

@@ -149,7 +149,7 @@ const theme = createTheme({
           "& .MuiInputBase-root": {
             borderRadius: "8px !important",
             fontSize: '1.25rem', // Increase font size
-            height: '65px',
+            minHeight: '65px',
           },
           '& .MuiInputLabel-root': {
             fontSize: '1.25rem', // Increase label font size
@@ -163,7 +163,7 @@ const theme = createTheme({
           borderRadius: "8px !important",
           "&.MuiOutlinedInput-root": {
             fontSize: '1.25rem', // Increase font size
-            height: '65px',
+            minHeight: '65px',
           },
           '& .MuiInputLabel-root': {
             fontSize: '1.25rem', // Increase label font size
