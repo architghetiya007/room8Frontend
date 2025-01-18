@@ -123,9 +123,9 @@ const Header: React.FC = () => {
       <Container
         sx={{
           p: 2,
-          // boxShadow: "0 4px 12px 0 #00000026",
+          boxShadow: "0 4px 12px 0 #00000026",
           borderRadius: 4,
-          // backdropFilter: "blur(41.5px)",
+          backdropFilter: "blur(41.5px)",
         }}
       >
         <Box
