@@ -87,8 +87,8 @@ const HeroSection: React.FC = () => {
                       "&:hover": {
                         backgroundColor: "#333", // Darker shade on hover
                       },
-                      mr: "-4px",
-                      height: "48px",
+                      mr: "-2px",
+                      height: "52px",
                       width: "140px",
                     }}
                   >
