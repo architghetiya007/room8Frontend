@@ -81,7 +81,7 @@ const HeroSection: React.FC = () => {
                     startIcon={<SearchIcon />}
                     sx={{
                       borderRadius: "40px",
-                      backgroundColor: "black", // Black background color
+                      backgroundColor: "#3B3D44", // Black background color
                       color: "white", // White text color
                       textTransform: "none", // Prevent text from being uppercase
                       "&:hover": {
