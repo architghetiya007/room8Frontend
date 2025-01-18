@@ -35,6 +35,10 @@ const CitySection: React.FC = () => {
             xs: 1,
             md: 2,
           },
+          px: {
+            xs: 1,
+            md: "0 !important"
+          }
         }}
       >
         <Box

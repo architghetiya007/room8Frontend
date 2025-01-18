@@ -59,8 +59,13 @@ const EasyStepSection: React.FC = () => {
   );
   return (
     <Box py={4}>
-      <Container>
-        <Grid container spacing={4} p={1}>
+      <Container sx={{
+        px: {
+          xs: 3,
+          md: "0 !important"
+        }
+      }}>
+        <Grid container spacing={4} p={0}>
           <Grid item xs={12} mb={6}>
             <Box
               sx={{
@@ -181,7 +186,7 @@ const EasyStepSection: React.FC = () => {
                 flexDirection: "column",
                 gap: 2,
                 pl: {
-                  xs: 4,
+                  xs: 1,
                   md: 0,
                 },
                 pr: {
@@ -258,7 +263,10 @@ const EasyStepSection: React.FC = () => {
                     display: "flex",
                     flexDirection: "column",
                     gap: 2,
-                    pl: 4,
+                    pl: {
+                      xs: 1,
+                      md: 4,
+                    },
                   }}
                 >
                   <Typography
@@ -314,7 +322,7 @@ const EasyStepSection: React.FC = () => {
                       height: "385px",
                       width: "100%",
                       pl: {
-                        xs: 4,
+                        xs: 1,
                         md: 0,
                       },
                     }}
@@ -440,7 +448,7 @@ const EasyStepSection: React.FC = () => {
                 flexDirection: "column",
                 gap: 2,
                 pl: {
-                  xs: 4,
+                  xs: 1,
                   md: 0,
                 },
                 pr: {

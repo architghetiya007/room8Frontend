@@ -12,8 +12,11 @@ const ApartmentSection: React.FC = () => {
   const navigate = useNavigate();
   return (
     <Box>
-      <Container>
-        <Grid container spacing={2} mt={2} mb={10}>
+      <Container sx={{ px: {
+          xs: 1,
+          md: "0 !important"
+        }}}>
+        <Grid container spacing={2} mt={2} mb={10} gap={0}>
           <Grid item xs={12} md={6}>
             <Box
               sx={{

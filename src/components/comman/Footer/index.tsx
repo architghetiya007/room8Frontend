@@ -12,7 +12,9 @@ const Footer: React.FC = () => {
         py: 8,
       }}
     >
-      <Container>
+      <Container sx={{
+        px: "0 !important"
+      }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
             <Typography

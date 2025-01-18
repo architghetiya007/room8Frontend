@@ -15,7 +15,12 @@ const AtRoom8Section: React.FC = () => {
         },
       }}
     >
-      <Container>
+      <Container sx={{
+        px: {
+          xs: 1,
+          md: "0 !important"
+        }
+      }}>
         <Box
           sx={{
             backgroundColor: "white",

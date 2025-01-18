@@ -6,9 +6,14 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 const RoomMatesSection: React.FC = () => {
   return (
     <Box sx={{ background: "linear-gradient( rgba(255, 233, 244, 0.3) 0%, rgba(234, 243, 255, 0.55) 100%);" }}>
-      <Container>
-        <Grid container spacing={2} mt={4}>
-          <Grid item xs={12} md={9}>
+      <Container sx={{
+        px: {
+          xs: 1,
+          md: "0 !important"
+        }
+      }}>
+        <Grid container spacing={1} mt={4}>
+          <Grid item xs={12} md={8}>
             <Stack spacing={3} pt={4} pb={8}>
               <Typography
                 sx={{
@@ -52,10 +57,12 @@ const RoomMatesSection: React.FC = () => {
               </LoadingButton>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
               <Box
                 component={"img"}
                 sx={{
+                  width :"100%",
+                  height: "320px"
                   // maxWidth: {
                   //   xs: "100%",
                   //   md: "320px",

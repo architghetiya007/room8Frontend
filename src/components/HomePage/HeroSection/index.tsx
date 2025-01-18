@@ -62,6 +62,7 @@ const HeroSection: React.FC = () => {
               ml: "auto",
               mr: "auto",
             }}
+            mt={1}
           >
             <OutlinedInput
               fullWidth
@@ -69,7 +70,7 @@ const HeroSection: React.FC = () => {
               placeholder="Search for a town, locality or street"
               startAdornment={
                 <InputAdornment position="start">
-                  <RoomOutlinedIcon />
+                  <RoomOutlinedIcon sx={{ ml: 1}}/>
                 </InputAdornment>
               }
               endAdornment={

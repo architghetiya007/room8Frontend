@@ -40,7 +40,12 @@ const RoomSection: React.FC = () => {
         },
       }}
     >
-      <Container>
+      <Container sx={{
+        px: {
+          xs: 1,
+          md: "0 !important"
+        }
+      }}>
         <Grid container spacing={2}>
           {roomData.map((item) => {
             return (
