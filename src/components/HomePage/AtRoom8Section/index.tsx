@@ -20,7 +20,9 @@ const AtRoom8Section: React.FC = () => {
           sx={{
             backgroundColor: "white",
             backgroundImage: `url(${RoomBackImage})`, // URL to your image
+            backgroundSize: "cover",
             width: "100%",
+            height: { xs: "auto", md: "265px" },
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
