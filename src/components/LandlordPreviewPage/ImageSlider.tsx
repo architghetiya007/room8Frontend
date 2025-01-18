@@ -30,11 +30,14 @@ const ImageSlider: React.FC<{
           top: "50%",
           transform: "translateY(-50%)",
           zIndex: 1,
-          width: "40px",
-          height: "40px",
-          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          borderRadius: "20px",
           backgroundColor: "white",
           boxShadow: 2,
+          "&:hover": {
+            backgroundColor: "white",
+          }
         }}
       >
         <IconButton sx={{ padding: 0, mr: "16px" }}>
@@ -60,11 +63,14 @@ const ImageSlider: React.FC<{
           top: "50%",
           transform: "translateY(-50%)",
           zIndex: 1,
-          width: "40px",
-          height: "40px",
-          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          borderRadius: "20px",
           backgroundColor: "white",
           boxShadow: 2,
+          "&:hover": {
+            backgroundColor: "white",
+          }
         }}
       >
         <IconButton sx={{ padding: 0, ml: "-10px" }}>
@@ -151,8 +157,8 @@ const ImageSlider: React.FC<{
               alt={`Slide ${index + 1}`}
               sx={{
                 width: "100%",
-                height: height,
-                borderRadius: "8px",
+                height: height ?? "345px",
+                borderRadius: "12px",
                 objectFit: "cover",
               }}
             />

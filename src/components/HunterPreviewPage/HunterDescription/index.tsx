@@ -133,13 +133,14 @@ const HunterDescription: React.FC<HunterDescriptionProps> = ({
         borderRadius: 5,
         display: "flex",
         alignItems: "center",
-        boxShadow: 3, // Predefined MUI box shadow (3 is moderate depth)
+        boxShadow: "31px 3px 88.17px 0px #5165AB42",
         width: "100%",
         flexWrap: {
           xs: "wrap",
           md: "nowrap",
         },
         p: 3,
+        mt: 1
       }}
     >
       <Grid container spacing={1}>

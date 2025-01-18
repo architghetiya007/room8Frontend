@@ -85,3 +85,8 @@ body {
   scrollbar-width: thin; /* Thick scrollbar */
   scrollbar-color: #d749af #f0f0f0; /* Thumb color (solid fallback) and track color */
 }
+
+.slick-track {
+  display: flex !important;
+  gap: 20px; /* Adds consistent spacing between slides */
+}

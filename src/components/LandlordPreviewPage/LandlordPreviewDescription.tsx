@@ -136,7 +136,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
         borderRadius: 5,
         display: "flex",
         alignItems: "center",
-        boxShadow: 3, // Predefined MUI box shadow (3 is moderate depth)
+        boxShadow: "31px 3px 88.17px 0px #5165AB42",
         width: "100%",
         flexWrap: {
           xs: "wrap",
@@ -253,7 +253,8 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
             sx={{
               borderRadius: 5,
               display: "flex",
-              boxShadow: 3, // Predefined MUI box shadow (3 is moderate depth)
+              boxShadow: "31px 39px 88.17px 0px #5165AB42;",
+              // boxShadow: 3, // Predefined MUI box shadow (3 is moderate depth)
               width: "100%",
               p: 3,
             }}
@@ -432,7 +433,7 @@ const LandlordPreviewDescription: React.FC<LandlordPreviewDescriptionProps> = ({
             sx={{
               borderRadius: 5,
               display: "flex",
-              boxShadow: 3, // Predefined MUI box shadow (3 is moderate depth)
+              boxShadow: "31px 39px 88.17px 0px #5165AB42;",
               width: "100%",
               p: 3,
               mt: 4,

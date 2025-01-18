@@ -72,6 +72,7 @@ const ApartmentSection: React.FC = () => {
                     borderRadius: 10,
                     px: 2,
                     py: 0,
+                    mt: "16px !important",
                     width: "auto",
                     height: "52px",
                     textTransform: "none",
@@ -172,10 +173,14 @@ const ApartmentSection: React.FC = () => {
                     py: 0,
                     width: "auto",
                     height: "52px",
+                    mt: "16px !important",
                     textTransform: "none",
                     fontWeight: "bold",
                     fontSize: "16px",
-                    minWidth: "278px"
+                    minWidth: "278px",
+                    "&:hover" : {
+                      backgroundColor: "#E152B9",
+                    }
                   }}
                   variant="contained"
                 >
