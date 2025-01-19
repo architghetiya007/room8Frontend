@@ -148,10 +148,15 @@ const ChatsPage: React.FC = () => {
         <Card
           sx={{
             width: "100%", // Full width for smaller screens
-            boxShadow: "31px 39px 88.17px 0px #5165AB42",
+            // boxShadow: "31px 39px 88.17px 0px #5165AB42",
+            backdropFilter: "blur(41.5px)",
             borderRadius: "12px",
             height: "calc(100vh - 115px)",
+            background: "#FFFFFF",
             mt: "-25px",
+            border: "1px solid",
+            borderImageSource:
+              "linear-gradient(218.14deg, #FFFFFF 35.05%, rgba(255, 255, 255, 0) 63.12%)",
           }}
         >
           <CardContent
@@ -160,6 +165,7 @@ const ChatsPage: React.FC = () => {
                 xs: 1,
                 md: 2,
               },
+              py: 1,
               height: "calc(100vh - 450px)",
             }}
           >
@@ -186,7 +192,7 @@ const ChatsPage: React.FC = () => {
                   justifyContent: "center",
                   height: "calc(100vh - 400px)",
                   flexDirection: "column",
-                  gap: 2,
+                  gap: 1,
                 }}
               >
                 <CircularProgress />
@@ -201,7 +207,7 @@ const ChatsPage: React.FC = () => {
                   justifyContent: "center",
                   height: "calc(100vh - 400px)",
                   flexDirection: "column",
-                  gap: 2,
+                  gap: 1,
                 }}
               >
                 <Typography>You don't have any conversations yet...</Typography>

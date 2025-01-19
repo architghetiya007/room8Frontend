@@ -194,7 +194,7 @@ const ChatList = () => {
       <Box sx={{ py: 1, borderTop: "1px solid #ccc" }}>
         <List
           sx={{
-            height: image ? "calc(100vh - 530px)" : "calc(100vh - 430px)",
+            height: image ? "calc(100vh - 520px)" : "calc(100vh - 420px)",
             overflowY: "auto",
             marginBottom: 2,
           }}
@@ -314,7 +314,7 @@ const ChatList = () => {
           >
             {image && (
               <CustomLoadingButton
-                sx={{ height: "40px", fontSize: "14px", px: 2 }}
+                sx={{ height: "40px", fontSize: "14px", px: 1 }}
                 onClick={handleRemoveImage}
               >
                 Remove Image
@@ -325,7 +325,8 @@ const ChatList = () => {
                 mt={0}
                 display="flex"
                 flexDirection="column"
-                alignItems="center"
+                alignItems="flex-end"
+                justifyContent={"flex-end"}
               >
                 <Typography variant="caption">
                   Selected Image Preview:
