@@ -297,9 +297,9 @@ const ChatList = () => {
           onChange={(e) => setMessage(e.target.value)}
           sx={{
             marginBottom: 1,
-            height: "50px",
+            height: "50px !important",
             "& .MuiInputBase-root": {
-              minHeight: "50px",
+              minHeight: "50px !important",
             },
           }}
         />
