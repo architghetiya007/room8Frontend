@@ -27,8 +27,9 @@ import { db, storage } from "../../firebase";
 import { useParams } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import CustomLoadingButton from "../../components/comman/CustomLoadingButton";
-import { MoreVertOutlined, PhotoCamera } from "@mui/icons-material";
+import { MoreVertOutlined } from "@mui/icons-material";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import ChatImage from "../../assets/ChatImage.png";
 
 const ChatList = () => {
   const { chatId, recipientId } = useParams();
@@ -40,7 +41,6 @@ const ChatList = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [recipientData, setRecipientData] = useState<any>(null);
   const [isMessageLoading, setIsMessageLoading] = useState(false);
-  console.log(userDetails);
 
   // Fetch messages based on selected chatId
   useEffect(() => {
@@ -159,23 +159,23 @@ const ChatList = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       {recipientData && (
-        <Box sx={{ display: "flex", alignItems: "center", pb: 1, px: 2 }}>
+        <Box sx={{ display: "flex", alignItems: "center", pb: 1, px: 1 }}>
           {recipientData.profilePic ? (
             <Avatar src={recipientData.profilePic}></Avatar>
           ) : (
             <Avatar>{recipientData.fullName.charAt(0)}</Avatar>
           )}
 
-          <Stack direction={"column"} flex={1} ml={2}>
+          <Stack direction={"column"} flex={1} spacing={0} ml={2}>
             <Typography
               variant="h6"
-              sx={{ color: "#3B3D44", fontWeight: "600" }}
+              sx={{ color: "#3B3D44", fontWeight: "600", fontSize: "24px" }}
             >
               {recipientData.fullName}
             </Typography>
             <Typography
               variant="subtitle1"
-              sx={{ color: "#3B3D44", fontWeight: "500" }}
+              sx={{ color: "#3EBC61", fontWeight: "450", fontSize: "18px" }}
             >
               Online
             </Typography>
@@ -191,61 +191,100 @@ const ChatList = () => {
         </Box>
       )}
 
-      <Box sx={{ padding: 2, borderTop: "1px solid #ccc" }}>
+      <Box sx={{ py: 1, borderTop: "1px solid #ccc" }}>
         <List
           sx={{
-            height: "calc(100vh - 450px)",
+            height: image ? "calc(100vh - 530px)" : "calc(100vh - 430px)",
             overflowY: "auto",
             marginBottom: 2,
           }}
         >
           {messages.map((msg) => {
-            // const senderDetail = userDetails[msg.senderId]; // Get sender details from userDetails state
+            const senderDetail = userDetails[msg.senderId]; // Get sender details from userDetails state
+            console.log(senderDetail);
 
             // Determine if the message is from the current user or the recipient
             const isCurrentUser = msg.senderId === userSlice.user?._id;
 
             return (
-              <ListItem
-                key={msg.id}
-                style={{
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
                   justifyContent: isCurrentUser ? "flex-end" : "flex-start",
+                  mb: 1,
                 }}
               >
-                <Box
+                <ListItem
+                  key={msg.id}
                   sx={{
-                    backgroundColor: isCurrentUser ? "#FF445E" : "grey.300", // Change background color based on sender
-                    color: isCurrentUser ? "white" : "black",
-                    borderRadius: 2,
-                    padding: 1,
-                    maxWidth: "70%", // Limit the width of the message bubble
-                    textAlign: isCurrentUser ? "right" : "left", // Text alignment
+                    justifyContent: isCurrentUser ? "flex-end" : "flex-start",
+                    px: 0,
+                    py: 1,
+                    borderRadius: "12px",
                   }}
                 >
-                  <ListItemText
-                    primary={msg.text}
-                    // secondary={
-                    //   senderDetail ? senderDetail.fullName : msg.senderId
-                    // }
-                    secondary={
-                      msg.timestamp?.seconds
-                        ? formatDistanceToNow(
-                            new Date(msg.timestamp?.seconds * 1000)
-                          ) + " ago"
-                        : ""
-                    }
-                    sx={{ margin: 0 }} // Remove default margin
-                  />
-                  {msg.imageUrl && (
-                    <Box
-                      component={"img"}
-                      src={msg.imageUrl}
-                      alt="chat attachment"
-                      style={{ maxWidth: "200px" }}
+                  <Box
+                    sx={{
+                      backgroundColor: isCurrentUser ? "#FF445E" : "grey.300", // Change background color based on sender
+                      color: isCurrentUser ? "white" : "black",
+                      borderRadius: 2,
+                      padding: 1,
+                      maxWidth: "70%", // Limit the width of the message bubble
+                      textAlign: isCurrentUser ? "right" : "left", // Text alignment
+                    }}
+                  >
+                    <ListItemText
+                      primary={msg.text}
+                      // secondary={
+                      //   senderDetail ? senderDetail.fullName : msg.senderId
+                      // }
+                      // secondary={
+                      //   msg.timestamp?.seconds
+                      //     ? formatDistanceToNow(
+                      //         new Date(msg.timestamp?.seconds * 1000)
+                      //       ) + " ago"
+                      //     : ""
+                      // }
+                      sx={{ margin: 0 }} // Remove default margin
                     />
+
+                    {msg.imageUrl && (
+                      <Box
+                        component={"img"}
+                        src={msg.imageUrl}
+                        alt="chat attachment"
+                        style={{ maxWidth: "200px", marginTop: "8px" }}
+                      />
+                    )}
+                  </Box>
+                </ListItem>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: isCurrentUser ? "flex-end" : "flex-start",
+                    gap: 1,
+                  }}
+                >
+                  <Typography sx={{ fontWeight: "450", fontSize: "14px" }}>
+                    {msg.timestamp?.seconds
+                      ? formatDistanceToNow(
+                          new Date(msg.timestamp?.seconds * 1000)
+                        ) + " ago"
+                      : ""}
+                  </Typography>
+                  {senderDetail?.profilePic ? (
+                    <Avatar
+                      sx={{ width: "21px", height: "21px" }}
+                      src={senderDetail?.profilePic}
+                    ></Avatar>
+                  ) : (
+                    <Avatar sx={{ width: "21px", height: "21px" }}>
+                      {senderDetail?.fullName.charAt(0)}
+                    </Avatar>
                   )}
                 </Box>
-              </ListItem>
+              </Box>
             );
           })}
         </List>
@@ -256,7 +295,13 @@ const ChatList = () => {
           size="small"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          sx={{ marginBottom: 1 }}
+          sx={{
+            marginBottom: 1,
+            height: "50px",
+            "& .MuiInputBase-root": {
+              minHeight: "50px",
+            },
+          }}
         />
         {image && (
           <Box
@@ -310,8 +355,16 @@ const ChatList = () => {
             onChange={handleImageChange}
           />
           <label htmlFor="icon-button-file">
-            <IconButton color="primary" component="span">
-              <PhotoCamera />
+            <IconButton
+              sx={{ width: "23px", height: "23px" }}
+              color="primary"
+              component="span"
+            >
+              <Box
+                sx={{ width: "23px", height: "23px" }}
+                component={"img"}
+                src={ChatImage}
+              ></Box>
             </IconButton>
           </label>
           <CustomLoadingButton

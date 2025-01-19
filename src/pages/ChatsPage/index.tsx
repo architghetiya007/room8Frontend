@@ -148,7 +148,7 @@ const ChatsPage: React.FC = () => {
         <Card
           sx={{
             width: "100%", // Full width for smaller screens
-            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+            boxShadow: "31px 39px 88.17px 0px #5165AB42",
             borderRadius: "12px",
             height: "calc(100vh - 115px)",
             mt: "-25px",
@@ -165,11 +165,13 @@ const ChatsPage: React.FC = () => {
           >
             <Typography
               sx={{
-                fontSize: "50px",
+                fontSize: "42px",
                 background:
-                  "linear-gradient(to right, #4AB1F1 0%, #566CEC 33%, #D749AF 66%, #FF7C51 100%)",
+                  "linear-gradient( #4AB1F1 0.58%, #566CEC 37.22%, #D749AF 73.87%, #FF7C51 112.26%);",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
+                textAlign: "start",
+                WebkitBackgroundClip: "text",
                 fontWeight: "700",
               }}
               mb={2}
@@ -206,7 +208,7 @@ const ChatsPage: React.FC = () => {
               </Box>
             )}
             {!isLoading && chatUsers.length > 0 && (
-              <Grid container spacing={2}>
+              <Grid container spacing={1}>
                 <Grid item xs={12} md={6}>
                   <Grid container spacing={2}>
                     {chatUsers.length > 0 && (
@@ -217,11 +219,17 @@ const ChatsPage: React.FC = () => {
                           fullWidth
                           size="small"
                           placeholder="Search By Name"
+                          sx={{
+                            height: "46px",
+                            "&.MuiOutlinedInput-root": {
+                              minHeight: "46px",
+                            },
+                          }}
                           endAdornment={
                             <Box
                               sx={{
                                 backgroundColor: "black",
-                                height: "65px",
+                                height: "45px",
                                 display: "flex",
                                 alignItems: "center",
                                 borderTopRightRadius: "8px",
