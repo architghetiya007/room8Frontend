@@ -21,7 +21,12 @@ const HunterPage: React.FC<HunterPageProps> = ({ activePage }) => {
   };
   return (
     <Box>
-      <Container>
+      <Container sx={{
+        px: {
+          xs: 2,
+          md: "0 !important"
+        }
+      }}>
         {tabIndex === 1 && <Step1 updateTabIndex={updateTabIndex} />}
         {tabIndex === 2 && <Step2 updateTabIndex={updateTabIndex} />}
       </Container>

@@ -27,7 +27,10 @@ const LandlordPage: React.FC<LandlordPageProps> = ({ activePage }) => {
   };
   return (
     <Box>
-      <Container>
+      <Container sx={{px: {
+          xs: 2,
+          md: "0 !important"
+        }}}>
         {tabIndex === 1 && <Step1 updateTabIndex={updateTabIndex} />}
         {tabIndex === 2 && <Step2 updateTabIndex={updateTabIndex} />}
         {tabIndex === 3 && <Step3 updateTabIndex={updateTabIndex} />}

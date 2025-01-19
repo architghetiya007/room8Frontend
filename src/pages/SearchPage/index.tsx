@@ -40,7 +40,10 @@ const SearchPage: React.FC = () => {
 
   return (
     <Box>
-      <Container sx={{ my: 4 }}>
+      <Container sx={{ my: 4,px: {
+          xs: 2,
+          md: "0 !important"
+        } }}>
         <Box sx={{ width: "100%", display: "flex", gap: 1, flexWrap: {
           xs: 'wrap',
           md: "nowrap"

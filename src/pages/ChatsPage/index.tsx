@@ -124,7 +124,12 @@ const ChatsPage: React.FC = () => {
   });
 
   return (
-    <Container>
+    <Container sx={{
+      px: {
+        xs: 2,
+        md: "0 !important"
+      }
+    }}>
       <Card
         sx={{
           width: "100%", // Full width for smaller screens

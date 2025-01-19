@@ -46,7 +46,10 @@ const HunterPreviewPage: React.FC = () => {
   }, []);
   return (
     <Box>
-      <Container>
+      <Container sx={{px: {
+          xs: 2,
+          md: "0 !important"
+        }}}>
         <Grid container spacing={3} mb={8}>
           {previewData && (
             <Grid item xs={12}>
